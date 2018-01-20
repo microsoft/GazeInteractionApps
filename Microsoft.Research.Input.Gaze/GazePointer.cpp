@@ -35,7 +35,6 @@ GazePointer::GazePointer(UIElement^ root)
     EyesOffDelay = GAZE_IDLE_TIME;
 
     InitializeHistogram();
-    InitializeScreenDimensions();
     InitializeGazeInputSource();
 }
 
@@ -64,12 +63,6 @@ void GazePointer::InitializeHistogram()
 
     _maxHistoryTime = DEFAULT_MAX_HISTORY_DURATION;    // maintain about 3 seconds of history (in microseconds)
     _gazeHistory = ref new Vector<GazeHistoryItem^>();
-}
-
-void GazePointer::InitializeScreenDimensions()
-{
-    auto disp = DisplayInformation::GetForCurrentView();
-    _scaleFactor = disp->RawPixelsPerViewPixel;
 }
 
 void GazePointer::InitializeGazeInputSource()
@@ -460,14 +453,7 @@ void GazePointer::OnGazeMoved(GazeInputSourcePreview^ provider, GazeMovedPreview
 
 void GazePointer::ProcessGazePoint(GazePointPreview^ gazePoint)
 {
-    if (gazePoint->EyeGazePosition == nullptr)
-    {
-        return;
-    }
-
-    auto eyeGazePoint = Point((float)(gazePoint->EyeGazePosition->Value.X / _scaleFactor), (float)(gazePoint->EyeGazePosition->Value.Y / _scaleFactor));
-
-    auto ea = ref new GazeEventArgs(eyeGazePoint, gazePoint->Timestamp);
+    auto ea = ref new GazeEventArgs(gazePoint->EyeGazePosition->Value, gazePoint->Timestamp);
 
     if (InputEventForwardingEnabled)
     {

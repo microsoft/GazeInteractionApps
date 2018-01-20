@@ -167,8 +167,7 @@ public:
 
 private:
     void    InitializeHistogram();
-    void    InitializeScreenDimensions();
-        void    InitializeGazeInputSource();
+    void    InitializeGazeInputSource();
         
     GazeInvokeParams^   GetGazeInvokeParams(UIElement^ target);
     UIElement^          GetHitTarget(Point gazePoint);
@@ -191,8 +190,6 @@ private:
 
 private:
     UIElement^        _rootElement;
-
-    double           _scaleFactor;
 
     int64            _eyesOffDelay;
 
