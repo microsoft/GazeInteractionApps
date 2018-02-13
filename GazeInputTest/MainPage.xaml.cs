@@ -55,14 +55,12 @@ namespace GazeInputTest
             Dwell.Content = "Clicked";
         }
 
-        private void ShowCursor_Checked(object sender, RoutedEventArgs e)
+        private void ShowCursor_Toggle(object sender, RoutedEventArgs e)
         {
-            _gazePointer.IsCursorVisible = true;
-        }
-
-        private void ShowCursor_Unchecked(object sender, RoutedEventArgs e)
-        {
-            _gazePointer.IsCursorVisible = false;
+            if (ShowCursor.IsChecked.HasValue)
+            {
+                _gazePointer.IsCursorVisible = ShowCursor.IsChecked.Value;
+            }
         }
     }
 }
