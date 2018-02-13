@@ -32,6 +32,8 @@ namespace GazeInputTest
             _gazePointer = new GazePointer(this);
             _gazePointer.OnGazeInputEvent += OnGazeInputEvent;
             _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+
+            ShowCursor.IsChecked = _gazePointer.IsCursorVisible;
         }
 
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
@@ -53,9 +55,14 @@ namespace GazeInputTest
             Dwell.Content = "Clicked";
         }
 
-        private void ShowCursor_Click(object sender, RoutedEventArgs e)
+        private void ShowCursor_Checked(object sender, RoutedEventArgs e)
         {
-            _gazePointer.IsCursorVisible = !_gazePointer.IsCursorVisible;
+            _gazePointer.IsCursorVisible = true;
+        }
+
+        private void ShowCursor_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _gazePointer.IsCursorVisible = false;
         }
     }
 }
