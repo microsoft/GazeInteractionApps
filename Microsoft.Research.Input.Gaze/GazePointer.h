@@ -87,12 +87,13 @@ public ref struct GazePointerEventArgs sealed
     }
 };
 
-    ref class GazePointer;
-    public delegate void GazePointerEvent(GazePointer^ sender, GazePointerEventArgs^ ea);
-    public delegate void GazeInputEvent(GazePointer^ sender, GazeEventArgs^ ea);
+ref class GazePointer;
+public delegate void GazePointerEvent(GazePointer^ sender, GazePointerEventArgs^ ea);
+public delegate void GazeInputEvent(GazePointer^ sender, GazeEventArgs^ ea);
 
-    public delegate bool GazeIsInvokableDelegate(UIElement^ target);
-    public delegate void GazeInvokeTargetDelegate(UIElement^ target);
+public delegate bool GazeIsInvokableDelegate(UIElement^ target);
+public delegate void GazeInvokeTargetDelegate(UIElement^ target);
+
 public ref class GazePointer sealed
 {
 public:
