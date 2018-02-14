@@ -113,16 +113,18 @@ ref struct GazeTargetItem sealed
 	// used to keep track of when the next DwellRepeat event is to be fired
 	property int NextDwellRepeatTime;
 
-	GazeTargetItem(UIElement^ target, int64 timestamp, int nextStateTime, int nextRepeatTime)
+	GazeTargetItem(UIElement^ target)
 	{
 		TargetElement = target;
+	}
+
+	void Reset(int nextStateTime, int nextRepeatTime)
+	{
 		ElementState = GazePointerState::PreEnter;
 		ElapsedTime = 0;
-		LastTimestamp = timestamp;
 		NextStateTime = nextStateTime;
 		NextDwellRepeatTime = nextRepeatTime;
 	}
-
 };
 
 public ref struct GazePointerEventArgs sealed
@@ -223,7 +225,7 @@ private:
 
 	GazeInvokeParams^   GetReadGazeInvokeParams(UIElement^ target);
 	GazeInvokeParams^   GetWriteGazeInvokeParams(UIElement^ target);
-	GazeTargetItem^     GetOrCreateGazeTargetItem(UIElement^ target, long long timestamp);
+	GazeTargetItem^     GetOrCreateGazeTargetItem(UIElement^ target);
 	GazeTargetItem^     GetGazeTargetItem(UIElement^ target);
 	UIElement^          GetHitTarget(Point gazePoint);
 	UIElement^          ResolveHitTarget(Point gazePoint, long long timestamp);

@@ -191,7 +191,7 @@ UIElement^ GazePointer::GetHitTarget(Point gazePoint)
     return _rootElement;
 }
 
-GazeTargetItem^ GazePointer::GetOrCreateGazeTargetItem(UIElement^ element, long long timestamp)
+GazeTargetItem^ GazePointer::GetOrCreateGazeTargetItem(UIElement^ element)
 {
 	GazeTargetItem^ target;
 
@@ -202,13 +202,7 @@ GazeTargetItem^ GazePointer::GetOrCreateGazeTargetItem(UIElement^ element, long 
 	}
 	else
 	{
-		auto invokeParams = GetReadGazeInvokeParams(element);
-		// calculate the time that the first DwellRepeat needs to be fired after. this will be updated every time a DwellRepeat is 
-		// fired to keep track of when the next one is to be fired after that.
-		int nextStateTime = invokeParams->Enter;
-		int nextRepeatTime = invokeParams->DwellRepeat;
-
-		target = ref new GazeTargetItem(element, timestamp, nextStateTime, nextRepeatTime);
+		target = ref new GazeTargetItem(element);
 		_hitTargetTimes->Insert(hashCode, target);
 	}
 
@@ -216,6 +210,16 @@ GazeTargetItem^ GazePointer::GetOrCreateGazeTargetItem(UIElement^ element, long 
 	if (!_activeHitTargetTimes->IndexOf(target, &index))
 	{
 		_activeHitTargetTimes->Append(target);
+
+		auto invokeParams = GetReadGazeInvokeParams(element);
+
+		// calculate the time that the first DwellRepeat needs to be fired after. this will be updated every time a DwellRepeat is 
+		// fired to keep track of when the next one is to be fired after that.
+		int nextStateTime = invokeParams->Enter;
+		int nextRepeatTime = invokeParams->DwellRepeat;
+
+		target->Reset(nextStateTime, nextRepeatTime);
+		_hitTargetTimes->Insert(hashCode, target);
 	}
 	assert(_hitTargetTimes->Size == _activeHitTargetTimes->Size);
 
@@ -241,8 +245,8 @@ UIElement^ GazePointer::ResolveHitTarget(Point gazePoint, long long timestamp)
 
     // create new GazeTargetItem with a (default) total elapsed time of zero if one does not exist already.
     // this ensures that there will always be an entry for target elements in the code below.
-	auto target = GetOrCreateGazeTargetItem(historyItem->HitTarget, timestamp);
-
+	auto target = GetOrCreateGazeTargetItem(historyItem->HitTarget);
+	target->LastTimestamp = timestamp;
 
     // just append to the list and return if the list is empty
     if (_gazeHistory->Size == 0)
@@ -261,7 +265,6 @@ UIElement^ GazePointer::ResolveHitTarget(Point gazePoint, long long timestamp)
 
     // update the time this particular hit target has accumulated
     target->ElapsedTime += historyItem->Duration;
-    target->LastTimestamp = timestamp;
 
 
     // drop the oldest samples from the list until we have samples only 
