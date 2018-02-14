@@ -265,6 +265,7 @@ private:
 	// The key is the hash code of the FrameworkElemnt
 	// The value is the total time that FrameworkElement has been gazed at
 	Map<int, GazeTargetItem^>^      _hitTargetTimes;
+	Vector<GazeTargetItem^>^        _activeHitTargetTimes;
 
 	// A vector to track the history of observed gaze targets
 	Vector<GazeHistoryItem^>^       _gazeHistory;

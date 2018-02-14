@@ -51,6 +51,7 @@ void GazePointer::InitializeHistogram()
     _defaultInvokeParams = ref new GazeInvokeParams();
 
     _hitTargetTimes = ref new Map<int, GazeTargetItem^>();
+	_activeHitTargetTimes = ref new Vector<GazeTargetItem^>();
 
     _offScreenElement = ref new UserControl();
     SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, DEFAULT_FIXATION_DELAY);
@@ -98,6 +99,7 @@ int GazePointer::GetElementStateDelay(UIElement ^element, GazePointerState point
 void GazePointer::Reset()
 {
     _hitTargetTimes->Clear();
+	_activeHitTargetTimes->Clear();
     _gazeHistory->Clear();
 }
 
@@ -209,6 +211,13 @@ GazeTargetItem^ GazePointer::GetOrCreateGazeTargetItem(UIElement^ element, long 
 		target = ref new GazeTargetItem(element, timestamp, nextStateTime, nextRepeatTime);
 		_hitTargetTimes->Insert(hashCode, target);
 	}
+
+	unsigned int index;
+	if (!_activeHitTargetTimes->IndexOf(target, &index))
+	{
+		_activeHitTargetTimes->Append(target);
+	}
+	assert(_hitTargetTimes->Size == _activeHitTargetTimes->Size);
 
 	return target;
 }
@@ -401,11 +410,21 @@ void GazePointer::CheckIfExiting(long long curTimestamp)
 
             int targetHash = target->Key;
             _hitTargetTimes->Remove(targetHash);
+			unsigned int index;
+			if (_activeHitTargetTimes->IndexOf(targetItem, &index))
+			{
+				_activeHitTargetTimes->RemoveAt(index);
+			}
+			else
+			{
+				assert(false);
+			}
 
             // remove all history samples referring to deleted hit target
             for (unsigned i = 0; i < _gazeHistory->Size; )
             {
                 auto hitTarget = _gazeHistory->GetAt(i)->HitTarget;
+				assert((hitTarget->GetHashCode() == targetHash) == (hitTarget == targetItem->TargetElement));
                 if (hitTarget->GetHashCode() == targetHash)
                 {
                     _gazeHistory->RemoveAt(i);
