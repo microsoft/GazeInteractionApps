@@ -223,6 +223,8 @@ private:
 
 	GazeInvokeParams^   GetReadGazeInvokeParams(UIElement^ target);
 	GazeInvokeParams^   GetWriteGazeInvokeParams(UIElement^ target);
+	GazeTargetItem^     GetOrCreateGazeTargetItem(UIElement^ target, long long timestamp);
+	GazeTargetItem^     GetGazeTargetItem(UIElement^ target);
 	UIElement^          GetHitTarget(Point gazePoint);
 	UIElement^          ResolveHitTarget(Point gazePoint, long long timestamp);
 
