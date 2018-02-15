@@ -16,6 +16,9 @@ using namespace Windows::UI::Xaml::Hosting;
 
 BEGIN_NAMESPACE_GAZE_INPUT
 
+static DependencyProperty^ GazeTargetItemProperty = DependencyProperty::RegisterAttached("GazeTargetItem", GazeTargetItem::typeid, UIElement::typeid, ref new PropertyMetadata(nullptr));
+static DependencyProperty^ GazeInvokeParamsProperty = DependencyProperty::RegisterAttached("GazeInvokeParams", GazeInvokeParams::typeid, UIElement::typeid, ref new PropertyMetadata(nullptr));
+
 GazePointer::GazePointer(UIElement^ root)
 {
     _rootElement = root;
@@ -50,7 +53,6 @@ void GazePointer::InitializeHistogram()
 {
     _defaultInvokeParams = ref new GazeInvokeParams();
 
-    _hitTargetTimes = ref new Map<int, GazeTargetItem^>();
 	_activeHitTargetTimes = ref new Vector<GazeTargetItem^>();
 
     _offScreenElement = ref new UserControl();
@@ -104,34 +106,27 @@ void GazePointer::Reset()
 
 GazeInvokeParams^ GazePointer::GetReadGazeInvokeParams(UIElement^ target)
 {
-	auto hashCode = target->GetHashCode();
+	auto params = safe_cast<GazeInvokeParams^>(target->GetValue(GazeInvokeParamsProperty));
 
-	// return invoke params for _offscreenElement if target IS _offscreenElement or if no invoke params
-	// exist for the target requested
-	if (target == _rootElement || _elementInvokeParams.find(hashCode) == _elementInvokeParams.end())
+	if (params == nullptr)
 	{
-		return _defaultInvokeParams;
+		params = _defaultInvokeParams;
 	}
 
-	// TODO: adjust history length if the click params indicate something else
-	return _elementInvokeParams[hashCode];
+	return params;
 }
 
 GazeInvokeParams^ GazePointer::GetWriteGazeInvokeParams(UIElement^ target)
 {
-	auto hashCode = target->GetHashCode();
+	auto params = safe_cast<GazeInvokeParams^>(target->GetValue(GazeInvokeParamsProperty));
 
-	// return invoke params for _offscreenElement if target IS _offscreenElement or if no invoke params
-	// exist for the target requested
-	if (target == _rootElement || _elementInvokeParams.find(hashCode) == _elementInvokeParams.end())
+	if (params == nullptr)
 	{
-		auto newInvokeParams = ref new GazeInvokeParams(_defaultInvokeParams);
-		_elementInvokeParams[hashCode] = newInvokeParams;
-		return newInvokeParams;
+		params = ref new GazeInvokeParams(_defaultInvokeParams);
+		target->SetValue(GazeInvokeParamsProperty, params);
 	}
 
-	// TODO: adjust history length if the click params indicate something else
-	return _elementInvokeParams[hashCode];
+	return params;
 }
 
 bool GazePointer::IsInvokable(UIElement^ element)
@@ -192,17 +187,11 @@ UIElement^ GazePointer::GetHitTarget(Point gazePoint)
 
 GazeTargetItem^ GazePointer::GetOrCreateGazeTargetItem(UIElement^ element)
 {
-	GazeTargetItem^ target;
-
-	auto hashCode = element->GetHashCode();
-	if (_hitTargetTimes->HasKey(hashCode))
-	{
-		target = GetGazeTargetItem(element);
-	}
-	else
+	auto target = safe_cast<GazeTargetItem^>(element->GetValue(GazeTargetItemProperty));
+	if (target == nullptr)
 	{
 		target = ref new GazeTargetItem(element);
-		_hitTargetTimes->Insert(hashCode, target);
+		element->SetValue(GazeTargetItemProperty, target);
 	}
 
 	unsigned int index;
@@ -225,8 +214,7 @@ GazeTargetItem^ GazePointer::GetOrCreateGazeTargetItem(UIElement^ element)
 
 GazeTargetItem^ GazePointer::GetGazeTargetItem(UIElement^ element)
 {
-	auto hashCode = element->GetHashCode();
-	auto target = _hitTargetTimes->Lookup(hashCode);
+	auto target = safe_cast<GazeTargetItem^>(element->GetValue(GazeTargetItemProperty));
 	return target;
 }
 
@@ -237,7 +225,6 @@ UIElement^ GazePointer::ResolveHitTarget(Point gazePoint, long long timestamp)
     historyItem->HitTarget = GetHitTarget(gazePoint);
     historyItem->Timestamp = timestamp;
     historyItem->Duration = 0;
-    int hashCode = historyItem->HitTarget->GetHashCode();
     assert(historyItem->HitTarget != nullptr);
 
     // create new GazeTargetItem with a (default) total elapsed time of zero if one does not exist already.

@@ -2,7 +2,6 @@
 #pragma warning(disable:4453)
 
 #include "IGazeFilter.h"
-#include <map>
 #include "GazeCursor.h"
 
 using namespace Platform::Collections;
@@ -259,14 +258,7 @@ private:
 	Control^          _offScreenElement;
 	GazeInvokeParams^  _defaultInvokeParams;
 
-	// Maps the hash code of passed in FrameworkElement to a particular set of GazeInvokeParams
-	// This member is an std::map instead of a Platform::Collections::Map because GazeInvokeParams
-	// isn't recognized as a WinRT compatible type
-	std::map<int, GazeInvokeParams^>    _elementInvokeParams;
-
-	// The key is the hash code of the FrameworkElemnt
 	// The value is the total time that FrameworkElement has been gazed at
-	Map<int, GazeTargetItem^>^      _hitTargetTimes;
 	Vector<GazeTargetItem^>^        _activeHitTargetTimes;
 
 	// A vector to track the history of observed gaze targets
