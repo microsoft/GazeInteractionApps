@@ -109,20 +109,17 @@ ref struct GazeTargetItem sealed
 	property int64 LastTimestamp;
 	property GazePointerState ElementState;
 	property UIElement^ TargetElement;
-	// used to keep track of when the next DwellRepeat event is to be fired
-	property int NextDwellRepeatTime;
 
 	GazeTargetItem(UIElement^ target)
 	{
 		TargetElement = target;
 	}
 
-	void Reset(int nextStateTime, int nextRepeatTime)
+	void Reset(int nextStateTime)
 	{
 		ElementState = GazePointerState::PreEnter;
 		ElapsedTime = 0;
 		NextStateTime = nextStateTime;
-		NextDwellRepeatTime = nextRepeatTime;
 	}
 };
 

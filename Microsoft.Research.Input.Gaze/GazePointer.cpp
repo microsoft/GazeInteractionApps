@@ -204,9 +204,8 @@ GazeTargetItem^ GazePointer::GetOrCreateGazeTargetItem(UIElement^ element)
 		// calculate the time that the first DwellRepeat needs to be fired after. this will be updated every time a DwellRepeat is 
 		// fired to keep track of when the next one is to be fired after that.
 		int nextStateTime = invokeParams->Enter;
-		int nextRepeatTime = invokeParams->DwellRepeat;
 
-		target->Reset(nextStateTime, nextRepeatTime);
+		target->Reset(nextStateTime);
 	}
 
 	return target;
