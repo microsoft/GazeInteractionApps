@@ -98,7 +98,6 @@ int GazePointer::GetElementStateDelay(UIElement ^element, GazePointerState point
 
 void GazePointer::Reset()
 {
-    _hitTargetTimes->Clear();
 	_activeHitTargetTimes->Clear();
     _gazeHistory->Clear();
 }
@@ -219,9 +218,7 @@ GazeTargetItem^ GazePointer::GetOrCreateGazeTargetItem(UIElement^ element)
 		int nextRepeatTime = invokeParams->DwellRepeat;
 
 		target->Reset(nextStateTime, nextRepeatTime);
-		_hitTargetTimes->Insert(hashCode, target);
 	}
-	assert(_hitTargetTimes->Size == _activeHitTargetTimes->Size);
 
 	return target;
 }
@@ -400,19 +397,18 @@ void GazePointer::OnEyesOff(Object ^sender, Object ^ea)
 
 void GazePointer::CheckIfExiting(long long curTimestamp)
 {
-    for each (auto target in _hitTargetTimes)
-    {
-        auto targetItem = target->Value;
-        auto invokeParams = GetReadGazeInvokeParams(targetItem->TargetElement);
+	for (unsigned int index = 0;index < _activeHitTargetTimes->Size; index++)
+	{
+		auto targetItem = _activeHitTargetTimes->GetAt(index);
+		auto targetElement = targetItem->TargetElement;
+        auto invokeParams = GetReadGazeInvokeParams(targetElement);
 
         long long idleDuration = curTimestamp - targetItem->LastTimestamp;
         if (targetItem->ElementState != GazePointerState::PreEnter && idleDuration > invokeParams->Exit)
         {
-			GotoState(targetItem->TargetElement, GazePointerState::Exit);
-            RaiseGazePointerEvent(targetItem->TargetElement, GazePointerState::Exit, targetItem->ElapsedTime);
+			GotoState(targetElement, GazePointerState::Exit);
+            RaiseGazePointerEvent(targetElement, GazePointerState::Exit, targetItem->ElapsedTime);
 
-            int targetHash = target->Key;
-            _hitTargetTimes->Remove(targetHash);
 			unsigned int index;
 			if (_activeHitTargetTimes->IndexOf(targetItem, &index))
 			{
@@ -427,8 +423,7 @@ void GazePointer::CheckIfExiting(long long curTimestamp)
             for (unsigned i = 0; i < _gazeHistory->Size; )
             {
                 auto hitTarget = _gazeHistory->GetAt(i)->HitTarget;
-				assert((hitTarget->GetHashCode() == targetHash) == (hitTarget == targetItem->TargetElement));
-                if (hitTarget->GetHashCode() == targetHash)
+                if (hitTarget == targetElement)
                 {
                     _gazeHistory->RemoveAt(i);
                 }
