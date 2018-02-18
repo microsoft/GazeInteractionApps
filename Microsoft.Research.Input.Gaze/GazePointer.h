@@ -62,61 +62,6 @@ public enum class GazePointerState
 	DwellRepeat
 };
 
-// assocate a particular GazePointerState with a duration
-ref class GazeInvokeParams sealed
-{
-public:
-
-	GazeInvokeParams()
-	{
-		Fixation = DEFAULT_FIXATION_DELAY;
-		Dwell = DEFAULT_DWELL_DELAY;
-		DwellRepeat = DEFAULT_REPEAT_DELAY;
-		Enter = DEFAULT_ENTER_EXIT_DELAY;
-		Exit = DEFAULT_ENTER_EXIT_DELAY;
-	}
-
-	GazeInvokeParams(GazeInvokeParams^ value)
-	{
-		Fixation = value->Fixation;
-		Dwell = value->Dwell;
-		DwellRepeat = value->DwellRepeat;
-		Enter = value->Enter;
-		Exit = value->Exit;
-	}
-
-	property int Fixation;
-	property int Dwell;
-	property int DwellRepeat;
-	property int Enter;
-	property int Exit;
-
-	int Get(GazePointerState state)
-	{
-		switch (state)
-		{
-		case GazePointerState::Fixation: return Fixation;
-		case GazePointerState::Dwell: return Dwell;
-		case GazePointerState::DwellRepeat: return DwellRepeat;
-		case GazePointerState::Enter: return Enter;
-		case GazePointerState::Exit: return Exit;
-		default: return 0;
-		}
-	}
-
-	void Set(GazePointerState state, int value)
-	{
-		switch (state)
-		{
-		case GazePointerState::Fixation: Fixation = value; break;
-		case GazePointerState::Dwell: Dwell = value; break;
-		case GazePointerState::DwellRepeat: DwellRepeat = value; break;
-		case GazePointerState::Enter: Enter = value; break;
-		case GazePointerState::Exit: Exit = value; break;
-		}
-	}
-};
-
 ref struct GazeHistoryItem
 {
 	property UIElement^ HitTarget;
@@ -242,8 +187,6 @@ private:
 	void    InitializeHistogram();
 	void    InitializeGazeInputSource();
 
-	GazeInvokeParams^   GetReadGazeInvokeParams(UIElement^ target);
-	GazeInvokeParams^   GetWriteGazeInvokeParams(UIElement^ target);
 	GazeTargetItem^     GetOrCreateGazeTargetItem(UIElement^ target);
 	GazeTargetItem^     GetGazeTargetItem(UIElement^ target);
 	UIElement^          GetHitTarget(Point gazePoint);
@@ -276,7 +219,6 @@ private:
 	// the screen so we can track how long the user has been looking outside
 	// the screen and appropriately trigger the EyesOff event
 	Control^          _offScreenElement;
-	GazeInvokeParams^  _defaultInvokeParams;
 
 	// The value is the total time that FrameworkElement has been gazed at
 	Vector<GazeTargetItem^>^        _activeHitTargetTimes;
