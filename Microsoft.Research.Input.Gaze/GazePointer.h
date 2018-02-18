@@ -15,6 +15,28 @@ namespace Shapes = Windows::UI::Xaml::Shapes;
 
 BEGIN_NAMESPACE_GAZE_INPUT
 
+public ref class GazeApi sealed
+{
+public:
+	static property DependencyProperty^ FixationProperty { DependencyProperty^ get(); }
+	static property DependencyProperty^ DwellProperty { DependencyProperty^ get(); }
+	static property DependencyProperty^ DwellRepeatProperty { DependencyProperty^ get(); }
+	static property DependencyProperty^ EnterProperty { DependencyProperty^ get(); }
+	static property DependencyProperty^ ExitProperty { DependencyProperty^ get(); }
+
+	static TimeSpan GetFixation(UIElement^ element);
+	static TimeSpan GetDwell(UIElement^ element);
+	static TimeSpan GetDwellRepeat(UIElement^ element);
+	static TimeSpan GetEnter(UIElement^ element);
+	static TimeSpan GetExit(UIElement^ element);
+
+	static void SetFixation(UIElement^ element, TimeSpan span);
+	static void SetDwell(UIElement^ element, TimeSpan span);
+	static void SetDwellRepeat(UIElement^ element, TimeSpan span);
+	static void SetEnter(UIElement^ element, TimeSpan span);
+	static void SetExit(UIElement^ element, TimeSpan span);
+};
+
 // units in microseconds
 const int DEFAULT_FIXATION_DELAY = 400000;
 const int DEFAULT_DWELL_DELAY = 800000;
