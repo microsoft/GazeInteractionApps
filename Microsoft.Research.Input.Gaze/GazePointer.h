@@ -4,6 +4,7 @@
 #include "IGazeFilter.h"
 #include "GazeCursor.h"
 
+using namespace Platform;
 using namespace Platform::Collections;
 using namespace Windows::Foundation;
 using namespace Windows::Devices::Enumeration;
@@ -120,7 +121,7 @@ public ref struct GazePointerEventArgs sealed
 
 ref class GazePointer;
 public delegate void GazePointerEvent(GazePointer^ sender, GazePointerEventArgs^ ea);
-public delegate void GazeInputEvent(GazePointer^ sender, GazeEventArgs^ ea);
+public delegate void GazeInputEvent(Object^ sender, GazeEventArgs^ ea);
 
 public delegate bool GazeIsInvokableDelegate(UIElement^ target);
 public delegate void GazeInvokeTargetDelegate(UIElement^ target);

@@ -60,7 +60,7 @@ namespace SeeSaw
             _pictureRect = new Rect(pos.X, pos.Y, Picture.ActualWidth, Picture.ActualHeight);
         }
 
-        private void OnGazeInput(GazePointer sender, GazeEventArgs ea)
+        private void OnGazeInput(object sender, GazeEventArgs ea)
         {
             if ((_imageData.TrackGaze) /*&& (_pictureRect.Contains(ea.Location)) */)
             {

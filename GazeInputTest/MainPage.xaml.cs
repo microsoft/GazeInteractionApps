@@ -40,7 +40,7 @@ namespace GazeInputTest
             }
         }
 
-        private void OnGazeInputEvent(GazePointer sender, GazeEventArgs ea)
+        private void OnGazeInputEvent(object sender, GazeEventArgs ea)
         {
             Coordinates.Text = ea.Location.ToString();
         }
