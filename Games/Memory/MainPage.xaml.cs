@@ -48,7 +48,6 @@ namespace Memory
             Loaded += MainPage_Loaded;
 
             _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -69,7 +68,7 @@ namespace Memory
         {
             if (ea.PointerState == GazePointerState.Dwell)
             {
-                _gazePointer.InvokeTarget(ea.HitTarget);
+                sender.InvokeTarget(ea.HitTarget);
             }
         }
 

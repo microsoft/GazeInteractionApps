@@ -40,14 +40,13 @@ namespace MinAAC
             _speechSynthesizer = new SpeechSynthesizer();
             _textToSpeak = new StringBuilder();
             _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazePointerEvent += _gazePointer_OnGazePointerEvent;
         }
 
         private void _gazePointer_OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
         {
             if (ea.PointerState == GazePointerState.Dwell)
             {
-                _gazePointer.InvokeTarget(ea.HitTarget);
+                sender.InvokeTarget(ea.HitTarget);
             }
         }
 

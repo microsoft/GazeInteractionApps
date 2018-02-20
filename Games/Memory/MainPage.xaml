@@ -5,8 +5,13 @@
     xmlns:local="using:Memory"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:gaze="using:Microsoft.Research.Input.Gaze"
     mc:Ignorable="d">
 
+    <gaze:GazeApi.GazePage>
+        <gaze:GazePage GazePointerEvent="OnGazePointerEvent"/>
+    </gaze:GazeApi.GazePage>
+    
     <Page.Resources>
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Stretch" />

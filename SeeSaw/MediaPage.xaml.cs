@@ -54,7 +54,6 @@ namespace SeeSaw
         {
             _gazePointer = new GazePointer(this);
             _gazePointer.IsCursorVisible = false;
-            _gazePointer.OnGazeInputEvent += OnGazeInput;
             _gazePointer.InputEventForwardingEnabled = true;
             Picture.ImageOpened += Picture_ImageOpened;
         }

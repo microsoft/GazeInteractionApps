@@ -5,7 +5,12 @@
     xmlns:local="using:MinAAC"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:gaze="using:Microsoft.Research.Input.Gaze"
     mc:Ignorable="d">
+
+    <gaze:GazeApi.GazePage>
+        <gaze:GazePage GazePointerEvent="_gazePointer_OnGazePointerEvent"/>
+    </gaze:GazeApi.GazePage>
 
     <Grid Background="Black">
         <Grid.RowDefinitions>

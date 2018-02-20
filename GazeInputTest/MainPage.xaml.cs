@@ -30,8 +30,6 @@ namespace GazeInputTest
         {
             this.InitializeComponent();
             _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazeInputEvent += OnGazeInputEvent;
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
 
             ShowCursor.IsChecked = _gazePointer.IsCursorVisible;
         }

@@ -15,26 +15,34 @@ namespace Shapes = Windows::UI::Xaml::Shapes;
 
 BEGIN_NAMESPACE_GAZE_INPUT
 
+ref class GazePage;
+
 public ref class GazeApi sealed
 {
 public:
-	static property DependencyProperty^ FixationProperty { DependencyProperty^ get(); }
-	static property DependencyProperty^ DwellProperty { DependencyProperty^ get(); }
-	static property DependencyProperty^ DwellRepeatProperty { DependencyProperty^ get(); }
-	static property DependencyProperty^ EnterProperty { DependencyProperty^ get(); }
-	static property DependencyProperty^ ExitProperty { DependencyProperty^ get(); }
+    static property DependencyProperty^ IsGazeEnabledProperty { DependencyProperty^ get(); }
+    static property DependencyProperty^ GazePageProperty { DependencyProperty^ get(); }
+    static property DependencyProperty^ FixationProperty { DependencyProperty^ get(); }
+    static property DependencyProperty^ DwellProperty { DependencyProperty^ get(); }
+    static property DependencyProperty^ DwellRepeatProperty { DependencyProperty^ get(); }
+    static property DependencyProperty^ EnterProperty { DependencyProperty^ get(); }
+    static property DependencyProperty^ ExitProperty { DependencyProperty^ get(); }
 
-	static TimeSpan GetFixation(UIElement^ element);
-	static TimeSpan GetDwell(UIElement^ element);
-	static TimeSpan GetDwellRepeat(UIElement^ element);
-	static TimeSpan GetEnter(UIElement^ element);
-	static TimeSpan GetExit(UIElement^ element);
+    static bool GetIsGazeEnabled(Page^ page);
+    static GazePage^ GetGazePage(Page^ page);
+    static TimeSpan GetFixation(UIElement^ element);
+    static TimeSpan GetDwell(UIElement^ element);
+    static TimeSpan GetDwellRepeat(UIElement^ element);
+    static TimeSpan GetEnter(UIElement^ element);
+    static TimeSpan GetExit(UIElement^ element);
 
-	static void SetFixation(UIElement^ element, TimeSpan span);
-	static void SetDwell(UIElement^ element, TimeSpan span);
-	static void SetDwellRepeat(UIElement^ element, TimeSpan span);
-	static void SetEnter(UIElement^ element, TimeSpan span);
-	static void SetExit(UIElement^ element, TimeSpan span);
+    static void SetIsGazeEnabled(Page^ page, bool value);
+    static void SetGazePage(Page^ page, GazePage^ value);
+    static void SetFixation(UIElement^ element, TimeSpan span);
+    static void SetDwell(UIElement^ element, TimeSpan span);
+    static void SetDwellRepeat(UIElement^ element, TimeSpan span);
+    static void SetEnter(UIElement^ element, TimeSpan span);
+    static void SetExit(UIElement^ element, TimeSpan span);
 };
 
 // units in microseconds
@@ -111,6 +119,16 @@ public delegate void GazeInputEvent(GazePointer^ sender, GazeEventArgs^ ea);
 public delegate bool GazeIsInvokableDelegate(UIElement^ target);
 public delegate void GazeInvokeTargetDelegate(UIElement^ target);
 
+public ref class GazePage sealed
+{
+public:
+    event GazePointerEvent^ GazePointerEvent;
+    event GazeInputEvent^ GazeInput;
+
+    void RaiseGazePointerEvent(GazePointer^ sender, GazePointerEventArgs^ args) { GazePointerEvent(sender, args); }
+    void RaiseGazeInputEvent(GazePointer^ sender, GazeEventArgs^ args) { GazeInput(sender, args); }
+};
+
 public ref class GazePointer sealed
 {
 public:
@@ -145,9 +163,6 @@ public:
 	void Reset();
 	void SetElementStateDelay(UIElement ^element, GazePointerState pointerState, int stateDelay);
 	int GetElementStateDelay(UIElement^ element, GazePointerState pointerState);
-
-	event GazePointerEvent^ OnGazePointerEvent;
-	event GazeInputEvent^ OnGazeInputEvent;
 
 	// Provide a configurable delay for when the EyesOffDelay event is fired
 	// GOTCHA: this value requires that _eyesOffTimer is instantiated so that it

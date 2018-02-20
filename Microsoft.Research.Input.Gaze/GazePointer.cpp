@@ -18,24 +18,55 @@ BEGIN_NAMESPACE_GAZE_INPUT
 
 static TimeSpan s_nonTimeSpan = { -123456 };
 
+static DependencyProperty^ GazePointerProperty = DependencyProperty::RegisterAttached("_GazePointer", GazePointer::typeid, Page::typeid, ref new PropertyMetadata(nullptr));
+
+static void OnIsGazeEnabledChanged(DependencyObject^ ob, DependencyPropertyChangedEventArgs^ args)
+{
+    auto isGazeEnabled = safe_cast<bool>(args->NewValue);
+    if (isGazeEnabled)
+    {
+        auto page = safe_cast<Page^>(ob);
+
+        auto gazePointer = safe_cast<GazePointer^>(ob->GetValue(GazePointerProperty));
+        if (gazePointer == nullptr)
+        {
+            gazePointer = ref new GazePointer(page);
+            ob->SetValue(GazePointerProperty, gazePointer);
+        }
+    }
+    else
+    {
+        // TODO: Turn off GazePointer
+    }
+}
+
+static DependencyProperty^ s_isGazeEnabledProperty = DependencyProperty::RegisterAttached("IsGazeEnabled", bool::typeid, Page::typeid, 
+    ref new PropertyMetadata(false, ref new PropertyChangedCallback(&OnIsGazeEnabledChanged)));
+static DependencyProperty^ s_gazePageProperty = DependencyProperty::RegisterAttached("GazePage", GazePage::typeid, Page::typeid, ref new PropertyMetadata(nullptr));
 static DependencyProperty^ s_fixationProperty = DependencyProperty::RegisterAttached("Fixation", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
 static DependencyProperty^ s_dwellProperty = DependencyProperty::RegisterAttached("Dwell", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
 static DependencyProperty^ s_dwellRepeatProperty = DependencyProperty::RegisterAttached("DwellRepeat", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
 static DependencyProperty^ s_enterProperty = DependencyProperty::RegisterAttached("Enter", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
 static DependencyProperty^ s_exitProperty = DependencyProperty::RegisterAttached("Exit", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
 
+DependencyProperty^ GazeApi::IsGazeEnabledProperty::get() { return s_isGazeEnabledProperty; }
+DependencyProperty^ GazeApi::GazePageProperty::get() { return s_gazePageProperty; }
 DependencyProperty^ GazeApi::FixationProperty::get() { return s_fixationProperty; }
 DependencyProperty^ GazeApi::DwellProperty::get() { return s_dwellProperty; }
 DependencyProperty^ GazeApi::DwellRepeatProperty::get() { return s_dwellRepeatProperty; }
 DependencyProperty^ GazeApi::EnterProperty::get() { return s_enterProperty; }
 DependencyProperty^ GazeApi::ExitProperty::get() { return s_exitProperty; }
 
+bool GazeApi::GetIsGazeEnabled(Page^ page) { return safe_cast<bool>(page->GetValue(s_isGazeEnabledProperty)); }
+GazePage^ GazeApi::GetGazePage(Page^ page) { return safe_cast<GazePage^>(page->GetValue(s_gazePageProperty)); }
 TimeSpan GazeApi::GetFixation(UIElement^ element) { return safe_cast<TimeSpan>(element->GetValue(s_fixationProperty)); }
 TimeSpan GazeApi::GetDwell(UIElement^ element) { return safe_cast<TimeSpan>(element->GetValue(s_dwellProperty)); }
 TimeSpan GazeApi::GetDwellRepeat(UIElement^ element) { return safe_cast<TimeSpan>(element->GetValue(s_dwellRepeatProperty)); }
 TimeSpan GazeApi::GetEnter(UIElement^ element) { return safe_cast<TimeSpan>(element->GetValue(s_enterProperty)); }
 TimeSpan GazeApi::GetExit(UIElement^ element) { return safe_cast<TimeSpan>(element->GetValue(s_exitProperty)); }
 
+void GazeApi::SetIsGazeEnabled(Page^ page, bool value) { page->SetValue(s_isGazeEnabledProperty, value); }
+void GazeApi::SetGazePage(Page^ page, GazePage^ value) { page->SetValue(s_gazePageProperty, value); }
 void GazeApi::SetFixation(UIElement^ element, TimeSpan span) { element->SetValue(s_fixationProperty, span); }
 void GazeApi::SetDwell(UIElement^ element, TimeSpan span) { element->SetValue(s_dwellProperty, span); }
 void GazeApi::SetDwellRepeat(UIElement^ element, TimeSpan span) { element->SetValue(s_dwellRepeatProperty, span); }
@@ -490,7 +521,12 @@ void GazePointer::RaiseGazePointerEvent(UIElement^ target, GazePointerState stat
     //{
     //    Debug::WriteLine(L"GPE: 0x%08x -> %s, %d", target != nullptr ? target->GetHashCode() : 0, PointerStates[(int)state], elapsedTime);
     //}
-    OnGazePointerEvent(this, gpea);
+
+    auto surrogate = safe_cast<GazePage^>(_rootElement->GetValue(s_gazePageProperty));
+    if (surrogate != nullptr)
+    {
+        surrogate->RaiseGazePointerEvent(this, gpea);
+    }
 }
 
 void GazePointer::OnGazeMoved(GazeInputSourcePreview^ provider, GazeMovedPreviewEventArgs^ args)
@@ -508,7 +544,11 @@ void GazePointer::ProcessGazePoint(GazePointPreview^ gazePoint)
 
     if (InputEventForwardingEnabled)
     {
-        OnGazeInputEvent(this, ea);
+        auto surrogate = safe_cast<GazePage^>(_rootElement->GetValue(s_gazePageProperty));
+        if (surrogate != nullptr)
+        {
+            surrogate->RaiseGazeInputEvent(this, ea);
+        }
     }
 
     auto fa = Filter->Update(ea);

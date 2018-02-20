@@ -30,14 +30,13 @@ namespace Fifteen
             ResetBoard();
 
             _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent; ;
         }
 
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
         {
             if (ea.PointerState == GazePointerState.Dwell)
             {
-                _gazePointer.InvokeTarget(ea.HitTarget);
+                sender.InvokeTarget(ea.HitTarget);
             }
         }
 
