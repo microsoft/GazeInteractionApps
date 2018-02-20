@@ -24,14 +24,11 @@ namespace GazeInputTest
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        GazePointer _gazePointer;
-
         public MainPage()
         {
             this.InitializeComponent();
-            _gazePointer = new GazePointer(this);
 
-            ShowCursor.IsChecked = _gazePointer.IsCursorVisible;
+            ShowCursor.IsChecked = GazeApi.GetIsGazeCursorVisible(this);
         }
 
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
@@ -39,7 +36,7 @@ namespace GazeInputTest
             Dwell.Content = ea.PointerState.ToString();
             if (ea.PointerState == GazePointerState.Dwell)
             {
-                _gazePointer.InvokeTarget(ea.HitTarget);
+                sender.InvokeTarget(ea.HitTarget);
             }
         }
 
@@ -57,7 +54,7 @@ namespace GazeInputTest
         {
             if (ShowCursor.IsChecked.HasValue)
             {
-                _gazePointer.IsCursorVisible = ShowCursor.IsChecked.Value;
+                GazeApi.SetIsGazeCursorVisible(this, ShowCursor.IsChecked.Value);
             }
         }
     }

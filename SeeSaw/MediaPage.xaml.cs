@@ -53,7 +53,6 @@ namespace SeeSaw
         private void TrackingPage_Loaded(object sender, RoutedEventArgs e)
         {
             _gazePointer = new GazePointer(this);
-            _gazePointer.IsCursorVisible = false;
             _gazePointer.InputEventForwardingEnabled = true;
             Picture.ImageOpened += Picture_ImageOpened;
         }
