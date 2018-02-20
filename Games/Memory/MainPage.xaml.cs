@@ -27,8 +27,6 @@ namespace Memory
         const byte MIN_CHAR = 0x21;
         const byte MAX_CHAR = 0xE8;
 
-        GazePointer _gazePointer;
-
         Random _rnd;
         Button _firstButton;
         Button _secondButton;
@@ -46,8 +44,6 @@ namespace Memory
             _flashTimer.Tick += OnFlashTimerTick;
 
             Loaded += MainPage_Loaded;
-
-            _gazePointer = new GazePointer(this);
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)

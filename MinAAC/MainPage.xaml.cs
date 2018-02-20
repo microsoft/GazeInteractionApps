@@ -28,7 +28,6 @@ namespace MinAAC
     public sealed partial class MainPage : Page
     {
         StringBuilder       _textToSpeak;
-        GazePointer         _gazePointer;
         MediaElement        _mediaElement;
         SpeechSynthesizer   _speechSynthesizer;
 
@@ -39,7 +38,6 @@ namespace MinAAC
             _mediaElement = new MediaElement();
             _speechSynthesizer = new SpeechSynthesizer();
             _textToSpeak = new StringBuilder();
-            _gazePointer = new GazePointer(this);
         }
 
         private void _gazePointer_OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)

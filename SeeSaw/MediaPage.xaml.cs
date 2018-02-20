@@ -38,7 +38,6 @@ namespace SeeSaw
     /// </summary>
     public sealed partial class MediaPage : Page
     {
-        GazePointer _gazePointer;
         TrackViewer _trackViewer;
         ImageData _imageData;
         Rect _pictureRect;
@@ -52,8 +51,6 @@ namespace SeeSaw
 
         private void TrackingPage_Loaded(object sender, RoutedEventArgs e)
         {
-            _gazePointer = new GazePointer(this);
-            _gazePointer.InputEventForwardingEnabled = true;
             Picture.ImageOpened += Picture_ImageOpened;
         }
 

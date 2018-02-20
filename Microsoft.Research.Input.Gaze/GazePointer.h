@@ -22,6 +22,7 @@ public ref class GazeApi sealed
 public:
     static property DependencyProperty^ IsGazeEnabledProperty { DependencyProperty^ get(); }
     static property DependencyProperty^ IsGazeCursorVisibleProperty { DependencyProperty^ get(); }
+    static property DependencyProperty^ IsInputEventForwardingEnabledProperty { DependencyProperty^ get(); }
     static property DependencyProperty^ GazePageProperty { DependencyProperty^ get(); }
     static property DependencyProperty^ FixationProperty { DependencyProperty^ get(); }
     static property DependencyProperty^ DwellProperty { DependencyProperty^ get(); }
@@ -31,6 +32,7 @@ public:
 
     static bool GetIsGazeEnabled(Page^ page);
     static bool GetIsGazeCursorVisible(Page^ page);
+    static bool GetIsInputEventForwardingEnabled(Page^ page);
     static GazePage^ GetGazePage(Page^ page);
     static TimeSpan GetFixation(UIElement^ element);
     static TimeSpan GetDwell(UIElement^ element);
@@ -40,6 +42,7 @@ public:
 
     static void SetIsGazeEnabled(Page^ page, bool value);
     static void SetIsGazeCursorVisible(Page^ page, bool value);
+    static void SetIsInputEventForwardingEnabled(Page^ page, bool value);
     static void SetGazePage(Page^ page, GazePage^ value);
     static void SetFixation(UIElement^ element, TimeSpan span);
     static void SetDwell(UIElement^ element, TimeSpan span);

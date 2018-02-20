@@ -15,8 +15,6 @@ namespace Fifteen
     {
         const int BOARD_SIZE = 4;
 
-        GazePointer _gazePointer;
-
         Button[,] _buttons;
         int _blankRow;
         int _blankCol;
@@ -28,8 +26,6 @@ namespace Fifteen
             this.InitializeComponent();
             InitializeButtonArray();
             ResetBoard();
-
-            _gazePointer = new GazePointer(this);
         }
 
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
