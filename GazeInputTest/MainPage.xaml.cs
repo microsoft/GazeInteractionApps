@@ -34,10 +34,6 @@ namespace GazeInputTest
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
         {
             Dwell.Content = ea.PointerState.ToString();
-            if (ea.PointerState == GazePointerState.Dwell)
-            {
-                sender.InvokeTarget(ea.HitTarget);
-            }
         }
 
         private void OnGazeInputEvent(object sender, GazeEventArgs ea)
@@ -56,6 +52,21 @@ namespace GazeInputTest
             {
                 GazeApi.SetIsGazeCursorVisible(this, ShowCursor.IsChecked.Value);
             }
+        }
+
+        int clickCount;
+
+        private void OnLegacyInvoked(object sender, RoutedEventArgs e)
+        {
+            clickCount++;
+            HowButton.Content = string.Format("{0}: Legacy click", clickCount);
+        }
+
+        private void OnGazeInvoked(object sender, GazeInvokedRoutedEventArgs e)
+        {
+            clickCount++;
+            HowButton.Content = string.Format("{0}: Accessible click", clickCount);
+            e.Handled = true;
         }
     }
 }

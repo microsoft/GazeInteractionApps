@@ -68,6 +68,7 @@ static DependencyProperty^ s_isGazeCursorVisibleProperty = DependencyProperty::R
 static DependencyProperty^ s_isInputEventForwardingEnabledProperty = DependencyProperty::RegisterAttached("IsInputEventForwardingEnabled", bool::typeid, Page::typeid,
     ref new PropertyMetadata(true, ref new PropertyChangedCallback(&OnIsInputEventForwardingEnabledChanged)));
 static DependencyProperty^ s_gazePageProperty = DependencyProperty::RegisterAttached("GazePage", GazePage::typeid, Page::typeid, ref new PropertyMetadata(nullptr));
+static DependencyProperty^ s_gazeElementProperty = DependencyProperty::RegisterAttached("GazeElement", GazeElement::typeid, UIElement::typeid, ref new PropertyMetadata(nullptr));
 static DependencyProperty^ s_fixationProperty = DependencyProperty::RegisterAttached("Fixation", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
 static DependencyProperty^ s_dwellProperty = DependencyProperty::RegisterAttached("Dwell", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
 static DependencyProperty^ s_dwellRepeatProperty = DependencyProperty::RegisterAttached("DwellRepeat", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
@@ -78,6 +79,7 @@ DependencyProperty^ GazeApi::IsGazeEnabledProperty::get() { return s_isGazeEnabl
 DependencyProperty^ GazeApi::IsGazeCursorVisibleProperty::get() { return s_isGazeCursorVisibleProperty; }
 DependencyProperty^ GazeApi::IsInputEventForwardingEnabledProperty::get() { return s_isInputEventForwardingEnabledProperty; }
 DependencyProperty^ GazeApi::GazePageProperty::get() { return s_gazePageProperty; }
+DependencyProperty^ GazeApi::GazeElementProperty::get() { return s_gazeElementProperty; }
 DependencyProperty^ GazeApi::FixationProperty::get() { return s_fixationProperty; }
 DependencyProperty^ GazeApi::DwellProperty::get() { return s_dwellProperty; }
 DependencyProperty^ GazeApi::DwellRepeatProperty::get() { return s_dwellRepeatProperty; }
@@ -88,6 +90,7 @@ bool GazeApi::GetIsGazeEnabled(Page^ page) { return safe_cast<bool>(page->GetVal
 bool GazeApi::GetIsGazeCursorVisible(Page^ page) { return safe_cast<bool>(page->GetValue(s_isGazeCursorVisibleProperty)); }
 bool GazeApi::GetIsInputEventForwardingEnabled(Page^ page) { return safe_cast<bool>(page->GetValue(s_isInputEventForwardingEnabledProperty)); }
 GazePage^ GazeApi::GetGazePage(Page^ page) { return safe_cast<GazePage^>(page->GetValue(s_gazePageProperty)); }
+GazeElement^ GazeApi::GetGazeElement(UIElement^ element) { return safe_cast<GazeElement^>(element->GetValue(s_gazeElementProperty)); }
 TimeSpan GazeApi::GetFixation(UIElement^ element) { return safe_cast<TimeSpan>(element->GetValue(s_fixationProperty)); }
 TimeSpan GazeApi::GetDwell(UIElement^ element) { return safe_cast<TimeSpan>(element->GetValue(s_dwellProperty)); }
 TimeSpan GazeApi::GetDwellRepeat(UIElement^ element) { return safe_cast<TimeSpan>(element->GetValue(s_dwellRepeatProperty)); }
@@ -98,6 +101,7 @@ void GazeApi::SetIsGazeEnabled(Page^ page, bool value) { page->SetValue(s_isGaze
 void GazeApi::SetIsGazeCursorVisible(Page^ page, bool value) { page->SetValue(s_isGazeCursorVisibleProperty, value); }
 void GazeApi::SetIsInputEventForwardingEnabled(Page^ page, bool value) { page->SetValue(s_isInputEventForwardingEnabledProperty, value); }
 void GazeApi::SetGazePage(Page^ page, GazePage^ value) { page->SetValue(s_gazePageProperty, value); }
+void GazeApi::SetGazeElement(UIElement^ element, GazeElement^ value) { element->SetValue(s_gazeElementProperty, value); }
 void GazeApi::SetFixation(UIElement^ element, TimeSpan span) { element->SetValue(s_fixationProperty, span); }
 void GazeApi::SetDwell(UIElement^ element, TimeSpan span) { element->SetValue(s_dwellProperty, span); }
 void GazeApi::SetDwellRepeat(UIElement^ element, TimeSpan span) { element->SetValue(s_dwellRepeatProperty, span); }
@@ -105,6 +109,10 @@ void GazeApi::SetEnter(UIElement^ element, TimeSpan span) { element->SetValue(s_
 void GazeApi::SetExit(UIElement^ element, TimeSpan span) { element->SetValue(s_exitProperty, span); }
 
 static DependencyProperty^ GazeTargetItemProperty = DependencyProperty::RegisterAttached("GazeTargetItem", GazeTargetItem::typeid, UIElement::typeid, ref new PropertyMetadata(nullptr));
+
+DependencyProperty^ const GazeElement::s_hasAttentionProperty = DependencyProperty::Register("HasAttention", bool::typeid, GazeElement::typeid, ref new PropertyMetadata(false));
+DependencyProperty^ const GazeElement::s_invokeProgressProperty = DependencyProperty::Register("InvokeProgress", double::typeid, GazeElement::typeid, ref new PropertyMetadata(0.0));
+
 
 GazePointer::GazePointer(UIElement^ root)
 {
@@ -552,10 +560,33 @@ void GazePointer::RaiseGazePointerEvent(UIElement^ target, GazePointerState stat
     //    Debug::WriteLine(L"GPE: 0x%08x -> %s, %d", target != nullptr ? target->GetHashCode() : 0, PointerStates[(int)state], elapsedTime);
     //}
 
-    auto surrogate = safe_cast<GazePage^>(_rootElement->GetValue(s_gazePageProperty));
-    if (surrogate != nullptr)
+    auto handled = false;
+
+    if (target != nullptr)
     {
-        surrogate->RaiseGazePointerEvent(this, gpea);
+        auto element = GazeApi::GetGazeElement(target);
+        if (element != nullptr && state == GazePointerState::Dwell)
+        {
+            auto args = ref new GazeInvokedRoutedEventArgs();
+            element->RaiseInvoked(this, args);
+            handled = args->Handled;
+        }
+    }
+
+    if (!handled)
+    {
+        if (state == GazePointerState::Dwell)
+        {
+            InvokeTarget(target);
+        }
+        else
+        {
+            auto surrogate = safe_cast<GazePage^>(_rootElement->GetValue(s_gazePageProperty));
+            if (surrogate != nullptr)
+            {
+                surrogate->RaiseGazePointerEvent(this, gpea);
+            }
+        }
     }
 }
 

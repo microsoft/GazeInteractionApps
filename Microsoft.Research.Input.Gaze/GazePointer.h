@@ -17,6 +17,7 @@ namespace Shapes = Windows::UI::Xaml::Shapes;
 BEGIN_NAMESPACE_GAZE_INPUT
 
 ref class GazePage;
+ref class GazeElement;
 
 public ref class GazeApi sealed
 {
@@ -25,6 +26,9 @@ public:
     static property DependencyProperty^ IsGazeCursorVisibleProperty { DependencyProperty^ get(); }
     static property DependencyProperty^ IsInputEventForwardingEnabledProperty { DependencyProperty^ get(); }
     static property DependencyProperty^ GazePageProperty { DependencyProperty^ get(); }
+
+    static property DependencyProperty^ GazeElementProperty { DependencyProperty^ get(); }
+
     static property DependencyProperty^ FixationProperty { DependencyProperty^ get(); }
     static property DependencyProperty^ DwellProperty { DependencyProperty^ get(); }
     static property DependencyProperty^ DwellRepeatProperty { DependencyProperty^ get(); }
@@ -35,6 +39,7 @@ public:
     static bool GetIsGazeCursorVisible(Page^ page);
     static bool GetIsInputEventForwardingEnabled(Page^ page);
     static GazePage^ GetGazePage(Page^ page);
+    static GazeElement^ GetGazeElement(UIElement^ element);
     static TimeSpan GetFixation(UIElement^ element);
     static TimeSpan GetDwell(UIElement^ element);
     static TimeSpan GetDwellRepeat(UIElement^ element);
@@ -45,6 +50,7 @@ public:
     static void SetIsGazeCursorVisible(Page^ page, bool value);
     static void SetIsInputEventForwardingEnabled(Page^ page, bool value);
     static void SetGazePage(Page^ page, GazePage^ value);
+    static void SetGazeElement(UIElement^ element, GazeElement^ value);
     static void SetFixation(UIElement^ element, TimeSpan span);
     static void SetDwell(UIElement^ element, TimeSpan span);
     static void SetDwellRepeat(UIElement^ element, TimeSpan span);
@@ -64,59 +70,59 @@ const int GAZE_IDLE_TIME = 2500000;
 
 public enum class GazePointerState
 {
-	Exit,
+    Exit,
 
-	// The order of the following elements is important because
-	// they represent states that linearly transition to their
-	// immediate successors. 
-	PreEnter,
-	Enter,
-	Fixation,
-	Dwell,
-	//FixationRepeat,
-	DwellRepeat
+    // The order of the following elements is important because
+    // they represent states that linearly transition to their
+    // immediate successors. 
+    PreEnter,
+    Enter,
+    Fixation,
+    Dwell,
+    //FixationRepeat,
+    DwellRepeat
 };
 
 ref struct GazeHistoryItem
 {
-	property UIElement^ HitTarget;
-	property int64 Timestamp;
-	property int Duration;
+    property UIElement^ HitTarget;
+    property int64 Timestamp;
+    property int Duration;
 };
 
 ref struct GazeTargetItem sealed
 {
-	property int ElapsedTime;
-	property int NextStateTime;
-	property int64 LastTimestamp;
-	property GazePointerState ElementState;
-	property UIElement^ TargetElement;
+    property int ElapsedTime;
+    property int NextStateTime;
+    property int64 LastTimestamp;
+    property GazePointerState ElementState;
+    property UIElement^ TargetElement;
 
-	GazeTargetItem(UIElement^ target)
-	{
-		TargetElement = target;
-	}
+    GazeTargetItem(UIElement^ target)
+    {
+        TargetElement = target;
+    }
 
-	void Reset(int nextStateTime)
-	{
-		ElementState = GazePointerState::PreEnter;
-		ElapsedTime = 0;
-		NextStateTime = nextStateTime;
-	}
+    void Reset(int nextStateTime)
+    {
+        ElementState = GazePointerState::PreEnter;
+        ElapsedTime = 0;
+        NextStateTime = nextStateTime;
+    }
 };
 
 public ref struct GazePointerEventArgs sealed
 {
-	property UIElement^ HitTarget;
-	property GazePointerState PointerState;
-	property int ElapsedTime;
+    property UIElement^ HitTarget;
+    property GazePointerState PointerState;
+    property int ElapsedTime;
 
-	GazePointerEventArgs(UIElement^ target, GazePointerState state, int elapsedTime)
-	{
-		HitTarget = target;
-		PointerState = state;
-		ElapsedTime = elapsedTime;
-	}
+    GazePointerEventArgs(UIElement^ target, GazePointerState state, int elapsedTime)
+    {
+        HitTarget = target;
+        PointerState = state;
+        ElapsedTime = elapsedTime;
+    }
 };
 
 ref class GazePointer;
@@ -136,128 +142,156 @@ public:
     void RaiseGazeInputEvent(GazePointer^ sender, GazeEventArgs^ args) { GazeInput(sender, args); }
 };
 
+public ref class GazeInvokedRoutedEventArgs : public RoutedEventArgs
+{
+public:
+
+    property bool Handled;
+};
+
+public ref class GazeElement sealed : public DependencyObject
+{
+private:
+    static DependencyProperty^ const s_hasAttentionProperty;
+    static DependencyProperty^ const s_invokeProgressProperty;
+public:
+    static property DependencyProperty^ HasAttentionProperty { DependencyProperty^ get() { return s_hasAttentionProperty; } }
+    static property DependencyProperty^ InvokeProgressProperty { DependencyProperty^ get() { return s_invokeProgressProperty; } }
+
+    property bool HasAttention { bool get() { return safe_cast<bool>(GetValue(s_hasAttentionProperty)); } void set(bool value) { SetValue(s_hasAttentionProperty, value); } }
+    property double InvokeProgress { double get() { return safe_cast<double>(GetValue(s_invokeProgressProperty)); } void set(double value) { SetValue(s_invokeProgressProperty, value); } }
+
+    event GazePointerEvent^ GazePointerEvent;
+    event EventHandler<GazeInvokedRoutedEventArgs^>^ Invoked;
+
+    void RaiseInvoked(Object^ sender, GazeInvokedRoutedEventArgs^ args)
+    {
+        Invoked(sender, args);
+    }
+};
+
 public ref class GazePointer sealed
 {
 public:
-	GazePointer(UIElement^ root);
-	virtual ~GazePointer();
+    GazePointer(UIElement^ root);
+    virtual ~GazePointer();
 
-	property GazeIsInvokableDelegate^ IsInvokableImpl
-	{
-		GazeIsInvokableDelegate^ get()
-		{
-			return _isInvokableImpl;
-		}
-		void set(GazeIsInvokableDelegate^ value)
-		{
-			_isInvokableImpl = value;
-		}
-	}
+    property GazeIsInvokableDelegate^ IsInvokableImpl
+    {
+        GazeIsInvokableDelegate^ get()
+        {
+            return _isInvokableImpl;
+        }
+        void set(GazeIsInvokableDelegate^ value)
+        {
+            _isInvokableImpl = value;
+        }
+    }
 
-	property GazeInvokeTargetDelegate^ InvokeTargetImpl
-	{
-		GazeInvokeTargetDelegate^ get()
-		{
-			return _invokeTargetImpl;
-		}
-		void set(GazeInvokeTargetDelegate^ value)
-		{
-			_invokeTargetImpl = value;
-		}
-	}
+    property GazeInvokeTargetDelegate^ InvokeTargetImpl
+    {
+        GazeInvokeTargetDelegate^ get()
+        {
+            return _invokeTargetImpl;
+        }
+        void set(GazeInvokeTargetDelegate^ value)
+        {
+            _invokeTargetImpl = value;
+        }
+    }
 
-	void InvokeTarget(UIElement^ target);
-	void Reset();
-	void SetElementStateDelay(UIElement ^element, GazePointerState pointerState, int stateDelay);
-	int GetElementStateDelay(UIElement^ element, GazePointerState pointerState);
+    void InvokeTarget(UIElement^ target);
+    void Reset();
+    void SetElementStateDelay(UIElement ^element, GazePointerState pointerState, int stateDelay);
+    int GetElementStateDelay(UIElement^ element, GazePointerState pointerState);
 
-	// Provide a configurable delay for when the EyesOffDelay event is fired
-	// GOTCHA: this value requires that _eyesOffTimer is instantiated so that it
-	// can update the timer interval 
-	property int64 EyesOffDelay
-	{
-		int64 get() { return _eyesOffDelay; }
-		void set(int64 value)
-		{
-			_eyesOffDelay = value;
+    // Provide a configurable delay for when the EyesOffDelay event is fired
+    // GOTCHA: this value requires that _eyesOffTimer is instantiated so that it
+    // can update the timer interval 
+    property int64 EyesOffDelay
+    {
+        int64 get() { return _eyesOffDelay; }
+        void set(int64 value)
+        {
+            _eyesOffDelay = value;
 
-			// convert GAZE_IDLE_TIME units (microseconds) to 100-nanosecond units used
-			// by TimeSpan struct
-			_eyesOffTimer->Interval = TimeSpan { EyesOffDelay * 10 };
-		}
-	}
+            // convert GAZE_IDLE_TIME units (microseconds) to 100-nanosecond units used
+            // by TimeSpan struct
+            _eyesOffTimer->Interval = TimeSpan{ EyesOffDelay * 10 };
+        }
+    }
 
-	// Pluggable filter for eye tracking sample data. This defaults to being set to the
-	// NullFilter which performs no filtering of input samples.
-	property IGazeFilter^ Filter;
+    // Pluggable filter for eye tracking sample data. This defaults to being set to the
+    // NullFilter which performs no filtering of input samples.
+    property IGazeFilter^ Filter;
 
-	property bool IsCursorVisible
-	{
-		bool get() { return _gazeCursor->IsCursorVisible; }
-		void set(bool value) { _gazeCursor->IsCursorVisible = value; }
-	}
+    property bool IsCursorVisible
+    {
+        bool get() { return _gazeCursor->IsCursorVisible; }
+        void set(bool value) { _gazeCursor->IsCursorVisible = value; }
+    }
 
-	property int CursorRadius
-	{
-		int get() { return _gazeCursor->CursorRadius; }
-		void set(int value) { _gazeCursor->CursorRadius = value; }
-	}
+    property int CursorRadius
+    {
+        int get() { return _gazeCursor->CursorRadius; }
+        void set(int value) { _gazeCursor->CursorRadius = value; }
+    }
 
-	property bool InputEventForwardingEnabled;
-
-private:
-	void    InitializeHistogram();
-	void    InitializeGazeInputSource();
-
-	GazeTargetItem^     GetOrCreateGazeTargetItem(UIElement^ target);
-	GazeTargetItem^     GetGazeTargetItem(UIElement^ target);
-	UIElement^          GetHitTarget(Point gazePoint);
-	UIElement^          ResolveHitTarget(Point gazePoint, long long timestamp);
-
-	bool    IsInvokable(UIElement^ target);
-
-	void    CheckIfExiting(long long curTimestamp);
-	void    GotoState(UIElement^ control, GazePointerState state);
-	void	RaiseGazePointerEvent(UIElement^ target, GazePointerState state, int elapsedTime);
-
-	void OnGazeMoved(
-		GazeInputSourcePreview^ provider,
-		GazeMovedPreviewEventArgs^ args);
-
-	void ProcessGazePoint(GazePointPreview^ gazePointPreview);
-
-	void    OnEyesOff(Object ^sender, Object ^ea);
-
+    property bool InputEventForwardingEnabled;
 
 private:
-	UIElement^        _rootElement;
+    void    InitializeHistogram();
+    void    InitializeGazeInputSource();
 
-	int64            _eyesOffDelay;
+    GazeTargetItem^     GetOrCreateGazeTargetItem(UIElement^ target);
+    GazeTargetItem^     GetGazeTargetItem(UIElement^ target);
+    UIElement^          GetHitTarget(Point gazePoint);
+    UIElement^          ResolveHitTarget(Point gazePoint, long long timestamp);
 
-	GazeCursor^      _gazeCursor;
-	DispatcherTimer^ _eyesOffTimer;
+    bool    IsInvokable(UIElement^ target);
 
-	// _offScreenElement is a pseudo-element that represents the area outside
-	// the screen so we can track how long the user has been looking outside
-	// the screen and appropriately trigger the EyesOff event
-	Control^          _offScreenElement;
+    void    CheckIfExiting(long long curTimestamp);
+    void    GotoState(UIElement^ control, GazePointerState state);
+    void	RaiseGazePointerEvent(UIElement^ target, GazePointerState state, int elapsedTime);
 
-	// The value is the total time that FrameworkElement has been gazed at
-	Vector<GazeTargetItem^>^        _activeHitTargetTimes;
+    void OnGazeMoved(
+        GazeInputSourcePreview^ provider,
+        GazeMovedPreviewEventArgs^ args);
 
-	// A vector to track the history of observed gaze targets
-	Vector<GazeHistoryItem^>^       _gazeHistory;
-	int64                             _maxHistoryTime;
+    void ProcessGazePoint(GazePointPreview^ gazePointPreview);
 
-	// Used to determine if exit events need to be fired by adding GAZE_IDLE_TIME to the last 
-	// saved timestamp
-	long long                       _lastTimestamp;
+    void    OnEyesOff(Object ^sender, Object ^ea);
 
-	GazeInputSourcePreview^          _gazeInputSource;
-	EventRegistrationToken          _gazeMovedToken;
-	CoreDispatcher^                 _coreDispatcher;
-	GazeIsInvokableDelegate^        _isInvokableImpl;
-	GazeInvokeTargetDelegate^       _invokeTargetImpl;
+
+private:
+    UIElement ^ _rootElement;
+
+    int64            _eyesOffDelay;
+
+    GazeCursor^      _gazeCursor;
+    DispatcherTimer^ _eyesOffTimer;
+
+    // _offScreenElement is a pseudo-element that represents the area outside
+    // the screen so we can track how long the user has been looking outside
+    // the screen and appropriately trigger the EyesOff event
+    Control^          _offScreenElement;
+
+    // The value is the total time that FrameworkElement has been gazed at
+    Vector<GazeTargetItem^>^        _activeHitTargetTimes;
+
+    // A vector to track the history of observed gaze targets
+    Vector<GazeHistoryItem^>^       _gazeHistory;
+    int64                             _maxHistoryTime;
+
+    // Used to determine if exit events need to be fired by adding GAZE_IDLE_TIME to the last 
+    // saved timestamp
+    long long                       _lastTimestamp;
+
+    GazeInputSourcePreview^          _gazeInputSource;
+    EventRegistrationToken          _gazeMovedToken;
+    CoreDispatcher^                 _coreDispatcher;
+    GazeIsInvokableDelegate^        _isInvokableImpl;
+    GazeInvokeTargetDelegate^       _invokeTargetImpl;
 };
 
 END_NAMESPACE_GAZE_INPUT
