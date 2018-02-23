@@ -9,10 +9,6 @@
     gaze:GazeApi.IsGazeEnabled="True"
     mc:Ignorable="d">
 
-    <gaze:GazeApi.GazePage>
-        <gaze:GazePage GazePointerEvent="_gazePointer_OnGazePointerEvent"/>
-    </gaze:GazeApi.GazePage>
-
     <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

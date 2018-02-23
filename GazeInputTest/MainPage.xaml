@@ -10,7 +10,7 @@
     mc:Ignorable="d" Margin="0,40,0,-40">
     
     <gaze:GazeApi.GazePage>
-        <gaze:GazePage GazeInput="OnGazeInputEvent" GazePointerEvent="OnGazePointerEvent"/>
+        <gaze:GazePage GazePointerEvent="OnGazePointerEvent"/>
     </gaze:GazeApi.GazePage>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -25,7 +25,6 @@
         </Grid.ColumnDefinitions>
         <ToggleButton Grid.Row="0" Grid.Column="0" x:Name="ShowCursor" Checked="ShowCursor_Toggle" Unchecked="ShowCursor_Toggle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">Show Cursor</ToggleButton>
         <Button       Grid.Row="0" Grid.Column="1" x:Name="Dwell" Click="Dwell_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">Eyes Here</Button>
-        <TextBox      Grid.Row="1" Grid.Column="0" x:Name="Coordinates" />
         <Button Grid.Row="1" Grid.Column="1" x:Name="HowButton" Content="0: Idle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnLegacyInvoked">
             <gaze:GazeApi.GazeElement>
                 <gaze:GazeElement Invoked="OnGazeInvoked"/>

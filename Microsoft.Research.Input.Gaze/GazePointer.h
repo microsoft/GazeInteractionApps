@@ -24,7 +24,6 @@ public ref class GazeApi sealed
 public:
     static property DependencyProperty^ IsGazeEnabledProperty { DependencyProperty^ get(); }
     static property DependencyProperty^ IsGazeCursorVisibleProperty { DependencyProperty^ get(); }
-    static property DependencyProperty^ IsInputEventForwardingEnabledProperty { DependencyProperty^ get(); }
     static property DependencyProperty^ GazePageProperty { DependencyProperty^ get(); }
 
     static property DependencyProperty^ GazeElementProperty { DependencyProperty^ get(); }
@@ -37,7 +36,6 @@ public:
 
     static bool GetIsGazeEnabled(Page^ page);
     static bool GetIsGazeCursorVisible(Page^ page);
-    static bool GetIsInputEventForwardingEnabled(Page^ page);
     static GazePage^ GetGazePage(Page^ page);
     static GazeElement^ GetGazeElement(UIElement^ element);
     static TimeSpan GetFixation(UIElement^ element);
@@ -48,7 +46,6 @@ public:
 
     static void SetIsGazeEnabled(Page^ page, bool value);
     static void SetIsGazeCursorVisible(Page^ page, bool value);
-    static void SetIsInputEventForwardingEnabled(Page^ page, bool value);
     static void SetGazePage(Page^ page, GazePage^ value);
     static void SetGazeElement(UIElement^ element, GazeElement^ value);
     static void SetFixation(UIElement^ element, TimeSpan span);
@@ -127,7 +124,6 @@ public ref struct GazePointerEventArgs sealed
 
 ref class GazePointer;
 public delegate void GazePointerEvent(GazePointer^ sender, GazePointerEventArgs^ ea);
-public delegate void GazeInputEvent(Object^ sender, GazeEventArgs^ ea);
 
 public delegate bool GazeIsInvokableDelegate(UIElement^ target);
 public delegate void GazeInvokeTargetDelegate(UIElement^ target);
@@ -136,10 +132,8 @@ public ref class GazePage sealed
 {
 public:
     event GazePointerEvent^ GazePointerEvent;
-    event GazeInputEvent^ GazeInput;
 
     void RaiseGazePointerEvent(GazePointer^ sender, GazePointerEventArgs^ args) { GazePointerEvent(sender, args); }
-    void RaiseGazeInputEvent(GazePointer^ sender, GazeEventArgs^ args) { GazeInput(sender, args); }
 };
 
 public ref class GazeInvokedRoutedEventArgs : public RoutedEventArgs
@@ -237,8 +231,6 @@ public:
         void set(int value) { _gazeCursor->CursorRadius = value; }
     }
 
-    property bool InputEventForwardingEnabled;
-
 private:
     void    InitializeHistogram();
     void    InitializeGazeInputSource();
@@ -258,7 +250,7 @@ private:
         GazeInputSourcePreview^ provider,
         GazeMovedPreviewEventArgs^ args);
 
-    void ProcessGazePoint(GazePointPreview^ gazePointPreview);
+    void ProcessGazePoint(long long timestamp, Point position);
 
     void    OnEyesOff(Object ^sender, Object ^ea);
 

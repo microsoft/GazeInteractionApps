@@ -40,14 +40,6 @@ namespace MinAAC
             _textToSpeak = new StringBuilder();
         }
 
-        private void _gazePointer_OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
-        {
-            if (ea.PointerState == GazePointerState.Dwell)
-            {
-                sender.InvokeTarget(ea.HitTarget);
-            }
-        }
-
         private void OnSettings(object sender, RoutedEventArgs e)
         {
 

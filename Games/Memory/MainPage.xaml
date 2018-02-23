@@ -9,10 +9,6 @@
     gaze:GazeApi.IsGazeEnabled="True"
     mc:Ignorable="d">
 
-    <gaze:GazeApi.GazePage>
-        <gaze:GazePage GazePointerEvent="OnGazePointerEvent"/>
-    </gaze:GazeApi.GazePage>
-    
     <Page.Resources>
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Stretch" />

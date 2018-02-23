@@ -1,19 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Microsoft.Research.Input.Gaze;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -58,14 +47,6 @@ namespace Memory
             _firstButton = null;
             _secondButton = null;
             _flashTimer.Stop();
-        }
-
-        private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
-        {
-            if (ea.PointerState == GazePointerState.Dwell)
-            {
-                sender.InvokeTarget(ea.HitTarget);
-            }
         }
 
         List<Button> ShuffleList(List<Button> list)

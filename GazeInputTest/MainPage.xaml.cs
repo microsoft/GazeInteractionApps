@@ -36,11 +36,6 @@ namespace GazeInputTest
             Dwell.Content = ea.PointerState.ToString();
         }
 
-        private void OnGazeInputEvent(object sender, GazeEventArgs ea)
-        {
-            Coordinates.Text = ea.Location.ToString();
-        }
-
         private void Dwell_Click(object sender, RoutedEventArgs e)
         {
             Dwell.Content = "Clicked";
