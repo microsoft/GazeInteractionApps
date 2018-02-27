@@ -19,6 +19,9 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Button x:Name="Button1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Button1_Click">Button</Button>
                 <TextBlock x:Name="TextBlock_Button1" Grid.Row="0" Grid.Column="1" />
@@ -26,6 +29,14 @@
                 <TextBlock x:Name="TextBlock_ToggleButton1" Grid.Row="1" Grid.Column="1" />
                 <ToggleSwitch x:Name="ToggleSwitch1" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">Toggle Switch</ToggleSwitch>
                 <TextBox x:Name="TextBox1" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="Sample Text - Change Me!" />
+                <CheckBox x:Name="CheckBox1" Grid.Row="4" Grid.Column="0" Content="Check Me!"/>
+                <FlipView x:Name="flipView1" Grid.Row="5" Grid.Column="0">
+                    <TextBlock Text="Item 1" />
+                    <TextBlock Text="Item 2" />
+                    <TextBlock Text="Item 3" />
+                    <TextBlock Text="Item 4" />
+                    <TextBlock Text="Item 5" />
+                </FlipView>
             </Grid>
         </PivotItem>
         <PivotItem Header="Non-Working Controls">
@@ -55,6 +66,7 @@
                     </PivotItem>
                 </Pivot>
                 <TextBlock Grid.Row="2" Grid.Column="1" Text="Bug: Need to focus on the pivot item to trigger click, not the Pivot getting focus" />
+                
             </Grid>
         </PivotItem>
     </Pivot>
