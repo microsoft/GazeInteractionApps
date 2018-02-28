@@ -186,7 +186,7 @@ namespace Microsoft.Research.Input.Gaze
                 }
             } while (delay == GazeApi.s_nonTimeSpan);
 
-            return (int)delay.TotalMilliseconds;
+            return (int)(1000.0 * delay.TotalMilliseconds);
         }
 
         // Provide a configurable delay for when the EyesOffDelay event is fired
@@ -628,11 +628,11 @@ namespace Microsoft.Research.Input.Gaze
         {
             switch (state)
             {
-                case GazePointerState.Fixation: return TimeSpan.FromMilliseconds(DEFAULT_FIXATION_DELAY);
-                case GazePointerState.Dwell: return TimeSpan.FromMilliseconds(DEFAULT_DWELL_DELAY);
-                case GazePointerState.DwellRepeat: return TimeSpan.FromMilliseconds(DEFAULT_REPEAT_DELAY);
-                case GazePointerState.Enter: return TimeSpan.FromMilliseconds(DEFAULT_ENTER_EXIT_DELAY);
-                case GazePointerState.Exit: return TimeSpan.FromMilliseconds(DEFAULT_ENTER_EXIT_DELAY);
+                case GazePointerState.Fixation: return TimeSpan.FromMilliseconds(DEFAULT_FIXATION_DELAY / 1000.0);
+                case GazePointerState.Dwell: return TimeSpan.FromMilliseconds(DEFAULT_DWELL_DELAY / 1000.0);
+                case GazePointerState.DwellRepeat: return TimeSpan.FromMilliseconds(DEFAULT_REPEAT_DELAY / 1000.0);
+                case GazePointerState.Enter: return TimeSpan.FromMilliseconds(DEFAULT_ENTER_EXIT_DELAY / 1000.0);
+                case GazePointerState.Exit: return TimeSpan.FromMilliseconds(DEFAULT_ENTER_EXIT_DELAY / 1000.0);
                 default: return GazeApi.s_nonTimeSpan;
             }
         }
