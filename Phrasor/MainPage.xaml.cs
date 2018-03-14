@@ -23,6 +23,18 @@ namespace Phrasor
         public List<PhraseNode> Children;
     }
 
+    public sealed class PhraseNodeComparer : IComparer<PhraseNode>
+    {
+        public int Compare(PhraseNode a, PhraseNode b)
+        {
+            if ((a.IsCategory) && (!b.IsCategory))
+                return -1;
+            if ((!a.IsCategory) && (b.IsCategory))
+                return 1;
+            return a.Caption.CompareTo(b.Caption); 
+        }
+    }
+
     public enum PageMode
     {
         Run,
@@ -47,6 +59,7 @@ namespace Phrasor
         const string PhraseConfigFile = "PhraseData.phr";
         PhraseNode _rootNode;
         PhraseNode _curNode;
+        PhraseNodeComparer _phraseNodeComparer;
         SolidColorBrush _backgroundBrush;
         SolidColorBrush _foregroundBrush;
         SpeechSynthesizer _speechSynthesizer;
@@ -69,6 +82,7 @@ namespace Phrasor
             _mediaElement = new MediaElement();
             _backgroundBrush = new SolidColorBrush(Colors.Gray);
             _foregroundBrush = new SolidColorBrush(Colors.Blue);
+            _phraseNodeComparer = new PhraseNodeComparer();
         }
 
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
@@ -173,6 +187,7 @@ namespace Phrasor
                 var childNode = LoadPhraseNode(item, phraseNode);
                 phraseNode.Children.Add(childNode);
             }
+            phraseNode.Children.Sort(_phraseNodeComparer);
             return phraseNode;
         }
 
@@ -194,10 +209,10 @@ namespace Phrasor
             await FileIO.WriteTextAsync(file, jsonObject.Stringify());
         }
 
-        private Button AddButtonToPhraseGrid(Object content, Object tag, int row, int col, bool navButtons)
+        private Button AddButtonToPhraseGrid(Object content, Object tag, int row, int col, bool isCategory, bool navButtons)
         {
             var button = new Button();
-            button.Content = content;
+            button.Content = isCategory ? content.ToString().ToUpper() : content;
             button.Background = _backgroundBrush;
             button.Foreground = _foregroundBrush;
             button.VerticalAlignment = VerticalAlignment.Stretch;
@@ -267,7 +282,7 @@ namespace Phrasor
             row = col = 0;
             if (addPrevPageButton)
             {
-                AddButtonToPhraseGrid("\uE72B", "\uE72B", row, col++, true);
+                AddButtonToPhraseGrid("\uE72B", "\uE72B", row, col++, false, true);
             }
 
             for (row = 0; row < rows; row++)
@@ -275,9 +290,10 @@ namespace Phrasor
                 for (; col < cols; col++)
                 {
                     var caption = phraseNode.Children[curButtonIndex].Caption;
+                    var category = phraseNode.Children[curButtonIndex].IsCategory;
                     var tag = phraseNode.Children[curButtonIndex];
 
-                    AddButtonToPhraseGrid(caption, tag, row, col, false);
+                    AddButtonToPhraseGrid(caption, tag, row, col, category, false);
 
                     curButtonIndex++;
                     if (curButtonIndex >= numButtons)
@@ -290,7 +306,7 @@ namespace Phrasor
                     {
                         if (addNextPageButton)
                         {
-                            AddButtonToPhraseGrid("\uE72A", "\uE72A", row, col + 1, true);
+                            AddButtonToPhraseGrid("\uE72A", "\uE72A", row, col + 1, false, true);
                         }
                         return;
                     }
