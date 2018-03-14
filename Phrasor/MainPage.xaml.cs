@@ -167,7 +167,7 @@ namespace Phrasor
             var jsonObj = jsonValue.GetObject();
             var caption = jsonObj.GetNamedString("caption");
             var items = jsonObj.ContainsKey("items") ? jsonObj.GetNamedArray("items") : null;
-            var isCategory = jsonObj.ContainsKey("isCategory") ? jsonObj.GetNamedBoolean("isCategory") : (items.Count > 0);
+            var isCategory = jsonObj.ContainsKey("isCategory") ? jsonObj.GetNamedBoolean("isCategory") : (items != null) && (items.Count > 0);
 
             var phraseNode = new PhraseNode
             {
