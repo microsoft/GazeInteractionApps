@@ -15,6 +15,8 @@
                 <Setter Property="FontSize" Value="100" />
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
                 <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="MaxHeight" Value="400" />
+                <Setter Property="MaxWidth" Value="400" />
                 <Setter Property="Background">
                     <Setter.Value>
                         <SolidColorBrush Color="#1A1A1A" />
@@ -34,6 +36,7 @@
                 <Setter Property="VerticalAlignment" Value="Stretch" />
                 <Setter Property="MaxHeight" Value="400" />
                 <Setter Property="MaxWidth" Value="400" />
+                <Setter Property="Margin" Value="20" />
                 <Setter Property="Background">
                     <Setter.Value>
                         <SolidColorBrush Color="#1A1A1A" />
@@ -66,6 +69,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button Grid.Row="0" Grid.Column="0" Content="&#xE80F;" Style="{StaticResource ToolbarButton}" Click="OnHomeClick" />
             <Button Grid.Row="0" Grid.Column="1" Content="&#xE74A;" Style="{StaticResource ToolbarButton}" Click="OnUpClick" />
@@ -73,7 +77,8 @@
             <Button Grid.Row="0" Grid.Column="3" Content="&#xE8F4;" Style="{StaticResource ToolbarButton}" Click="OnAddCategoryClick" />
             <Button Grid.Row="0" Grid.Column="4" Content="&#xE70F;" Style="{StaticResource ToolbarButton}" Click="OnEditClick" />
             <Button Grid.Row="0" Grid.Column="5" Content="&#xE74D;" Style="{StaticResource ToolbarButton}" Click="OnDeleteClick" />
-            <Button Grid.Row="0" Grid.Column="6" Content="&#xE711;" Style="{StaticResource ToolbarButton}" Click="OnExitClick" />
+            <Button Grid.Row="0" Grid.Column="6" Content="&#xE769;" Style="{StaticResource ToolbarButton}" Click="OnPauseClick" />
+            <Button Grid.Row="0" Grid.Column="7" Content="&#xE711;" Style="{StaticResource ToolbarButton}" Click="OnExitClick" />
         </Grid>
         <Grid x:Name="PhraseGrid" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 

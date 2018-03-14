@@ -9,6 +9,7 @@ using Windows.Storage;
 using Windows.Data.Json;
 using Windows.UI;
 using Microsoft.Research.Input.Gaze;
+using Windows.Graphics.Display;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -51,7 +52,10 @@ namespace Phrasor
         SpeechSynthesizer _speechSynthesizer;
         MediaElement _mediaElement;
         PageMode _pageMode;
+        bool _interactionPaused;
         GazePointer _gazePointer;
+        KeyboardPageNavigationParams _navParams;
+        int _curPageIndex;
 
         public MainPage()
         {
@@ -69,6 +73,15 @@ namespace Phrasor
 
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
         {
+            if (ea.HitTarget == null)
+            {
+                return;
+            }
+            var parent = VisualTreeHelper.GetParent(ea.HitTarget);
+            if ((_interactionPaused) && (parent == PhraseGrid))
+            {
+                return;
+            }
             if (ea.PointerState == GazePointerState.Dwell)
             {
                 _gazePointer.InvokeTarget(ea.HitTarget);
@@ -89,6 +102,21 @@ namespace Phrasor
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             CopyConfigFileMaybe();
+
+            if (_navParams != null)
+            {
+                _rootNode = _navParams.RootNode;
+                if (_navParams.NeedsSaving)
+                {
+                    SaveConfigFile(PhraseConfigFile);
+                }
+                GotoNode(_navParams.CurrentNode);
+                _navParams = null;
+            }
+            else
+            {
+                LoadConfigFile(PhraseConfigFile);
+            }
         }
 
 
@@ -96,19 +124,7 @@ namespace Phrasor
         {
             base.OnNavigatedTo(e);
             var navParams = e.Parameter as KeyboardPageNavigationParams;
-            if (navParams == null)
-            {
-                LoadConfigFile(PhraseConfigFile);
-                return;
-            }
-
-            _rootNode = navParams.RootNode;
-
-            if (navParams.NeedsSaving)
-            {
-                SaveConfigFile(PhraseConfigFile);
-            }
-            GotoNode(navParams.CurrentNode);
+            _navParams = navParams;
         }
 
         private JsonObject SavePhraseNode(PhraseNode node)
@@ -178,16 +194,27 @@ namespace Phrasor
             await FileIO.WriteTextAsync(file, jsonObject.Stringify());
         }
 
-        private void GotoNode(PhraseNode phraseNode)
+        private Button AddButtonToPhraseGrid(Object content, Object tag, int row, int col, bool navButtons)
         {
-            int rows;
-            int cols;
+            var button = new Button();
+            button.Content = content;
+            button.Background = _backgroundBrush;
+            button.Foreground = _foregroundBrush;
+            button.VerticalAlignment = VerticalAlignment.Stretch;
+            button.HorizontalAlignment = HorizontalAlignment.Stretch;
+            button.Click += OnGridButtonClick;
+            button.Tag = tag;
+            button.Style = navButtons ? Resources["ToolbarButton"] as Style : Resources["PhraseButton"] as Style;
 
-            _curNode = phraseNode;
+            Grid.SetColumn(button, col);
+            Grid.SetRow(button, row);
+            PhraseGrid.Children.Add(button);
+            return button;
+        }
 
-            int size = phraseNode.Children.Count;
-            GetNumRowColumns(size, out rows, out cols);
-
+        private void RecreateGrid(int rows, int cols)
+        {
+            // clear the current grid of all buttons
             PhraseGrid.Children.Clear();
             PhraseGrid.RowDefinitions.Clear();
             PhraseGrid.ColumnDefinitions.Clear();
@@ -201,46 +228,107 @@ namespace Phrasor
                 PhraseGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            int curNode = 0;
-            for (int row = 0; row < rows; row++)
+        }
+
+        private void GotoNode(PhraseNode phraseNode)
+        {
+            int rows;
+            int cols;
+
+            _curNode = phraseNode;
+
+            int numButtons = phraseNode.Children.Count;
+            int buttonsPerPage = GetNumRowColumns(numButtons, out rows, out cols);
+
+            RecreateGrid(rows, cols);
+
+            int numPages = 1;
+            bool addPrevPageButton = false;
+            bool addNextPageButton = false;
+            int curButtonIndex = 0;
+            if (numButtons > buttonsPerPage)
             {
-                for (int col = 0; col < cols; col++)
+                // all pages have a prev and next button, except the first and last
+                // pages, which only have either a next and prev button respectively
+                numPages += (numButtons - 3) / (buttonsPerPage - 2);
+
+                addPrevPageButton = _curPageIndex > 0;
+                addNextPageButton = _curPageIndex != numPages - 1;
+
+                curButtonIndex = _curPageIndex * (buttonsPerPage - 1);
+
+                // if only the prev or next button are going to be added, remove one button, else remove two buttons
+                buttonsPerPage = (addPrevPageButton ^ addNextPageButton) ? buttonsPerPage - 1 : buttonsPerPage - 2;
+            }
+
+            int row;
+            int col;
+
+            row = col = 0;
+            if (addPrevPageButton)
+            {
+                AddButtonToPhraseGrid("\uE72B", "\uE72B", row, col++, true);
+            }
+
+            for (row = 0; row < rows; row++)
+            {
+                for (; col < cols; col++)
                 {
-                    var button = new Button();
-                    button.Content = phraseNode.Children[curNode].Caption;
-                    button.Background = _backgroundBrush;
-                    button.Foreground = _foregroundBrush;
-                    button.VerticalAlignment = VerticalAlignment.Stretch;
-                    button.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    button.Click += OnGridButtonClick;
-                    button.Tag = phraseNode.Children[curNode];
-                    button.Style = Resources["PhraseButton"] as Style;
+                    var caption = phraseNode.Children[curButtonIndex].Caption;
+                    var tag = phraseNode.Children[curButtonIndex];
 
-                    Grid.SetColumn(button, col);
-                    Grid.SetRow(button, row);
-                    PhraseGrid.Children.Add(button);
+                    AddButtonToPhraseGrid(caption, tag, row, col, false);
 
-                    curNode++;
-                    if (curNode >= size)
+                    curButtonIndex++;
+                    if (curButtonIndex >= numButtons)
                     {
                         return;
                     }
+
+                    buttonsPerPage--;
+                    if (buttonsPerPage == 0)
+                    {
+                        if (addNextPageButton)
+                        {
+                            AddButtonToPhraseGrid("\uE72A", "\uE72A", row, col + 1, true);
+                        }
+                        return;
+                    }
                 }
+                col = 0;
             }
         }
 
-        private void GetNumRowColumns(int size, out int rows, out int cols)
+        private int GetNumRowColumns(int numButtons, out int rows, out int cols)
         {
-            rows = (int)Math.Sqrt(size);
-            cols = rows;
-            while (rows * cols < size)
+            // TODO: Read these from settings
+            var maxButtonsPerRow = 4;
+            var maxButtonsPerCol = 4;
+
+            var maxButtons = maxButtonsPerRow * maxButtonsPerCol;
+
+            if (numButtons < (int)maxButtons)
             {
-                cols++;
+                rows = (int)Math.Sqrt(numButtons);
+                cols = rows;
+                while (rows * cols < numButtons)
+                {
+                    cols++;
+                }
             }
+            else
+            {
+                numButtons = (int)maxButtons;
+                rows = (int)maxButtonsPerRow;
+                cols = (int)maxButtonsPerCol;
+            }
+
+            return numButtons;
         }
 
         private void OnHomeClick(object sender, RoutedEventArgs e)
         {
+            _curPageIndex = 0;
             GotoNode(_rootNode);
         }
 
@@ -248,6 +336,7 @@ namespace Phrasor
         {
             if (_curNode.Parent != null)
             {
+                _curPageIndex = 0; // TODO: Save current page index
                 GotoNode(_curNode.Parent);
             }
         }
@@ -289,7 +378,20 @@ namespace Phrasor
         {
             var button = sender as Button;
             var phraseNode = button.Tag as PhraseNode;
-            var caption = phraseNode.Caption;
+            var caption = phraseNode != null ? phraseNode.Caption : button.Content.ToString();
+
+            if (caption == "\uE72B")
+            {
+                _curPageIndex--;
+                GotoNode(_curNode);
+                return;
+            }
+            else if (caption == "\uE72A")
+            {
+                _curPageIndex++;
+                GotoNode(_curNode);
+                return;
+            }
 
             switch (_pageMode)
             {
@@ -302,6 +404,7 @@ namespace Phrasor
                     _curNode.Children.Remove(phraseNode);
                     PhraseGrid.Children.Remove(button);
                     _pageMode = PageMode.Run;
+                    GotoNode(_curNode);
                     break;
 
                 case PageMode.Edit:
@@ -331,6 +434,11 @@ namespace Phrasor
                     break;
             }
 
+        }
+
+        private void OnPauseClick(object sender, RoutedEventArgs e)
+        {
+            _interactionPaused = !_interactionPaused;
         }
 
         private void OnExitClick(object sender, RoutedEventArgs e)
