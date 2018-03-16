@@ -19,6 +19,9 @@ using namespace Windows::UI::Xaml::Hosting;
 
 BEGIN_NAMESPACE_GAZE_INPUT
 
+static DependencyProperty^ GazeTargetItemProperty = DependencyProperty::RegisterAttached("GazeTargetItem", GazeTargetItem::typeid, UIElement::typeid, ref new PropertyMetadata(nullptr));
+static DependencyProperty^ GazeInvokeParamsProperty = DependencyProperty::RegisterAttached("GazeInvokeParams", GazeInvokeParams::typeid, UIElement::typeid, ref new PropertyMetadata(nullptr));
+
 GazePointer::GazePointer(UIElement^ root)
 {
     _rootElement = root;
@@ -52,13 +55,8 @@ GazePointer::~GazePointer()
 void GazePointer::InitializeHistogram()
 {
     _defaultInvokeParams = ref new GazeInvokeParams();
-    _defaultInvokeParams->Insert(GazePointerState::Fixation, DEFAULT_FIXATION_DELAY);
-    _defaultInvokeParams->Insert(GazePointerState::Dwell, DEFAULT_DWELL_DELAY);
-    _defaultInvokeParams->Insert(GazePointerState::DwellRepeat, DEFAULT_REPEAT_DELAY);
-    _defaultInvokeParams->Insert(GazePointerState::Enter, DEFAULT_ENTER_EXIT_DELAY);
-    _defaultInvokeParams->Insert(GazePointerState::Exit, DEFAULT_ENTER_EXIT_DELAY);
 
-    _hitTargetTimes = ref new Map<int, GazeTargetItem^>();
+	_activeHitTargetTimes = ref new Vector<GazeTargetItem^>();
 
     _offScreenElement = ref new UserControl();
     SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, DEFAULT_FIXATION_DELAY);
@@ -80,30 +78,13 @@ void GazePointer::InitializeGazeInputSource()
 
 void GazePointer::SetElementStateDelay(UIElement ^element, GazePointerState relevantState, int stateDelay)
 {
-    int hashCode = element->GetHashCode();
-
     // do we need to create a new invoke params map for the user-specified element?
-    if (_elementInvokeParams.find(hashCode) == _elementInvokeParams.end())
-    {
-        // copy all existing default delay params from existe _offscreenElementInvokeParams.
-        // this copy is done because it makes it easier for the rest of the code to use. element invoke
-        // params could be refactored to avoid this copying of default values but it doesn't seem worth 
-        // it considering all the places and situations that invoke params are used
-        auto newInvokeParams = ref new GazeInvokeParams();
-        for each (auto params in _defaultInvokeParams)
-        {
-            newInvokeParams->Insert(params->Key, params->Value);
-        }
-
-        _elementInvokeParams[hashCode] = newInvokeParams;
-    }
-
-    auto invokeParams = _elementInvokeParams[hashCode];
-    invokeParams->Insert(relevantState, stateDelay);
+	auto invokeParams = GetWriteGazeInvokeParams(element);
+    invokeParams->Set(relevantState, stateDelay);
 
     // fix up _maxHistoryTime in case the new param exceeds the history length we are currently tracking
-    int dwellTime = invokeParams->Lookup(GazePointerState::Dwell);
-    int repeatTime = invokeParams->Lookup(GazePointerState::DwellRepeat);
+    int dwellTime = invokeParams->Dwell;
+    int repeatTime = invokeParams->DwellRepeat;
     if (repeatTime != INT_MAX)
     {
         _maxHistoryTime = max(2 * repeatTime, _maxHistoryTime);
@@ -116,37 +97,39 @@ void GazePointer::SetElementStateDelay(UIElement ^element, GazePointerState rele
 
 int GazePointer::GetElementStateDelay(UIElement ^element, GazePointerState pointerState)
 {
-    int hashCode = element->GetHashCode();
-
-    // do we need to create a new invoke params map for the user-specified element?
-    auto iterator = _elementInvokeParams.find(hashCode);
-    if (iterator == _elementInvokeParams.end())
-    {
-        return _defaultInvokeParams->Lookup(pointerState);
-    }
-    
-    return iterator->second->Lookup(pointerState);;
+	auto invokeParams = GetReadGazeInvokeParams(element);
+	return invokeParams->Get(pointerState);
 }
 
 void GazePointer::Reset()
 {
-    _hitTargetTimes->Clear();
+	_activeHitTargetTimes->Clear();
     _gazeHistory->Clear();
 }
 
-GazeInvokeParams^ GazePointer::GetGazeInvokeParams(UIElement^ target)
+GazeInvokeParams^ GazePointer::GetReadGazeInvokeParams(UIElement^ target)
 {
-    auto hashCode = target->GetHashCode();
+	auto params = safe_cast<GazeInvokeParams^>(target->GetValue(GazeInvokeParamsProperty));
 
-    // return invoke params for _offscreenElement if target IS _offscreenElement or if no invoke params
-    // exist for the target requested
-    if (target == _rootElement || _elementInvokeParams.find(hashCode) == _elementInvokeParams.end())
-    {
-        return _defaultInvokeParams;
-    }
+	if (params == nullptr)
+	{
+		params = _defaultInvokeParams;
+	}
 
-    // TODO: adjust history length if the click params indicate something else
-    return _elementInvokeParams[hashCode];
+	return params;
+}
+
+GazeInvokeParams^ GazePointer::GetWriteGazeInvokeParams(UIElement^ target)
+{
+	auto params = safe_cast<GazeInvokeParams^>(target->GetValue(GazeInvokeParamsProperty));
+
+	if (params == nullptr)
+	{
+		params = ref new GazeInvokeParams(_defaultInvokeParams);
+		target->SetValue(GazeInvokeParamsProperty, params);
+	}
+
+	return params;
 }
 
 bool GazePointer::IsInvokable(UIElement^ element)
@@ -205,6 +188,39 @@ UIElement^ GazePointer::GetHitTarget(Point gazePoint)
     return _rootElement;
 }
 
+GazeTargetItem^ GazePointer::GetOrCreateGazeTargetItem(UIElement^ element)
+{
+	auto target = safe_cast<GazeTargetItem^>(element->GetValue(GazeTargetItemProperty));
+	if (target == nullptr)
+	{
+		target = ref new GazeTargetItem(element);
+		element->SetValue(GazeTargetItemProperty, target);
+	}
+
+	unsigned int index;
+	if (!_activeHitTargetTimes->IndexOf(target, &index))
+	{
+		_activeHitTargetTimes->Append(target);
+
+		auto invokeParams = GetReadGazeInvokeParams(element);
+
+		// calculate the time that the first DwellRepeat needs to be fired after. this will be updated every time a DwellRepeat is 
+		// fired to keep track of when the next one is to be fired after that.
+		int nextStateTime = invokeParams->Enter;
+		int nextRepeatTime = invokeParams->DwellRepeat;
+
+		target->Reset(nextStateTime, nextRepeatTime);
+	}
+
+	return target;
+}
+
+GazeTargetItem^ GazePointer::GetGazeTargetItem(UIElement^ element)
+{
+	auto target = safe_cast<GazeTargetItem^>(element->GetValue(GazeTargetItemProperty));
+	return target;
+}
+
 UIElement^ GazePointer::ResolveHitTarget(Point gazePoint, long long timestamp)
 {
     // create GazeHistoryItem to deal with this sample
@@ -212,22 +228,12 @@ UIElement^ GazePointer::ResolveHitTarget(Point gazePoint, long long timestamp)
     historyItem->HitTarget = GetHitTarget(gazePoint);
     historyItem->Timestamp = timestamp;
     historyItem->Duration = 0;
-    int hashCode = historyItem->HitTarget->GetHashCode();
     assert(historyItem->HitTarget != nullptr);
 
     // create new GazeTargetItem with a (default) total elapsed time of zero if one does not exist already.
     // this ensures that there will always be an entry for target elements in the code below.
-    if (!_hitTargetTimes->HasKey(hashCode))
-    {
-        auto invokeParams = GetGazeInvokeParams(historyItem->HitTarget);
-        // calculate the time that the first DwellRepeat needs to be fired after. this will be updated every time a DwellRepeat is 
-        // fired to keep track of when the next one is to be fired after that.
-        int nextStateTime = invokeParams->Lookup(GazePointerState::Enter);
-        int nextRepeatTime = invokeParams->Lookup(GazePointerState::DwellRepeat);
-
-        _hitTargetTimes->Insert(hashCode, ref new GazeTargetItem(historyItem->HitTarget, timestamp, nextStateTime, nextRepeatTime));
-    }
-
+	auto target = GetOrCreateGazeTargetItem(historyItem->HitTarget);
+	target->LastTimestamp = timestamp;
 
     // just append to the list and return if the list is empty
     if (_gazeHistory->Size == 0)
@@ -245,9 +251,7 @@ UIElement^ GazePointer::ResolveHitTarget(Point gazePoint, long long timestamp)
     _gazeHistory->Append(historyItem);
 
     // update the time this particular hit target has accumulated
-    auto target = _hitTargetTimes->Lookup(hashCode);
     target->ElapsedTime += historyItem->Duration;
-    target->LastTimestamp = timestamp;
 
 
     // drop the oldest samples from the list until we have samples only 
@@ -259,17 +263,16 @@ UIElement^ GazePointer::ResolveHitTarget(Point gazePoint, long long timestamp)
         auto evOldest = _gazeHistory->GetAt(0);
         _gazeHistory->RemoveAt(0);
 
-        int hashOldest = evOldest->HitTarget->GetHashCode();
-        assert(_hitTargetTimes->Lookup(hashOldest)->ElapsedTime - evOldest->Duration >= 0);
+        assert(GetGazeTargetItem(evOldest->HitTarget)->ElapsedTime - evOldest->Duration >= 0);
 
         // subtract the duration obtained from the oldest sample in _gazeHistory
-        auto targetItem = _hitTargetTimes->Lookup(hashOldest);
+        auto targetItem = GetGazeTargetItem(evOldest->HitTarget);
         targetItem->ElapsedTime -= evOldest->Duration;
 
-        auto invokeParams = GetGazeInvokeParams(targetItem->TargetElement);
+        auto invokeParams = GetReadGazeInvokeParams(targetItem->TargetElement);
 
         if ((targetItem->ElementState == GazePointerState::Dwell) &&
-            (invokeParams->Lookup(GazePointerState::DwellRepeat) != MAXINT))
+            (invokeParams->DwellRepeat != MAXINT))
         {
             targetItem->NextStateTime -= evOldest->Duration;
         }
@@ -384,25 +387,33 @@ void GazePointer::OnEyesOff(Object ^sender, Object ^ea)
 
 void GazePointer::CheckIfExiting(long long curTimestamp)
 {
-    for each (auto target in _hitTargetTimes)
-    {
-        auto targetItem = target->Value;
-        auto invokeParams = GetGazeInvokeParams(targetItem->TargetElement);
+	for (unsigned int index = 0;index < _activeHitTargetTimes->Size; index++)
+	{
+		auto targetItem = _activeHitTargetTimes->GetAt(index);
+		auto targetElement = targetItem->TargetElement;
+        auto invokeParams = GetReadGazeInvokeParams(targetElement);
 
         long long idleDuration = curTimestamp - targetItem->LastTimestamp;
-        if (targetItem->ElementState != GazePointerState::PreEnter && idleDuration > invokeParams->Lookup(GazePointerState::Exit))
+        if (targetItem->ElementState != GazePointerState::PreEnter && idleDuration > invokeParams->Exit)
         {
-			GotoState(targetItem->TargetElement, GazePointerState::Exit);
-            RaiseGazePointerEvent(targetItem->TargetElement, GazePointerState::Exit, targetItem->ElapsedTime);
+			GotoState(targetElement, GazePointerState::Exit);
+            RaiseGazePointerEvent(targetElement, GazePointerState::Exit, targetItem->ElapsedTime);
 
-            int targetHash = target->Key;
-            _hitTargetTimes->Remove(targetHash);
+			unsigned int index;
+			if (_activeHitTargetTimes->IndexOf(targetItem, &index))
+			{
+				_activeHitTargetTimes->RemoveAt(index);
+			}
+			else
+			{
+				assert(false);
+			}
 
             // remove all history samples referring to deleted hit target
             for (unsigned i = 0; i < _gazeHistory->Size; )
             {
                 auto hitTarget = _gazeHistory->GetAt(i)->HitTarget;
-                if (hitTarget->GetHashCode() == targetHash)
+                if (hitTarget == targetElement)
                 {
                     _gazeHistory->RemoveAt(i);
                 }
@@ -475,8 +486,8 @@ void GazePointer::ProcessGazePoint(GazePointPreview^ gazePoint)
     // this ensures that all exit events are fired before enter event
     CheckIfExiting(fa->Timestamp);
 
-    auto targetItem = _hitTargetTimes->Lookup(hitTarget->GetHashCode());
-    auto invokeParams = GetGazeInvokeParams(targetItem->TargetElement);
+    auto targetItem = GetGazeTargetItem(hitTarget);
+    auto invokeParams = GetReadGazeInvokeParams(targetItem->TargetElement);
 
     GazePointerState nextState = static_cast<GazePointerState>(static_cast<int>(targetItem->ElementState) + 1);
 
@@ -490,12 +501,12 @@ void GazePointer::ProcessGazePoint(GazePointPreview^ gazePoint)
         {
             targetItem->ElementState = nextState;
             nextState = static_cast<GazePointerState>(static_cast<int>(nextState) + 1);     // nextState++
-            targetItem->NextStateTime = invokeParams->Lookup(nextState);
+            targetItem->NextStateTime = invokeParams->Get(nextState);
         }
         else
         {
             // move the NextStateTime by one dwell period, while continuing to stay in Dwell state
-            targetItem->NextStateTime += invokeParams->Lookup(GazePointerState::Dwell) - invokeParams->Lookup(GazePointerState::Fixation);
+            targetItem->NextStateTime += invokeParams->Dwell - invokeParams->Fixation;
         }
 
         GotoState(targetItem->TargetElement, targetItem->ElementState);
