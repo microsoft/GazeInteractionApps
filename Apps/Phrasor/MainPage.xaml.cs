@@ -1,4 +1,7 @@
-﻿using System;
+﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+//See LICENSE in the project root for license information.
+
+using System;
 using System.Collections.Generic;
 using Windows.Media.SpeechSynthesis;
 using Windows.UI.Xaml;
@@ -113,7 +116,7 @@ namespace Phrasor
             }
         }
 
-        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             CopyConfigFileMaybe();
 
