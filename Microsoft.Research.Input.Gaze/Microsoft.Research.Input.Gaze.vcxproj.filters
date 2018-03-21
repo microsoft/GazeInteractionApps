@@ -28,6 +28,9 @@
     <ClCompile Include="pch.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="GazeSettings.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -48,5 +51,11 @@
     <ClInclude Include="OneEuroFilter.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="GazeSettings.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

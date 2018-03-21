@@ -123,7 +123,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>28204</DisableSpecificWarnings>      
+      <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
     </ClCompile>
     <Link>
@@ -139,7 +139,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>28204</DisableSpecificWarnings>      
+      <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
     </ClCompile>
     <Link>
@@ -210,6 +210,7 @@
   <ItemGroup>
     <ClInclude Include="GazeCursor.h" />
     <ClInclude Include="GazePointer.h" />
+    <ClInclude Include="GazeSettings.h" />
     <ClInclude Include="GazeStats.h" />
     <ClInclude Include="IGazeFilter.h" />
     <ClInclude Include="OneEuroFilter.h" />
@@ -218,6 +219,7 @@
   <ItemGroup>
     <ClCompile Include="GazeCursor.cpp" />
     <ClCompile Include="GazePointer.cpp" />
+    <ClCompile Include="GazeSettings.cpp" />
     <ClCompile Include="GazeStats.cpp" />
     <ClCompile Include="OneEuroFilter.cpp" />
     <ClCompile Include="pch.cpp">

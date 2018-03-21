@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap mp">
+  <Identity Name="Microsoft.EyeControlToolkitSettings" Publisher="CN=Microsoft Corporation" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="2a00001a-9739-489c-92c0-c260eeb46c55" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>Eye Control Toolkit Settings</DisplayName>
+    <PublisherDisplayName>Microsoft Corporations</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application 
+      Id="EctkSettings.App"
+      Executable="$targetnametoken$.exe" 
+      EntryPoint="EyeControlToolkitSettings.App">
+      <uap:VisualElements DisplayName="Eye Control Toolkit Settings" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="An application used to configure, store and provide common settings for applications which use the Eye Control Toolkit" BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.appService">
+          <uap3:AppService Name="com.microsoft.ectksettings" SupportsRemoteSystems="true" />
+        </uap:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <rescap:Capability Name="gazeInput" />
+  </Capabilities>
+</Package>

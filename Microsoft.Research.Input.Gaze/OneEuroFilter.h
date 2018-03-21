@@ -4,6 +4,7 @@
 #pragma once
 #include "pch.h"
 #include "IGazeFilter.h"
+#include "GazeSettings.h"
 
 using namespace Windows::Foundation;
 
@@ -34,10 +35,6 @@ public:
     }
 };
 
-const float EUROFILTER_DEFAULT_BETA = 5.0f;
-const float EUROFILTER_DEFAULT_CUTOFF = 0.1f;
-const float EUROFILTER_DEFAULT_VELOCITY_CUTOFF = 1.0f;
-
 public ref class OneEuroFilter sealed : public IGazeFilter
 {
 public:
@@ -57,6 +54,8 @@ private:
     long long       _lastTimestamp;
     LowpassFilter^  _pointFilter;
     LowpassFilter^  _deltaFilter;
+
+    GazeSettings^   _gazeSettings;
 };
 
 END_NAMESPACE_GAZE_INPUT

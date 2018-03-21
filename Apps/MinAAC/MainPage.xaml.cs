@@ -2,24 +2,12 @@
 //See LICENSE in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Diagnostics;
-using System.Text;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.Media.SpeechSynthesis;
 using EyeGazeUserControls;
+using Microsoft.Research.Input.Gaze;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -36,6 +24,9 @@ namespace MinAAC
         public MainPage()
         {
             this.InitializeComponent();
+
+            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance);
+
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
             _mediaElement = new MediaElement();
             _speechSynthesizer = new SpeechSynthesizer();

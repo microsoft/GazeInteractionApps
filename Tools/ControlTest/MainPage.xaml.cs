@@ -24,6 +24,8 @@ namespace ControlTest
         {
             this.InitializeComponent();
 
+            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance);
+
             _gazePointer = new GazePointer(this);
             _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
         }

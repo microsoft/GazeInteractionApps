@@ -7,6 +7,7 @@
 #include "IGazeFilter.h"
 #include <map>
 #include "GazeCursor.h"
+#include "GazeSettings.h"
 
 using namespace Platform::Collections;
 using namespace Windows::Foundation;
@@ -18,16 +19,6 @@ using namespace Windows::Devices::Input::Preview;
 namespace Shapes = Windows::UI::Xaml::Shapes;
 
 BEGIN_NAMESPACE_GAZE_INPUT
-
-// units in microseconds
-const int DEFAULT_FIXATION_DELAY = 400000;
-const int DEFAULT_DWELL_DELAY = 800000;
-const int DEFAULT_REPEAT_DELAY = MAXINT;
-const int DEFAULT_ENTER_EXIT_DELAY = 50000;
-const int DEFAULT_MAX_HISTORY_DURATION = 3000000;
-const int MAX_SINGLE_SAMPLE_DURATION = 100000;
-
-const int GAZE_IDLE_TIME = 2500000;
 
 public enum class GazePointerState
 {
@@ -147,7 +138,7 @@ public:
 
             // convert GAZE_IDLE_TIME units (microseconds) to 100-nanosecond units used
             // by TimeSpan struct
-            _eyesOffTimer->Interval = TimeSpan { EyesOffDelay * 10 };
+            _eyesOffTimer->Interval = TimeSpan{ EyesOffDelay * 10 };
         }
     }
 
@@ -172,39 +163,39 @@ public:
 private:
     void    InitializeHistogram();
     void    InitializeGazeInputSource();
-        
+
     GazeInvokeParams^   GetGazeInvokeParams(UIElement^ target);
     UIElement^          GetHitTarget(Point gazePoint);
     UIElement^          ResolveHitTarget(Point gazePoint, long long timestamp);
-        
+
     bool    IsInvokable(UIElement^ target);
 
     void    CheckIfExiting(long long curTimestamp);
     void    GotoState(UIElement^ control, GazePointerState state);
-    void	RaiseGazePointerEvent(UIElement^ target, GazePointerState state, int elapsedTime);
+    void    RaiseGazePointerEvent(UIElement^ target, GazePointerState state, int elapsedTime);
 
-        void OnGazeMoved(
-                    GazeInputSourcePreview^ provider,
-                    GazeMovedPreviewEventArgs^ args);
-        
-        void ProcessGazePoint(GazePointPreview^ gazePointPreview);
+    void OnGazeMoved(
+        GazeInputSourcePreview^ provider,
+        GazeMovedPreviewEventArgs^ args);
+
+    void ProcessGazePoint(GazePointPreview^ gazePointPreview);
 
     void    OnEyesOff(Object ^sender, Object ^ea);
 
 
 private:
-    UIElement^        _rootElement;
+    UIElement ^                         _rootElement;
 
-    int64            _eyesOffDelay;
+    int64                               _eyesOffDelay;
 
-    GazeCursor^      _gazeCursor;
-    DispatcherTimer^ _eyesOffTimer;
+    GazeCursor^                         _gazeCursor;
+    DispatcherTimer^                    _eyesOffTimer;
 
     // _offScreenElement is a pseudo-element that represents the area outside
     // the screen so we can track how long the user has been looking outside
     // the screen and appropriately trigger the EyesOff event
-    Control^          _offScreenElement;
-    GazeInvokeParams^  _defaultInvokeParams;
+    Control^                            _offScreenElement;
+    GazeInvokeParams^                   _defaultInvokeParams;
 
     // Maps the hash code of passed in FrameworkElement to a particular set of GazeInvokeParams
     // This member is an std::map instead of a Platform::Collections::Map because GazeInvokeParams
@@ -213,21 +204,23 @@ private:
 
     // The key is the hash code of the FrameworkElemnt
     // The value is the total time that FrameworkElement has been gazed at
-    Map<int, GazeTargetItem^>^      _hitTargetTimes; 
+    Map<int, GazeTargetItem^>^          _hitTargetTimes;
 
     // A vector to track the history of observed gaze targets
-    Vector<GazeHistoryItem^>^       _gazeHistory;
-    int64                             _maxHistoryTime;
+    Vector<GazeHistoryItem^>^           _gazeHistory;
+    int64                               _maxHistoryTime;
 
     // Used to determine if exit events need to be fired by adding GAZE_IDLE_TIME to the last 
     // saved timestamp
-    long long                       _lastTimestamp;
+    long long                           _lastTimestamp;
 
-    GazeInputSourcePreview^          _gazeInputSource;
-    EventRegistrationToken          _gazeMovedToken;
-    CoreDispatcher^                 _coreDispatcher;
-    GazeIsInvokableDelegate^        _isInvokableImpl;
-    GazeInvokeTargetDelegate^       _invokeTargetImpl;
+    GazeInputSourcePreview^             _gazeInputSource;
+    EventRegistrationToken              _gazeMovedToken;
+    CoreDispatcher^                     _coreDispatcher;
+    GazeIsInvokableDelegate^            _isInvokableImpl;
+    GazeInvokeTargetDelegate^           _invokeTargetImpl;
+
+    GazeSettings^                       _gazeSettings;
 };
 
 END_NAMESPACE_GAZE_INPUT

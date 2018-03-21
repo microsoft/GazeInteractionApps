@@ -29,6 +29,9 @@ namespace Fifteen
         public MainPage()
         {
             this.InitializeComponent();
+
+            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance);
+
             InitializeButtonArray();
             ResetBoard();
 

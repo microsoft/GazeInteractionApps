@@ -3,19 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Microsoft.Research.Input.Gaze;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -42,6 +32,8 @@ namespace Memory
         public MainPage()
         {
             this.InitializeComponent();
+
+            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance);
 
             _rnd = new Random();
             _flashTimer = new DispatcherTimer();
