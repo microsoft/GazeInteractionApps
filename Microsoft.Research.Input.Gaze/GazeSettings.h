@@ -2,7 +2,6 @@
 //See LICENSE in the project root for license information.
 
 #pragma once
-// These includes are use solely for obtaining the default values
 
 BEGIN_NAMESPACE_GAZE_INPUT
 
@@ -150,7 +149,7 @@ public:
         }
     }
 
-    property bool GazePointer_Cursor_Visibility
+    property bool GazeCursor_Cursor_Visibility
     {
         bool get() { return _gazeCursor_cursor_visibility; }
         void set(bool value)

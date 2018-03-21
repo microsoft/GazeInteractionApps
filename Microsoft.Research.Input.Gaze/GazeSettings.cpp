@@ -75,7 +75,7 @@ void GazeSettings::RetrieveSharedSettings(GazeSettings^ gazeSettings)
                     gazeSettings->GazePointer_Gaze_Idle_Time = (int)(message->Lookup("GazePointer_Gaze_Idle_Time"));
 
                     gazeSettings->GazeCursor_Cursor_Radius = (int)(message->Lookup("GazeCursor_Cursor_Radius"));
-                    gazeSettings->GazePointer_Cursor_Visibility = (bool)(message->Lookup("GazePointer_Cursor_Visibility"));
+                    gazeSettings->GazeCursor_Cursor_Visibility = (bool)(message->Lookup("GazeCursor_Cursor_Visibility"));
 
                     return;
                 }

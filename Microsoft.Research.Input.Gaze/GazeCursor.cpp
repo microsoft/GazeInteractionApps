@@ -11,7 +11,7 @@ GazeCursor::GazeCursor()
     _gazeSettings = GazeSettings::Instance;
 
     _cursorRadius = _gazeSettings->GazeCursor_Cursor_Radius;
-    _isCursorVisible = _gazeSettings->GazePointer_Cursor_Visibility;
+    _isCursorVisible = _gazeSettings->GazeCursor_Cursor_Visibility;
 
     _gazePopup = ref new Popup();
     _gazeCanvas = ref new Canvas();
