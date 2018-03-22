@@ -14,8 +14,6 @@ BEGIN_NAMESPACE_GAZE_INPUT
 
 GazeSettings::GazeSettings()
 {
-    _isInitialized = false;
-
     // from OneEuroFilter.h
     _oneEurofilter_beta = EUROFILTER_DEFAULT_BETA;
     _oneEurofilter_cutoff = EUROFILTER_DEFAULT_CUTOFF;
@@ -101,7 +99,7 @@ void GazeSettings::RetrieveSharedSettings(GazeSettings^ gazeSettings)
         case AppServiceConnectionStatus::Unknown:
             break;
         }
-    }).wait(); // create_task(connection->OpenAsync())
+    }); // create_task(connection->OpenAsync())
 }
 
 END_NAMESPACE_GAZE_INPUT

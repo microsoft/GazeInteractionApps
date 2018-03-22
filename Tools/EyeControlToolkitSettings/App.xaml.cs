@@ -34,7 +34,7 @@ namespace EyeControlToolkitSettings
             Suspending += OnSuspending;
             _gazeSettings = GazeSettings.Instance;
 
-            GazeSettingsFromLocalSettings(_gazeSettings);
+            GazeSettingsHelpers.GazeSettingsFromLocalSettings(_gazeSettings);
         }
 
         /// <summary>
@@ -118,7 +118,11 @@ namespace EyeControlToolkitSettings
         {
             AppServiceDeferral messageDeferral = args.GetDeferral();
 
-            await args.Request.SendResponseAsync(ValueSetFromGazeSettings(GazeSettings.Instance));
+            var result = new ValueSet();
+
+            GazeSettingsHelpers.ValueSetFromGazeSettings(_gazeSettings, result);
+
+            await args.Request.SendResponseAsync(result);
             messageDeferral.Complete();
         }
 
@@ -130,69 +134,6 @@ namespace EyeControlToolkitSettings
         private void AppServiceConnection_ServiceClosed(AppServiceConnection sender, AppServiceClosedEventArgs args)
         {
             _appServiceDeferral.Complete();
-        }
-
-        private void GazeSettingsFromLocalSettings(GazeSettings gazeSettings)
-        {
-            var localSettings = ApplicationData.Current.LocalSettings;
-
-            if (localSettings.Values["OneEuroFilter_Beta"] != null) { _gazeSettings.OneEuroFilter_Beta = (float)localSettings.Values["OneEuroFilter_Beta"]; }
-            if (localSettings.Values["OneEuroFilter_Cutoff"] != null) { _gazeSettings.OneEuroFilter_Cutoff = (float)localSettings.Values["OneEuroFilter_Cutoff"]; }
-            if (localSettings.Values["OneEuroFilter_Velocity_Cutoff"] != null) { _gazeSettings.OneEuroFilter_Velocity_Cutoff = (float)localSettings.Values["OneEuroFilter_Velocity_Cutoff"]; }
-
-            if (localSettings.Values["GazePointer_Fixation_Delay"] != null) { _gazeSettings.GazePointer_Fixation_Delay = (int)localSettings.Values["GazePointer_Fixation_Delay"]; }
-            if (localSettings.Values["GazePointer_Dwell_Delay"] != null) { _gazeSettings.GazePointer_Dwell_Delay = (int)localSettings.Values["GazePointer_Dwell_Delay"]; }
-            if (localSettings.Values["GazePointer_Repeat_Delay"] != null) { _gazeSettings.GazePointer_Repeat_Delay = (int)localSettings.Values["GazePointer_Repeat_Delay"]; }
-            if (localSettings.Values["GazePointer_Enter_Exit_Delay"] != null) { _gazeSettings.GazePointer_Enter_Exit_Delay = (int)localSettings.Values["GazePointer_Enter_Exit_Delay"]; }
-            if (localSettings.Values["GazePointer_Max_History_Duration"] != null) { _gazeSettings.GazePointer_Max_History_Duration = (int)localSettings.Values["GazePointer_Max_History_Duration"]; }
-            if (localSettings.Values["GazePointer_Max_Single_Sample_Duration"] != null) { _gazeSettings.GazePointer_Max_Single_Sample_Duration = (int)localSettings.Values["GazePointer_Max_Single_Sample_Duration"]; }
-            if (localSettings.Values["GazePointer_Gaze_Idle_Time"] != null) { _gazeSettings.GazePointer_Gaze_Idle_Time = (int)localSettings.Values["GazePointer_Gaze_Idle_Time"]; }
-
-            if (localSettings.Values["GazeCursor_Cursor_Radius"] != null) { _gazeSettings.GazeCursor_Cursor_Radius = (int)localSettings.Values["GazeCursor_Cursor_Radius"]; }
-            if (localSettings.Values["GazeCursor_Cursor_Visibility"] != null) { _gazeSettings.GazeCursor_Cursor_Visibility = (bool)localSettings.Values["GazeCursor_Cursor_Visibility"]; }
-        }
-
-        private void LocalSettingsFromGazeSettings(GazeSettings gazeSettings)
-        {
-            var localSettings = ApplicationData.Current.LocalSettings;
-
-            localSettings.Values["OneEuroFilter_Beta"] = _gazeSettings.OneEuroFilter_Beta;
-            localSettings.Values["OneEuroFilter_Cutoff"] = _gazeSettings.OneEuroFilter_Cutoff;
-            localSettings.Values["OneEuroFilter_Velocity_Cutoff"] = _gazeSettings.OneEuroFilter_Velocity_Cutoff;
-
-            localSettings.Values["GazePointer_Fixation_Delay"] = _gazeSettings.GazePointer_Fixation_Delay;
-            localSettings.Values["GazePointer_Dwell_Delay"] = _gazeSettings.GazePointer_Dwell_Delay;
-            localSettings.Values["GazePointer_Repeat_Delay"] = _gazeSettings.GazePointer_Repeat_Delay;
-            localSettings.Values["GazePointer_Enter_Exit_Delay"] = _gazeSettings.GazePointer_Enter_Exit_Delay;
-            localSettings.Values["GazePointer_Max_History_Duration"] = _gazeSettings.GazePointer_Max_History_Duration;
-            localSettings.Values["GazePointer_Max_Single_Sample_Duration"] = _gazeSettings.GazePointer_Max_Single_Sample_Duration;
-            localSettings.Values["GazePointer_Gaze_Idle_Time"] = _gazeSettings.GazePointer_Gaze_Idle_Time;
-
-            localSettings.Values["GazeCursor_Cursor_Radius"] = _gazeSettings.GazeCursor_Cursor_Radius;
-            localSettings.Values["GazeCursor_Cursor_Visibility"] = _gazeSettings.GazeCursor_Cursor_Visibility;
-        }
-
-        private ValueSet ValueSetFromGazeSettings(GazeSettings gazeSettings)
-        {
-            var result = new ValueSet
-            {
-                { "OneEuroFilter_Beta", gazeSettings.OneEuroFilter_Beta },
-                { "OneEuroFilter_Cutoff", gazeSettings.OneEuroFilter_Cutoff },
-                { "OneEuroFilter_Velocity_Cutoff", gazeSettings.OneEuroFilter_Velocity_Cutoff },
-
-                { "GazePointer_Fixation_Delay", gazeSettings.GazePointer_Fixation_Delay },
-                { "GazePointer_Dwell_Delay", gazeSettings.GazePointer_Dwell_Delay },
-                { "GazePointer_Repeat_Delay", gazeSettings.GazePointer_Repeat_Delay },
-                { "GazePointer_Enter_Exit_Delay", gazeSettings.GazePointer_Enter_Exit_Delay },
-                { "GazePointer_Max_History_Duration", gazeSettings.GazePointer_Max_History_Duration },
-                { "GazePointer_Max_Single_Sample_Duration", gazeSettings.GazePointer_Max_Single_Sample_Duration },
-                { "GazePointer_Gaze_Idle_Time", gazeSettings.GazePointer_Gaze_Idle_Time },
-
-                { "GazeCursor_Cursor_Radius", gazeSettings.GazeCursor_Cursor_Radius },
-                { "GazeCursor_Cursor_Visibility", gazeSettings.GazeCursor_Cursor_Visibility }
-            };
-
-            return result;
         }
     }
 }

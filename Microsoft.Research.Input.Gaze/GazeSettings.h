@@ -179,8 +179,6 @@ private:
     // from GazeCursor.h
     int _gazeCursor_cursor_radius;
     bool _gazeCursor_cursor_visibility;
-
-    bool _isInitialized;
 };
 
 END_NAMESPACE_GAZE_INPUT
