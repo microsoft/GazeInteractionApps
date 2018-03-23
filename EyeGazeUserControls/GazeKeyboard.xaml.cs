@@ -39,8 +39,8 @@ namespace EyeGazeUserControls
             _theText = new StringBuilder();
 
             GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
-            _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+                _gazePointer = new GazePointer(this);
+                _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
             });
         }
 
@@ -79,8 +79,14 @@ namespace EyeGazeUserControls
             if (lastSpace > 0)
             {
                 _theText.Remove(lastSpace, _theText.Length - lastSpace);
+                textControl.Text = _theText.ToString();
             }
-            textControl.Text = _theText.ToString();
+            else
+            {
+                // no space found, so empty the textbox
+                textControl.Text = "";
+            }
+            
         }
     }
 }
