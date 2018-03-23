@@ -458,6 +458,9 @@ void GazePointer::OnGazeMoved(GazeInputSourcePreview^ provider, GazeMovedPreview
 
 void GazePointer::ProcessGazePoint(GazePointPreview^ gazePoint)
 {
+    if (gazePoint->EyeGazePosition == nullptr)
+        return;
+
     auto ea = ref new GazeEventArgs(gazePoint->EyeGazePosition->Value, gazePoint->Timestamp);
 
     if (InputEventForwardingEnabled)
