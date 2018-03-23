@@ -37,69 +37,65 @@ GazeSettings::~GazeSettings()
 {
 }
 
-void GazeSettings::RetrieveSharedSettings(GazeSettings^ gazeSettings)
+Windows::Foundation::IAsyncAction^ GazeSettings::RetrieveSharedSettings(GazeSettings^ gazeSettings)
 {
-    // Setup a new app service connection
-    AppServiceConnection^ connection = ref new AppServiceConnection();
-    connection->AppServiceName = "com.microsoft.ectksettings";
-    connection->PackageFamilyName = "Microsoft.EyeControlToolkitSettings_s9y1p3hwd5qda";
+    return create_async([gazeSettings]{
+        // Setup a new app service connection
+        AppServiceConnection^ connection = ref new AppServiceConnection();
+        connection->AppServiceName = "com.microsoft.ectksettings";
+        connection->PackageFamilyName = "Microsoft.EyeControlToolkitSettings_s9y1p3hwd5qda";
 
-    // open the connection
-    create_task(connection->OpenAsync()).then([gazeSettings, connection](AppServiceConnectionStatus status)
-    {
-        switch (status)
+        // open the connection
+        create_task(connection->OpenAsync()).then([gazeSettings, connection](AppServiceConnectionStatus status)
         {
-        case AppServiceConnectionStatus::Success:
-            // The new connection opened successfully
-            // Set up the inputs and send a message to the service
-            create_task(connection->SendMessageAsync(ref new ValueSet())).then([gazeSettings](AppServiceResponse^ response)
+            switch (status)
             {
-                // If the service responded with success display the result and walk away
-                if (response->Status == AppServiceResponseStatus::Success)
+            case AppServiceConnectionStatus::Success:
+                // The new connection opened successfully
+                // Set up the inputs and send a message to the service
+                create_task(connection->SendMessageAsync(ref new ValueSet())).then([gazeSettings](AppServiceResponse^ response)
                 {
-                    auto message = response->Message;
+                    switch (response->Status)
+                    {
+                    case AppServiceResponseStatus::Success:
+                        {
+                            auto message = response->Message;
 
-                    // TODO Consider serializing the settings object so it can simply be rehydrated.
-                    gazeSettings->OneEuroFilter_Beta = (float)(message->Lookup("OneEuroFilter_Beta"));
-                    gazeSettings->OneEuroFilter_Cutoff = (float)(message->Lookup("OneEuroFilter_Cutoff"));
-                    gazeSettings->OneEuroFilter_Velocity_Cutoff = (float)(message->Lookup("OneEuroFilter_Velocity_Cutoff"));
+                            // TODO Consider serializing the settings object so it can simply be rehydrated.
+                            gazeSettings->OneEuroFilter_Beta = (float)(message->Lookup("OneEuroFilter_Beta"));
+                            gazeSettings->OneEuroFilter_Cutoff = (float)(message->Lookup("OneEuroFilter_Cutoff"));
+                            gazeSettings->OneEuroFilter_Velocity_Cutoff = (float)(message->Lookup("OneEuroFilter_Velocity_Cutoff"));
 
-                    gazeSettings->GazePointer_Fixation_Delay = (int)(message->Lookup("GazePointer_Fixation_Delay"));
-                    gazeSettings->GazePointer_Dwell_Delay = (int)(message->Lookup("GazePointer_Dwell_Delay"));
-                    gazeSettings->GazePointer_Repeat_Delay = (int)(message->Lookup("GazePointer_Repeat_Delay"));
-                    gazeSettings->GazePointer_Enter_Exit_Delay = (int)(message->Lookup("GazePointer_Enter_Exit_Delay"));
-                    gazeSettings->GazePointer_Max_History_Duration = (int)(message->Lookup("GazePointer_Max_History_Duration"));
-                    gazeSettings->GazePointer_Max_Single_Sample_Duration = (int)(message->Lookup("GazePointer_Max_Single_Sample_Duration"));
-                    gazeSettings->GazePointer_Gaze_Idle_Time = (int)(message->Lookup("GazePointer_Gaze_Idle_Time"));
+                            gazeSettings->GazePointer_Fixation_Delay = (int)(message->Lookup("GazePointer_Fixation_Delay"));
+                            gazeSettings->GazePointer_Dwell_Delay = (int)(message->Lookup("GazePointer_Dwell_Delay"));
+                            gazeSettings->GazePointer_Repeat_Delay = (int)(message->Lookup("GazePointer_Repeat_Delay"));
+                            gazeSettings->GazePointer_Enter_Exit_Delay = (int)(message->Lookup("GazePointer_Enter_Exit_Delay"));
+                            gazeSettings->GazePointer_Max_History_Duration = (int)(message->Lookup("GazePointer_Max_History_Duration"));
+                            gazeSettings->GazePointer_Max_Single_Sample_Duration = (int)(message->Lookup("GazePointer_Max_Single_Sample_Duration"));
+                            gazeSettings->GazePointer_Gaze_Idle_Time = (int)(message->Lookup("GazePointer_Gaze_Idle_Time"));
 
-                    gazeSettings->GazeCursor_Cursor_Radius = (int)(message->Lookup("GazeCursor_Cursor_Radius"));
-                    gazeSettings->GazeCursor_Cursor_Visibility = (bool)(message->Lookup("GazeCursor_Cursor_Visibility"));
+                            gazeSettings->GazeCursor_Cursor_Radius = (int)(message->Lookup("GazeCursor_Cursor_Radius"));
+                            gazeSettings->GazeCursor_Cursor_Visibility = (bool)(message->Lookup("GazeCursor_Cursor_Visibility"));
+                        }
+                        break;
+                    default:
+                    case AppServiceResponseStatus::Failure:
+                    case AppServiceResponseStatus::ResourceLimitsExceeded:
+                    case AppServiceResponseStatus::Unknown:
+                        break;
+                    }
+                }); // create_task(connection->SendMessageAsync(inputs))
+                break;
 
-                    return;
-                }
-
-                // Something went wrong. Show the user a meaningful message depending upon the status
-                switch (response->Status)
-                {
-                case AppServiceResponseStatus::Success:
-                    break;
-                default:
-                case AppServiceResponseStatus::Failure:
-                case AppServiceResponseStatus::ResourceLimitsExceeded:
-                case AppServiceResponseStatus::Unknown:
-                    break;
-                }
-            }); // create_task(connection->SendMessageAsync(inputs))
-            break;
-
-        default:
-        case AppServiceConnectionStatus::AppNotInstalled:
-        case AppServiceConnectionStatus::AppUnavailable:
-        case AppServiceConnectionStatus::AppServiceUnavailable:
-        case AppServiceConnectionStatus::Unknown:
-            break;
-        }
-    }); // create_task(connection->OpenAsync())
+            default:
+            case AppServiceConnectionStatus::AppNotInstalled:
+            case AppServiceConnectionStatus::AppUnavailable:
+            case AppServiceConnectionStatus::AppServiceUnavailable:
+            case AppServiceConnectionStatus::Unknown:
+                break;
+            }
+        }); // create_task(connection->OpenAsync())
+    }); // create_async()
 }
 
 END_NAMESPACE_GAZE_INPUT

@@ -22,8 +22,6 @@ namespace SeeSaw
         public MainPage()
         {
             this.InitializeComponent();
-
-            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance);
         }
         private async void SelectMedia_Click(object sender, RoutedEventArgs e)
         {

@@ -24,10 +24,10 @@ namespace ControlTest
         {
             this.InitializeComponent();
 
-            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance);
-
-            _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+                _gazePointer = new GazePointer(this);
+                _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            });
         }
 
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)

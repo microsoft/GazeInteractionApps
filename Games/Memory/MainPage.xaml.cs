@@ -33,8 +33,6 @@ namespace Memory
         {
             this.InitializeComponent();
 
-            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance);
-
             _rnd = new Random();
             _flashTimer = new DispatcherTimer();
             _flashTimer.Interval = new TimeSpan(0, 0, 2);
@@ -42,8 +40,10 @@ namespace Memory
 
             Loaded += MainPage_Loaded;
 
-            _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+                _gazePointer = new GazePointer(this);
+                _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            });
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)

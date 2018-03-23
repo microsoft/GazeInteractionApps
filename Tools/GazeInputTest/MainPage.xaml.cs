@@ -20,11 +20,11 @@ namespace GazeInputTest
         {
             this.InitializeComponent();
 
-            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance);
-
-            _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazeInputEvent += OnGazeInputEvent;
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+                _gazePointer = new GazePointer(this);
+                _gazePointer.OnGazeInputEvent += OnGazeInputEvent;
+                _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            });
 
             ShowCursor.IsChecked = _gazePointer.IsCursorVisible;
         }

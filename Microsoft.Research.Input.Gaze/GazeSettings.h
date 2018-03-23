@@ -43,7 +43,7 @@ public:
 
     virtual ~GazeSettings();
 
-    static void RetrieveSharedSettings(GazeSettings^ gazeSettings);
+    static Windows::Foundation::IAsyncAction^ RetrieveSharedSettings(GazeSettings^ gazeSettings);
 
 #pragma region OneEuroFilter
     property float OneEuroFilter_Beta

@@ -25,8 +25,6 @@ namespace MinAAC
         {
             this.InitializeComponent();
 
-            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance);
-
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
             _mediaElement = new MediaElement();
             _speechSynthesizer = new SpeechSynthesizer();

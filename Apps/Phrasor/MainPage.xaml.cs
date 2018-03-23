@@ -77,10 +77,10 @@ namespace Phrasor
             this.InitializeComponent();
             this.Loaded += MainPage_Loaded;
 
-            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance);
-
-            _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+                _gazePointer = new GazePointer(this);
+                _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            });
 
             _pageMode = PageMode.Run;
             _speechSynthesizer = new SpeechSynthesizer();
