@@ -19,6 +19,6 @@
         </Grid.ColumnDefinitions>
         <ToggleButton Grid.Row="0" Grid.Column="0" x:Name="ShowCursor" Checked="ShowCursor_Toggle" Unchecked="ShowCursor_Toggle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">Show Cursor</ToggleButton>
         <Button       Grid.Row="0" Grid.Column="1" x:Name="Dwell" Click="Dwell_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">Eyes Here</Button>
-        <TextBox      Grid.Row="1" Grid.Column="0" x:Name="Coordinates" />
+        <TextBlock    Grid.Row="1" Grid.Column="0" x:Name="Coordinates" />
     </Grid>
 </Page>
