@@ -7,8 +7,6 @@ using Windows.UI.Xaml.Controls;
 using Microsoft.Research.Input.Gaze;
 using Windows.UI.Popups;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace ControlTest
 {
     /// <summary>

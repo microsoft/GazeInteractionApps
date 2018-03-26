@@ -86,7 +86,6 @@ namespace EyeGazeUserControls
                 // no space found, so empty the textbox
                 textControl.Text = "";
             }
-            
         }
     }
 }
