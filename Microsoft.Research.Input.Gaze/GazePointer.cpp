@@ -21,6 +21,8 @@ BEGIN_NAMESPACE_GAZE_INPUT
 
 GazePointer::GazePointer(UIElement^ root)
 {
+    _gazeSettings = GazeSettings::Instance;
+
     _rootElement = root;
     _coreDispatcher = CoreWindow::GetForCurrentThread()->Dispatcher;
 
@@ -35,7 +37,7 @@ GazePointer::GazePointer(UIElement^ root)
     _eyesOffTimer->Tick += ref new EventHandler<Object^>(this, &GazePointer::OnEyesOff);
 
     // provide a default of GAZE_IDLE_TIME microseconds to fire eyes off 
-    EyesOffDelay = GAZE_IDLE_TIME;
+    EyesOffDelay = _gazeSettings->GazePointer_Gaze_Idle_Time;
 
     InitializeHistogram();
     InitializeGazeInputSource();
@@ -52,17 +54,17 @@ GazePointer::~GazePointer()
 void GazePointer::InitializeHistogram()
 {
     _defaultInvokeParams = ref new GazeInvokeParams();
-    _defaultInvokeParams->Insert(GazePointerState::Fixation, DEFAULT_FIXATION_DELAY);
-    _defaultInvokeParams->Insert(GazePointerState::Dwell, DEFAULT_DWELL_DELAY);
-    _defaultInvokeParams->Insert(GazePointerState::DwellRepeat, DEFAULT_REPEAT_DELAY);
-    _defaultInvokeParams->Insert(GazePointerState::Enter, DEFAULT_ENTER_EXIT_DELAY);
-    _defaultInvokeParams->Insert(GazePointerState::Exit, DEFAULT_ENTER_EXIT_DELAY);
+    _defaultInvokeParams->Insert(GazePointerState::Fixation, _gazeSettings->GazePointer_Fixation_Delay);
+    _defaultInvokeParams->Insert(GazePointerState::Dwell, _gazeSettings->GazePointer_Dwell_Delay);
+    _defaultInvokeParams->Insert(GazePointerState::DwellRepeat, _gazeSettings->GazePointer_Repeat_Delay);
+    _defaultInvokeParams->Insert(GazePointerState::Enter, _gazeSettings->GazePointer_Enter_Exit_Delay);
+    _defaultInvokeParams->Insert(GazePointerState::Exit, _gazeSettings->GazePointer_Enter_Exit_Delay);
 
     _hitTargetTimes = ref new Map<int, GazeTargetItem^>();
 
     _offScreenElement = ref new UserControl();
-    SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, DEFAULT_FIXATION_DELAY);
-    SetElementStateDelay(_offScreenElement, GazePointerState::Dwell, DEFAULT_DWELL_DELAY);
+    SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, _gazeSettings->GazePointer_Fixation_Delay);
+    SetElementStateDelay(_offScreenElement, GazePointerState::Dwell, _gazeSettings->GazePointer_Dwell_Delay);
 
     _maxHistoryTime = DEFAULT_MAX_HISTORY_DURATION;    // maintain about 3 seconds of history (in microseconds)
     _gazeHistory = ref new Vector<GazeHistoryItem^>();
@@ -124,7 +126,7 @@ int GazePointer::GetElementStateDelay(UIElement ^element, GazePointerState point
     {
         return _defaultInvokeParams->Lookup(pointerState);
     }
-    
+
     return iterator->second->Lookup(pointerState);;
 }
 
@@ -157,35 +159,35 @@ bool GazePointer::IsInvokable(UIElement^ element)
     }
     else
     {
-    auto button = dynamic_cast<Button ^>(element);
-    if (button != nullptr)
-    {
-        return true;
-    }
+        auto button = dynamic_cast<Button ^>(element);
+        if (button != nullptr)
+        {
+            return true;
+        }
 
-    auto toggleButton = dynamic_cast<ToggleButton^>(element);
-    if (toggleButton != nullptr)
-    {
-        return true;
-    }
+        auto toggleButton = dynamic_cast<ToggleButton^>(element);
+        if (toggleButton != nullptr)
+        {
+            return true;
+        }
 
-    auto toggleSwitch = dynamic_cast<ToggleSwitch^>(element);
-    if (toggleSwitch != nullptr)
-    {
-        return true;
-    }
+        auto toggleSwitch = dynamic_cast<ToggleSwitch^>(element);
+        if (toggleSwitch != nullptr)
+        {
+            return true;
+        }
 
-    auto textbox = dynamic_cast<TextBox^>(element);
-    if (textbox != nullptr)
-    {
-        return true;
-    }
+        auto textbox = dynamic_cast<TextBox^>(element);
+        if (textbox != nullptr)
+        {
+            return true;
+        }
 
-    auto pivot = dynamic_cast<Pivot^>(element);
-    if (pivot != nullptr)
-    {
-        return true;
-    }
+        auto pivot = dynamic_cast<Pivot^>(element);
+        if (pivot != nullptr)
+        {
+            return true;
+        }
     }
 
     return false;
@@ -238,9 +240,9 @@ UIElement^ GazePointer::ResolveHitTarget(Point gazePoint, long long timestamp)
 
     // find elapsed time since we got the last hit target
     historyItem->Duration = (int)(timestamp - _gazeHistory->GetAt(_gazeHistory->Size - 1)->Timestamp);
-    if (historyItem->Duration > MAX_SINGLE_SAMPLE_DURATION)
+    if (historyItem->Duration > _gazeSettings->GazePointer_Max_Single_Sample_Duration)
     {
-        historyItem->Duration = MAX_SINGLE_SAMPLE_DURATION;
+        historyItem->Duration = _gazeSettings->GazePointer_Max_Single_Sample_Duration;
     }
     _gazeHistory->Append(historyItem);
 
@@ -294,7 +296,7 @@ void GazePointer::GotoState(UIElement^ control, GazePointerState state)
     {
     case GazePointerState::Enter:
         return;
-	case GazePointerState::Exit:
+    case GazePointerState::Exit:
         stateName = "Normal";
         break;
     case GazePointerState::Fixation:
@@ -305,7 +307,7 @@ void GazePointer::GotoState(UIElement^ control, GazePointerState state)
         stateName = "Dwell";
         break;
     default:
-		assert(0);
+        assert(0);
         return;
     }
 
@@ -332,45 +334,45 @@ void GazePointer::InvokeTarget(UIElement ^target)
     }
     else
     {
-    auto button = dynamic_cast<Button^>(control);
-    if (button != nullptr)
-    {
-        auto peer = ref new ButtonAutomationPeer(button);
-        peer->Invoke();
-        return;
-    }
+        auto button = dynamic_cast<Button^>(control);
+        if (button != nullptr)
+        {
+            auto peer = ref new ButtonAutomationPeer(button);
+            peer->Invoke();
+            return;
+        }
 
-    auto toggleButton = dynamic_cast<ToggleButton^>(control);
-    if (toggleButton != nullptr)
-    {
-        auto peer = ref new ToggleButtonAutomationPeer(toggleButton);
-        peer->Toggle();
-        return;
-    }
+        auto toggleButton = dynamic_cast<ToggleButton^>(control);
+        if (toggleButton != nullptr)
+        {
+            auto peer = ref new ToggleButtonAutomationPeer(toggleButton);
+            peer->Toggle();
+            return;
+        }
 
-    auto toggleSwitch = dynamic_cast<ToggleSwitch^>(control);
-    if (toggleSwitch)
-    {
-        auto peer = ref new ToggleSwitchAutomationPeer(toggleSwitch);
-        peer->Toggle();
-        return;
-    }
+        auto toggleSwitch = dynamic_cast<ToggleSwitch^>(control);
+        if (toggleSwitch)
+        {
+            auto peer = ref new ToggleSwitchAutomationPeer(toggleSwitch);
+            peer->Toggle();
+            return;
+        }
 
-    auto textBox = dynamic_cast<TextBox^>(control);
-    if (textBox != nullptr)
-    {
-        auto peer = ref new TextBoxAutomationPeer(textBox);
-        peer->SetFocus();
-        return;
-    }
+        auto textBox = dynamic_cast<TextBox^>(control);
+        if (textBox != nullptr)
+        {
+            auto peer = ref new TextBoxAutomationPeer(textBox);
+            peer->SetFocus();
+            return;
+        }
 
-    auto pivot = dynamic_cast<Pivot^>(control);
-    if (pivot != nullptr)
-    {
-        auto peer = ref new PivotAutomationPeer(pivot);
-        peer->SetFocus();
-        return;
-    }
+        auto pivot = dynamic_cast<Pivot^>(control);
+        if (pivot != nullptr)
+        {
+            auto peer = ref new PivotAutomationPeer(pivot);
+            peer->SetFocus();
+            return;
+        }
     }
 }
 
@@ -392,7 +394,7 @@ void GazePointer::CheckIfExiting(long long curTimestamp)
         long long idleDuration = curTimestamp - targetItem->LastTimestamp;
         if (targetItem->ElementState != GazePointerState::PreEnter && idleDuration > invokeParams->Lookup(GazePointerState::Exit))
         {
-			GotoState(targetItem->TargetElement, GazePointerState::Exit);
+            GotoState(targetItem->TargetElement, GazePointerState::Exit);
             RaiseGazePointerEvent(targetItem->TargetElement, GazePointerState::Exit, targetItem->ElapsedTime);
 
             int targetHash = target->Key;

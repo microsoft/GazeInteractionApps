@@ -12,7 +12,6 @@ using Windows.Storage;
 using Windows.Data.Json;
 using Windows.UI;
 using Microsoft.Research.Input.Gaze;
-using Windows.Graphics.Display;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -77,8 +76,11 @@ namespace Phrasor
         {
             this.InitializeComponent();
             this.Loaded += MainPage_Loaded;
-            _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+
+            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+                _gazePointer = new GazePointer(this);
+                _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            });
 
             _pageMode = PageMode.Run;
             _speechSynthesizer = new SpeechSynthesizer();

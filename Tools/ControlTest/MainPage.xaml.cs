@@ -7,8 +7,6 @@ using Windows.UI.Xaml.Controls;
 using Microsoft.Research.Input.Gaze;
 using Windows.UI.Popups;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace ControlTest
 {
     /// <summary>
@@ -24,8 +22,10 @@ namespace ControlTest
         {
             this.InitializeComponent();
 
-            _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+                _gazePointer = new GazePointer(this);
+                _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            });
         }
 
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)

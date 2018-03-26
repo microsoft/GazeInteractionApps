@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("EyeGazeUserControls")]
+[assembly: AssemblyTitle("Eye Control Toolkit Settings")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("EyeGazeUserControls")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCompany("Microsoft Corporation")]
+[assembly: AssemblyProduct("Eye Control Toolkit Settings")]
+[assembly: AssemblyCopyright("Copyright © Microsoft Coproration")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
