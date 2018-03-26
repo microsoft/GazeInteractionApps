@@ -79,13 +79,13 @@ namespace EyeGazeUserControls
             if (lastSpace > 0)
             {
                 _theText.Remove(lastSpace, _theText.Length - lastSpace);
-                textControl.Text = _theText.ToString();
             }
             else
             {
                 // no space found, so empty the textbox
-                textControl.Text = "";
+                _theText.Clear();
             }
+            textControl.Text = _theText.ToString();
         }
     }
 }
