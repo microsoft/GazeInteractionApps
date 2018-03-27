@@ -1,21 +1,12 @@
-﻿using System;
+﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+//See LICENSE in the project root for license information.
+
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Microsoft.Research.Input.Gaze;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace Memory
 {
@@ -47,8 +38,10 @@ namespace Memory
 
             Loaded += MainPage_Loaded;
 
-            _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+                _gazePointer = new GazePointer(this);
+                _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            });
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)

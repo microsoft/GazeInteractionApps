@@ -1,6 +1,10 @@
+//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+//See LICENSE in the project root for license information.
+
 #pragma once
 
 #include "pch.h"
+#include "GazeSettings.h"
 
 using namespace Windows::Foundation;
 using namespace Windows::UI;
@@ -12,9 +16,6 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Shapes;
 
 BEGIN_NAMESPACE_GAZE_INPUT
-
-const int DEFAULT_CURSOR_RADIUS = 5;
-const bool DEFAULT_CURSOR_VISIBILITY = true;
 
 ref class GazeCursor sealed
 {
@@ -82,6 +83,7 @@ private:
     int                 _cursorRadius = DEFAULT_CURSOR_RADIUS;
     bool                _isCursorVisible = DEFAULT_CURSOR_VISIBILITY;
 
+    GazeSettings^       _gazeSettings;
 };
 
 END_NAMESPACE_GAZE_INPUT

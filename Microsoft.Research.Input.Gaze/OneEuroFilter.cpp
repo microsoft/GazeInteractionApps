@@ -1,3 +1,6 @@
+//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+//See LICENSE in the project root for license information.
+
 #include "pch.h"
 #include "OneEuroFilter.h"
 
@@ -10,10 +13,12 @@ BEGIN_NAMESPACE_GAZE_INPUT
 
 OneEuroFilter::OneEuroFilter()
 {
+    _gazeSettings = GazeSettings::Instance;
+
     _lastTimestamp = 0;
-    Beta = EUROFILTER_DEFAULT_BETA;
-    Cutoff = EUROFILTER_DEFAULT_CUTOFF;
-    VelocityCutoff = EUROFILTER_DEFAULT_VELOCITY_CUTOFF;
+    Beta = _gazeSettings->OneEuroFilter_Beta;
+    Cutoff = _gazeSettings->OneEuroFilter_Cutoff;
+    VelocityCutoff = _gazeSettings->OneEuroFilter_Velocity_Cutoff;
 }
 
 OneEuroFilter::OneEuroFilter(float cutoff, float beta)
@@ -21,7 +26,7 @@ OneEuroFilter::OneEuroFilter(float cutoff, float beta)
     _lastTimestamp = 0;
     Beta = beta;
     Cutoff = cutoff;
-    VelocityCutoff = EUROFILTER_DEFAULT_VELOCITY_CUTOFF;
+    VelocityCutoff = _gazeSettings->OneEuroFilter_Velocity_Cutoff;
 }
 
 GazeEventArgs^ OneEuroFilter::Update(GazeEventArgs^ args)

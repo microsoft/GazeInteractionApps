@@ -1,0 +1,88 @@
+﻿<Page
+    x:Class="Phrasor.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Phrasor"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ToolbarButton" TargetType="Button">
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="FontSize" Value="100" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="MaxHeight" Value="400" />
+                <Setter Property="MaxWidth" Value="400" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="#1A1A1A" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Foreground">
+                    <Setter.Value>
+                        <SolidColorBrush Color="White" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="PhraseButton" TargetType="ButtonBase">
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="MaxHeight" Value="400" />
+                <Setter Property="MaxWidth" Value="400" />
+                <Setter Property="Margin" Value="20" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="#1A1A1A" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Foreground">
+                    <Setter.Value>
+                        <SolidColorBrush Color="White" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+
+    </Page.Resources>
+
+    <Grid x:Name="AppGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Row="0" Grid.Column="0" Content="&#xE80F;" Style="{StaticResource ToolbarButton}" Click="OnHomeClick" />
+            <Button Grid.Row="0" Grid.Column="1" Content="&#xE74A;" Style="{StaticResource ToolbarButton}" Click="OnUpClick" />
+            <Button Grid.Row="0" Grid.Column="2" Content="&#xE710;" Style="{StaticResource ToolbarButton}" Click="OnAddPhraseClick" />
+            <Button Grid.Row="0" Grid.Column="3" Content="&#xE8F4;" Style="{StaticResource ToolbarButton}" Click="OnAddCategoryClick" />
+            <Button Grid.Row="0" Grid.Column="4" Content="&#xE70F;" Style="{StaticResource ToolbarButton}" Click="OnEditClick" />
+            <Button Grid.Row="0" Grid.Column="5" Content="&#xE74D;" Style="{StaticResource ToolbarButton}" Click="OnDeleteClick" />
+            <Button Grid.Row="0" Grid.Column="6" Content="&#xE769;" Style="{StaticResource ToolbarButton}" Click="OnPauseClick" />
+            <Button Grid.Row="0" Grid.Column="7" Content="&#xE711;" Style="{StaticResource ToolbarButton}" Click="OnExitClick" />
+        </Grid>
+        <Grid x:Name="PhraseGrid" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+        </Grid>
+    </Grid>
+
+</Page>

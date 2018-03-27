@@ -1,0 +1,38 @@
+﻿{
+  "caption": "Talk37",
+  "isCategory":  "true",
+  "items": [
+    {
+      "caption": "Simple Questions",
+      "isCategory": "true",
+      "items": [
+        { "caption": "Yes" },
+        { "caption": "No" },
+        { "caption": "Maybe" },
+        { "caption": "Wait" }
+      ]
+    },
+    {
+      "caption": "Help",
+      "isCategory": "true",
+      "items": [
+        { "caption": "Chair" },
+        { "caption": "Suction" },
+        { "caption": "Itch" },
+        { "caption": "Temperature" }
+      ]
+    },
+    {
+      "caption": "Greetings",
+      "isCategory": "true",
+      "items": [
+        { "caption": "Hello" },
+        { "caption": "Hi" },
+        { "caption": "Howdy" },
+        { "caption": "How are you?" },
+        { "caption": "Good morning" }
+      ]
+    }
+  ]
+
+}
