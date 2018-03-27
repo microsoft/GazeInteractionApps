@@ -172,7 +172,7 @@ namespace Memory
             }
         }
 
-        async void CheckGameCompletion()
+        void CheckGameCompletion()
         {
             if (_remaining > 0)
             {
@@ -180,11 +180,14 @@ namespace Memory
             }
 
             string message = $"Congratulations!! You solved it in {_numMoves} moves";
-            MessageDialog dlg = new MessageDialog(message);
-            await dlg.ShowAsync();
-
-            ResetBoard();
+            dialogText.Text = message;
+            dialogGrid.Visibility = Visibility.Visible;           
         }
 
+        private void dialogButton_Click(object sender, RoutedEventArgs e)
+        {
+            ResetBoard();
+            dialogGrid.Visibility = Visibility.Collapsed;
+        }
     }
 }
