@@ -24,7 +24,7 @@ namespace Memory
         Button _firstButton;
         Button _secondButton;
         DispatcherTimer _flashTimer;
-        int _remaining = 16;
+        int _remaining;
         int _numMoves;
 
         public MainPage()
@@ -111,6 +111,7 @@ namespace Memory
             _firstButton = null;
             _secondButton = null;
             _numMoves = 0;
+            _remaining = 16;
 
             List<char> listChars = GetNewContent(8);
             List<Button> listButtons = GetButtonList();
