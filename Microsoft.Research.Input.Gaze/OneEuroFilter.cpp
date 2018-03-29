@@ -97,9 +97,18 @@ float OneEuroFilter::Alpha(float rate, float cutoff)
 
 void OneEuroFilter::LoadSettings(ValueSet^ settings)
 {
-    Beta = (float)(settings->Lookup("OneEuroFilter_Beta"));
-    Cutoff = (float)(settings->Lookup("OneEuroFilter_Cutoff"));
-    VelocityCutoff = (float)(settings->Lookup("OneEuroFilter_Velocity_Cutoff"));;
+    if (settings->HasKey("OneEuroFilter_Beta"))
+    {
+        Beta = (float)(settings->Lookup("OneEuroFilter_Beta"));
+    }
+    if (settings->HasKey("OneEuroFilter_Cutoff"))
+    {
+        Cutoff = (float)(settings->Lookup("OneEuroFilter_Cutoff"));
+    }
+    if (settings->HasKey("OneEuroFilter_Velocity_Cutoff"))
+    {
+        VelocityCutoff = (float)(settings->Lookup("OneEuroFilter_Velocity_Cutoff"));
+    }
 }
 
 END_NAMESPACE_GAZE_INPUT
