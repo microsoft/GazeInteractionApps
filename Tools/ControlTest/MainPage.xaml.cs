@@ -6,6 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Research.Input.Gaze;
 using Windows.UI.Popups;
+using Windows.Foundation.Collections;
 
 namespace ControlTest
 {
@@ -22,10 +23,12 @@ namespace ControlTest
         {
             this.InitializeComponent();
 
-            //GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+            var sharedSettings = new ValueSet();
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
                 _gazePointer = new GazePointer(this);
+                _gazePointer.LoadSettings(sharedSettings);
                 _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
-            //});
+            });
         }
 
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)

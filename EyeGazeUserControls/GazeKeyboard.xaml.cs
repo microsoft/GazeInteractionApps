@@ -3,6 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Microsoft.Research.Input.Gaze;
+using Windows.Foundation.Collections;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -38,10 +39,12 @@ namespace EyeGazeUserControls
             this.InitializeComponent();
             _theText = new StringBuilder();
 
-            //GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+            var sharedSettings = new ValueSet();
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
                 _gazePointer = new GazePointer(this);
+                _gazePointer.LoadSettings(sharedSettings);
                 _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
-            //});
+            });
         }
 
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
