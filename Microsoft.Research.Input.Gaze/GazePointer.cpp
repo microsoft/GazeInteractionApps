@@ -21,8 +21,6 @@ BEGIN_NAMESPACE_GAZE_INPUT
 
 GazePointer::GazePointer(UIElement^ root)
 {
-    _gazeSettings = GazeSettings::Instance;
-
     _rootElement = root;
     _coreDispatcher = CoreWindow::GetForCurrentThread()->Dispatcher;
 
@@ -37,7 +35,7 @@ GazePointer::GazePointer(UIElement^ root)
     _eyesOffTimer->Tick += ref new EventHandler<Object^>(this, &GazePointer::OnEyesOff);
 
     // provide a default of GAZE_IDLE_TIME microseconds to fire eyes off 
-    EyesOffDelay = _gazeSettings->GazePointer_Gaze_Idle_Time;
+    EyesOffDelay = GAZE_IDLE_TIME;
 
     InitializeHistogram();
     InitializeGazeInputSource();
@@ -51,20 +49,42 @@ GazePointer::~GazePointer()
     }
 }
 
+void GazePointer::LoadSettings(ValueSet^ settings)
+{
+    _gazeCursor->LoadSettings(settings);
+    Filter->LoadSettings(settings);
+
+    // TODO Add logic to protect against missing settings
+
+    _defaultInvokeParams->Insert(GazePointerState::Fixation, (int)(settings->Lookup("GazePointer_Fixation_Delay")));
+    _defaultInvokeParams->Insert(GazePointerState::Dwell, (int)(settings->Lookup("GazePointer_Dwell_Delay")));
+    _defaultInvokeParams->Insert(GazePointerState::DwellRepeat, (int)(settings->Lookup("GazePointer_Repeat_Delay")));
+    _defaultInvokeParams->Insert(GazePointerState::Enter, (int)(settings->Lookup("GazePointer_Enter_Exit_Delay")));
+    _defaultInvokeParams->Insert(GazePointerState::Exit, (int)(settings->Lookup("GazePointer_Enter_Exit_Delay")));
+
+    // TODO need to set fixation and dwell for all elements
+    SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, (int)(settings->Lookup("GazePointer_Fixation_Delay")));
+    SetElementStateDelay(_offScreenElement, GazePointerState::Dwell, (int)(settings->Lookup("GazePointer_Dwell_Delay")));
+
+    EyesOffDelay = (int)(settings->Lookup("GazePointer_Gaze_Idle_Time"));
+
+    _maxHistoryTime = (int)(settings->Lookup("GazePointer_Max_History_Duration"));
+}
+
 void GazePointer::InitializeHistogram()
 {
     _defaultInvokeParams = ref new GazeInvokeParams();
-    _defaultInvokeParams->Insert(GazePointerState::Fixation, _gazeSettings->GazePointer_Fixation_Delay);
-    _defaultInvokeParams->Insert(GazePointerState::Dwell, _gazeSettings->GazePointer_Dwell_Delay);
-    _defaultInvokeParams->Insert(GazePointerState::DwellRepeat, _gazeSettings->GazePointer_Repeat_Delay);
-    _defaultInvokeParams->Insert(GazePointerState::Enter, _gazeSettings->GazePointer_Enter_Exit_Delay);
-    _defaultInvokeParams->Insert(GazePointerState::Exit, _gazeSettings->GazePointer_Enter_Exit_Delay);
+    _defaultInvokeParams->Insert(GazePointerState::Fixation, DEFAULT_FIXATION_DELAY);
+    _defaultInvokeParams->Insert(GazePointerState::Dwell, DEFAULT_DWELL_DELAY);
+    _defaultInvokeParams->Insert(GazePointerState::DwellRepeat, DEFAULT_REPEAT_DELAY);
+    _defaultInvokeParams->Insert(GazePointerState::Enter, DEFAULT_ENTER_EXIT_DELAY);
+    _defaultInvokeParams->Insert(GazePointerState::Exit, DEFAULT_ENTER_EXIT_DELAY);
 
     _hitTargetTimes = ref new Map<int, GazeTargetItem^>();
 
     _offScreenElement = ref new UserControl();
-    SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, _gazeSettings->GazePointer_Fixation_Delay);
-    SetElementStateDelay(_offScreenElement, GazePointerState::Dwell, _gazeSettings->GazePointer_Dwell_Delay);
+    SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, DEFAULT_FIXATION_DELAY);
+    SetElementStateDelay(_offScreenElement, GazePointerState::Dwell, DEFAULT_DWELL_DELAY);
 
     _maxHistoryTime = DEFAULT_MAX_HISTORY_DURATION;    // maintain about 3 seconds of history (in microseconds)
     _gazeHistory = ref new Vector<GazeHistoryItem^>();
@@ -240,9 +260,9 @@ UIElement^ GazePointer::ResolveHitTarget(Point gazePoint, long long timestamp)
 
     // find elapsed time since we got the last hit target
     historyItem->Duration = (int)(timestamp - _gazeHistory->GetAt(_gazeHistory->Size - 1)->Timestamp);
-    if (historyItem->Duration > _gazeSettings->GazePointer_Max_Single_Sample_Duration)
+    if (historyItem->Duration > MAX_SINGLE_SAMPLE_DURATION)
     {
-        historyItem->Duration = _gazeSettings->GazePointer_Max_Single_Sample_Duration;
+        historyItem->Duration = MAX_SINGLE_SAMPLE_DURATION;
     }
     _gazeHistory->Append(historyItem);
 

@@ -22,7 +22,6 @@ namespace EyeControlToolkitSettings
     {
         private AppServiceConnection _appServiceConnection;
         private BackgroundTaskDeferral _appServiceDeferral;
-        public static GazeSettings _gazeSettings;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -32,9 +31,6 @@ namespace EyeControlToolkitSettings
         {
             InitializeComponent();
             Suspending += OnSuspending;
-            _gazeSettings = GazeSettings.Instance;
-
-            GazeSettingsHelpers.GazeSettingsFromLocalSettings(_gazeSettings);
         }
 
         /// <summary>
@@ -120,7 +116,8 @@ namespace EyeControlToolkitSettings
 
             var result = new ValueSet();
 
-            GazeSettingsHelpers.ValueSetFromGazeSettings(_gazeSettings, result);
+            // TODO load valueset from settings
+            //GazeSettingsHelpers.ValueSetFromGazeSettings(_gazeSettings, result);
 
             await args.Request.SendResponseAsync(result);
             messageDeferral.Complete();

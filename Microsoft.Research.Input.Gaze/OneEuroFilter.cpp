@@ -13,12 +13,10 @@ BEGIN_NAMESPACE_GAZE_INPUT
 
 OneEuroFilter::OneEuroFilter()
 {
-    _gazeSettings = GazeSettings::Instance;
-
     _lastTimestamp = 0;
-    Beta = _gazeSettings->OneEuroFilter_Beta;
-    Cutoff = _gazeSettings->OneEuroFilter_Cutoff;
-    VelocityCutoff = _gazeSettings->OneEuroFilter_Velocity_Cutoff;
+    Beta = EUROFILTER_DEFAULT_BETA;
+    Cutoff = EUROFILTER_DEFAULT_CUTOFF;
+    VelocityCutoff = EUROFILTER_DEFAULT_VELOCITY_CUTOFF;
 }
 
 OneEuroFilter::OneEuroFilter(float cutoff, float beta)
@@ -26,7 +24,7 @@ OneEuroFilter::OneEuroFilter(float cutoff, float beta)
     _lastTimestamp = 0;
     Beta = beta;
     Cutoff = cutoff;
-    VelocityCutoff = _gazeSettings->OneEuroFilter_Velocity_Cutoff;
+    VelocityCutoff = EUROFILTER_DEFAULT_VELOCITY_CUTOFF;
 }
 
 GazeEventArgs^ OneEuroFilter::Update(GazeEventArgs^ args)
@@ -95,6 +93,13 @@ float OneEuroFilter::Alpha(float rate, float cutoff)
     float tau = (float)(1.0f / (2 * PI * cutoff));
     float alpha = te / (te + tau);
     return alpha;
+}
+
+void OneEuroFilter::LoadSettings(ValueSet^ settings)
+{
+    Beta = (float)(settings->Lookup("OneEuroFilter_Beta"));
+    Cutoff = (float)(settings->Lookup("OneEuroFilter_Cutoff"));
+    VelocityCutoff = (float)(settings->Lookup("OneEuroFilter_Velocity_Cutoff"));;
 }
 
 END_NAMESPACE_GAZE_INPUT

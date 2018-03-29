@@ -38,10 +38,10 @@ namespace EyeGazeUserControls
             this.InitializeComponent();
             _theText = new StringBuilder();
 
-            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+            //GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
                 _gazePointer = new GazePointer(this);
                 _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
-            });
+            //});
         }
 
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)

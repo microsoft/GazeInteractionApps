@@ -38,10 +38,10 @@ namespace Memory
 
             Loaded += MainPage_Loaded;
 
-            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+            //GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
                 _gazePointer = new GazePointer(this);
                 _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
-            });
+            //});
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
