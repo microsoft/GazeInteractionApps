@@ -116,8 +116,7 @@ namespace EyeControlToolkitSettings
 
             var result = new ValueSet();
 
-            // TODO load valueset from settings
-            //GazeSettingsHelpers.ValueSetFromGazeSettings(_gazeSettings, result);
+            GazeSettingsHelpers.ValueSetFromLocalSettings(result);
 
             await args.Request.SendResponseAsync(result);
             messageDeferral.Complete();
