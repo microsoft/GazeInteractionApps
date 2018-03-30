@@ -7,8 +7,6 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation.Collections;
-using Windows.Storage;
-using Microsoft.Research.Input.Gaze;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -116,7 +114,7 @@ namespace EyeControlToolkitSettings
 
             var result = new ValueSet();
 
-            GazeSettingsHelpers.ValueSetFromLocalSettings(result);
+            GazeSettings.ValueSetFromLocalSettings(result);
 
             await args.Request.SendResponseAsync(result);
             messageDeferral.Complete();

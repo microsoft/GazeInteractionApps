@@ -2,10 +2,7 @@
 //See LICENSE in the project root for license information.
 
 using Microsoft.Research.Input.Gaze;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
 namespace EyeControlToolkitSettings
@@ -23,7 +20,7 @@ namespace EyeControlToolkitSettings
             InitializeComponent();
 
             var localSettings = new ValueSet();
-            GazeSettingsHelpers.ValueSetFromLocalSettings(localSettings);
+            GazeSettings.ValueSetFromLocalSettings(localSettings);
 
             _gazePointer = new GazePointer(this);
             _gazePointer.LoadSettings(localSettings);
