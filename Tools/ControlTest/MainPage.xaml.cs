@@ -4,7 +4,7 @@
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Research.Input.Gaze;
+using Microsoft.Toolkit.UWP.Input.Gaze;
 using Windows.UI.Popups;
 
 namespace ControlTest

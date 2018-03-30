@@ -7,7 +7,7 @@ using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Research.Input.Gaze;
+using Microsoft.Toolkit.UWP.Input.Gaze;
 
 namespace SeeSaw
 {

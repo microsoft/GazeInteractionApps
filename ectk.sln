@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.Research.Input.Gaze", "Microsoft.Research.Input.Gaze\Microsoft.Research.Input.Gaze.vcxproj", "{A5E98964-45B1-442D-A07A-298A3221D81E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.Toolkit.UWP.Input.Gaze", "Microsoft.Toolkit.UWP.Input.Gaze\Microsoft.Toolkit.UWP.Input.Gaze.vcxproj", "{A5E98964-45B1-442D-A07A-298A3221D81E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeInputTest", "Tools\GazeInputTest\GazeInputTest.csproj", "{A122EA02-4DE7-413D-BFBF-AF7DFC668DD6}"
 	ProjectSection(ProjectDependencies) = postProject
