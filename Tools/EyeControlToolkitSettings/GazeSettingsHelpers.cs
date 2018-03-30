@@ -7,20 +7,20 @@ namespace EyeControlToolkitSettings
     {
         public static void ValueSetFromLocalSettings(ValueSet output)
         {
-            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter_Beta"] != null) { output["OneEuroFilter_Beta"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter_Beta"]; }
-            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter_Cutoff"] != null) { output["OneEuroFilter_Cutoff"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter_Cutoff"]; }
-            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter_Velocity_Cutoff"] != null) { output["OneEuroFilter_Velocity_Cutoff"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter_Velocity_Cutoff"]; }
+            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Beta"] != null) { output["OneEuroFilter.Beta"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Beta"]; }
+            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Cutoff"] != null) { output["OneEuroFilter.Cutoff"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Cutoff"]; }
+            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter.VelocityCutoff"] != null) { output["OneEuroFilter.VelocityCutoff"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter.VelocityCutoff"]; }
 
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer_Fixation_Delay"] != null) { output["GazePointer_Fixation_Delay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer_Fixation_Delay"]; }
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer_Dwell_Delay"] != null) { output["GazePointer_Dwell_Delay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer_Dwell_Delay"]; }
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer_Repeat_Delay"] != null) { output["GazePointer_Repeat_Delay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer_Repeat_Delay"]; }
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer_Enter_Exit_Delay"] != null) { output["GazePointer_Enter_Exit_Delay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer_Enter_Exit_Delay"]; }
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer_Max_History_Duration"] != null) { output["GazePointer_Max_History_Duration"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer_Max_History_Duration"]; }
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer_Max_Single_Sample_Duration"] != null) { output["GazePointer_Max_Single_Sample_Duration"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer_Max_Single_Sample_Duration"]; }
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer_Gaze_Idle_Time"] != null) { output["GazePointer_Gaze_Idle_Time"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer_Gaze_Idle_Time"]; }
+            if (ApplicationData.Current.LocalSettings.Values["GazePointer.FixationDelay"] != null) { output["GazePointer.FixationDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.FixationDelay"]; }
+            if (ApplicationData.Current.LocalSettings.Values["GazePointer.DwellDelay"] != null) { output["GazePointer.DwellDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.DwellDelay"]; }
+            if (ApplicationData.Current.LocalSettings.Values["GazePointer.RepeatDelay"] != null) { output["GazePointer.RepeatDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.RepeatDelay"]; }
+            if (ApplicationData.Current.LocalSettings.Values["GazePointer.EnterExitDelay"] != null) { output["GazePointer.EnterExitDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.EnterExitDelay"]; }
+            if (ApplicationData.Current.LocalSettings.Values["GazePointer.MaxHistoryDuration"] != null) { output["GazePointer.MaxHistoryDuration"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.MaxHistoryDuration"]; }
+            if (ApplicationData.Current.LocalSettings.Values["GazePointer.MaxSingleSampleDuration"] != null) { output["GazePointer.MaxSingleSampleDuration"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.MaxSingleSampleDuration"]; }
+            if (ApplicationData.Current.LocalSettings.Values["GazePointer.GazeIdleTime"] != null) { output["GazePointer.GazeIdleTime"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.GazeIdleTime"]; }
 
-            if (ApplicationData.Current.LocalSettings.Values["GazeCursor_Cursor_Radius"] != null) { output["GazeCursor_Cursor_Radius"] = (int)ApplicationData.Current.LocalSettings.Values["GazeCursor_Cursor_Radius"]; }
-            if (ApplicationData.Current.LocalSettings.Values["GazeCursor_Cursor_Visibility"] != null) { output["GazeCursor_Cursor_Visibility"] = (bool)ApplicationData.Current.LocalSettings.Values["GazeCursor_Cursor_Visibility"]; }
+            if (ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorRadius"] != null) { output["GazeCursor.CursorRadius"] = (int)ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorRadius"]; }
+            if (ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorVisibility"] != null) { output["GazeCursor.CursorVisibility"] = (bool)ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorVisibility"]; }
         }
     }
 }

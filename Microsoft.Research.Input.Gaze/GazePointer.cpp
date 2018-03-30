@@ -55,19 +55,19 @@ void GazePointer::LoadSettings(ValueSet^ settings)
 
     // TODO Add logic to protect against missing settings
 
-    _defaultInvokeParams->Insert(GazePointerState::Fixation, (int)(settings->Lookup("GazePointer_Fixation_Delay")));
-    _defaultInvokeParams->Insert(GazePointerState::Dwell, (int)(settings->Lookup("GazePointer_Dwell_Delay")));
-    _defaultInvokeParams->Insert(GazePointerState::DwellRepeat, (int)(settings->Lookup("GazePointer_Repeat_Delay")));
-    _defaultInvokeParams->Insert(GazePointerState::Enter, (int)(settings->Lookup("GazePointer_Enter_Exit_Delay")));
-    _defaultInvokeParams->Insert(GazePointerState::Exit, (int)(settings->Lookup("GazePointer_Enter_Exit_Delay")));
+    _defaultInvokeParams->Insert(GazePointerState::Fixation, (int)(settings->Lookup("GazePointer.FixationDelay")));
+    _defaultInvokeParams->Insert(GazePointerState::Dwell, (int)(settings->Lookup("GazePointer.DwellDelay")));
+    _defaultInvokeParams->Insert(GazePointerState::DwellRepeat, (int)(settings->Lookup("GazePointer.RepeatDelay")));
+    _defaultInvokeParams->Insert(GazePointerState::Enter, (int)(settings->Lookup("GazePointer.EnterExitDelay")));
+    _defaultInvokeParams->Insert(GazePointerState::Exit, (int)(settings->Lookup("GazePointer.EnterExitDelay")));
 
     // TODO need to set fixation and dwell for all elements
-    SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, (int)(settings->Lookup("GazePointer_Fixation_Delay")));
-    SetElementStateDelay(_offScreenElement, GazePointerState::Dwell, (int)(settings->Lookup("GazePointer_Dwell_Delay")));
+    SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, (int)(settings->Lookup("GazePointer.FixationDelay")));
+    SetElementStateDelay(_offScreenElement, GazePointerState::Dwell, (int)(settings->Lookup("GazePointer.DwellDelay")));
 
-    EyesOffDelay = (int)(settings->Lookup("GazePointer_Gaze_Idle_Time"));
+    EyesOffDelay = (int)(settings->Lookup("GazePointer.GazeIdleTime"));
 
-    _maxHistoryTime = (int)(settings->Lookup("GazePointer_Max_History_Duration"));
+    _maxHistoryTime = (int)(settings->Lookup("GazePointer.MaxHistoryDuration"));
 }
 
 void GazePointer::InitializeHistogram()

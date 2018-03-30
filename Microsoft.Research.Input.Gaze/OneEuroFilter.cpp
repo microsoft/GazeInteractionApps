@@ -14,9 +14,9 @@ BEGIN_NAMESPACE_GAZE_INPUT
 OneEuroFilter::OneEuroFilter()
 {
     _lastTimestamp = 0;
-    Beta = EUROFILTER_DEFAULT_BETA;
-    Cutoff = EUROFILTER_DEFAULT_CUTOFF;
-    VelocityCutoff = EUROFILTER_DEFAULT_VELOCITY_CUTOFF;
+    Beta = ONEEUROFILTER_DEFAULT_BETA;
+    Cutoff = ONEEUROFILTER_DEFAULT_CUTOFF;
+    VelocityCutoff = ONEEUROFILTER_DEFAULT_VELOCITY_CUTOFF;
 }
 
 OneEuroFilter::OneEuroFilter(float cutoff, float beta)
@@ -24,7 +24,7 @@ OneEuroFilter::OneEuroFilter(float cutoff, float beta)
     _lastTimestamp = 0;
     Beta = beta;
     Cutoff = cutoff;
-    VelocityCutoff = EUROFILTER_DEFAULT_VELOCITY_CUTOFF;
+    VelocityCutoff = ONEEUROFILTER_DEFAULT_VELOCITY_CUTOFF;
 }
 
 GazeEventArgs^ OneEuroFilter::Update(GazeEventArgs^ args)
@@ -97,17 +97,17 @@ float OneEuroFilter::Alpha(float rate, float cutoff)
 
 void OneEuroFilter::LoadSettings(ValueSet^ settings)
 {
-    if (settings->HasKey("OneEuroFilter_Beta"))
+    if (settings->HasKey("OneEuroFilter.Beta"))
     {
-        Beta = (float)(settings->Lookup("OneEuroFilter_Beta"));
+        Beta = (float)(settings->Lookup("OneEuroFilter.Beta"));
     }
-    if (settings->HasKey("OneEuroFilter_Cutoff"))
+    if (settings->HasKey("OneEuroFilter.Cutoff"))
     {
-        Cutoff = (float)(settings->Lookup("OneEuroFilter_Cutoff"));
+        Cutoff = (float)(settings->Lookup("OneEuroFilter.Cutoff"));
     }
-    if (settings->HasKey("OneEuroFilter_Velocity_Cutoff"))
+    if (settings->HasKey("OneEuroFilter.VelocityCutoff"))
     {
-        VelocityCutoff = (float)(settings->Lookup("OneEuroFilter_Velocity_Cutoff"));
+        VelocityCutoff = (float)(settings->Lookup("OneEuroFilter.VelocityCutoff"));
     }
 }
 

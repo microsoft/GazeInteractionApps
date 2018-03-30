@@ -62,13 +62,13 @@ void GazeCursor::IsCursorVisible::set(bool value)
 
 void GazeCursor::LoadSettings(ValueSet^ settings)
 {
-    if (settings->HasKey("GazeCursor_Cursor_Radius"))
+    if (settings->HasKey("GazeCursor.CursorRadius"))
     {
-        CursorRadius = (int)(settings->Lookup("GazeCursor_Cursor_Radius"));
+        CursorRadius = (int)(settings->Lookup("GazeCursor.CursorRadius"));
     }
-    if (settings->HasKey("GazeCursor_Cursor_Visibility"))
+    if (settings->HasKey("GazeCursor.CursorVisibility"))
     {
-        IsCursorVisible = (bool)(settings->Lookup("GazeCursor_Cursor_Visibility"));
+        IsCursorVisible = (bool)(settings->Lookup("GazeCursor.CursorVisibility"));
     }
 }
 

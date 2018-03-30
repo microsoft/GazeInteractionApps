@@ -10,9 +10,9 @@ using namespace Windows::Foundation::Collections;
 
 BEGIN_NAMESPACE_GAZE_INPUT
 
-const float EUROFILTER_DEFAULT_BETA = 5.0f;
-const float EUROFILTER_DEFAULT_CUTOFF = 0.1f;
-const float EUROFILTER_DEFAULT_VELOCITY_CUTOFF = 1.0f;
+const float ONEEUROFILTER_DEFAULT_BETA = 5.0f;
+const float ONEEUROFILTER_DEFAULT_CUTOFF = 0.1f;
+const float ONEEUROFILTER_DEFAULT_VELOCITY_CUTOFF = 1.0f;
 
 public ref class LowpassFilter sealed
 {
