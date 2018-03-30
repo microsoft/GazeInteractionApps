@@ -3,7 +3,7 @@
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Research.Input.Gaze;
+using Microsoft.Toolkit.UWP.Input.Gaze;
 
 namespace GazeInputTest
 {

@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using Windows.Data.Json;
 using Windows.UI;
-using Microsoft.Research.Input.Gaze;
+using Microsoft.Toolkit.UWP.Input.Gaze;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 

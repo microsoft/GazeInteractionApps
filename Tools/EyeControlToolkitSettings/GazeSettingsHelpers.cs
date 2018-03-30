@@ -1,4 +1,4 @@
-﻿using Microsoft.Research.Input.Gaze;
+﻿using Microsoft.Toolkit.UWP.Input.Gaze;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 

@@ -2,7 +2,7 @@
 //See LICENSE in the project root for license information.
 
 using System.Collections.Generic;
-using Microsoft.Research.Input.Gaze;
+using Microsoft.Toolkit.UWP.Input.Gaze;
 namespace SeeSaw
 {
     public class SeeSawData
