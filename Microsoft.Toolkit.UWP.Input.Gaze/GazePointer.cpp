@@ -55,19 +55,50 @@ void GazePointer::LoadSettings(ValueSet^ settings)
 
     // TODO Add logic to protect against missing settings
 
-    _defaultInvokeParams->Insert(GazePointerState::Fixation, (int)(settings->Lookup("GazePointer.FixationDelay")));
-    _defaultInvokeParams->Insert(GazePointerState::Dwell, (int)(settings->Lookup("GazePointer.DwellDelay")));
-    _defaultInvokeParams->Insert(GazePointerState::DwellRepeat, (int)(settings->Lookup("GazePointer.RepeatDelay")));
-    _defaultInvokeParams->Insert(GazePointerState::Enter, (int)(settings->Lookup("GazePointer.EnterExitDelay")));
-    _defaultInvokeParams->Insert(GazePointerState::Exit, (int)(settings->Lookup("GazePointer.EnterExitDelay")));
+    if (settings->HasKey("GazePointer.FixationDelay"))
+    {
+        _defaultInvokeParams->Insert(GazePointerState::Fixation, (int)(settings->Lookup("GazePointer.FixationDelay")));
+    }
+
+    if (settings->HasKey("GazePointer.DwellDelay"))
+    {
+        _defaultInvokeParams->Insert(GazePointerState::Dwell, (int)(settings->Lookup("GazePointer.DwellDelay")));
+    }
+
+    if (settings->HasKey("GazePointer.RepeatDelay"))
+    {
+        _defaultInvokeParams->Insert(GazePointerState::DwellRepeat, (int)(settings->Lookup("GazePointer.RepeatDelay")));
+    }
+
+    if (settings->HasKey("GazePointer.EnterExitDelay"))
+    {
+        _defaultInvokeParams->Insert(GazePointerState::Enter, (int)(settings->Lookup("GazePointer.EnterExitDelay")));
+    }
+
+    if (settings->HasKey("GazePointer.EnterExitDelay"))
+    {
+        _defaultInvokeParams->Insert(GazePointerState::Exit, (int)(settings->Lookup("GazePointer.EnterExitDelay")));
+    }
 
     // TODO need to set fixation and dwell for all elements
-    SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, (int)(settings->Lookup("GazePointer.FixationDelay")));
-    SetElementStateDelay(_offScreenElement, GazePointerState::Dwell, (int)(settings->Lookup("GazePointer.DwellDelay")));
+    if (settings->HasKey("GazePointer.FixationDelay"))
+    {
+        SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, (int)(settings->Lookup("GazePointer.FixationDelay")));
+    }
+    if (settings->HasKey("GazePointer.DwellDelay"))
+    {
+        SetElementStateDelay(_offScreenElement, GazePointerState::Dwell, (int)(settings->Lookup("GazePointer.DwellDelay")));
+    }
 
-    EyesOffDelay = (int)(settings->Lookup("GazePointer.GazeIdleTime"));
+    if (settings->HasKey("GazePointer.GazeIdleTime"))
+    {
+        EyesOffDelay = (int)(settings->Lookup("GazePointer.GazeIdleTime"));
+    }
 
-    _maxHistoryTime = (int)(settings->Lookup("GazePointer.MaxHistoryDuration"));
+    if (settings->HasKey("GazePointer.MaxHistoryDuration"))
+    {
+        _maxHistoryTime = (int)(settings->Lookup("GazePointer.MaxHistoryDuration"));
+    }
 }
 
 void GazePointer::InitializeHistogram()
