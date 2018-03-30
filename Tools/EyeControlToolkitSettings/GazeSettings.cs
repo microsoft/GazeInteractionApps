@@ -25,7 +25,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _OneEuroFilter_Beta = 0f;
+                        _OneEuroFilter_Beta = 5.0f;
                     }
                 }
                 return _OneEuroFilter_Beta.Value;
@@ -50,7 +50,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _OneEuroFilter_Cutoff = 0f;
+                        _OneEuroFilter_Cutoff = 0.1f;
                     }
                 }
                 return _OneEuroFilter_Cutoff.Value;
@@ -75,7 +75,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _OneEuroFilter_VelocityCutoff = 0f;
+                        _OneEuroFilter_VelocityCutoff = 1.0f;
                     }
                 }
                 return _OneEuroFilter_VelocityCutoff.Value;
@@ -102,7 +102,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_FixationDelay = 0;
+                        _GazePointer_FixationDelay = 400000;
                     }
                 }
                 return _GazePointer_FixationDelay.Value;
@@ -129,7 +129,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_DwellDelay = 0;
+                        _GazePointer_DwellDelay = 800000;
                     }
                 }
                 return _GazePointer_DwellDelay.Value;
@@ -156,7 +156,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_RepeatDelay = 0;
+                        _GazePointer_RepeatDelay = int.MaxValue;
                     }
                 }
                 return _GazePointer_RepeatDelay.Value;
@@ -183,7 +183,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_EnterExitDelay = 0;
+                        _GazePointer_EnterExitDelay = 50000;
                     }
                 }
                 return _GazePointer_EnterExitDelay.Value;
@@ -210,7 +210,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_MaxHistoryDuration = 0;
+                        _GazePointer_MaxHistoryDuration = 3000000;
                     }
                 }
                 return _GazePointer_MaxHistoryDuration.Value;
@@ -264,7 +264,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_GazeIdleTime = 0;
+                        _GazePointer_GazeIdleTime = 100000;
                     }
                 }
                 return _GazePointer_GazeIdleTime.Value;
@@ -293,7 +293,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazeCursor_CursorRadius = 0;
+                        _GazeCursor_CursorRadius = 5;
                     }
                 }
                 return _GazeCursor_CursorRadius.Value;
