@@ -144,9 +144,9 @@
       <Project>{5234acc2-814b-4232-8647-7142e74b9295}</Project>
       <Name>EyeGazeUserControls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Microsoft.Research.Input.Gaze\Microsoft.Research.Input.Gaze.vcxproj">
+    <ProjectReference Include="..\..\Microsoft.Toolkit.UWP.Input.Gaze\Microsoft.Toolkit.UWP.Input.Gaze.vcxproj">
       <Project>{a5e98964-45b1-442d-a07a-298a3221d81e}</Project>
-      <Name>Microsoft.Research.Input.Gaze</Name>
+      <Name>Microsoft.Toolkit.UWP.Input.Gaze</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

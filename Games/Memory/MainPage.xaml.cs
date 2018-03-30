@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Research.Input.Gaze;
+using Microsoft.Toolkit.UWP.Input.Gaze;
 using Windows.Foundation.Collections;
 
 namespace Memory

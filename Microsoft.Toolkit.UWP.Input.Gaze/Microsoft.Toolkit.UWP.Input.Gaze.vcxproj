@@ -29,7 +29,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{a5e98964-45b1-442d-a07a-298a3221d81e}</ProjectGuid>
     <Keyword>WindowsRuntimeComponent</Keyword>
-    <RootNamespace>Microsoft.Research.Input.Gaze</RootNamespace>
+    <RootNamespace>Microsoft.Toolkit.UWP.Input.Gaze</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>

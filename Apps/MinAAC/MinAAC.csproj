@@ -138,9 +138,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Research.Input.Gaze, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Toolkit.UWP.Input.Gaze, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\x64\Debug\Microsoft.Research.Input.Gaze\Microsoft.Research.Input.Gaze.winmd</HintPath>
+      <HintPath>..\..\x64\Debug\Microsoft.Toolkit.UWP.Input.Gaze\Microsoft.Toolkit.UWP.Input.Gaze.winmd</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -1,7 +1,7 @@
 ﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
 //See LICENSE in the project root for license information.
 
-using Microsoft.Research.Input.Gaze;
+using Microsoft.Toolkit.UWP.Input.Gaze;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml.Controls;
 

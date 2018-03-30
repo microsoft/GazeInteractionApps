@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
-using Microsoft.Research.Input.Gaze;
+using Microsoft.Toolkit.UWP.Input.Gaze;
 
 namespace SeeSaw
 {
