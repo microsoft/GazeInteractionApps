@@ -3,10 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Toolkit.UWP.Input.Gaze;
+using Windows.Foundation.Collections;
 
 namespace Memory
 {
@@ -38,8 +38,10 @@ namespace Memory
 
             Loaded += MainPage_Loaded;
 
-            GazeSettings.RetrieveSharedSettings(GazeSettings.Instance).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+            var sharedSettings = new ValueSet();
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
                 _gazePointer = new GazePointer(this);
+                _gazePointer.LoadSettings(sharedSettings);
                 _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
             });
         }

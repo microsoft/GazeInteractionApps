@@ -7,10 +7,10 @@
 #include "IGazeFilter.h"
 #include <map>
 #include "GazeCursor.h"
-#include "GazeSettings.h"
 
 using namespace Platform::Collections;
 using namespace Windows::Foundation;
+using namespace Windows::Foundation::Collections;
 using namespace Windows::Devices::Enumeration;
 using namespace Windows::Devices::HumanInterfaceDevice;
 using namespace Windows::UI::Core;
@@ -19,6 +19,16 @@ using namespace Windows::Devices::Input::Preview;
 namespace Shapes = Windows::UI::Xaml::Shapes;
 
 BEGIN_NAMESPACE_GAZE_INPUT
+
+// units in microseconds
+const int DEFAULT_FIXATION_DELAY = 400000;
+const int DEFAULT_DWELL_DELAY = 800000;
+const int DEFAULT_REPEAT_DELAY = MAXINT;
+const int DEFAULT_ENTER_EXIT_DELAY = 50000;
+const int DEFAULT_MAX_HISTORY_DURATION = 3000000;
+const int MAX_SINGLE_SAMPLE_DURATION = 100000;
+
+const int GAZE_IDLE_TIME = 2500000;
 
 public enum class GazePointerState
 {
@@ -93,6 +103,8 @@ public ref class GazePointer sealed
 public:
     GazePointer(UIElement^ root);
     virtual ~GazePointer();
+
+    void LoadSettings(ValueSet^ settings);
 
     property GazeIsInvokableDelegate^ IsInvokableImpl
     {
@@ -219,8 +231,6 @@ private:
     CoreDispatcher^                     _coreDispatcher;
     GazeIsInvokableDelegate^            _isInvokableImpl;
     GazeInvokeTargetDelegate^           _invokeTargetImpl;
-
-    GazeSettings^                       _gazeSettings;
 };
 
 END_NAMESPACE_GAZE_INPUT
