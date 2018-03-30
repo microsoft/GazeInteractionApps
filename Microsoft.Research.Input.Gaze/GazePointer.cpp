@@ -2,7 +2,6 @@
 //See LICENSE in the project root for license information.
 
 #include "pch.h"
-#include "OneEuroFilter.h"
 #include "GazePointer.h"
 #include <xstddef>
 #include <varargs.h>
