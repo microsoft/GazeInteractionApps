@@ -29,33 +29,32 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">OneEuroFilter_Beta</TextBlock>
-        <TextBox x:Name="OneEuroFilter_Beta_Textbox" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox x:Name="OneEuroFilter_Beta_Textbox" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.OneEuroFilter_Beta, Mode=TwoWay}" />
         <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">OneEuroFilter_Cutoff</TextBlock>
-        <TextBox x:Name="OneEuroFilter_Cutoff_Textbox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox x:Name="OneEuroFilter_Cutoff_Textbox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.OneEuroFilter_Cutoff, Mode=TwoWay}" />
         <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">OneEuroFilter_Velocity_Cutoff</TextBlock>
-        <TextBox x:Name="OneEuroFilter_Velocity_Cutoff_Textbox" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox x:Name="OneEuroFilter_Velocity_Cutoff_Textbox" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.OneEuroFilter_Velocity_Cutoff, Mode=TwoWay}" />
 
         <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointer_Fixation_Delay</TextBlock>
-        <TextBox x:Name="GazePointer_Fixation_Delay_Textbox" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox x:Name="GazePointer_Fixation_Delay_Textbox" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointer_Fixation_Delay, Mode=TwoWay}" />
         <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointer_Dwell_Delay</TextBlock>
-        <TextBox x:Name="GazePointer_Dwell_Delay_Textbox" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox x:Name="GazePointer_Dwell_Delay_Textbox" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointer_Dwell_Delay, Mode=TwoWay}" />
         <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointer_Repeat_Delay</TextBlock>
-        <TextBox x:Name="GazePointer_Repeat_Delay_Textbox" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox x:Name="GazePointer_Repeat_Delay_Textbox" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointer_Repeat_Delay, Mode=TwoWay}" />
         <TextBlock Grid.Row="6" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointer_Enter_Exit_Delay</TextBlock>
-        <TextBox x:Name="GazePointer_Enter_Exit_Delay_Textbox" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox x:Name="GazePointer_Enter_Exit_Delay_Textbox" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointer_Enter_Exit_Delay, Mode=TwoWay}" />
         <TextBlock Grid.Row="7" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointer_Max_History_Duration</TextBlock>
-        <TextBox x:Name="GazePointer_Max_History_Duration_Textbox" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox x:Name="GazePointer_Max_History_Duration_Textbox" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointer_Max_History_Duration, Mode=TwoWay}" />
         <TextBlock Grid.Row="8" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointer_Max_Single_Sample_Duration</TextBlock>
-        <TextBox x:Name="GazePointer_Max_Single_Sample_Duration_Textbox" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox x:Name="GazePointer_Max_Single_Sample_Duration_Textbox" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointer_Max_Single_Sample_Duration, Mode=TwoWay}" />
         <TextBlock Grid.Row="9" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointer_Gaze_Idle_Time</TextBlock>
-        <TextBox x:Name="GazePointer_Gaze_Idle_Time_Textbox" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox x:Name="GazePointer_Gaze_Idle_Time_Textbox" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointer_Gaze_Idle_Time, Mode=TwoWay}" />
 
         <TextBlock Grid.Row="10" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazeCursor_Cursor_Radius</TextBlock>
-        <TextBox x:Name="GazeCursor_Cursor_Radius_Textbox" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox x:Name="GazeCursor_Cursor_Radius_Textbox" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazeCursor_Cursor_Radius, Mode=TwoWay}" />
         <TextBlock Grid.Row="11" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazeCursor_Cursor_Visibility</TextBlock>
-        <TextBox x:Name="GazeCursor_Cursor_Visibility_Textbox" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <CheckBox x:Name="GazeCursor_Cursor_Visibility_Checkbox" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsChecked="{x:Bind GazeSettings.GazeCursor_Cursor_Visibility, Mode=TwoWay}" />
 
-        <Button x:Name="GetButton" Grid.Row="12" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Get" Click="GetButton_Click" />
-        <Button x:Name="SetButton" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Set" Click="SetButton_Click" />
+        <Button x:Name="ResetButton" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Reset" />
     </Grid>
 </Page>

@@ -7,8 +7,6 @@
 using namespace concurrency;
 using namespace Windows::ApplicationModel::AppService;
 using namespace Windows::Foundation;
-using namespace Windows::Foundation::Collections;
-using namespace Windows::Data::Json;
 
 BEGIN_NAMESPACE_GAZE_INPUT
 
