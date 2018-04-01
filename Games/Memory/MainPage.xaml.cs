@@ -1,10 +1,12 @@
-﻿using System;
+﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+//See LICENSE in the project root for license information.
+
+using System;
 using System.Collections.Generic;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using Microsoft.Toolkit.UWP.Input.Gaze;
+using Windows.Foundation.Collections;
 
 namespace Memory
 {
@@ -20,7 +22,7 @@ namespace Memory
         Button _firstButton;
         Button _secondButton;
         DispatcherTimer _flashTimer;
-        int _remaining = 16;
+        int _remaining;
         int _numMoves;
 
         public MainPage()
@@ -33,6 +35,13 @@ namespace Memory
             _flashTimer.Tick += OnFlashTimerTick;
 
             Loaded += MainPage_Loaded;
+
+            var sharedSettings = new ValueSet();
+            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+            //    _gazePointer = new GazePointer(this);
+            //    _gazePointer.LoadSettings(sharedSettings);
+            //    _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            //});
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -94,6 +103,7 @@ namespace Memory
             _firstButton = null;
             _secondButton = null;
             _numMoves = 0;
+            _remaining = 16;
 
             List<char> listChars = GetNewContent(8);
             List<Button> listButtons = GetButtonList();
@@ -148,7 +158,7 @@ namespace Memory
             }
         }
 
-        async void CheckGameCompletion()
+        void CheckGameCompletion()
         {
             if (_remaining > 0)
             {
@@ -156,11 +166,14 @@ namespace Memory
             }
 
             string message = $"Congratulations!! You solved it in {_numMoves} moves";
-            MessageDialog dlg = new MessageDialog(message);
-            await dlg.ShowAsync();
-
-            ResetBoard();
+            dialogText.Text = message;
+            dialogGrid.Visibility = Visibility.Visible;           
         }
 
+        private void dialogButton_Click(object sender, RoutedEventArgs e)
+        {
+            ResetBoard();
+            dialogGrid.Visibility = Visibility.Collapsed;
+        }
     }
 }

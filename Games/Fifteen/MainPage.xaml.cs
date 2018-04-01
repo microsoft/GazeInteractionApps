@@ -1,9 +1,12 @@
-﻿using System;
+﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+//See LICENSE in the project root for license information.
+
+using System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using Microsoft.Toolkit.UWP.Input.Gaze;
+using Windows.Foundation.Collections;
 
 namespace Fifteen
 {
@@ -23,8 +26,16 @@ namespace Fifteen
         public MainPage()
         {
             this.InitializeComponent();
+
             InitializeButtonArray();
             ResetBoard();
+
+            var sharedSettings = new ValueSet();
+            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+            //    _gazePointer = new GazePointer(this);
+            //    _gazePointer.LoadSettings(sharedSettings);
+            //    _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            //});
         }
 
         void InitializeButtonArray()
