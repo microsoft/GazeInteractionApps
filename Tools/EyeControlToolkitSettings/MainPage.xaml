@@ -18,146 +18,87 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">OneEuroFilterBeta</TextBlock>
-        <Grid Grid.Row="0" Grid.Column="1">
+        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center">GazePointer - Fixation Delay</TextBlock>
+        <Grid Grid.Row="0" Grid.Column="1" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="120" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="120" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="OneEuroFilterBeta_NudgeDown" Grid.Column="0" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="OneEuroFilterBeta_NudgeDown_Click" />
-            <TextBox x:Name="OneEuroFilterBeta_Textbox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.OneEuroFilterBeta, Mode=TwoWay}" />
-            <Button x:Name="OneEuroFilterBeta_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="OneEuroFilterBeta_NudgeUp_Click" />
+            <Button x:Name="GazePointerFixationDelay_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GazePointerFixationDelay_NudgeDown_Click" />
+            <TextBox x:Name="GazePointerFixationDelay_Textbox" Grid.Column="1" Height="80" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointerFixationDelay, Mode=TwoWay}" />
+            <Button x:Name="GazePointerFixationDelay_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GazePointerFixationDelay_NudgeUp_Click" />
         </Grid>
-        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">OneEuroFilterCutoff</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center">GazePointer - Dwell Delay</TextBlock>
         <Grid Grid.Row="1" Grid.Column="1" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="120" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="120" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="OneEuroFilterCutoff_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="OneEuroFilterCutoff_NudgeDown_Click" />
-            <TextBox x:Name="OneEuroFilterCutoff_Textbox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.OneEuroFilterCutoff, Mode=TwoWay}" />
-            <Button x:Name="OneEuroFilterCutoff_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="OneEuroFilterCutoff_NudgeUp_Click" />
+            <Button x:Name="GazePointerDwellDelay_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GazePointerDwellDelay_NudgeDown_Click" />
+            <TextBox x:Name="GazePointerDwellDelay_Textbox" Grid.Column="1" Height="80" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointerDwellDelay, Mode=TwoWay}" />
+            <Button x:Name="GazePointerDwellDelay_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GazePointerDwellDelay_NudgeUp_Click" />
         </Grid>
-        <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">OneEuroFilterVelocityCutoff</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center">GazePointer - Repeat Delay</TextBlock>
         <Grid Grid.Row="2" Grid.Column="1" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="120" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="120" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="OneEuroFilterVelocityCutoff_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="OneEuroFilterVelocityCutoff_NudgeDown_Click" />
-            <TextBox x:Name="OneEuroFilterVelocityCutoff_Textbox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.OneEuroFilterVelocityCutoff, Mode=TwoWay}" />
-            <Button x:Name="OneEuroFilterVelocityCutoff_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="OneEuroFilterVelocityCutoff_NudgeUp_Click" />
+            <Button x:Name="GazePointerRepeatDelay_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GazePointerRepeatDelay_NudgeDown_Click" />
+            <TextBox x:Name="GazePointerRepeatDelay_Textbox" Grid.Column="1" Height="80" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointerRepeatDelay, Mode=TwoWay}" />
+            <Button x:Name="GazePointerRepeatDelay_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GazePointerRepeatDelay_NudgeUp_Click" />
         </Grid>
-
-        <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointerFixationDelay</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center">GazePointer - Enter/Exit Delay</TextBlock>
         <Grid Grid.Row="3" Grid.Column="1" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="120" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="120" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="GazePointerFixationDelay_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerFixationDelay_NudgeDown_Click" />
-            <TextBox x:Name="GazePointerFixationDelay_Textbox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointerFixationDelay, Mode=TwoWay}" />
-            <Button x:Name="GazePointerFixationDelay_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerFixationDelay_NudgeUp_Click" />
+            <Button x:Name="GazePointerEnterExitDelay_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GazePointerEnterExitDelay_NudgeDown_Click" />
+            <TextBox x:Name="GazePointerEnterExitDelay_Textbox" Grid.Column="1" Height="80" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointerEnterExitDelay, Mode=TwoWay}" />
+            <Button x:Name="GazePointerEnterExitDelay_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GazePointerEnterExitDelay_NudgeUp_Click" />
         </Grid>
-        <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointerDwellDelay</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="0" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center">GazePointer - Gaze Idle Time</TextBlock>
         <Grid Grid.Row="4" Grid.Column="1" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="120" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="120" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="GazePointerDwellDelay_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerDwellDelay_NudgeDown_Click" />
-            <TextBox x:Name="GazePointerDwellDelay_Textbox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointerDwellDelay, Mode=TwoWay}" />
-            <Button x:Name="GazePointerDwellDelay_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerDwellDelay_NudgeUp_Click" />
-        </Grid>
-        <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointerRepeatDelay</TextBlock>
-        <Grid Grid.Row="5" Grid.Column="1" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
-            </Grid.ColumnDefinitions>
-            <Button x:Name="GazePointerRepeatDelay_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerRepeatDelay_NudgeDown_Click" />
-            <TextBox x:Name="GazePointerRepeatDelay_Textbox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointerRepeatDelay, Mode=TwoWay}" />
-            <Button x:Name="GazePointerRepeatDelay_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerRepeatDelay_NudgeUp_Click" />
-        </Grid>
-        <TextBlock Grid.Row="6" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointerEnterExitDelay</TextBlock>
-        <Grid Grid.Row="6" Grid.Column="1" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
-            </Grid.ColumnDefinitions>
-            <Button x:Name="GazePointerEnterExitDelay_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerEnterExitDelay_NudgeDown_Click" />
-            <TextBox x:Name="GazePointerEnterExitDelay_Textbox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointerEnterExitDelay, Mode=TwoWay}" />
-            <Button x:Name="GazePointerEnterExitDelay_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerEnterExitDelay_NudgeUp_Click" />
-        </Grid>
-        <TextBlock Grid.Row="7" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointerMaxHistoryDuration</TextBlock>
-        <Grid Grid.Row="7" Grid.Column="1" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
-            </Grid.ColumnDefinitions>
-            <Button x:Name="GazePointerMaxHistoryDuration_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerMaxHistoryDuration_NudgeDown_Click" />
-            <TextBox x:Name="GazePointerMaxHistoryDuration_Textbox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointerMaxHistoryDuration, Mode=TwoWay}" />
-            <Button x:Name="GazePointerMaxHistoryDuration_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerMaxHistoryDuration_NudgeUp_Click" />
-        </Grid>
-        <TextBlock Grid.Row="8" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointerMaxSingleSampleDuration</TextBlock>
-        <Grid Grid.Row="8" Grid.Column="1" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
-            </Grid.ColumnDefinitions>
-            <Button x:Name="GazePointerMaxSingleSampleDuration_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerMaxSingleSampleDuration_NudgeDown_Click" />
-            <TextBox x:Name="GazePointerMaxSingleSampleDuration_Textbox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointerMaxSingleSampleDuration, Mode=TwoWay}" />
-            <Button x:Name="GazePointerMaxSingleSampleDuration_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerMaxSingleSampleDuration_NudgeUp_Click" />
-        </Grid>
-        <TextBlock Grid.Row="9" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazePointerGazeIdleTime</TextBlock>
-        <Grid Grid.Row="9" Grid.Column="1" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
-            </Grid.ColumnDefinitions>
-            <Button x:Name="GazePointerGazeIdleTime_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerGazeIdleTime_NudgeDown_Click" />
-            <TextBox x:Name="GazePointerGazeIdleTime_Textbox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointerGazeIdleTime, Mode=TwoWay}" />
-            <Button x:Name="GazePointerGazeIdleTime_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazePointerGazeIdleTime_NudgeUp_Click" />
+            <Button x:Name="GazePointerGazeIdleTime_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GazePointerGazeIdleTime_NudgeDown_Click" />
+            <TextBox x:Name="GazePointerGazeIdleTime_Textbox" Grid.Column="1" Height="80" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazePointerGazeIdleTime, Mode=TwoWay}" />
+            <Button x:Name="GazePointerGazeIdleTime_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GazePointerGazeIdleTime_NudgeUp_Click" />
         </Grid>
 
-        <TextBlock Grid.Row="10" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazeCursorRadius</TextBlock>
-        <Grid Grid.Row="10" Grid.Column="1" >
+        <TextBlock Grid.Row="5" Grid.Column="0" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center">GazeCursor - Radius</TextBlock>
+        <Grid Grid.Row="5" Grid.Column="1" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="120" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="120" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="GazeCursorRadius_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazeCursorRadius_NudgeDown_Click" />
-            <TextBox x:Name="GazeCursorRadius_Textbox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazeCursorRadius, Mode=TwoWay}" />
-            <Button x:Name="GazeCursorRadius_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" Click="GazeCursorRadius_NudgeUp_Click" />
+            <Button x:Name="GazeCursorRadius_NudgeDown" Content="&#xE108;" FontFamily="Segoe UI Symbol" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GazeCursorRadius_NudgeDown_Click" />
+            <TextBox x:Name="GazeCursorRadius_Textbox" Grid.Column="1" Height="80" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind GazeSettings.GazeCursorRadius, Mode=TwoWay}" />
+            <Button x:Name="GazeCursorRadius_NudgeUp" Grid.Column="2" Content="&#xE109;" FontFamily="Segoe UI Symbol" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GazeCursorRadius_NudgeUp_Click" />
         </Grid>
-        <TextBlock Grid.Row="11" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">GazeCursorVisibility</TextBlock>
-        <CheckBox x:Name="GazeCursorVisibility_Checkbox" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{x:Bind GazeSettings.GazeCursorVisibility, Mode=TwoWay}" RenderTransformOrigin="0.5,0.5" >
+
+        <TextBlock Grid.Row="6" Grid.Column="0" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center">GazeCursor - Visibility</TextBlock>
+        <CheckBox x:Name="GazeCursorVisibility_Checkbox" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{x:Bind GazeSettings.GazeCursorVisibility, Mode=TwoWay}" RenderTransformOrigin="0.5,0.5" Content="Visible" >
             <CheckBox.RenderTransform>
                 <CompositeTransform ScaleX="3" ScaleY="3"/>
             </CheckBox.RenderTransform>
         </CheckBox>
 
-        <Button x:Name="ResetButton" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Reset" Click="ResetButton_Click" />
+        <Button x:Name="ResetButton" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Reset" Click="ResetButton_Click" />
     </Grid>
 </Page>
