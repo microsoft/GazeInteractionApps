@@ -36,5 +36,115 @@ namespace EyeControlToolkitSettings
                 _gazePointer.InvokeTarget(ea.HitTarget);
             }
         }
+
+        private void OneEuroFilter_Beta_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void OneEuroFilter_Beta_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void OneEuroFilter_Cutoff_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void OneEuroFilter_Cutoff_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void OneEuroFilter_VelocityCutoff_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void OneEuroFilter_VelocityCutoff_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_FixationDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_FixationDelay_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_DwellDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_DwellDelay_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_RepeatDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_RepeatDelay_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_EnterExitDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_EnterExitDelay_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_MaxHistoryDuration_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_MaxHistoryDuration_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_MaxSingleSampleDuration_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_MaxSingleSampleDuration_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_GazeIdleTime_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointer_GazeIdleTime_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazeCursor_CursorRadius_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazeCursor_CursorRadius_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
     }
 }
