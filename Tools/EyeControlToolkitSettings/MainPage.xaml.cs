@@ -39,52 +39,52 @@ namespace EyeControlToolkitSettings
 
         private void OneEuroFilter_Beta_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.OneEuroFilter_Beta -= 1f;
         }
 
         private void OneEuroFilter_Beta_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.OneEuroFilter_Beta += 1f;
         }
 
         private void OneEuroFilter_Cutoff_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.OneEuroFilter_Cutoff -= 0.01f;
         }
 
         private void OneEuroFilter_Cutoff_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.OneEuroFilter_Cutoff += 0.01f;
         }
 
         private void OneEuroFilter_VelocityCutoff_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.OneEuroFilter_VelocityCutoff -= 0.1f;
         }
 
         private void OneEuroFilter_VelocityCutoff_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.OneEuroFilter_VelocityCutoff += 0.1f;
         }
 
         private void GazePointer_FixationDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.GazePointer_FixationDelay -= 50000;
         }
 
         private void GazePointer_FixationDelay_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.GazePointer_FixationDelay += 50000;
         }
 
         private void GazePointer_DwellDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.GazePointer_DwellDelay -= 50000;
         }
 
         private void GazePointer_DwellDelay_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.GazePointer_DwellDelay -= 50000;
         }
 
         private void GazePointer_RepeatDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -99,12 +99,12 @@ namespace EyeControlToolkitSettings
 
         private void GazePointer_EnterExitDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.GazePointer_EnterExitDelay -= 50000;
         }
 
         private void GazePointer_EnterExitDelay_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.GazePointer_EnterExitDelay += 50000;
         }
 
         private void GazePointer_MaxHistoryDuration_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -129,22 +129,22 @@ namespace EyeControlToolkitSettings
 
         private void GazePointer_GazeIdleTime_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.GazePointer_GazeIdleTime -= 10000;
         }
 
         private void GazePointer_GazeIdleTime_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.GazePointer_GazeIdleTime += 10000;
         }
 
         private void GazeCursor_CursorRadius_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.GazeCursor_CursorRadius -= 5;
         }
 
         private void GazeCursor_CursorRadius_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            GazeSettings.GazeCursor_CursorRadius -= 5;
         }
     }
 }
