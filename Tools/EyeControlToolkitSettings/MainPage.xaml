@@ -158,6 +158,6 @@
             </CheckBox.RenderTransform>
         </CheckBox>
 
-        <Button x:Name="ResetButton" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Reset" />
+        <Button x:Name="ResetButton" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Reset" Click="ResetButton_Click" />
     </Grid>
 </Page>

@@ -3,6 +3,7 @@
 
 using Microsoft.Toolkit.UWP.Input.Gaze;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
 namespace EyeControlToolkitSettings
@@ -37,6 +38,7 @@ namespace EyeControlToolkitSettings
             }
         }
 
+        #region Button Handlers
         private void OneEuroFilter_Beta_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             GazeSettings.OneEuroFilter_Beta -= 1f;
@@ -146,5 +148,12 @@ namespace EyeControlToolkitSettings
         {
             GazeSettings.GazeCursor_CursorRadius += 5;
         }
+
+        private void ResetButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ApplicationData.Current.LocalSettings.Values.Clear();
+            GazeSettings.Reset();
+        }
+        #endregion
     }
 }

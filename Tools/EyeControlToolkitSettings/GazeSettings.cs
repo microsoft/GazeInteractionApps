@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.UWP.Input.Gaze;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.Foundation.Collections;
@@ -8,86 +9,31 @@ namespace EyeControlToolkitSettings
 {
     public class GazeSettings : INotifyPropertyChanged
     {
+        #region Default Values
+        // GazePointer
+        // units in microseconds
+        private const int DEFAULT_FIXATION_DELAY = 400000;
+        private const int DEFAULT_DWELL_DELAY = 800000;
+        private const int DEFAULT_REPEAT_DELAY = int.MaxValue;
+        private const int DEFAULT_ENTER_EXIT_DELAY = 50000;
+        private const int DEFAULT_MAX_HISTORY_DURATION = 3000000;
+        private const int MAX_SINGLE_SAMPLE_DURATION = 100000;
+        private const int GAZE_IDLE_TIME = 2500000;
+
+        // GazeCursor
+        private const int DEFAULT_CURSOR_RADIUS = 5;
+        private const bool DEFAULT_CURSOR_VISIBILITY = true;
+
+        // OneEuroFilter
+        private const float ONEEUROFILTER_DEFAULT_BETA = 5.0f;
+        private const float ONEEUROFILTER_DEFAULT_CUTOFF = 0.1f;
+        private const float ONEEUROFILTER_DEFAULT_VELOCITY_CUTOFF = 1.0f;
+
+        #endregion
+
         public GazePointer GazePointer = null;
 
         #region Properties
-        #region OneEuroFilter
-        float? _OneEuroFilter_Beta;
-        public float OneEuroFilter_Beta
-        {
-            get
-            {
-                if (!_OneEuroFilter_Beta.HasValue)
-                {
-                    if (ApplicationData.Current.LocalSettings.Values.Keys.Contains("OneEuroFilter.Beta"))
-                    {
-                        _OneEuroFilter_Beta = (float)(ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Beta"]);
-                    }
-                    else
-                    {
-                        _OneEuroFilter_Beta = 5.0f;
-                    }
-                }
-                return _OneEuroFilter_Beta.Value;
-            }
-            set
-            {
-                ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Beta"] = value;
-                SetProperty(ref _OneEuroFilter_Beta, value);
-            }
-        }
-
-        float? _OneEuroFilter_Cutoff;
-        public float OneEuroFilter_Cutoff
-        {
-            get
-            {
-                if (!_OneEuroFilter_Cutoff.HasValue)
-                {
-                    if (ApplicationData.Current.LocalSettings.Values.Keys.Contains("OneEuroFilter.Cutoff"))
-                    {
-                        _OneEuroFilter_Cutoff = (float)(ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Cutoff"]);
-                    }
-                    else
-                    {
-                        _OneEuroFilter_Cutoff = 0.1f;
-                    }
-                }
-                return _OneEuroFilter_Cutoff.Value;
-            }
-            set
-            {
-                ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Cutoff"] = value;
-                SetProperty(ref _OneEuroFilter_Cutoff, value);
-            }
-        }
-
-        float? _OneEuroFilter_VelocityCutoff;
-        public float OneEuroFilter_VelocityCutoff
-        {
-            get
-            {
-                if (!_OneEuroFilter_VelocityCutoff.HasValue)
-                {
-                    if (ApplicationData.Current.LocalSettings.Values.Keys.Contains("OneEuroFilter.VelocityCutoff"))
-                    {
-                        _OneEuroFilter_VelocityCutoff = (float)(ApplicationData.Current.LocalSettings.Values["OneEuroFilter.VelocityCutoff"]);
-                    }
-                    else
-                    {
-                        _OneEuroFilter_VelocityCutoff = 1.0f;
-                    }
-                }
-                return _OneEuroFilter_VelocityCutoff.Value;
-            }
-            set
-            {
-                ApplicationData.Current.LocalSettings.Values["OneEuroFilter.VelocityCutoff"] = value;
-                SetProperty(ref _OneEuroFilter_VelocityCutoff, value);
-            }
-        }
-        #endregion
-
         #region GazePointer
         int? _GazePointer_FixationDelay;
         public int GazePointer_FixationDelay
@@ -102,7 +48,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_FixationDelay = 400000;
+                        _GazePointer_FixationDelay = DEFAULT_FIXATION_DELAY;
                     }
                 }
                 return _GazePointer_FixationDelay.Value;
@@ -129,7 +75,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_DwellDelay = 800000;
+                        _GazePointer_DwellDelay = DEFAULT_DWELL_DELAY;
                     }
                 }
                 return _GazePointer_DwellDelay.Value;
@@ -156,7 +102,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_RepeatDelay = int.MaxValue;
+                        _GazePointer_RepeatDelay = DEFAULT_REPEAT_DELAY;
                     }
                 }
                 return _GazePointer_RepeatDelay.Value;
@@ -183,7 +129,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_EnterExitDelay = 50000;
+                        _GazePointer_EnterExitDelay = DEFAULT_ENTER_EXIT_DELAY;
                     }
                 }
                 return _GazePointer_EnterExitDelay.Value;
@@ -210,7 +156,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_MaxHistoryDuration = 3000000;
+                        _GazePointer_MaxHistoryDuration = DEFAULT_MAX_HISTORY_DURATION;
                     }
                 }
                 return _GazePointer_MaxHistoryDuration.Value;
@@ -237,7 +183,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_MaxSingleSampleDuration = 0;
+                        _GazePointer_MaxSingleSampleDuration = MAX_SINGLE_SAMPLE_DURATION;
                     }
                 }
                 return _GazePointer_MaxSingleSampleDuration.Value;
@@ -264,7 +210,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazePointer_GazeIdleTime = 100000;
+                        _GazePointer_GazeIdleTime = GAZE_IDLE_TIME;
                     }
                 }
                 return _GazePointer_GazeIdleTime.Value;
@@ -293,7 +239,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazeCursor_CursorRadius = 5;
+                        _GazeCursor_CursorRadius = DEFAULT_CURSOR_RADIUS;
                     }
                 }
                 return _GazeCursor_CursorRadius.Value;
@@ -325,7 +271,7 @@ namespace EyeControlToolkitSettings
                     }
                     else
                     {
-                        _GazeCursor_CursorVisibility = true;
+                        _GazeCursor_CursorVisibility = DEFAULT_CURSOR_VISIBILITY;
                     }
                 }
                 return _GazeCursor_CursorVisibility.Value;
@@ -343,15 +289,88 @@ namespace EyeControlToolkitSettings
             }
         }
         #endregion
+
+        #region OneEuroFilter
+        float? _OneEuroFilter_Beta;
+        public float OneEuroFilter_Beta
+        {
+            get
+            {
+                if (!_OneEuroFilter_Beta.HasValue)
+                {
+                    if (ApplicationData.Current.LocalSettings.Values.Keys.Contains("OneEuroFilter.Beta"))
+                    {
+                        _OneEuroFilter_Beta = (float)(ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Beta"]);
+                    }
+                    else
+                    {
+                        _OneEuroFilter_Beta = ONEEUROFILTER_DEFAULT_BETA;
+                    }
+                }
+                return _OneEuroFilter_Beta.Value;
+            }
+            set
+            {
+                ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Beta"] = value;
+                SetProperty(ref _OneEuroFilter_Beta, value);
+            }
+        }
+
+        float? _OneEuroFilter_Cutoff;
+        public float OneEuroFilter_Cutoff
+        {
+            get
+            {
+                if (!_OneEuroFilter_Cutoff.HasValue)
+                {
+                    if (ApplicationData.Current.LocalSettings.Values.Keys.Contains("OneEuroFilter.Cutoff"))
+                    {
+                        _OneEuroFilter_Cutoff = (float)(ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Cutoff"]);
+                    }
+                    else
+                    {
+                        _OneEuroFilter_Cutoff = ONEEUROFILTER_DEFAULT_CUTOFF;
+                    }
+                }
+                return _OneEuroFilter_Cutoff.Value;
+            }
+            set
+            {
+                ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Cutoff"] = value;
+                SetProperty(ref _OneEuroFilter_Cutoff, value);
+            }
+        }
+
+        float? _OneEuroFilter_VelocityCutoff;
+        public float OneEuroFilter_VelocityCutoff
+        {
+            get
+            {
+                if (!_OneEuroFilter_VelocityCutoff.HasValue)
+                {
+                    if (ApplicationData.Current.LocalSettings.Values.Keys.Contains("OneEuroFilter.VelocityCutoff"))
+                    {
+                        _OneEuroFilter_VelocityCutoff = (float)(ApplicationData.Current.LocalSettings.Values["OneEuroFilter.VelocityCutoff"]);
+                    }
+                    else
+                    {
+                        _OneEuroFilter_VelocityCutoff = ONEEUROFILTER_DEFAULT_VELOCITY_CUTOFF;
+                    }
+                }
+                return _OneEuroFilter_VelocityCutoff.Value;
+            }
+            set
+            {
+                ApplicationData.Current.LocalSettings.Values["OneEuroFilter.VelocityCutoff"] = value;
+                SetProperty(ref _OneEuroFilter_VelocityCutoff, value);
+            }
+        }
+        #endregion
         #endregion
 
-        #region Static Helpers
+        #region Helpers
         public static void ValueSetFromLocalSettings(ValueSet output)
         {
-            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Beta"] != null) { output["OneEuroFilter.Beta"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Beta"]; }
-            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Cutoff"] != null) { output["OneEuroFilter.Cutoff"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Cutoff"]; }
-            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter.VelocityCutoff"] != null) { output["OneEuroFilter.VelocityCutoff"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter.VelocityCutoff"]; }
-
             if (ApplicationData.Current.LocalSettings.Values["GazePointer.FixationDelay"] != null) { output["GazePointer.FixationDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.FixationDelay"]; }
             if (ApplicationData.Current.LocalSettings.Values["GazePointer.DwellDelay"] != null) { output["GazePointer.DwellDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.DwellDelay"]; }
             if (ApplicationData.Current.LocalSettings.Values["GazePointer.RepeatDelay"] != null) { output["GazePointer.RepeatDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.RepeatDelay"]; }
@@ -362,7 +381,30 @@ namespace EyeControlToolkitSettings
 
             if (ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorRadius"] != null) { output["GazeCursor.CursorRadius"] = (int)ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorRadius"]; }
             if (ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorVisibility"] != null) { output["GazeCursor.CursorVisibility"] = (bool)ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorVisibility"]; }
+
+            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Beta"] != null) { output["OneEuroFilter.Beta"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Beta"]; }
+            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Cutoff"] != null) { output["OneEuroFilter.Cutoff"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Cutoff"]; }
+            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter.VelocityCutoff"] != null) { output["OneEuroFilter.VelocityCutoff"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter.VelocityCutoff"]; }
         }
+
+        public void Reset()
+        {
+            GazePointer_FixationDelay = DEFAULT_FIXATION_DELAY;
+            GazePointer_DwellDelay = DEFAULT_DWELL_DELAY;
+            GazePointer_RepeatDelay = DEFAULT_REPEAT_DELAY;
+            GazePointer_EnterExitDelay = DEFAULT_ENTER_EXIT_DELAY;
+            GazePointer_MaxHistoryDuration = DEFAULT_MAX_HISTORY_DURATION;
+            GazePointer_MaxSingleSampleDuration = MAX_SINGLE_SAMPLE_DURATION;
+            GazePointer_GazeIdleTime = GAZE_IDLE_TIME;
+
+            GazeCursor_CursorRadius = DEFAULT_CURSOR_RADIUS;
+            GazeCursor_CursorVisibility = DEFAULT_CURSOR_VISIBILITY;
+
+            OneEuroFilter_Beta = ONEEUROFILTER_DEFAULT_BETA;
+            OneEuroFilter_Cutoff = ONEEUROFILTER_DEFAULT_CUTOFF;
+            OneEuroFilter_VelocityCutoff = ONEEUROFILTER_DEFAULT_VELOCITY_CUTOFF;
+        }
+
         #endregion
 
         #region INotifyPropertyChanged
