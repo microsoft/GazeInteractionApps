@@ -7,6 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Toolkit.UWP.Input.Gaze;
 using Windows.Foundation.Collections;
+using Windows.Foundation;
 
 namespace Memory
 {
@@ -37,11 +38,10 @@ namespace Memory
             Loaded += MainPage_Loaded;
 
             var sharedSettings = new ValueSet();
-            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
-            //    _gazePointer = new GazePointer(this);
-            //    _gazePointer.LoadSettings(sharedSettings);
-            //    _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
-            //});
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+                var gazePointer = GazeApi.GetGazePointer(this);
+                gazePointer.LoadSettings(sharedSettings);
+            });
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)

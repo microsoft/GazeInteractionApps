@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Controls;
 using Microsoft.Toolkit.UWP.Input.Gaze;
 using Windows.UI.Popups;
 using Windows.Foundation.Collections;
+using Windows.Foundation;
 
 namespace ControlTest
 {
@@ -15,7 +16,6 @@ namespace ControlTest
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        GazePointer _gazePointer;
         uint _button1ClickCount = 0;
         uint _togglebutton1ClickCount = 0;
 
@@ -24,19 +24,10 @@ namespace ControlTest
             this.InitializeComponent();
 
             var sharedSettings = new ValueSet();
-            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
-            //    _gazePointer = new GazePointer(this);
-            //    _gazePointer.LoadSettings(sharedSettings);
-            //    _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
-            //});
-        }
-
-        private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
-        {
-            if (ea.PointerState == GazePointerState.Dwell)
-            {
-                _gazePointer.InvokeTarget(ea.HitTarget);
-            }
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+                var gazePointer = GazeApi.GetGazePointer(this);
+                gazePointer.LoadSettings(sharedSettings);
+            });
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)

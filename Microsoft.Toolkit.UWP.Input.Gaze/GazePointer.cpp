@@ -22,6 +22,21 @@ static TimeSpan s_nonTimeSpan = { -123456 };
 
 static DependencyProperty^ GazePointerProperty = DependencyProperty::RegisterAttached("_GazePointer", GazePointer::typeid, Page::typeid, ref new PropertyMetadata(nullptr));
 
+GazePointer^ GazeApi::GetGazePointer(Page^ page)
+{
+	auto gazePointer = safe_cast<GazePointer^>(page->GetValue(GazePointerProperty));
+
+	if (gazePointer == nullptr)
+	{
+		gazePointer = ref new GazePointer(page);
+		page->SetValue(GazePointerProperty, gazePointer);
+
+		gazePointer->IsCursorVisible = safe_cast<bool>(page->GetValue(GazeApi::IsGazeCursorVisibleProperty));
+	}
+
+	return gazePointer;
+}
+
 static void OnIsGazeEnabledChanged(DependencyObject^ ob, DependencyPropertyChangedEventArgs^ args)
 {
     auto isGazeEnabled = safe_cast<bool>(args->NewValue);
@@ -29,14 +44,7 @@ static void OnIsGazeEnabledChanged(DependencyObject^ ob, DependencyPropertyChang
     {
         auto page = safe_cast<Page^>(ob);
 
-        auto gazePointer = safe_cast<GazePointer^>(ob->GetValue(GazePointerProperty));
-        if (gazePointer == nullptr)
-        {
-            gazePointer = ref new GazePointer(page);
-            ob->SetValue(GazePointerProperty, gazePointer);
-
-            gazePointer->IsCursorVisible = safe_cast<bool>(ob->GetValue(GazeApi::IsGazeCursorVisibleProperty));
-        }
+		auto gazePointer = GazeApi::GetGazePointer(page);
     }
     else
     {

@@ -22,6 +22,7 @@ BEGIN_NAMESPACE_GAZE_INPUT
 
 ref class GazePage;
 ref class GazeElement;
+ref class GazePointer;
 
 public ref class GazeApi sealed
 {
@@ -57,6 +58,8 @@ public:
     static void SetDwellRepeat(UIElement^ element, TimeSpan span);
     static void SetEnter(UIElement^ element, TimeSpan span);
     static void SetExit(UIElement^ element, TimeSpan span);
+
+	static GazePointer^ GetGazePointer(Page^ page);
 };
 
 // units in microseconds
