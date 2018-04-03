@@ -5,7 +5,7 @@
     xmlns:local="using:GazeInputTest"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:gaze="using:Microsoft.Research.Input.Gaze"
+    xmlns:gaze="using:Microsoft.Toolkit.UWP.Input.Gaze"
     gaze:GazeApi.IsGazeEnabled="True"
     mc:Ignorable="d" Margin="0,40,0,-40">
     

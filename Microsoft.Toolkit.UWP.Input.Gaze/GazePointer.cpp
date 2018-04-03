@@ -137,6 +137,7 @@ void GazePointer::LoadSettings(ValueSet^ settings)
 
     // TODO Add logic to protect against missing settings
 
+	/*
     if (settings->HasKey("GazePointer.FixationDelay"))
     {
         _defaultInvokeParams->Insert(GazePointerState::Fixation, (int)(settings->Lookup("GazePointer.FixationDelay")));
@@ -161,6 +162,7 @@ void GazePointer::LoadSettings(ValueSet^ settings)
     {
         _defaultInvokeParams->Insert(GazePointerState::Exit, (int)(settings->Lookup("GazePointer.EnterExitDelay")));
     }
+	*/
 
     // TODO need to set fixation and dwell for all elements
     if (settings->HasKey("GazePointer.FixationDelay"))
