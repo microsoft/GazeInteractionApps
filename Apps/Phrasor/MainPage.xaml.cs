@@ -110,21 +110,8 @@ namespace Phrasor
             }
         }
 
-        private async void CopyConfigFileMaybe()
-        {
-            var folder = ApplicationData.Current.LocalFolder;
-            var file = await folder.TryGetItemAsync(PhraseConfigFile);
-            if (file == null)
-            {
-                var configFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///" + PhraseConfigFile));
-                await configFile.CopyAsync(folder);
-            }
-        }
-
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            CopyConfigFileMaybe();
-
             if (_navParams != null)
             {
                 _rootNode = _navParams.RootNode;
@@ -202,7 +189,15 @@ namespace Phrasor
         private async void LoadConfigFile(string filename)
         {
             var folder = ApplicationData.Current.LocalFolder;
-            var file = await folder.GetFileAsync(PhraseConfigFile);
+
+            var file = await folder.TryGetItemAsync(PhraseConfigFile) as StorageFile;
+
+            if (file == null)
+            {
+                var configFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///" + PhraseConfigFile));
+                file = await configFile.CopyAsync(folder);
+            }
+
             var text = await FileIO.ReadTextAsync(file);
             var jsonRoot = JsonValue.Parse(text);
             _rootNode = LoadPhraseNode(jsonRoot, null);

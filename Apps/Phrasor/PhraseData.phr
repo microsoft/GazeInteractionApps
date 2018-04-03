@@ -1,10 +1,10 @@
 ﻿{
   "caption": "Talk37",
-  "isCategory":  "true",
+  "isCategory":  true,
   "items": [
     {
       "caption": "Simple Questions",
-      "isCategory": "true",
+      "isCategory": true,
       "items": [
         { "caption": "Yes" },
         { "caption": "No" },
@@ -14,7 +14,7 @@
     },
     {
       "caption": "Help",
-      "isCategory": "true",
+      "isCategory": true,
       "items": [
         { "caption": "Chair" },
         { "caption": "Suction" },
@@ -24,7 +24,7 @@
     },
     {
       "caption": "Greetings",
-      "isCategory": "true",
+      "isCategory": true,
       "items": [
         { "caption": "Hello" },
         { "caption": "Hi" },
