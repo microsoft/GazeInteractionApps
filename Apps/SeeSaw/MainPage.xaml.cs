@@ -7,10 +7,7 @@ using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Windows.Devices.Input.Preview;
-using Windows.Foundation;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using Microsoft.Toolkit.UWP.Input.Gaze;
 
 namespace SeeSaw
 {
@@ -37,7 +34,7 @@ namespace SeeSaw
             {
                 _imageData = new ImageData();
                 _imageData.File = file;
-                _imageData.GazeEvents = new List<Point>();
+                _imageData.GazeEvents = new List<GazeEventArgs>();
                 SelectedMedia.Text = file.Path;
             }
         }

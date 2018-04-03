@@ -22,7 +22,7 @@ namespace SeeSaw
     public sealed class ImageData
     {
         public StorageFile File;
-        public List<Point> GazeEvents;
+        public List<GazeEventArgs> GazeEvents;
         public bool TrackGaze;
         public bool ShowPoints;
         public bool ShowTracks;
@@ -62,12 +62,12 @@ namespace SeeSaw
             _pictureRect = new Rect(pos.X, pos.Y, Picture.ActualWidth, Picture.ActualHeight);
         }
 
-        private void OnGazeInput(GazeInputSourcePreview sender, GazeMovedPreviewEventArgs ea)
+        private void OnGazeInput(object sender, GazeEventArgs ea)
         {
             if ((_imageData.TrackGaze) /*&& (_pictureRect.Contains(ea.Location)) */)
             {
-                _imageData.GazeEvents.Add(ea.CurrentPoint.EyeGazePosition.Value);
-                _trackViewer.AddEvent(ea.CurrentPoint.EyeGazePosition.Value);
+                _imageData.GazeEvents.Add(ea);
+                _trackViewer.AddEvent(ea);
             }
         }
 
