@@ -134,22 +134,29 @@ namespace Fifteen
             }
         }
 
-        async void CheckCompletion()
+        void CheckCompletion()
         {
-            for (int i = 0; i < BOARD_SIZE*BOARD_SIZE - 1; i++)
+            for (int i = 0; i < BOARD_SIZE * BOARD_SIZE - 1; i++)
             {
                 int row = i / BOARD_SIZE;
                 int col = i % BOARD_SIZE;
-                if (_buttons[row, col].Content.ToString() != (i+1).ToString())
+                if (_buttons[row, col].Content.ToString() != (i + 1).ToString())
                 {
                     return;
                 }
             }
 
             string message = $"Congratulations!! You solved it in {_numMoves} moves";
-            MessageDialog dlg = new MessageDialog(message);
-            await dlg.ShowAsync();
+            dialogText.Text = message;
+            dialogGrid.Visibility = Visibility.Visible;
+
             ResetBoard();
+        }
+
+        private void DialogButton_Click(object sender, RoutedEventArgs e)
+        {
+            ResetBoard();
+            dialogGrid.Visibility = Visibility.Collapsed;
         }
     }
 }

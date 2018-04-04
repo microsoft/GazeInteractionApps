@@ -170,7 +170,7 @@ namespace Memory
             dialogGrid.Visibility = Visibility.Visible;           
         }
 
-        private void dialogButton_Click(object sender, RoutedEventArgs e)
+        private void DialogButton_Click(object sender, RoutedEventArgs e)
         {
             ResetBoard();
             dialogGrid.Visibility = Visibility.Collapsed;

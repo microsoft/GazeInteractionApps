@@ -63,7 +63,7 @@
             </Grid.RowDefinitions>
             <Border BorderBrush="{ThemeResource AppBarItemForegroundThemeBrush}" BorderThickness="1" Grid.Row="1" Grid.Column="1" Background="{ThemeResource AppBarBackgroundThemeBrush}">
                 <Grid>
-                    <Button x:Name="dialogButton" Content="Close" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="80" Height="80" Margin="0,0,0,10" Click="dialogButton_Click"/>
+                    <Button x:Name="dialogButton" Content="Close" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="80" Height="80" Margin="0,0,0,10" Click="DialogButton_Click"/>
                     <TextBlock x:Name="dialogText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="16"/>
                 </Grid>
             </Border>
