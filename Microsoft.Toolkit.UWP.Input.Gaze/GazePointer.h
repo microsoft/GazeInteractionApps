@@ -205,7 +205,7 @@ public:
 
     void InvokeTarget(UIElement^ target);
     void Reset();
-    void SetElementStateDelay(UIElement ^element, GazePointerState pointerState, int stateDelay);
+	void SetElementStateDelay(UIElement ^element, GazePointerState pointerState, int stateDelay);
     int GetElementStateDelay(UIElement^ element, GazePointerState pointerState);
 
     // Provide a configurable delay for when the EyesOffDelay event is fired
@@ -241,6 +241,8 @@ public:
     }
 
 private:
+	TimeSpan* GetDefaultPropertyValue(GazePointerState state);
+
     void    InitializeHistogram();
     void    InitializeGazeInputSource();
 
@@ -293,6 +295,12 @@ private:
     CoreDispatcher^                     _coreDispatcher;
     GazeIsInvokableDelegate^            _isInvokableImpl;
     GazeInvokeTargetDelegate^           _invokeTargetImpl;
+
+	int _defaultFixation = DEFAULT_FIXATION_DELAY;
+	int _defaultDwell = DEFAULT_DWELL_DELAY;
+	int _defaultRepeat = DEFAULT_REPEAT_DELAY;
+	int _defaultEnter = DEFAULT_ENTER_EXIT_DELAY;
+	int _defaultExit = DEFAULT_ENTER_EXIT_DELAY;
 };
 
 END_NAMESPACE_GAZE_INPUT

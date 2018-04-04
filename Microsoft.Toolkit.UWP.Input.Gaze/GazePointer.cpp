@@ -145,32 +145,30 @@ void GazePointer::LoadSettings(ValueSet^ settings)
 
     // TODO Add logic to protect against missing settings
 
-	/*
     if (settings->HasKey("GazePointer.FixationDelay"))
     {
-        _defaultInvokeParams->Insert(GazePointerState::Fixation, (int)(settings->Lookup("GazePointer.FixationDelay")));
+        _defaultFixation = (int)(settings->Lookup("GazePointer.FixationDelay"));
     }
 
     if (settings->HasKey("GazePointer.DwellDelay"))
     {
-        _defaultInvokeParams->Insert(GazePointerState::Dwell, (int)(settings->Lookup("GazePointer.DwellDelay")));
+        _defaultDwell = (int)(settings->Lookup("GazePointer.DwellDelay"));
     }
 
     if (settings->HasKey("GazePointer.RepeatDelay"))
     {
-        _defaultInvokeParams->Insert(GazePointerState::DwellRepeat, (int)(settings->Lookup("GazePointer.RepeatDelay")));
+        _defaultRepeat = (int)(settings->Lookup("GazePointer.RepeatDelay"));
     }
 
     if (settings->HasKey("GazePointer.EnterExitDelay"))
     {
-        _defaultInvokeParams->Insert(GazePointerState::Enter, (int)(settings->Lookup("GazePointer.EnterExitDelay")));
+        _defaultEnter = (int)(settings->Lookup("GazePointer.EnterExitDelay"));
     }
 
     if (settings->HasKey("GazePointer.EnterExitDelay"))
     {
-        _defaultInvokeParams->Insert(GazePointerState::Exit, (int)(settings->Lookup("GazePointer.EnterExitDelay")));
+        _defaultExit = (int)(settings->Lookup("GazePointer.EnterExitDelay"));
     }
-	*/
 
     // TODO need to set fixation and dwell for all elements
     if (settings->HasKey("GazePointer.FixationDelay"))
@@ -198,8 +196,8 @@ void GazePointer::InitializeHistogram()
     _activeHitTargetTimes = ref new Vector<GazeTargetItem^>();
 
     _offScreenElement = ref new UserControl();
-    SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, DEFAULT_FIXATION_DELAY);
-    SetElementStateDelay(_offScreenElement, GazePointerState::Dwell, DEFAULT_DWELL_DELAY);
+    SetElementStateDelay(_offScreenElement, GazePointerState::Fixation, _defaultFixation);
+    SetElementStateDelay(_offScreenElement, GazePointerState::Dwell, _defaultDwell);
 
     _maxHistoryTime = DEFAULT_MAX_HISTORY_DURATION;    // maintain about 3 seconds of history (in microseconds)
     _gazeHistory = ref new Vector<GazeHistoryItem^>();
@@ -228,15 +226,15 @@ static DependencyProperty^ GetProperty(GazePointerState state)
     }
 }
 
-static TimeSpan* GetDefaultPropertyValue(GazePointerState state)
+TimeSpan* GazePointer::GetDefaultPropertyValue(GazePointerState state)
 {
     switch (state)
     {
-    case GazePointerState::Fixation: return ref new TimeSpan{ 10 * DEFAULT_FIXATION_DELAY };
-    case GazePointerState::Dwell: return ref new TimeSpan{ 10 * DEFAULT_DWELL_DELAY };
-    case GazePointerState::DwellRepeat: return ref new TimeSpan{ DEFAULT_REPEAT_DELAY };
-    case GazePointerState::Enter: return ref new TimeSpan{ 10 * DEFAULT_ENTER_EXIT_DELAY };
-    case GazePointerState::Exit: return ref new TimeSpan{ 10 * DEFAULT_ENTER_EXIT_DELAY };
+    case GazePointerState::Fixation: return ref new TimeSpan{ 10 * _defaultFixation };
+    case GazePointerState::Dwell: return ref new TimeSpan{ 10 * _defaultDwell };
+    case GazePointerState::DwellRepeat: return ref new TimeSpan{ 10 * _defaultRepeat };
+    case GazePointerState::Enter: return ref new TimeSpan{ 10 * _defaultEnter };
+    case GazePointerState::Exit: return ref new TimeSpan{ 10 * _defaultExit };
     default: return &s_nonTimeSpan;
     }
 }
