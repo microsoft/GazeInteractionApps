@@ -107,7 +107,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="PhraseData.phr" />
+    <Content Include="PhraseData.phr">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Phrasor_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

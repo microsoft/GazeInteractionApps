@@ -166,14 +166,14 @@ namespace Memory
             }
 
             string message = $"Congratulations!! You solved it in {_numMoves} moves";
-            dialogText.Text = message;
-            dialogGrid.Visibility = Visibility.Visible;
+            DialogText.Text = message;
+            DialogGrid.Visibility = Visibility.Visible;           
         }
 
-        private void dialogButton_Click(object sender, RoutedEventArgs e)
+        private void DialogButton_Click(object sender, RoutedEventArgs e)
         {
             ResetBoard();
-            dialogGrid.Visibility = Visibility.Collapsed;
+            DialogGrid.Visibility = Visibility.Collapsed;
         }
     }
 }
