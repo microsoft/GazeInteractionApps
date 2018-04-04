@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Microsoft.Toolkit.UWP.Input.Gaze;
 using Windows.Foundation.Collections;
+using Windows.Foundation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -39,20 +40,11 @@ namespace EyeGazeUserControls
             this.InitializeComponent();
             _theText = new StringBuilder();
 
-            var sharedSettings = new ValueSet();
-            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
-                _gazePointer = new GazePointer(this);
-                _gazePointer.LoadSettings(sharedSettings);
-                _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
-            });
-        }
-
-        private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
-        {
-            if (ea.PointerState == GazePointerState.Dwell)
-            {
-                _gazePointer.InvokeTarget(ea.HitTarget);
-            }
+            //var sharedSettings = new ValueSet();
+            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+            //    var gazePointer = GazeApi.GetGazePointer(this);
+            //    gazePointer.LoadSettings(sharedSettings);
+            //});
         }
 
         private void OnChar(object sender, RoutedEventArgs e)

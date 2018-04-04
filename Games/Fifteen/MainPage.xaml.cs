@@ -7,6 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Toolkit.UWP.Input.Gaze;
 using Windows.Foundation.Collections;
+using Windows.Foundation;
 
 namespace Fifteen
 {
@@ -16,8 +17,6 @@ namespace Fifteen
     public sealed partial class MainPage : Page
     {
         const int BOARD_SIZE = 4;
-
-        GazePointer _gazePointer;
 
         Button[,] _buttons;
         int _blankRow;
@@ -33,19 +32,10 @@ namespace Fifteen
             ResetBoard();
 
             var sharedSettings = new ValueSet();
-            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
-                _gazePointer = new GazePointer(this);
-                _gazePointer.LoadSettings(sharedSettings);
-                _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+                var gazePointer = GazeApi.GetGazePointer(this);
+                gazePointer.LoadSettings(sharedSettings);
             });
-        }
-
-        private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
-        {
-            if (ea.PointerState == GazePointerState.Dwell)
-            {
-                _gazePointer.InvokeTarget(ea.HitTarget);
-            }
         }
 
         void InitializeButtonArray()

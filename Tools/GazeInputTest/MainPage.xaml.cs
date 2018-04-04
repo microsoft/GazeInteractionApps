@@ -12,32 +12,16 @@ namespace GazeInputTest
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        GazePointer _gazePointer;
-
         public MainPage()
         {
             this.InitializeComponent();
 
-            // Since this is an input test, don't make it dependent on shared settings
-            _gazePointer = new GazePointer(this);
-            _gazePointer.OnGazeInputEvent += OnGazeInputEvent;
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
-
-            ShowCursor.IsChecked = _gazePointer.IsCursorVisible;
+            ShowCursor.IsChecked = GazeApi.GetIsGazeCursorVisible(this);
         }
 
         private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
         {
             Dwell.Content = ea.PointerState.ToString();
-            if (ea.PointerState == GazePointerState.Dwell)
-            {
-                _gazePointer.InvokeTarget(ea.HitTarget);
-            }
-        }
-
-        private void OnGazeInputEvent(GazePointer sender, GazeEventArgs ea)
-        {
-            Coordinates.Text = ea.Location.ToString();
         }
 
         private void Dwell_Click(object sender, RoutedEventArgs e)
@@ -49,8 +33,23 @@ namespace GazeInputTest
         {
             if (ShowCursor.IsChecked.HasValue)
             {
-                _gazePointer.IsCursorVisible = ShowCursor.IsChecked.Value;
+                GazeApi.SetIsGazeCursorVisible(this, ShowCursor.IsChecked.Value);
             }
+        }
+
+        int clickCount;
+
+        private void OnLegacyInvoked(object sender, RoutedEventArgs e)
+        {
+            clickCount++;
+            HowButton.Content = string.Format("{0}: Legacy click", clickCount);
+        }
+
+        private void OnGazeInvoked(object sender, GazeInvokedRoutedEventArgs e)
+        {
+            clickCount++;
+            HowButton.Content = string.Format("{0}: Accessible click", clickCount);
+            e.Handled = true;
         }
     }
 }

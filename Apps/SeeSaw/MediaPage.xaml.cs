@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Windows.Devices.Input.Preview;
 
 using Microsoft.Toolkit.UWP.Input.Gaze;
 
@@ -32,7 +33,6 @@ namespace SeeSaw
     /// </summary>
     public sealed partial class MediaPage : Page
     {
-        GazePointer _gazePointer;
         TrackViewer _trackViewer;
         ImageData _imageData;
         Rect _pictureRect;
@@ -42,14 +42,17 @@ namespace SeeSaw
             this.InitializeComponent();
             _trackViewer = new TrackViewer();
             Loaded += TrackingPage_Loaded;
+
+            var gazeInputSource = GazeInputSourcePreview.GetForCurrentView();
+            if (gazeInputSource != null)
+            {
+                gazeInputSource.GazeMoved += OnGazeInput;
+            }
+
         }
 
         private void TrackingPage_Loaded(object sender, RoutedEventArgs e)
         {
-            _gazePointer = new GazePointer(this);
-            _gazePointer.IsCursorVisible = false;
-            _gazePointer.OnGazeInputEvent += OnGazeInput;
-            _gazePointer.InputEventForwardingEnabled = true;
             Picture.ImageOpened += Picture_ImageOpened;
         }
 
@@ -59,7 +62,7 @@ namespace SeeSaw
             _pictureRect = new Rect(pos.X, pos.Y, Picture.ActualWidth, Picture.ActualHeight);
         }
 
-        private void OnGazeInput(GazePointer sender, GazeEventArgs ea)
+        private void OnGazeInput(object sender, GazeEventArgs ea)
         {
             if ((_imageData.TrackGaze) /*&& (_pictureRect.Contains(ea.Location)) */)
             {

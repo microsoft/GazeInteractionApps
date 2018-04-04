@@ -13,6 +13,7 @@ using Windows.Data.Json;
 using Windows.UI;
 using Microsoft.Toolkit.UWP.Input.Gaze;
 using Windows.Foundation.Collections;
+using Windows.Foundation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -69,7 +70,6 @@ namespace Phrasor
         MediaElement _mediaElement;
         PageMode _pageMode;
         bool _interactionPaused;
-        GazePointer _gazePointer;
         KeyboardPageNavigationParams _navParams;
         int _curPageIndex;
 
@@ -79,10 +79,9 @@ namespace Phrasor
             this.Loaded += MainPage_Loaded;
 
             var sharedSettings = new ValueSet();
-            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new Windows.Foundation.AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
-                _gazePointer = new GazePointer(this);
-                _gazePointer.LoadSettings(sharedSettings);
-                _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+                var gazePointer = GazeApi.GetGazePointer(this);
+                gazePointer.LoadSettings(sharedSettings);
             });
 
             _pageMode = PageMode.Run;
@@ -93,38 +92,8 @@ namespace Phrasor
             _phraseNodeComparer = new PhraseNodeComparer();
         }
 
-        private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
-        {
-            if (ea.HitTarget == null)
-            {
-                return;
-            }
-            var parent = VisualTreeHelper.GetParent(ea.HitTarget);
-            if ((_interactionPaused) && (parent == PhraseGrid))
-            {
-                return;
-            }
-            if (ea.PointerState == GazePointerState.Dwell)
-            {
-                _gazePointer.InvokeTarget(ea.HitTarget);
-            }
-        }
-
-        private async void CopyConfigFileMaybe()
-        {
-            var folder = ApplicationData.Current.LocalFolder;
-            var file = await folder.TryGetItemAsync(PhraseConfigFile);
-            if (file == null)
-            {
-                var configFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///" + PhraseConfigFile));
-                await configFile.CopyAsync(folder);
-            }
-        }
-
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            CopyConfigFileMaybe();
-
             if (_navParams != null)
             {
                 _rootNode = _navParams.RootNode;
@@ -202,7 +171,15 @@ namespace Phrasor
         private async void LoadConfigFile(string filename)
         {
             var folder = ApplicationData.Current.LocalFolder;
-            var file = await folder.GetFileAsync(PhraseConfigFile);
+
+            var file = await folder.TryGetItemAsync(PhraseConfigFile) as StorageFile;
+
+            if (file == null)
+            {
+                var configFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///" + PhraseConfigFile));
+                file = await configFile.CopyAsync(folder);
+            }
+
             var text = await FileIO.ReadTextAsync(file);
             var jsonRoot = JsonValue.Parse(text);
             _rootNode = LoadPhraseNode(jsonRoot, null);

@@ -13,7 +13,6 @@ namespace EyeControlToolkitSettings
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private GazePointer _gazePointer;
         public GazeSettings GazeSettings = new GazeSettings();
 
         public MainPage()
@@ -23,19 +22,10 @@ namespace EyeControlToolkitSettings
             var localSettings = new ValueSet();
             GazeSettings.ValueSetFromLocalSettings(localSettings);
 
-            _gazePointer = new GazePointer(this);
-            _gazePointer.LoadSettings(localSettings);
-            _gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            var gazePointer = GazeApi.GetGazePointer(this);
+            gazePointer.LoadSettings(localSettings);
 
-            GazeSettings.GazePointer = _gazePointer;
-        }
-
-        private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
-        {
-            if (ea.PointerState == GazePointerState.Dwell)
-            {
-                _gazePointer.InvokeTarget(ea.HitTarget);
-            }
+            GazeSettings.GazePointer = gazePointer;
         }
 
         #region Button Handlers
