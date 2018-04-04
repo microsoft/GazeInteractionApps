@@ -24,6 +24,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Button x:Name="Button1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Button1_Click">Button</Button>
                 <TextBlock x:Name="TextBlock_Button1" Grid.Row="0" Grid.Column="1" />
@@ -39,6 +40,12 @@
                     <TextBlock Text="Item 4" />
                     <TextBlock Text="Item 5" />
                 </FlipView>
+                <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="0">
+                    <RadioButton Content="Green" Tag="Green" />
+                    <RadioButton Content="Yellow" Tag="Yellow" />
+                    <RadioButton Content="Blue" Tag="Blue" />
+                    <RadioButton Content="White" Tag="White" IsChecked="True"/>
+                </StackPanel>
             </Grid>
         </PivotItem>
         <PivotItem Header="Non-Working Controls">
@@ -48,6 +55,9 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -68,7 +78,12 @@
                     </PivotItem>
                 </Pivot>
                 <TextBlock Grid.Row="2" Grid.Column="1" Text="Bug: Need to focus on the pivot item to trigger click, not the Pivot getting focus" />
-                
+                <Slider Grid.Row="3" Grid.Column="0" Minimum="0" Maximum="100" Value="50" />
+                <ListBox Grid.Row="4" Grid.Column="0">
+                    <ListBoxItem Content="Red" />
+                    <ListBoxItem Content="Green" />
+                    <ListBoxItem Content="Blue" />
+                </ListBox>
             </Grid>
         </PivotItem>
     </Pivot>
