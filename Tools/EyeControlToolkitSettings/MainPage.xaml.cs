@@ -3,6 +3,7 @@
 
 using Microsoft.Toolkit.UWP.Input.Gaze;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
 namespace EyeControlToolkitSettings
@@ -12,7 +13,6 @@ namespace EyeControlToolkitSettings
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private GazePointer _gazePointer;
         public GazeSettings GazeSettings = new GazeSettings();
 
         public MainPage()
@@ -22,19 +22,78 @@ namespace EyeControlToolkitSettings
             var localSettings = new ValueSet();
             GazeSettings.ValueSetFromLocalSettings(localSettings);
 
-            _gazePointer = new GazePointer(this);
-            _gazePointer.LoadSettings(localSettings);
-            //_gazePointer.OnGazePointerEvent += OnGazePointerEvent;
+            var gazePointer = GazeApi.GetGazePointer(this);
+            gazePointer.LoadSettings(localSettings);
 
-            GazeSettings.GazePointer = _gazePointer;
+            GazeSettings.GazePointer = gazePointer;
         }
 
-        private void OnGazePointerEvent(GazePointer sender, GazePointerEventArgs ea)
+        #region Button Handlers
+        private void GazePointerFixationDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (ea.PointerState == GazePointerState.Dwell)
-            {
-                _gazePointer.InvokeTarget(ea.HitTarget);
-            }
+            GazeSettings.GazePointerFixationDelay -= 50000;
         }
+
+        private void GazePointerFixationDelay_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazePointerFixationDelay += 50000;
+        }
+
+        private void GazePointerDwellDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazePointerDwellDelay -= 50000;
+        }
+
+        private void GazePointerDwellDelay_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazePointerDwellDelay -= 50000;
+        }
+
+        private void GazePointerRepeatDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointerRepeatDelay_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazePointerEnterExitDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazePointerEnterExitDelay -= 50000;
+        }
+
+        private void GazePointerEnterExitDelay_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazePointerEnterExitDelay += 50000;
+        }
+
+        private void GazePointerGazeIdleTime_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazePointerGazeIdleTime -= 10000;
+        }
+
+        private void GazePointerGazeIdleTime_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazePointerGazeIdleTime += 10000;
+        }
+
+        private void GazeCursorRadius_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazeCursorRadius -= 5;
+        }
+
+        private void GazeCursorRadius_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazeCursorRadius += 5;
+        }
+
+        private void ResetButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ApplicationData.Current.LocalSettings.Values.Clear();
+            GazeSettings.Reset();
+        }
+        #endregion
     }
 }
