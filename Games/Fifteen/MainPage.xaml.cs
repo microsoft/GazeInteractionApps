@@ -147,8 +147,8 @@ namespace Fifteen
             }
 
             string message = $"Congratulations!! You solved it in {_numMoves} moves";
-            dialogText.Text = message;
-            dialogGrid.Visibility = Visibility.Visible;
+            DialogText.Text = message;
+            DialogGrid.Visibility = Visibility.Visible;
 
             ResetBoard();
         }
@@ -156,7 +156,7 @@ namespace Fifteen
         private void DialogButton_Click(object sender, RoutedEventArgs e)
         {
             ResetBoard();
-            dialogGrid.Visibility = Visibility.Collapsed;
+            DialogGrid.Visibility = Visibility.Collapsed;
         }
     }
 }
