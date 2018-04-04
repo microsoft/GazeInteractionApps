@@ -15,7 +15,6 @@ namespace SeeSaw
     /// </summary>
     sealed partial class App : Application
     {
-        private SeeSawData _seeSawData;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -24,7 +23,6 @@ namespace SeeSaw
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            _seeSawData = new SeeSawData();
         }
 
         /// <summary>
