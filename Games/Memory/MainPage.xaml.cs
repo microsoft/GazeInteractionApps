@@ -60,15 +60,13 @@ namespace Memory
 
         List<Button> ShuffleList(List<Button> list)
         {
-            int len = list.Count;
-            int shuffleCount = len * 10;
-            while (shuffleCount > 0)
+            var len = list.Count;
+            for (var i = 0; i < len; i++)
             {
-                int index = _rnd.Next(0, len);
-                var item = list[index];
-                list.RemoveAt(index);
-                list.Insert(0, item);
-                shuffleCount--;
+                var j = _rnd.Next(0, len);
+                var k = list[i];
+                list[i] = list[j];
+                list[j] = k;
             }
             return list;
         }
@@ -78,7 +76,14 @@ namespace Memory
             List<char> list = new List<char>();
             for (int i = 0; i < len; i++)
             {
-                list.Add(System.Convert.ToChar(_rnd.Next(MIN_CHAR, MAX_CHAR)));
+                char ch;
+                do
+                {
+                    ch = Convert.ToChar(_rnd.Next(MIN_CHAR, MAX_CHAR));
+                }
+                while (list.Contains(ch));
+
+                list.Add(ch);
             }
             return list;
         }
@@ -86,14 +91,9 @@ namespace Memory
         List<Button> GetButtonList()
         {
             List<Button> list = new List<Button>();
-            for (int i = 0; i < 4; i++)
+            foreach (Button button in buttonMatrix.Children)
             {
-                for (int j = 0; j < 4; j++)
-                {
-                    var name = $"button_{i}_{j}";
-                    var button = FindName(name) as Button;
-                    list.Add(button);
-                }
+                list.Add(button);
             }
             return ShuffleList(list);
         }
@@ -166,14 +166,15 @@ namespace Memory
             }
 
             string message = $"Congratulations!! You solved it in {_numMoves} moves";
-            dialogText.Text = message;
-            dialogGrid.Visibility = Visibility.Visible;           
+            DialogText.Text = message;
+            DialogGrid.Visibility = Visibility.Visible;           
         }
 
-        private void dialogButton_Click(object sender, RoutedEventArgs e)
+        private void DialogButton_Click(object sender, RoutedEventArgs e)
         {
             ResetBoard();
-            dialogGrid.Visibility = Visibility.Collapsed;
+            DialogGrid.Visibility = Visibility.Collapsed;
         }
     }
 }
+

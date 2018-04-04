@@ -18,35 +18,55 @@
         </Style>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions >
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-        <Button x:Name="button_0_0" Tag="0" Grid.Row="0" Grid.Column="0" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_0_1" Tag="1" Grid.Row="0" Grid.Column="1" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_0_2" Tag="2" Grid.Row="0" Grid.Column="2" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_0_3" Tag="3" Grid.Row="0" Grid.Column="3" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_1_0" Tag="4" Grid.Row="1" Grid.Column="0" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_1_1" Tag="5" Grid.Row="1" Grid.Column="1" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_1_2" Tag="6" Grid.Row="1" Grid.Column="2" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_1_3" Tag="7" Grid.Row="1" Grid.Column="3" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_2_0" Tag="8" Grid.Row="2" Grid.Column="0" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_2_1" Tag="9" Grid.Row="2" Grid.Column="1" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_2_2" Tag="10" Grid.Row="2" Grid.Column="2" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_2_3" Tag="11" Grid.Row="2" Grid.Column="3" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_3_0" Tag="12" Grid.Row="3" Grid.Column="0" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_3_1" Tag="13" Grid.Row="3" Grid.Column="1" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_3_2" Tag="14" Grid.Row="3" Grid.Column="2" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
-        <Button x:Name="button_3_3" Tag="15" Grid.Row="3" Grid.Column="3" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_0_0" Tag="0" Grid.Row="0" Grid.Column="0" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_0_1" Tag="1" Grid.Row="0" Grid.Column="1" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_0_2" Tag="2" Grid.Row="0" Grid.Column="2" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_0_3" Tag="3" Grid.Row="0" Grid.Column="3" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_1_0" Tag="4" Grid.Row="1" Grid.Column="0" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_1_1" Tag="5" Grid.Row="1" Grid.Column="1" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_1_2" Tag="6" Grid.Row="1" Grid.Column="2" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_1_3" Tag="7" Grid.Row="1" Grid.Column="3" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_2_0" Tag="8" Grid.Row="2" Grid.Column="0" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_2_1" Tag="9" Grid.Row="2" Grid.Column="1" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_2_2" Tag="10" Grid.Row="2" Grid.Column="2" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_2_3" Tag="11" Grid.Row="2" Grid.Column="3" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_3_0" Tag="12" Grid.Row="3" Grid.Column="0" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_3_1" Tag="13" Grid.Row="3" Grid.Column="1" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_3_2" Tag="14" Grid.Row="3" Grid.Column="2" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="button_3_3" Tag="15" Grid.Row="3" Grid.Column="3" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+        </Grid>
+        <Grid x:Name="DialogGrid" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1.5*"/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="{ThemeResource AppBarItemForegroundThemeBrush}" BorderThickness="1" Grid.Row="1" Grid.Column="1" Background="{ThemeResource AppBarBackgroundThemeBrush}">
+                <Grid>
+                    <Button x:Name="DialogButton" Content="Close" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="80" Height="80" Margin="0,0,0,10" Click="DialogButton_Click"/>
+                    <TextBlock x:Name="DialogText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="16"/>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Page>
