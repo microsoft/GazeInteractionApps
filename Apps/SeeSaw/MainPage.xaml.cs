@@ -7,7 +7,7 @@ using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Toolkit.UWP.Input.Gaze;
+using Windows.Devices.Input.Preview;
 
 namespace SeeSaw
 {
@@ -34,7 +34,7 @@ namespace SeeSaw
             {
                 _imageData = new ImageData();
                 _imageData.File = file;
-                _imageData.GazeEvents = new List<GazeEventArgs>();
+                _imageData.GazeEvents = new List<GazeMovedPreviewEventArgs>();
                 SelectedMedia.Text = file.Path;
             }
         }

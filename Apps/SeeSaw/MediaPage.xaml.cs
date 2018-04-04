@@ -22,7 +22,7 @@ namespace SeeSaw
     public sealed class ImageData
     {
         public StorageFile File;
-        public List<GazeEventArgs> GazeEvents;
+        public List<GazeMovedPreviewEventArgs> GazeEvents;
         public bool TrackGaze;
         public bool ShowPoints;
         public bool ShowTracks;
@@ -62,7 +62,7 @@ namespace SeeSaw
             _pictureRect = new Rect(pos.X, pos.Y, Picture.ActualWidth, Picture.ActualHeight);
         }
 
-        private void OnGazeInput(object sender, GazeEventArgs ea)
+        private void OnGazeInput(GazeInputSourcePreview sender, GazeMovedPreviewEventArgs ea)
         {
             if ((_imageData.TrackGaze) /*&& (_pictureRect.Contains(ea.Location)) */)
             {

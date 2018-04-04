@@ -13,7 +13,7 @@ namespace EyeGazeUserControls
     public sealed partial class GazeKeyboard : UserControl
     {
         StringBuilder _theText;
-        GazePointer _gazePointer;
+        //GazePointer _gazePointer;
 
         public ButtonBase EnterButton
         {

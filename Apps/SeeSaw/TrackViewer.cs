@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
 using Microsoft.Toolkit.UWP.Input.Gaze;
+using Windows.Devices.Input.Preview;
 
 namespace SeeSaw
 {
@@ -18,7 +19,7 @@ namespace SeeSaw
 
         Popup _popup;
         Canvas _canvas;
-        List<GazeEventArgs> _gazeEvents;
+        List<GazeMovedPreviewEventArgs> _gazeEvents;
         List<Ellipse> _ellipses;
         List<Line> _lines;
 
@@ -57,7 +58,7 @@ namespace SeeSaw
         {
             _popup = new Popup();
             _canvas = new Canvas();
-            _gazeEvents = new List<GazeEventArgs>();
+            _gazeEvents = new List<GazeMovedPreviewEventArgs>();
             _ellipses = new List<Ellipse>();
             _lines = new List<Line>();
 
@@ -100,7 +101,7 @@ namespace SeeSaw
             }
         }
 
-        public void AddEvent(GazeEventArgs ea)
+        public void AddEvent(GazeMovedPreviewEventArgs ea)
         {
             _gazeEvents.Add(ea);
 
@@ -110,7 +111,7 @@ namespace SeeSaw
             ellipse.HorizontalAlignment = HorizontalAlignment.Left;
             ellipse.Width = 2 * DEFAULT_ELLIPSE_RADIUS;
             ellipse.Height = 2 * DEFAULT_ELLIPSE_RADIUS;
-            ellipse.Margin = new Thickness(ea.Location.X - DEFAULT_ELLIPSE_RADIUS, ea.Location.Y - DEFAULT_ELLIPSE_RADIUS, 0, 0);
+            ellipse.Margin = new Thickness(ea.CurrentPoint.EyeGazePosition.Value.X - DEFAULT_ELLIPSE_RADIUS, ea.CurrentPoint.EyeGazePosition.Value.Y - DEFAULT_ELLIPSE_RADIUS, 0, 0);
 
             _ellipses.Add(ellipse);
 
@@ -119,10 +120,10 @@ namespace SeeSaw
             if (count > 2)
             {
                 var line = new Line();
-                line.X1 = _gazeEvents[count - 2].Location.X;
-                line.Y1 = _gazeEvents[count - 2].Location.Y;
-                line.X2 = _gazeEvents[count - 1].Location.X;
-                line.Y2 = _gazeEvents[count - 1].Location.Y;
+                line.X1 = _gazeEvents[count - 2].CurrentPoint.EyeGazePosition.Value.X;
+                line.Y1 = _gazeEvents[count - 2].CurrentPoint.EyeGazePosition.Value.Y;
+                line.X2 = _gazeEvents[count - 1].CurrentPoint.EyeGazePosition.Value.X;
+                line.Y2 = _gazeEvents[count - 1].CurrentPoint.EyeGazePosition.Value.Y;
                 line.Stroke = _ellipseBrush;
                 line.StrokeThickness = 2;
                 _lines.Add(line);
