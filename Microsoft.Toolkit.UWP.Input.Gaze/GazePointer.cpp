@@ -232,7 +232,7 @@ TimeSpan* GazePointer::GetDefaultPropertyValue(GazePointerState state)
     {
     case GazePointerState::Fixation: return ref new TimeSpan{ 10 * _defaultFixation };
     case GazePointerState::Dwell: return ref new TimeSpan{ 10 * _defaultDwell };
-    case GazePointerState::DwellRepeat: return ref new TimeSpan{ 10 * _defaultRepeat };
+    case GazePointerState::DwellRepeat: return ref new TimeSpan{ _defaultRepeat };
     case GazePointerState::Enter: return ref new TimeSpan{ 10 * _defaultEnter };
     case GazePointerState::Exit: return ref new TimeSpan{ 10 * _defaultExit };
     default: return &s_nonTimeSpan;
