@@ -25,7 +25,7 @@
         </Grid.ColumnDefinitions>
         <ToggleButton Grid.Row="0" Grid.Column="0" x:Name="ShowCursor" Checked="ShowCursor_Toggle" Unchecked="ShowCursor_Toggle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">Show Cursor</ToggleButton>
         <Button       Grid.Row="0" Grid.Column="1" x:Name="Dwell" Click="Dwell_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">Eyes Here</Button>
-        <Button Grid.Row="1" Grid.Column="1" x:Name="HowButton" Content="0: Idle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnLegacyInvoked">
+        <Button Grid.Row="1" Grid.Column="1" x:Name="HowButton" Content="0: Idle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnLegacyInvoked" gaze:GazeApi.MaxRepeatCount="5">
             <gaze:GazeApi.GazeElement>
                 <gaze:GazeElement Invoked="OnGazeInvoked"/>
             </gaze:GazeApi.GazeElement>

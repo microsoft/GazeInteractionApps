@@ -39,6 +39,8 @@ public:
     static property DependencyProperty^ EnterProperty { DependencyProperty^ get(); }
     static property DependencyProperty^ ExitProperty { DependencyProperty^ get(); }
 
+	static property DependencyProperty^ MaxRepeatCountProperty { DependencyProperty^ get(); }
+
     static bool GetIsGazeEnabled(Page^ page);
     static bool GetIsGazeCursorVisible(Page^ page);
     static GazePage^ GetGazePage(Page^ page);
@@ -48,6 +50,7 @@ public:
     static TimeSpan GetDwellRepeat(UIElement^ element);
     static TimeSpan GetEnter(UIElement^ element);
     static TimeSpan GetExit(UIElement^ element);
+	static int GetMaxRepeatCount(UIElement^ element);
 
     static void SetIsGazeEnabled(Page^ page, bool value);
     static void SetIsGazeCursorVisible(Page^ page, bool value);
@@ -58,6 +61,7 @@ public:
     static void SetDwellRepeat(UIElement^ element, TimeSpan span);
     static void SetEnter(UIElement^ element, TimeSpan span);
     static void SetExit(UIElement^ element, TimeSpan span);
+	static void SetMaxRepeatCount(UIElement^ element, int value);
 
 	static GazePointer^ GetGazePointer(Page^ page);
 };
@@ -65,7 +69,7 @@ public:
 // units in microseconds
 const int DEFAULT_FIXATION_DELAY = 400000;
 const int DEFAULT_DWELL_DELAY = 800000;
-const int DEFAULT_REPEAT_DELAY = MAXINT;
+const int DEFAULT_REPEAT_DELAY = 1600000;
 const int DEFAULT_ENTER_EXIT_DELAY = 50000;
 const int DEFAULT_MAX_HISTORY_DURATION = 3000000;
 const int MAX_SINGLE_SAMPLE_DURATION = 100000;
@@ -101,6 +105,8 @@ ref struct GazeTargetItem sealed
     property int64 LastTimestamp;
     property GazePointerState ElementState;
     property UIElement^ TargetElement;
+	property int RepeatCount;
+	property int MaxRepeatCount;
 
     GazeTargetItem(UIElement^ target)
     {
@@ -112,6 +118,8 @@ ref struct GazeTargetItem sealed
         ElementState = GazePointerState::PreEnter;
         ElapsedTime = 0;
         NextStateTime = nextStateTime;
+		RepeatCount = 0;
+		MaxRepeatCount = GazeApi::GetMaxRepeatCount(TargetElement);
     }
 };
 
