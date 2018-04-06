@@ -277,7 +277,7 @@ int GazePointer::GetElementStateDelay(UIElement ^element, GazePointerState point
         }
         else
         {
-            auto ob = element->GetValue(property);
+            auto ob = elementWalker->GetValue(property);
             delay = safe_cast<TimeSpan>(ob);
             elementWalker = VisualTreeHelper::GetParent(elementWalker);
         }
@@ -674,7 +674,7 @@ void GazePointer::ProcessGazePoint(long long timestamp, Point position)
     auto targetItem = GetGazeTargetItem(hitTarget);
     GazePointerState nextState = static_cast<GazePointerState>(static_cast<int>(targetItem->ElementState) + 1);
 
-    //Debug::WriteLine(L"%llu -> State=%d, Elapsed=%d, NextStateTime=%d", targetItem->TargetElement, targetItem->ElementState, targetItem->ElapsedTime, targetItem->NextStateTime);
+    Debug::WriteLine(L"%llu -> State=%d, Elapsed=%d, NextStateTime=%d", targetItem->TargetElement, targetItem->ElementState, targetItem->ElapsedTime, targetItem->NextStateTime);
 
     if (targetItem->ElapsedTime > targetItem->NextStateTime)
     {
