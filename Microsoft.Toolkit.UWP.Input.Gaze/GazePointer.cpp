@@ -230,16 +230,16 @@ static DependencyProperty^ GetProperty(GazePointerState state)
     }
 }
 
-TimeSpan* GazePointer::GetDefaultPropertyValue(GazePointerState state)
+TimeSpan GazePointer::GetDefaultPropertyValue(GazePointerState state)
 {
     switch (state)
     {
-    case GazePointerState::Fixation: return new TimeSpan{ 10 * _defaultFixation };
-    case GazePointerState::Dwell: return new TimeSpan{ 10 * _defaultDwell };
-    case GazePointerState::DwellRepeat: return new TimeSpan{ 10 * _defaultRepeat };
-    case GazePointerState::Enter: return new TimeSpan{ 10 * _defaultEnter };
-    case GazePointerState::Exit: return new TimeSpan{ 10 * _defaultExit };
-    default: return &s_nonTimeSpan;
+    case GazePointerState::Fixation: return *new TimeSpan{ 10 * _defaultFixation };
+    case GazePointerState::Dwell: return *new TimeSpan{ 10 * _defaultDwell };
+    case GazePointerState::DwellRepeat: return *new TimeSpan{ 10 * _defaultRepeat };
+    case GazePointerState::Enter: return *new TimeSpan{ 10 * _defaultEnter };
+    case GazePointerState::Exit: return *new TimeSpan{ 10 * _defaultExit };
+    default: return s_nonTimeSpan;
     }
 }
 
@@ -273,7 +273,7 @@ int GazePointer::GetElementStateDelay(UIElement ^element, GazePointerState point
     {
         if (elementWalker == nullptr)
         {
-            delay = *GetDefaultPropertyValue(pointerState);
+            delay = GetDefaultPropertyValue(pointerState);
         }
         else
         {

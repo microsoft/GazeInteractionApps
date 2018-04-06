@@ -249,7 +249,7 @@ public:
     }
 
 private:
-	TimeSpan* GetDefaultPropertyValue(GazePointerState state);
+	TimeSpan GetDefaultPropertyValue(GazePointerState state);
 
     void    InitializeHistogram();
     void    InitializeGazeInputSource();
