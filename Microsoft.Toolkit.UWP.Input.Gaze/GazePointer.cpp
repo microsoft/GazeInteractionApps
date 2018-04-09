@@ -72,7 +72,7 @@ static DependencyProperty^ s_dwellProperty = DependencyProperty::RegisterAttache
 static DependencyProperty^ s_dwellRepeatProperty = DependencyProperty::RegisterAttached("DwellRepeat", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
 static DependencyProperty^ s_enterProperty = DependencyProperty::RegisterAttached("Enter", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
 static DependencyProperty^ s_exitProperty = DependencyProperty::RegisterAttached("Exit", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
-static DependencyProperty^ s_maxRepeatCountProperty = DependencyProperty::RegisterAttached("MaxRepeatCount", int::typeid, UIElement::typeid, ref new PropertyMetadata(0));
+static DependencyProperty^ s_maxRepeatCountProperty = DependencyProperty::RegisterAttached("MaxRepeatCount", int::typeid, UIElement::typeid, ref new PropertyMetadata(safe_cast<Object^>(0)));
 
 DependencyProperty^ GazeApi::IsGazeEnabledProperty::get() { return s_isGazeEnabledProperty; }
 DependencyProperty^ GazeApi::IsGazeCursorVisibleProperty::get() { return s_isGazeCursorVisibleProperty; }
