@@ -425,15 +425,6 @@ UIElement^ GazePointer::ResolveHitTarget(Point gazePoint, long long timestamp)
 		// subtract the duration obtained from the oldest sample in _gazeHistory
 		auto targetItem = GetGazeTargetItem(evOldest->HitTarget);
 		targetItem->ElapsedTime -= evOldest->Duration;
-
-		if (targetItem->ElementState == GazePointerState::Dwell)
-		{
-			auto dwellRepeat = GetElementStateDelay(targetItem->TargetElement, GazePointerState::DwellRepeat);
-			if (dwellRepeat != MAXINT)
-			{
-				targetItem->NextStateTime -= evOldest->Duration;
-			}
-		}
 	}
 
 	// Return the most recent hit target 
