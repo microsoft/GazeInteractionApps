@@ -16,13 +16,16 @@ namespace ControlTest
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public GazePointer gazePointer;
         public MainPage()
         {
             this.InitializeComponent();
 
+            gazePointer = GazeApi.GetGazePointer(this);
+            CursorVisible.IsChecked = gazePointer.IsCursorVisible;
+
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
-                var gazePointer = GazeApi.GetGazePointer(this);
                 gazePointer.LoadSettings(sharedSettings);
             });
         }
@@ -127,6 +130,38 @@ namespace ControlTest
         {
             TextBlock_ButtonGazeInvokeOrClick.Text = $"Gaze = {++_GazeInvokeOrClick_GazeCount} \r\nClick = {_GazeInvokeOrClick_ClickCount}";
             e.Handled = true;
+        }
+        #endregion
+
+        #region Cursor Settings
+        private void CursorVisible_Checked(object sender, RoutedEventArgs e)
+        {
+            gazePointer.IsCursorVisible = true;
+        }
+
+        private void CursorVisible_Unchecked(object sender, RoutedEventArgs e)
+        {
+            gazePointer.IsCursorVisible = false;
+        }
+
+        private void CursorRadius5_Click(object sender, RoutedEventArgs e)
+        {
+            gazePointer.CursorRadius = 5;
+        }
+
+        private void CursorRadius10_Click(object sender, RoutedEventArgs e)
+        {
+            gazePointer.CursorRadius = 10;
+        }
+
+        private void CursorRadius20_Click(object sender, RoutedEventArgs e)
+        {
+            gazePointer.CursorRadius = 20;
+        }
+
+        private void CursorRadius50_Click(object sender, RoutedEventArgs e)
+        {
+            gazePointer.CursorRadius = 50;
         }
         #endregion
     }

@@ -116,5 +116,24 @@
                 <TextBlock x:Name="TextBlock_Button9Repeat" Grid.Row="3" Grid.Column="1" />
             </Grid>
         </PivotItem>
+        <PivotItem Header="Cursor Settings">
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <ToggleButton x:Name="CursorVisible" Grid.Row="0" Checked="CursorVisible_Checked" Unchecked="CursorVisible_Unchecked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Cursor Visible" />
+                <Button x:Name="CursorRadius5" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CursorRadius5_Click" Content="Cursor Radius 5"/>
+                <Button x:Name="CursorRadius10" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CursorRadius10_Click" Content="Cursor Radius 10"/>
+                <Button x:Name="CursorRadius20" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CursorRadius20_Click" Content="Cursor Radius 20"/>
+                <Button x:Name="CursorRadius50" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CursorRadius50_Click" Content="Cursor Radius 50"/>
+            </Grid>
+        </PivotItem>
     </Pivot>
 </Page>
