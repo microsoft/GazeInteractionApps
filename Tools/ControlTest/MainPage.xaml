@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
     <Pivot>
-        <PivotItem Header="Working Controls">
+        <PivotItem Header="Default Controls">
             <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -37,6 +37,35 @@
                     <RadioButton Content="Blue" Tag="Blue" />
                     <RadioButton Content="White" Tag="White" IsChecked="True"/>
                 </StackPanel>
+            </Grid>
+        </PivotItem>
+        <PivotItem Header="Invoke Handling">
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button x:Name="ButtonDefaultInvoke" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Default Click" Click="ButtonDefaultInvoke_Click"/>
+                <TextBlock x:Name="TextBlock_ButtonDefaultInvoke" Grid.Row="0" Grid.Column="1" />
+                <Button x:Name="ButtonGazeInvoke" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="GazeInvoke Only">
+                    <gaze:GazeApi.GazeElement>
+                        <gaze:GazeElement Invoked="GazeInvoke_Only_Invoked"/>
+                    </gaze:GazeApi.GazeElement>
+                </Button>
+                <TextBlock x:Name="TextBlock_ButtonGazeInvoke" Grid.Row="1" Grid.Column="1" />
+                <Button x:Name="ButtonGazeInvokeOrClick" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="GazeInvoke Or Click" Click="ButtonGazeInvokeOrClick_Click">
+                    <gaze:GazeApi.GazeElement>
+                        <gaze:GazeElement Invoked="GazeInvokeOrClick_Invoked"/>
+                    </gaze:GazeApi.GazeElement>
+                </Button>
+                <TextBlock x:Name="TextBlock_ButtonGazeInvokeOrClick" Grid.Row="2" Grid.Column="1" />
             </Grid>
         </PivotItem>
         <PivotItem Header="Click Timing">

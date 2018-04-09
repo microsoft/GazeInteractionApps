@@ -131,5 +131,33 @@ namespace ControlTest
             TextBlock_Button9Repeat.Text = $"Clicks = {++_Repeat9ButtonClickCount}";
         }
         #endregion
+
+        #region Invoke Handing Handlers
+        uint _DefaultInvokeClickCount = 0;
+        uint _GazeInvokeCount = 0;
+        uint _GazeInvokeOrClick_GazeCount = 0;
+        uint _GazeInvokeOrClick_ClickCount = 0;
+
+        private void ButtonDefaultInvoke_Click(object sender, RoutedEventArgs e)
+        {
+            TextBlock_ButtonDefaultInvoke.Text = $"Gaze OR Click = {++_DefaultInvokeClickCount}";
+        }
+        private void GazeInvoke_Only_Invoked(object sender, GazeInvokedRoutedEventArgs e)
+        {
+            TextBlock_ButtonGazeInvoke.Text = $"Gazes = {++_GazeInvokeCount}";
+            e.Handled = true;
+        }
+
+        private void ButtonGazeInvokeOrClick_Click(object sender, RoutedEventArgs e)
+        {
+            TextBlock_ButtonGazeInvokeOrClick.Text = $"Gaze = {_GazeInvokeOrClick_GazeCount} \r\nClick = {++_GazeInvokeOrClick_ClickCount}";
+        }
+
+        private void GazeInvokeOrClick_Invoked(object sender, GazeInvokedRoutedEventArgs e)
+        {
+            TextBlock_ButtonGazeInvokeOrClick.Text = $"Gaze = {++_GazeInvokeOrClick_GazeCount} \r\nClick = {_GazeInvokeOrClick_ClickCount}";
+            e.Handled = true;
+        }
+        #endregion
     }
 }
