@@ -42,36 +42,6 @@ namespace ControlTest
         }
         #endregion
 
-        #region Non-Working Controls Handlers
-        private void MessageDialog_Click(object sender, RoutedEventArgs e)
-        {
-            ShowMessageDialog();
-        }
-
-        private void ContentDialog_Click(object sender, RoutedEventArgs e)
-        {
-            ShowContentDialog();
-        }
-
-        async void ShowMessageDialog()
-        {
-            string message = $"Congratulations!! You have a MessageDialog";
-            MessageDialog dlg = new MessageDialog(message);
-            await dlg.ShowAsync();
-        }
-
-        async void ShowContentDialog()
-        {
-            ContentDialog dlg = new ContentDialog()
-            {
-                Title = "I am a content Dialog",
-                Content = "There is content here.",
-                CloseButtonText = "Ok"
-            };
-            await dlg.ShowAsync();
-        }
-        #endregion
-
         #region Timing Button Handlers
         uint _TimingButton200msClickCount = 0;
         uint _TimingButton400msClickCount = 0;

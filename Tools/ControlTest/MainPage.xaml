@@ -116,43 +116,5 @@
                 <TextBlock x:Name="TextBlock_Button9Repeat" Grid.Row="3" Grid.Column="1" />
             </Grid>
         </PivotItem>
-        <PivotItem Header="Non-Working Controls">
-            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Button x:Name="MessageDialog" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MessageDialog_Click">MessageDialog</Button>
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="MessageDialog is not supported for EyeGaze API" />
-                <Button x:Name="ContentDialog" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ContentDialog_Click">ContentDialog</Button>
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="ContentDialog is not supported for EyeGaze API" />
-                <Pivot x:Name="Pivot1Root" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Title="Pivot">
-                    <PivotItem Header="Item 1">
-                        <TextBlock Text="Text for Item 1"/>
-                    </PivotItem>
-                    <PivotItem Header="Item 2">
-                        <TextBlock Text="Text for Item 2"/>
-                    </PivotItem>
-                    <PivotItem Header="Item 3">
-                        <TextBlock Text="Text for Item 3"/>
-                    </PivotItem>
-                </Pivot>
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="Bug: Need to focus on the pivot item to trigger click, not the Pivot getting focus" />
-                <Slider Grid.Row="3" Grid.Column="0" Minimum="0" Maximum="100" Value="50" />
-                <ListBox Grid.Row="4" Grid.Column="0">
-                    <ListBoxItem Content="Red" />
-                    <ListBoxItem Content="Green" />
-                    <ListBoxItem Content="Blue" />
-                </ListBox>
-            </Grid>
-        </PivotItem>
     </Pivot>
 </Page>
