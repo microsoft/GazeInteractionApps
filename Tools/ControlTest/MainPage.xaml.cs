@@ -16,15 +16,6 @@ namespace ControlTest
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        uint _button1ClickCount = 0;
-        uint _togglebutton1ClickCount = 0;
-
-        uint _TimingButton200msClickCount = 0;
-        uint _TimingButton400msClickCount = 0;
-        uint _TimingButton800msClickCount = 0;
-        uint _TimingButton1600msClickCount = 0;
-        uint _TimingButton2400msClickCount = 0;
-
         public MainPage()
         {
             this.InitializeComponent();
@@ -36,6 +27,10 @@ namespace ControlTest
             });
         }
 
+        #region Default Invokable Controls Handlers
+        uint _button1ClickCount = 0;
+        uint _togglebutton1ClickCount = 0;
+
         private void Button1_Click(object sender, RoutedEventArgs e)
         {
             TextBlock_Button1.Text = $"Clicks = {++_button1ClickCount}";
@@ -45,7 +40,9 @@ namespace ControlTest
         {
             TextBlock_ToggleButton1.Text = $"Checks = {++_togglebutton1ClickCount}";
         }
+        #endregion
 
+        #region Non-Working Controls Handlers
         private void MessageDialog_Click(object sender, RoutedEventArgs e)
         {
             ShowMessageDialog();
@@ -73,6 +70,14 @@ namespace ControlTest
             };
             await dlg.ShowAsync();
         }
+        #endregion
+
+        #region Timing Button Handlers
+        uint _TimingButton200msClickCount = 0;
+        uint _TimingButton400msClickCount = 0;
+        uint _TimingButton800msClickCount = 0;
+        uint _TimingButton1600msClickCount = 0;
+        uint _TimingButton2400msClickCount = 0;
 
         private void TimingButton200ms_Click(object sender, RoutedEventArgs e)
         {
@@ -98,5 +103,33 @@ namespace ControlTest
         {
             TextBlock_TimingButton2400ms.Text = $"Clicks = {++_TimingButton2400msClickCount}";
         }
+        #endregion
+
+        #region Repeat Button Handlers
+        uint _Repeat0ButtonClickCount = 0;
+        uint _Repeat1ButtonClickCount = 0;
+        uint _Repeat2ButtonClickCount = 0;
+        uint _Repeat9ButtonClickCount = 0;
+
+        private void Button0Repeat_Click(object sender, RoutedEventArgs e)
+        {
+            TextBlock_Button0Repeat.Text = $"Clicks = {++_Repeat0ButtonClickCount}";
+        }
+
+        private void Button1Repeat_Click(object sender, RoutedEventArgs e)
+        {
+            TextBlock_Button1Repeat.Text = $"Clicks = {++_Repeat1ButtonClickCount}";
+        }
+
+        private void Button2Repeat_Click(object sender, RoutedEventArgs e)
+        {
+            TextBlock_Button2Repeat.Text = $"Clicks = {++_Repeat2ButtonClickCount}";
+        }
+
+        private void Button9Repeat_Click(object sender, RoutedEventArgs e)
+        {
+            TextBlock_Button9Repeat.Text = $"Clicks = {++_Repeat9ButtonClickCount}";
+        }
+        #endregion
     }
 }

@@ -64,6 +64,29 @@
                 <TextBlock x:Name="TextBlock_TimingButton2400ms" Grid.Row="4" Grid.Column="1" />
             </Grid>
         </PivotItem>
+        <PivotItem Header="Repeat">
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button x:Name="Button0Repeat" Grid.Row="0" Grid.Column="0" gaze:GazeApi.MaxRepeatCount="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="0 Repeat" Click="Button0Repeat_Click"/>
+                <TextBlock x:Name="TextBlock_Button0Repeat" Grid.Row="0" Grid.Column="1" />
+                <Button x:Name="Button1Repeat" Grid.Row="1" Grid.Column="0" gaze:GazeApi.MaxRepeatCount="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="1 Repeat" Click="Button1Repeat_Click"/>
+                <TextBlock x:Name="TextBlock_Button1Repeat" Grid.Row="1" Grid.Column="1" />
+                <Button x:Name="Button2Repeat" Grid.Row="2" Grid.Column="0" gaze:GazeApi.MaxRepeatCount="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="2 Repeat" Click="Button2Repeat_Click"/>
+                <TextBlock x:Name="TextBlock_Button2Repeat" Grid.Row="2" Grid.Column="1" />
+                <Button x:Name="Button9Repeat" Grid.Row="3" Grid.Column="0" gaze:GazeApi.MaxRepeatCount="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="9 Repeat" Click="Button9Repeat_Click"/>
+                <TextBlock x:Name="TextBlock_Button9Repeat" Grid.Row="3" Grid.Column="1" />
+            </Grid>
+        </PivotItem>
         <PivotItem Header="Non-Working Controls">
             <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                 <Grid.ColumnDefinitions>
