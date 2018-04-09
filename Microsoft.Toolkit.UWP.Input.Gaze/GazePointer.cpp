@@ -24,17 +24,17 @@ static DependencyProperty^ GazePointerProperty = DependencyProperty::RegisterAtt
 
 GazePointer^ GazeApi::GetGazePointer(Page^ page)
 {
-	auto gazePointer = safe_cast<GazePointer^>(page->GetValue(GazePointerProperty));
+    auto gazePointer = safe_cast<GazePointer^>(page->GetValue(GazePointerProperty));
 
-	if (gazePointer == nullptr)
-	{
-		gazePointer = ref new GazePointer(page);
-		page->SetValue(GazePointerProperty, gazePointer);
+    if (gazePointer == nullptr)
+    {
+        gazePointer = ref new GazePointer(page);
+        page->SetValue(GazePointerProperty, gazePointer);
 
-		gazePointer->IsCursorVisible = safe_cast<bool>(page->GetValue(GazeApi::IsGazeCursorVisibleProperty));
-	}
+        gazePointer->IsCursorVisible = safe_cast<bool>(page->GetValue(GazeApi::IsGazeCursorVisibleProperty));
+    }
 
-	return gazePointer;
+    return gazePointer;
 }
 
 static void OnIsGazeEnabledChanged(DependencyObject^ ob, DependencyPropertyChangedEventArgs^ args)
@@ -44,7 +44,7 @@ static void OnIsGazeEnabledChanged(DependencyObject^ ob, DependencyPropertyChang
     {
         auto page = safe_cast<Page^>(ob);
 
-		auto gazePointer = GazeApi::GetGazePointer(page);
+        auto gazePointer = GazeApi::GetGazePointer(page);
     }
     else
     {
@@ -323,12 +323,6 @@ bool GazePointer::IsInvokable(UIElement^ element)
         {
             return true;
         }
-
-        auto pivot = dynamic_cast<Pivot^>(element);
-        if (pivot != nullptr)
-        {
-            return true;
-        }
     }
 
     return false;
@@ -524,14 +518,6 @@ void GazePointer::InvokeTarget(UIElement ^target)
             peer->SetFocus();
             return;
         }
-
-        auto pivot = dynamic_cast<Pivot^>(control);
-        if (pivot != nullptr)
-        {
-            auto peer = ref new PivotAutomationPeer(pivot);
-            peer->SetFocus();
-            return;
-        }
     }
 }
 
@@ -689,22 +675,22 @@ void GazePointer::ProcessGazePoint(long long timestamp, Point position)
         else
         {
             // move the NextStateTime by one dwell period, while continuing to stay in Dwell state
-			targetItem->NextStateTime += GetElementStateDelay(targetItem->TargetElement, GazePointerState::Dwell) -
-				GetElementStateDelay(targetItem->TargetElement, GazePointerState::Fixation);
-		}
+            targetItem->NextStateTime += GetElementStateDelay(targetItem->TargetElement, GazePointerState::Dwell) -
+                GetElementStateDelay(targetItem->TargetElement, GazePointerState::Fixation);
+        }
 
         GotoState(targetItem->TargetElement, targetItem->ElementState);
         RaiseGazePointerEvent(targetItem->TargetElement, targetItem->ElementState, targetItem->ElapsedTime);
-	
-		if (targetItem->ElementState == GazePointerState::Dwell)
-		{
-			targetItem->RepeatCount++;
-			if (targetItem->MaxRepeatCount < targetItem->RepeatCount)
-			{
-				targetItem->NextStateTime = MAXINT;
-			}
-		}
-	}
+
+        if (targetItem->ElementState == GazePointerState::Dwell)
+        {
+            targetItem->RepeatCount++;
+            if (targetItem->MaxRepeatCount < targetItem->RepeatCount)
+            {
+                targetItem->NextStateTime = MAXINT;
+            }
+        }
+    }
 
     _eyesOffTimer->Start();
     _lastTimestamp = fa->Timestamp;
