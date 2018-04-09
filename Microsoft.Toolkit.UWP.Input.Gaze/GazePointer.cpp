@@ -24,17 +24,17 @@ static DependencyProperty^ GazePointerProperty = DependencyProperty::RegisterAtt
 
 GazePointer^ GazeApi::GetGazePointer(Page^ page)
 {
-	auto gazePointer = safe_cast<GazePointer^>(page->GetValue(GazePointerProperty));
+    auto gazePointer = safe_cast<GazePointer^>(page->GetValue(GazePointerProperty));
 
-	if (gazePointer == nullptr)
-	{
-		gazePointer = ref new GazePointer(page);
-		page->SetValue(GazePointerProperty, gazePointer);
+    if (gazePointer == nullptr)
+    {
+        gazePointer = ref new GazePointer(page);
+        page->SetValue(GazePointerProperty, gazePointer);
 
-		gazePointer->IsCursorVisible = safe_cast<bool>(page->GetValue(GazeApi::IsGazeCursorVisibleProperty));
-	}
+        gazePointer->IsCursorVisible = safe_cast<bool>(page->GetValue(GazeApi::IsGazeCursorVisibleProperty));
+    }
 
-	return gazePointer;
+    return gazePointer;
 }
 
 static void OnIsGazeEnabledChanged(DependencyObject^ ob, DependencyPropertyChangedEventArgs^ args)
@@ -44,12 +44,12 @@ static void OnIsGazeEnabledChanged(DependencyObject^ ob, DependencyPropertyChang
 	{
 		auto page = safe_cast<Page^>(ob);
 
-		auto gazePointer = GazeApi::GetGazePointer(page);
-	}
-	else
-	{
-		// TODO: Turn off GazePointer
-	}
+        auto gazePointer = GazeApi::GetGazePointer(page);
+    }
+    else
+    {
+        // TODO: Turn off GazePointer
+    }
 }
 
 static void OnIsGazeCursorVisibleChanged(DependencyObject^ ob, DependencyPropertyChangedEventArgs^ args)
@@ -318,18 +318,12 @@ bool GazePointer::IsInvokable(UIElement^ element)
 			return true;
 		}
 
-		auto textbox = dynamic_cast<TextBox^>(element);
-		if (textbox != nullptr)
-		{
-			return true;
-		}
-
-		auto pivot = dynamic_cast<Pivot^>(element);
-		if (pivot != nullptr)
-		{
-			return true;
-		}
-	}
+        auto textbox = dynamic_cast<TextBox^>(element);
+        if (textbox != nullptr)
+        {
+            return true;
+        }
+    }
 
 	return false;
 }
@@ -508,22 +502,14 @@ void GazePointer::InvokeTarget(UIElement ^target)
 			return;
 		}
 
-		auto textBox = dynamic_cast<TextBox^>(control);
-		if (textBox != nullptr)
-		{
-			auto peer = ref new TextBoxAutomationPeer(textBox);
-			peer->SetFocus();
-			return;
-		}
-
-		auto pivot = dynamic_cast<Pivot^>(control);
-		if (pivot != nullptr)
-		{
-			auto peer = ref new PivotAutomationPeer(pivot);
-			peer->SetFocus();
-			return;
-		}
-	}
+        auto textBox = dynamic_cast<TextBox^>(control);
+        if (textBox != nullptr)
+        {
+            auto peer = ref new TextBoxAutomationPeer(textBox);
+            peer->SetFocus();
+            return;
+        }
+    }
 }
 
 void GazePointer::OnEyesOff(Object ^sender, Object ^ea)

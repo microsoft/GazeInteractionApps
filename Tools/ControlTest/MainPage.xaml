@@ -23,8 +23,6 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Button x:Name="Button1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Button1_Click">Button</Button>
                 <TextBlock x:Name="TextBlock_Button1" Grid.Row="0" Grid.Column="1" />
@@ -33,14 +31,7 @@
                 <ToggleSwitch x:Name="ToggleSwitch1" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">Toggle Switch</ToggleSwitch>
                 <TextBox x:Name="TextBox1" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="Sample Text - Change Me!" />
                 <CheckBox x:Name="CheckBox1" Grid.Row="4" Grid.Column="0" Content="Check Me!"/>
-                <FlipView x:Name="flipView1" Grid.Row="5" Grid.Column="0">
-                    <TextBlock Text="Item 1" />
-                    <TextBlock Text="Item 2" />
-                    <TextBlock Text="Item 3" />
-                    <TextBlock Text="Item 4" />
-                    <TextBlock Text="Item 5" />
-                </FlipView>
-                <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="0">
+                <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0">
                     <RadioButton Content="Green" Tag="Green" />
                     <RadioButton Content="Yellow" Tag="Yellow" />
                     <RadioButton Content="Blue" Tag="Blue" />
@@ -71,6 +62,29 @@
                 <TextBlock x:Name="TextBlock_TimingButton1600ms" Grid.Row="3" Grid.Column="1" />
                 <Button x:Name="TimingButton2400ms" Grid.Row="4" Grid.Column="0" gaze:GazeApi.Dwell="0:00:02.400" Click="TimingButton2400ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="2400ms"/>
                 <TextBlock x:Name="TextBlock_TimingButton2400ms" Grid.Row="4" Grid.Column="1" />
+            </Grid>
+        </PivotItem>
+        <PivotItem Header="Repeat">
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button x:Name="Button0Repeat" Grid.Row="0" Grid.Column="0" gaze:GazeApi.MaxRepeatCount="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="0 Repeat" Click="Button0Repeat_Click"/>
+                <TextBlock x:Name="TextBlock_Button0Repeat" Grid.Row="0" Grid.Column="1" />
+                <Button x:Name="Button1Repeat" Grid.Row="1" Grid.Column="0" gaze:GazeApi.MaxRepeatCount="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="1 Repeat" Click="Button1Repeat_Click"/>
+                <TextBlock x:Name="TextBlock_Button1Repeat" Grid.Row="1" Grid.Column="1" />
+                <Button x:Name="Button2Repeat" Grid.Row="2" Grid.Column="0" gaze:GazeApi.MaxRepeatCount="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="2 Repeat" Click="Button2Repeat_Click"/>
+                <TextBlock x:Name="TextBlock_Button2Repeat" Grid.Row="2" Grid.Column="1" />
+                <Button x:Name="Button9Repeat" Grid.Row="3" Grid.Column="0" gaze:GazeApi.MaxRepeatCount="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="9 Repeat" Click="Button9Repeat_Click"/>
+                <TextBlock x:Name="TextBlock_Button9Repeat" Grid.Row="3" Grid.Column="1" />
             </Grid>
         </PivotItem>
         <PivotItem Header="Non-Working Controls">
