@@ -24,17 +24,17 @@ static DependencyProperty^ GazePointerProperty = DependencyProperty::RegisterAtt
 
 GazePointer^ GazeApi::GetGazePointer(Page^ page)
 {
-    auto gazePointer = safe_cast<GazePointer^>(page->GetValue(GazePointerProperty));
+	auto gazePointer = safe_cast<GazePointer^>(page->GetValue(GazePointerProperty));
 
-    if (gazePointer == nullptr)
-    {
-        gazePointer = ref new GazePointer(page);
-        page->SetValue(GazePointerProperty, gazePointer);
+	if (gazePointer == nullptr)
+	{
+		gazePointer = ref new GazePointer(page);
+		page->SetValue(GazePointerProperty, gazePointer);
 
-        gazePointer->IsCursorVisible = safe_cast<bool>(page->GetValue(GazeApi::IsGazeCursorVisibleProperty));
-    }
+		gazePointer->IsCursorVisible = safe_cast<bool>(page->GetValue(GazeApi::IsGazeCursorVisibleProperty));
+	}
 
-    return gazePointer;
+	return gazePointer;
 }
 
 static void OnIsGazeEnabledChanged(DependencyObject^ ob, DependencyPropertyChangedEventArgs^ args)
@@ -44,12 +44,12 @@ static void OnIsGazeEnabledChanged(DependencyObject^ ob, DependencyPropertyChang
 	{
 		auto page = safe_cast<Page^>(ob);
 
-        auto gazePointer = GazeApi::GetGazePointer(page);
-    }
-    else
-    {
-        // TODO: Turn off GazePointer
-    }
+		auto gazePointer = GazeApi::GetGazePointer(page);
+	}
+	else
+	{
+		// TODO: Turn off GazePointer
+	}
 }
 
 static void OnIsGazeCursorVisibleChanged(DependencyObject^ ob, DependencyPropertyChangedEventArgs^ args)
@@ -188,11 +188,6 @@ void GazePointer::LoadSettings(ValueSet^ settings)
 	{
 		EyesOffDelay = (int)(settings->Lookup("GazePointer.GazeIdleTime"));
 	}
-
-	if (settings->HasKey("GazePointer.MaxHistoryDuration"))
-	{
-		_maxHistoryTime = (int)(settings->Lookup("GazePointer.MaxHistoryDuration"));
-	}
 }
 
 void GazePointer::InitializeHistogram()
@@ -252,14 +247,7 @@ void GazePointer::SetElementStateDelay(UIElement ^element, GazePointerState rele
 	// fix up _maxHistoryTime in case the new param exceeds the history length we are currently tracking
 	int dwellTime = GetElementStateDelay(element, GazePointerState::Dwell);
 	int repeatTime = GetElementStateDelay(element, GazePointerState::DwellRepeat);
-	if (repeatTime != INT_MAX)
-	{
-		_maxHistoryTime = max(2 * repeatTime, _maxHistoryTime);
-	}
-	else
-	{
-		_maxHistoryTime = max(2 * dwellTime, _maxHistoryTime);
-	}
+	_maxHistoryTime = 2 * max(dwellTime, repeatTime);
 }
 
 int GazePointer::GetElementStateDelay(UIElement ^element, GazePointerState pointerState)
@@ -283,13 +271,25 @@ int GazePointer::GetElementStateDelay(UIElement ^element, GazePointerState point
 		}
 	} while (delay.Duration == s_nonTimeSpan.Duration);
 
-	return safe_cast<int>(delay.Duration / 10);
+	auto ticks = safe_cast<int>(delay.Duration / 10);
+
+	switch (pointerState)
+	{
+		case GazePointerState::Dwell:
+		case GazePointerState::DwellRepeat:
+			_maxHistoryTime = max(_maxHistoryTime, 2 * ticks);
+			break;
+	}
+
+	return ticks;
 }
 
 void GazePointer::Reset()
 {
 	_activeHitTargetTimes->Clear();
 	_gazeHistory->Clear();
+
+	_maxHistoryTime = DEFAULT_MAX_HISTORY_DURATION;
 }
 
 bool GazePointer::IsInvokable(UIElement^ element)
@@ -318,12 +318,12 @@ bool GazePointer::IsInvokable(UIElement^ element)
 			return true;
 		}
 
-        auto textbox = dynamic_cast<TextBox^>(element);
-        if (textbox != nullptr)
-        {
-            return true;
-        }
-    }
+		auto textbox = dynamic_cast<TextBox^>(element);
+		if (textbox != nullptr)
+		{
+			return true;
+		}
+	}
 
 	return false;
 }
@@ -502,14 +502,14 @@ void GazePointer::InvokeTarget(UIElement ^target)
 			return;
 		}
 
-        auto textBox = dynamic_cast<TextBox^>(control);
-        if (textBox != nullptr)
-        {
-            auto peer = ref new TextBoxAutomationPeer(textBox);
-            peer->SetFocus();
-            return;
-        }
-    }
+		auto textBox = dynamic_cast<TextBox^>(control);
+		if (textBox != nullptr)
+		{
+			auto peer = ref new TextBoxAutomationPeer(textBox);
+			peer->SetFocus();
+			return;
+		}
+	}
 }
 
 void GazePointer::OnEyesOff(Object ^sender, Object ^ea)
