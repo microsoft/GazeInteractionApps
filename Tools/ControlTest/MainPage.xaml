@@ -48,6 +48,31 @@
                 </StackPanel>
             </Grid>
         </PivotItem>
+        <PivotItem Header="Click Timing">
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button x:Name="TimingButton200ms" Grid.Row="0" Grid.Column="0" gaze:GazeApi.Dwell="0:00:00.200" Click="TimingButton200ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="200ms"/>
+                <TextBlock x:Name="TextBlock_TimingButton200ms" Grid.Row="0" Grid.Column="1" />
+                <Button x:Name="TimingButton400ms" Grid.Row="1" Grid.Column="0" gaze:GazeApi.Dwell="0:00:00.400" Click="TimingButton400ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="400ms"/>
+                <TextBlock x:Name="TextBlock_TimingButton400ms" Grid.Row="1" Grid.Column="1" />
+                <Button x:Name="TimingButton800ms" Grid.Row="2" Grid.Column="0" gaze:GazeApi.Dwell="0:00:00.800" Click="TimingButton800ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="800ms"/>
+                <TextBlock x:Name="TextBlock_TimingButton800ms" Grid.Row="2" Grid.Column="1" />
+                <Button x:Name="TimingButton1600ms" Grid.Row="3" Grid.Column="0" gaze:GazeApi.Dwell="0:00:01.600" Click="TimingButton1600ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="1600ms"/>
+                <TextBlock x:Name="TextBlock_TimingButton1600ms" Grid.Row="3" Grid.Column="1" />
+                <Button x:Name="TimingButton2400ms" Grid.Row="4" Grid.Column="0" gaze:GazeApi.Dwell="0:00:02.400" Click="TimingButton2400ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="2400ms"/>
+                <TextBlock x:Name="TextBlock_TimingButton2400ms" Grid.Row="4" Grid.Column="1" />
+            </Grid>
+        </PivotItem>
         <PivotItem Header="Non-Working Controls">
             <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                 <Grid.ColumnDefinitions>
