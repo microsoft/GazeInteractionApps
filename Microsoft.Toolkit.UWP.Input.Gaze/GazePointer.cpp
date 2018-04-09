@@ -72,7 +72,7 @@ static DependencyProperty^ s_dwellProperty = DependencyProperty::RegisterAttache
 static DependencyProperty^ s_dwellRepeatProperty = DependencyProperty::RegisterAttached("DwellRepeat", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
 static DependencyProperty^ s_enterProperty = DependencyProperty::RegisterAttached("Enter", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
 static DependencyProperty^ s_exitProperty = DependencyProperty::RegisterAttached("Exit", TimeSpan::typeid, UIElement::typeid, ref new PropertyMetadata(s_nonTimeSpan));
-static DependencyProperty^ s_maxRepeatCountProperty = DependencyProperty::RegisterAttached("MaxRepeatCount", int::typeid, UIElement::typeid, ref new PropertyMetadata(1));
+static DependencyProperty^ s_maxRepeatCountProperty = DependencyProperty::RegisterAttached("MaxRepeatCount", int::typeid, UIElement::typeid, ref new PropertyMetadata(0));
 
 DependencyProperty^ GazeApi::IsGazeEnabledProperty::get() { return s_isGazeEnabledProperty; }
 DependencyProperty^ GazeApi::IsGazeCursorVisibleProperty::get() { return s_isGazeCursorVisibleProperty; }
@@ -699,7 +699,7 @@ void GazePointer::ProcessGazePoint(long long timestamp, Point position)
 		if (targetItem->ElementState == GazePointerState::Dwell)
 		{
 			targetItem->RepeatCount++;
-			if (targetItem->MaxRepeatCount <= targetItem->RepeatCount)
+			if (targetItem->MaxRepeatCount < targetItem->RepeatCount)
 			{
 				targetItem->NextStateTime = MAXINT;
 			}
