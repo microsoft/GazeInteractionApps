@@ -182,7 +182,6 @@ public:
 public ref class GazePointer sealed
 {
 public:
-    GazePointer(UIElement^ root);
     virtual ~GazePointer();
 
     void LoadSettings(ValueSet^ settings);
@@ -248,7 +247,12 @@ public:
         void set(int value) { _gazeCursor->CursorRadius = value; }
     }
 
+internal:
+
+	GazePointer(UIElement^ root);
+
 private:
+
 	TimeSpan GetDefaultPropertyValue(GazePointerState state);
 
     void    InitializeHistogram();
