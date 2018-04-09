@@ -143,33 +143,6 @@ namespace EyeControlToolkitSettings
             }
         }
 
-        int? _GazePointerMaxHistoryDuration;
-        public int GazePointerMaxHistoryDuration
-        {
-            get
-            {
-                if (!_GazePointerMaxHistoryDuration.HasValue)
-                {
-                    if (ApplicationData.Current.LocalSettings.Values.Keys.Contains("GazePointer.MaxHistoryDuration"))
-                    {
-                        _GazePointerMaxHistoryDuration = (int)(ApplicationData.Current.LocalSettings.Values["GazePointer.MaxHistoryDuration"]);
-                    }
-                    else
-                    {
-                        _GazePointerMaxHistoryDuration = DEFAULT_MAX_HISTORY_DURATION;
-                    }
-                }
-                return _GazePointerMaxHistoryDuration.Value;
-            }
-            set
-            {
-                if (SetProperty(ref _GazePointerMaxHistoryDuration, value))
-                {
-                    ApplicationData.Current.LocalSettings.Values["GazePointer.MaxHistoryDuration"] = value;
-                }
-            }
-        }
-
         int? _GazePointerMaxSingleSampleDuration;
         public int GazePointerMaxSingleSampleDuration
         {
@@ -444,7 +417,6 @@ namespace EyeControlToolkitSettings
             GazePointerDwellDelay = DEFAULT_DWELL_DELAY;
             GazePointerRepeatDelay = DEFAULT_REPEAT_DELAY;
             GazePointerEnterExitDelay = DEFAULT_ENTER_EXIT_DELAY;
-            GazePointerMaxHistoryDuration = DEFAULT_MAX_HISTORY_DURATION;
             GazePointerMaxSingleSampleDuration = MAX_SINGLE_SAMPLE_DURATION;
             GazePointerGazeIdleTime = GAZE_IDLE_TIME;
 
