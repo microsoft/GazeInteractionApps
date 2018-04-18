@@ -1,13 +1,11 @@
 ﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. 
 //See LICENSE in the project root for license information. 
 
-using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Toolkit.UWP.Input.Gaze;
-using Windows.UI.Popups;
 using Windows.Foundation.Collections;
 using Windows.Foundation;
+using Microsoft.Toolkit.Uwp.Input.Gaze;
 
 namespace ControlTest
 {

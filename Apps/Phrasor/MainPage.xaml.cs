@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using Windows.Data.Json;
 using Windows.UI;
-using Microsoft.Toolkit.UWP.Input.Gaze;
+using Microsoft.Toolkit.Uwp.Input.Gaze;
 using Windows.Foundation.Collections;
 using Windows.Foundation;
 

@@ -138,17 +138,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.1</Version>
+      <Version>6.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Input.Gaze">
+      <Version>3.0.0-build.83.g0885c9aac2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\EyeGazeUserControls\EyeGazeUserControls.csproj">
       <Project>{5234acc2-814b-4232-8647-7142e74b9295}</Project>
       <Name>EyeGazeUserControls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Microsoft.Toolkit.UWP.Input.Gaze\Microsoft.Toolkit.UWP.Input.Gaze.vcxproj">
-      <Project>{a5e98964-45b1-442d-a07a-298a3221d81e}</Project>
-      <Name>Microsoft.Toolkit.UWP.Input.Gaze</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

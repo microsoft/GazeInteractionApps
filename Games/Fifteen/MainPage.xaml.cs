@@ -5,7 +5,7 @@ using System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Toolkit.UWP.Input.Gaze;
+using Microsoft.Toolkit.Uwp.Input.Gaze;
 using Windows.Foundation.Collections;
 using Windows.Foundation;
 
