@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Toolkit.Uwp.Input.Gaze;
+using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.Foundation.Collections;
 using Windows.Foundation;
 
@@ -39,7 +39,7 @@ namespace Memory
 
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
-                var gazePointer = GazeApi.GetGazePointer(this);
+                var gazePointer = GazeInput.GetGazePointer(this);
                 gazePointer.LoadSettings(sharedSettings);
             });
         }

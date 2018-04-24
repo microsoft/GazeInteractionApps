@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using Windows.Data.Json;
 using Windows.UI;
-using Microsoft.Toolkit.Uwp.Input.Gaze;
+using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.Foundation.Collections;
 using Windows.Foundation;
 
@@ -80,7 +80,7 @@ namespace Phrasor
 
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
-                var gazePointer = GazeApi.GetGazePointer(this);
+                var gazePointer = GazeInput.GetGazePointer(this);
                 gazePointer.LoadSettings(sharedSettings);
             });
 

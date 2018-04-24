@@ -5,8 +5,8 @@
     xmlns:local="using:ControlTest"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.Gaze"
-    gaze:GazeApi.IsGazeEnabled="True"
+    xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
+    gaze:GazeInput.IsGazeEnabled="Enabled"
     mc:Ignorable="d">
 
     <Pivot>
@@ -53,15 +53,15 @@
                 <Button x:Name="ButtonDefaultInvoke" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Default Click" Click="ButtonDefaultInvoke_Click"/>
                 <TextBlock x:Name="TextBlock_ButtonDefaultInvoke" Grid.Row="0" Grid.Column="1" />
                 <Button x:Name="ButtonGazeInvoke" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="GazeInvoke Only">
-                    <gaze:GazeApi.GazeElement>
+                    <gaze:GazeInput.GazeElement>
                         <gaze:GazeElement Invoked="GazeInvoke_Only_Invoked"/>
-                    </gaze:GazeApi.GazeElement>
+                    </gaze:GazeInput.GazeElement>
                 </Button>
                 <TextBlock x:Name="TextBlock_ButtonGazeInvoke" Grid.Row="1" Grid.Column="1" />
                 <Button x:Name="ButtonGazeInvokeOrClick" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="GazeInvoke Or Click" Click="ButtonGazeInvokeOrClick_Click">
-                    <gaze:GazeApi.GazeElement>
+                    <gaze:GazeInput.GazeElement>
                         <gaze:GazeElement Invoked="GazeInvokeOrClick_Invoked"/>
-                    </gaze:GazeApi.GazeElement>
+                    </gaze:GazeInput.GazeElement>
                 </Button>
                 <TextBlock x:Name="TextBlock_ButtonGazeInvokeOrClick" Grid.Row="2" Grid.Column="1" />
             </Grid>
@@ -79,15 +79,15 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Button x:Name="TimingButton200ms" Grid.Row="0" Grid.Column="0" gaze:GazeApi.Dwell="0:00:00.200" gaze:GazeApi.Fixation="0:00:00.050" Click="TimingButton200ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="200ms"/>
+                <Button x:Name="TimingButton200ms" Grid.Row="0" Grid.Column="0" gaze:GazeInput.DwellDuration="0:00:00.200" gaze:GazeInput.FixationDuration="0:00:00.050" Click="TimingButton200ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="200ms"/>
                 <TextBlock x:Name="TextBlock_TimingButton200ms" Grid.Row="0" Grid.Column="1" />
-                <Button x:Name="TimingButton400ms" Grid.Row="1" Grid.Column="0" gaze:GazeApi.Dwell="0:00:00.400" gaze:GazeApi.Fixation="0:00:00.050" Click="TimingButton400ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="400ms"/>
+                <Button x:Name="TimingButton400ms" Grid.Row="1" Grid.Column="0" gaze:GazeInput.DwellDuration="0:00:00.400" gaze:GazeInput.FixationDuration="0:00:00.050" Click="TimingButton400ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="400ms"/>
                 <TextBlock x:Name="TextBlock_TimingButton400ms" Grid.Row="1" Grid.Column="1" />
-                <Button x:Name="TimingButton800ms" Grid.Row="2" Grid.Column="0" gaze:GazeApi.Dwell="0:00:00.800" Click="TimingButton800ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="800ms"/>
+                <Button x:Name="TimingButton800ms" Grid.Row="2" Grid.Column="0" gaze:GazeInput.DwellDuration="0:00:00.800" Click="TimingButton800ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="800ms"/>
                 <TextBlock x:Name="TextBlock_TimingButton800ms" Grid.Row="2" Grid.Column="1" />
-                <Button x:Name="TimingButton1600ms" Grid.Row="3" Grid.Column="0" gaze:GazeApi.Dwell="0:00:01.600" Click="TimingButton1600ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="1600ms"/>
+                <Button x:Name="TimingButton1600ms" Grid.Row="3" Grid.Column="0" gaze:GazeInput.DwellDuration="0:00:01.600" Click="TimingButton1600ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="1600ms"/>
                 <TextBlock x:Name="TextBlock_TimingButton1600ms" Grid.Row="3" Grid.Column="1" />
-                <Button x:Name="TimingButton2400ms" Grid.Row="4" Grid.Column="0" gaze:GazeApi.Dwell="0:00:02.400" Click="TimingButton2400ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="2400ms"/>
+                <Button x:Name="TimingButton2400ms" Grid.Row="4" Grid.Column="0" gaze:GazeInput.DwellDuration="0:00:02.400" Click="TimingButton2400ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="2400ms"/>
                 <TextBlock x:Name="TextBlock_TimingButton2400ms" Grid.Row="4" Grid.Column="1" />
             </Grid>
         </PivotItem>
@@ -104,13 +104,13 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Button x:Name="Button0Repeat" Grid.Row="0" Grid.Column="0" gaze:GazeApi.MaxRepeatCount="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="0 Repeat" Click="Button0Repeat_Click"/>
+                <Button x:Name="Button0Repeat" Grid.Row="0" Grid.Column="0" gaze:GazeInput.MaxDwellRepeatCount="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="0 Repeat" Click="Button0Repeat_Click"/>
                 <TextBlock x:Name="TextBlock_Button0Repeat" Grid.Row="0" Grid.Column="1" />
-                <Button x:Name="Button1Repeat" Grid.Row="1" Grid.Column="0" gaze:GazeApi.MaxRepeatCount="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="1 Repeat" Click="Button1Repeat_Click"/>
+                <Button x:Name="Button1Repeat" Grid.Row="1" Grid.Column="0" gaze:GazeInput.MaxDwellRepeatCount="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="1 Repeat" Click="Button1Repeat_Click"/>
                 <TextBlock x:Name="TextBlock_Button1Repeat" Grid.Row="1" Grid.Column="1" />
-                <Button x:Name="Button2Repeat" Grid.Row="2" Grid.Column="0" gaze:GazeApi.MaxRepeatCount="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="2 Repeat" Click="Button2Repeat_Click"/>
+                <Button x:Name="Button2Repeat" Grid.Row="2" Grid.Column="0" gaze:GazeInput.MaxDwellRepeatCount="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="2 Repeat" Click="Button2Repeat_Click"/>
                 <TextBlock x:Name="TextBlock_Button2Repeat" Grid.Row="2" Grid.Column="1" />
-                <Button x:Name="Button9Repeat" Grid.Row="3" Grid.Column="0" gaze:GazeApi.MaxRepeatCount="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="9 Repeat" Click="Button9Repeat_Click"/>
+                <Button x:Name="Button9Repeat" Grid.Row="3" Grid.Column="0" gaze:GazeInput.MaxDwellRepeatCount="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="9 Repeat" Click="Button9Repeat_Click"/>
                 <TextBlock x:Name="TextBlock_Button9Repeat" Grid.Row="3" Grid.Column="1" />
             </Grid>
         </PivotItem>

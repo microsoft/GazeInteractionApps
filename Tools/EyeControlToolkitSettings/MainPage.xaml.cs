@@ -1,7 +1,7 @@
 ﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
 //See LICENSE in the project root for license information.
 
-using Microsoft.Toolkit.Uwp.Input.Gaze;
+using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
@@ -22,7 +22,7 @@ namespace EyeControlToolkitSettings
             var localSettings = new ValueSet();
             GazeSettings.ValueSetFromLocalSettings(localSettings);
 
-            var gazePointer = GazeApi.GetGazePointer(this);
+            var gazePointer = GazeInput.GetGazePointer(this);
             gazePointer.LoadSettings(localSettings);
 
             GazeSettings.GazePointer = gazePointer;

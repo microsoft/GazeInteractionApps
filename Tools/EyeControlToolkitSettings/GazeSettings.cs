@@ -1,4 +1,4 @@
-﻿using Microsoft.Toolkit.Uwp.Input.Gaze;
+﻿using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;

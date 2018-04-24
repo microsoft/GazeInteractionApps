@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.Foundation.Collections;
 using Windows.Foundation;
-using Microsoft.Toolkit.Uwp.Input.Gaze;
+using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 
 namespace ControlTest
 {
@@ -19,7 +19,7 @@ namespace ControlTest
         {
             this.InitializeComponent();
 
-            gazePointer = GazeApi.GetGazePointer(this);
+            //gazePointer = GazeApi.GetGazePointer(this);
             CursorVisible.IsChecked = gazePointer.IsCursorVisible;
 
             var sharedSettings = new ValueSet();
