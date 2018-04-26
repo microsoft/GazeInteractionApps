@@ -21,6 +21,12 @@ namespace Positioning
 
         private void GazeInputSourcePreview_GazeMoved(GazeInputSourcePreview sender, GazeMovedPreviewEventArgs args)
         {
+            if (args.CurrentPoint.EyeGazePosition != null)
+            {
+                Canvas.SetLeft(GazePositionEllipse, args.CurrentPoint.EyeGazePosition.Value.X);
+                Canvas.SetTop(GazePositionEllipse, args.CurrentPoint.EyeGazePosition.Value.Y);
+            }
+
             if (args.CurrentPoint.HidInputReport != null)
             {
                 var hidReport = args.CurrentPoint.HidInputReport;
@@ -34,8 +40,23 @@ namespace Positioning
                 var rightEyePosition = rightEyePositionParser.GetPosition(hidReport);
                 var headPosition = headPositionParser.GetPosition(hidReport);
 
-                Canvas.SetLeft(HeadPositionEllipse, headPosition.Value.X);
-                Canvas.SetTop(HeadPositionEllipse, headPosition.Value.Y);
+                if (leftEyePosition != null)
+                {
+                    Canvas.SetLeft(LeftEyePositionEllipse, leftEyePosition.Value.X);
+                    Canvas.SetTop(LeftEyePositionEllipse, leftEyePosition.Value.Y);
+                }
+
+                if (rightEyePosition != null)
+                {
+                    Canvas.SetLeft(RightEyePositionEllipse, rightEyePosition.Value.X);
+                    Canvas.SetTop(RightEyePositionEllipse, rightEyePosition.Value.Y);
+                }
+
+                if (headPosition != null)
+                {
+                    Canvas.SetLeft(HeadPositionEllipse, headPosition.Value.X);
+                    Canvas.SetTop(HeadPositionEllipse, headPosition.Value.Y);
+                }
             }
         }
     }

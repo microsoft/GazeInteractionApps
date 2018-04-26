@@ -10,6 +10,9 @@
 
     <Grid>
         <Canvas Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Ellipse x:Name="GazePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Black" />
+            <Ellipse x:Name="LeftEyePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Blue" />
+            <Ellipse x:Name="RightEyePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Red" />
             <Ellipse x:Name="HeadPositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Gray" />
         </Canvas>
     </Grid>
