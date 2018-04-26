@@ -19,7 +19,7 @@ namespace ControlTest
         {
             this.InitializeComponent();
 
-            //gazePointer = GazeApi.GetGazePointer(this);
+            gazePointer = GazeInput.GetGazePointer(this);
             CursorVisible.IsChecked = gazePointer.IsCursorVisible;
 
             var sharedSettings = new ValueSet();
