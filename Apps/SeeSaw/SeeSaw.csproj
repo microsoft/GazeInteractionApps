@@ -137,7 +137,7 @@
       <Version>6.0.8</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Input.GazeInteraction">
-      <Version>3.0.0-build.125.gbdf6c1d432</Version>
+      <Version>3.0.0-build.137.gc17b00e56f</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

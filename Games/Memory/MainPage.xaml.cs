@@ -121,9 +121,13 @@ namespace Memory
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            if ((btn.Content != null) || (_flashTimer.IsEnabled))
+            if (btn.Content != null)
             {
                 return;
+            }
+            if (_flashTimer.IsEnabled)
+            {
+                OnFlashTimerTick(null, null);
             }
 
             _numMoves++;
