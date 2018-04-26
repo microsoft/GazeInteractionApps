@@ -141,7 +141,7 @@
       <Version>6.0.8</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Input.GazeInteraction">
-      <Version>3.0.0-build.135.gd229d38b94</Version>
+      <Version>3.0.0-build.143.g91e79734c2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
