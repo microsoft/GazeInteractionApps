@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-using Windows.Devices.HumanInterfaceDevice;
-using Windows.Devices.Input.Preview;
+﻿using Windows.Devices.Input.Preview;
 using Windows.UI.Xaml.Controls;
 using static Positioning.GazeHidInputReportHelpers;
 
@@ -34,11 +32,9 @@ namespace Positioning
 
                 var leftEyePositionParser = new GazePositionHidParser(sourceDevice, GazeExtendedUsages.Usage_LeftEyePosition);
                 var rightEyePositionParser = new GazePositionHidParser(sourceDevice, GazeExtendedUsages.Usage_RightEyePosition);
-                var headPositionParser = new GazePositionHidParser(sourceDevice, GazeExtendedUsages.Usage_HeadPosition);
 
                 var leftEyePosition = leftEyePositionParser.GetPosition(hidReport);
                 var rightEyePosition = rightEyePositionParser.GetPosition(hidReport);
-                var headPosition = headPositionParser.GetPosition(hidReport);
 
                 if (leftEyePosition != null)
                 {
@@ -50,12 +46,6 @@ namespace Positioning
                 {
                     Canvas.SetLeft(RightEyePositionEllipse, rightEyePosition.Value.X);
                     Canvas.SetTop(RightEyePositionEllipse, rightEyePosition.Value.Y);
-                }
-
-                if (headPosition != null)
-                {
-                    Canvas.SetLeft(HeadPositionEllipse, headPosition.Value.X);
-                    Canvas.SetTop(HeadPositionEllipse, headPosition.Value.Y);
                 }
             }
         }
