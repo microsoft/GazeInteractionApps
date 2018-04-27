@@ -14,16 +14,16 @@ namespace ControlTest
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public GazePointer gazePointer;
         public MainPage()
         {
             this.InitializeComponent();
 
-            gazePointer = GazeInput.GetGazePointer(this);
-            CursorVisible.IsChecked = gazePointer.IsCursorVisible;
+            CursorVisible.IsChecked = GazeInput.GetIsCursorVisible(this);
 
             var sharedSettings = new ValueSet();
-            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
+            {
+                var gazePointer = GazeInput.GetGazePointer(this);
                 gazePointer.LoadSettings(sharedSettings);
             });
         }
@@ -134,32 +134,32 @@ namespace ControlTest
         #region Cursor Settings
         private void CursorVisible_Checked(object sender, RoutedEventArgs e)
         {
-            gazePointer.IsCursorVisible = true;
+            GazeInput.SetIsCursorVisible(this, true);
         }
 
         private void CursorVisible_Unchecked(object sender, RoutedEventArgs e)
         {
-            gazePointer.IsCursorVisible = false;
+            GazeInput.SetIsCursorVisible(this, false);
         }
 
         private void CursorRadius5_Click(object sender, RoutedEventArgs e)
         {
-            gazePointer.CursorRadius = 5;
+            GazeInput.SetCursorRadius(this, 5);
         }
 
         private void CursorRadius10_Click(object sender, RoutedEventArgs e)
         {
-            gazePointer.CursorRadius = 10;
+            GazeInput.SetCursorRadius(this, 10);
         }
 
         private void CursorRadius20_Click(object sender, RoutedEventArgs e)
         {
-            gazePointer.CursorRadius = 20;
+            GazeInput.SetCursorRadius(this, 20);
         }
 
         private void CursorRadius50_Click(object sender, RoutedEventArgs e)
         {
-            gazePointer.CursorRadius = 50;
+            GazeInput.SetCursorRadius(this, 50);
         }
         #endregion
     }

@@ -79,9 +79,9 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Button x:Name="TimingButton200ms" Grid.Row="0" Grid.Column="0" gaze:GazeInput.DwellDuration="0:00:00.200" gaze:GazeInput.FixationDuration="0:00:00.050" Click="TimingButton200ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="200ms"/>
+                <Button x:Name="TimingButton200ms" Grid.Row="0" Grid.Column="0" gaze:GazeInput.DwellDuration="0:00:00.200" Click="TimingButton200ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="200ms"/>
                 <TextBlock x:Name="TextBlock_TimingButton200ms" Grid.Row="0" Grid.Column="1" />
-                <Button x:Name="TimingButton400ms" Grid.Row="1" Grid.Column="0" gaze:GazeInput.DwellDuration="0:00:00.400" gaze:GazeInput.FixationDuration="0:00:00.050" Click="TimingButton400ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="400ms"/>
+                <Button x:Name="TimingButton400ms" Grid.Row="1" Grid.Column="0" gaze:GazeInput.DwellDuration="0:00:00.400" Click="TimingButton400ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="400ms"/>
                 <TextBlock x:Name="TextBlock_TimingButton400ms" Grid.Row="1" Grid.Column="1" />
                 <Button x:Name="TimingButton800ms" Grid.Row="2" Grid.Column="0" gaze:GazeInput.DwellDuration="0:00:00.800" Click="TimingButton800ms_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="800ms"/>
                 <TextBlock x:Name="TextBlock_TimingButton800ms" Grid.Row="2" Grid.Column="1" />

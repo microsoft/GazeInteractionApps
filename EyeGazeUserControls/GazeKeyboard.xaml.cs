@@ -2,9 +2,6 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
-using Windows.Foundation.Collections;
-using Windows.Foundation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -12,8 +9,7 @@ namespace EyeGazeUserControls
 {
     public sealed partial class GazeKeyboard : UserControl
     {
-        StringBuilder _theText;
-        //GazePointer _gazePointer;
+        readonly StringBuilder _theText= new StringBuilder();
 
         public ButtonBase EnterButton
         {
@@ -38,33 +34,29 @@ namespace EyeGazeUserControls
         public GazeKeyboard()
         {
             this.InitializeComponent();
-            _theText = new StringBuilder();
-
-            //var sharedSettings = new ValueSet();
-            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
-            //    var gazePointer = GazeApi.GetGazePointer(this);
-            //    gazePointer.LoadSettings(sharedSettings);
-            //});
         }
 
         private void OnChar(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var tag = button.Tag.ToString();
-            if (tag == "0x22")
-            {
-                _theText.Append(' ');
-            }
-            else if (tag == "0x0E")
+            var button = (Button)sender;
+            var content = button.Content.ToString();
+            _theText.Append(content);
+            textControl.Text = _theText.ToString();
+        }
+
+        private void OnSpace(object sender, RoutedEventArgs e)
+        {
+            _theText.Append(' ');
+            textControl.Text = _theText.ToString();
+        }
+
+        private void OnBackspace(object sender, RoutedEventArgs e)
+        {
+            if (_theText.Length != 0)
             {
                 _theText.Remove(_theText.Length - 1, 1);
+                textControl.Text = _theText.ToString();
             }
-            else
-            {
-                var content = button.Content.ToString();
-                _theText.Append(content);
-            }
-            textControl.Text = _theText.ToString();
         }
 
         private void OnWordDelete(object sender, RoutedEventArgs e)
