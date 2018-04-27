@@ -1,4 +1,6 @@
-﻿using Windows.Devices.Input.Preview;
+﻿using System;
+using System.Diagnostics;
+using Windows.Devices.Input.Preview;
 using Windows.UI.Xaml.Controls;
 using static Positioning.GazeHidInputReportHelpers;
 
@@ -38,16 +40,39 @@ namespace Positioning
 
                 if (leftEyePosition != null)
                 {
-                    Canvas.SetLeft(LeftEyePositionEllipse, leftEyePosition.Value.X);
-                    Canvas.SetTop(LeftEyePositionEllipse, leftEyePosition.Value.Y);
+                    Debug.WriteLine($"LeftEye  {leftEyePosition.Value.X}, {leftEyePosition.Value.Y}, {leftEyePosition.Value.Z}");
+
+                    var newX = MapRange(150000, 500000, 0, ActualWidth, leftEyePosition.Value.X);
+                    var newY = MapRange(0, 100000, 0, ActualHeight, leftEyePosition.Value.Y);
+                    var newZ = MapRange(500000, 1300000, 0, 100, leftEyePosition.Value.Z);
+
+                    Debug.WriteLine($"LeftEye* {newX}, {newY}, {newZ}");
+
+                    Canvas.SetLeft(LeftEyePositionEllipse, newX);
+                    Canvas.SetTop(LeftEyePositionEllipse, newY);
+
                 }
 
                 if (rightEyePosition != null)
                 {
-                    Canvas.SetLeft(RightEyePositionEllipse, rightEyePosition.Value.X);
-                    Canvas.SetTop(RightEyePositionEllipse, rightEyePosition.Value.Y);
+                    Debug.WriteLine($"RightEye {rightEyePosition.Value.X}, {rightEyePosition.Value.Y}, {rightEyePosition.Value.Z}");
+
+                    var newX = MapRange(150000, 500000, 0, ActualWidth, rightEyePosition.Value.X);
+                    var newY = MapRange(0, 100000, 0, ActualHeight, rightEyePosition.Value.Y);
+                    var newZ = MapRange(500000, 1300000, 0, 100, rightEyePosition.Value.Z);
+
+                    Debug.WriteLine($"RightEye* {newX}, {newY}, {newZ}");
+
+                    Canvas.SetLeft(RightEyePositionEllipse, newX);
+                    Canvas.SetTop(RightEyePositionEllipse, newY);
                 }
             }
+        }
+
+        private static double MapRange(double oldStart, double oldEnd, double newStart, double newEnd, double valueToMap)
+        {
+            double scalingFactor = (double)(newEnd - newStart) / (oldEnd - oldStart);
+            return (double)(newStart + ((valueToMap - oldStart) * scalingFactor));
         }
     }
 }
