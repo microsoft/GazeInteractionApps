@@ -31,8 +31,6 @@ namespace EyeControlToolkitSettings
 
         #endregion
 
-        public GazePointer GazePointer = null;
-
         #region Properties
         #region GazePointer
         int? _GazePointerFixationDelay;
@@ -224,10 +222,7 @@ namespace EyeControlToolkitSettings
                     if (SetProperty(ref _GazeCursorRadius, value))
                     {
                         ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorRadius"] = value;
-                        if (GazePointer != null)
-                        {
-                            GazePointer.CursorRadius = value;
-                        }
+                        //_GazePointer.CursorRadius = value;
                     }
                 }
             }
@@ -256,10 +251,7 @@ namespace EyeControlToolkitSettings
                 if (SetProperty(ref _GazeCursorVisibility, value))
                 {
                     ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorVisibility"] = value;
-                    if (GazePointer != null)
-                    {
-                        GazePointer.IsCursorVisible = value;
-                    }
+                    //GazeInput.IsCursorVisible = value;
                 }
             }
         }

@@ -113,7 +113,7 @@ namespace ControlTest
         {
             TextBlock_ButtonDefaultInvoke.Text = $"Gaze OR Click = {++_DefaultInvokeClickCount}";
         }
-        private void GazeInvoke_Only_Invoked(object sender, GazeInvokedRoutedEventArgs e)
+        private void GazeInvoke_Only_Invoked(object sender, DwellInvokedRoutedEventArgs e)
         {
             TextBlock_ButtonGazeInvoke.Text = $"Gazes = {++_GazeInvokeCount}";
             e.Handled = true;
@@ -124,7 +124,7 @@ namespace ControlTest
             TextBlock_ButtonGazeInvokeOrClick.Text = $"Gaze = {_GazeInvokeOrClick_GazeCount} \r\nClick = {++_GazeInvokeOrClick_ClickCount}";
         }
 
-        private void GazeInvokeOrClick_Invoked(object sender, GazeInvokedRoutedEventArgs e)
+        private void GazeInvokeOrClick_Invoked(object sender, DwellInvokedRoutedEventArgs e)
         {
             TextBlock_ButtonGazeInvokeOrClick.Text = $"Gaze = {++_GazeInvokeOrClick_GazeCount} \r\nClick = {_GazeInvokeOrClick_ClickCount}";
             e.Handled = true;
