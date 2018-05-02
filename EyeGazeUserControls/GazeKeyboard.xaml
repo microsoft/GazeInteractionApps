@@ -19,6 +19,7 @@
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="AllowFocusOnInteraction" Value="False" />
+            <Setter Property="g:GazeInput.RepeatDelayDuration" Value="0:0:0.8"/>
             <Setter Property="g:GazeInput.MaxDwellRepeatCount" Value="1" />
         </Style>
 
