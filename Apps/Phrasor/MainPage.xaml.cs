@@ -54,6 +54,7 @@ namespace Phrasor
         public PhraseNode ChildNode;
         public bool IsCategory;
         public bool NeedsSaving;
+        public bool SpeechMode;
     }
 
     /// <summary>
@@ -79,11 +80,11 @@ namespace Phrasor
             this.InitializeComponent();
             this.Loaded += MainPage_Loaded;
 
-            var sharedSettings = new ValueSet();
-            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
-                var gazePointer = GazeInput.GetGazePointer(this);
-                gazePointer.LoadSettings(sharedSettings);
-            });
+            //var sharedSettings = new ValueSet();
+            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+            //    var gazePointer = GazeInput.GetGazePointer(this);
+            //    gazePointer.LoadSettings(sharedSettings);
+            //});
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
@@ -353,7 +354,7 @@ namespace Phrasor
                 CurrentNode = _curNode,
                 ChildNode = null,
                 NeedsSaving = false,
-                IsCategory = isCategory
+                IsCategory = isCategory               
             };
             Frame.Navigate(typeof(KeyboardPage), navParams);
         }
@@ -455,6 +456,19 @@ namespace Phrasor
                 (sender as Button).Content = "\uE768";
             }
 
+        }
+
+        private void OnSpeechClick(object sender, RoutedEventArgs e)
+        {
+            var navParams = new KeyboardPageNavigationParams
+            {
+                RootNode = _rootNode,
+                CurrentNode = _curNode,
+                ChildNode = null,
+                NeedsSaving = false,
+                SpeechMode = true
+            };
+            Frame.Navigate(typeof(KeyboardPage), navParams);
         }
 
         private void OnExitClick(object sender, RoutedEventArgs e)

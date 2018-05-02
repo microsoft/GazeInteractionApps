@@ -7,6 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     gaze:GazeInput.Interaction="Enabled"
+    gaze:GazeInput.CursorRadius="5"
+    gaze:GazeInput.MaxDwellRepeatCount="0"    
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -72,6 +74,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button Grid.Row="0" Grid.Column="0" Content="&#xE80F;" Style="{StaticResource ToolbarButton}" Click="OnHomeClick" />
             <Button Grid.Row="0" Grid.Column="1" Content="&#xE74A;" Style="{StaticResource ToolbarButton}" Click="OnUpClick" />
@@ -80,7 +83,8 @@
             <Button Grid.Row="0" Grid.Column="4" Content="&#xE70F;" Style="{StaticResource ToolbarButton}" Click="OnEditClick" />
             <Button Grid.Row="0" Grid.Column="5" Content="&#xE74D;" Style="{StaticResource ToolbarButton}" Click="OnDeleteClick" />
             <Button gaze:GazeInput.Interaction="Enabled" Grid.Row="0" Grid.Column="6" Content="&#xE769;" Style="{StaticResource ToolbarButton}" Click="OnPauseClick" />
-            <Button Grid.Row="0" Grid.Column="7" Content="&#xE711;" Style="{StaticResource ToolbarButton}" Click="OnExitClick" />
+            <Button Grid.Row="0" Grid.Column="7" Content="&#xE8BD;" Style="{StaticResource ToolbarButton}" Click="OnSpeechClick" />
+            <Button Grid.Row="0" Grid.Column="8" Content="&#xE711;" Style="{StaticResource ToolbarButton}" Click="OnExitClick" />
         </Grid>
         <Grid x:Name="PhraseGrid" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
