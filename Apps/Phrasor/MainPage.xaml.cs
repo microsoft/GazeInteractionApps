@@ -14,6 +14,7 @@ using Windows.UI;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.Foundation.Collections;
 using Windows.Foundation;
+using Windows.UI.ViewManagement;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -83,6 +84,8 @@ namespace Phrasor
                 var gazePointer = GazeInput.GetGazePointer(this);
                 gazePointer.LoadSettings(sharedSettings);
             });
+
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
             _pageMode = PageMode.Run;
             _speechSynthesizer = new SpeechSynthesizer();
@@ -439,7 +442,19 @@ namespace Phrasor
 
         private void OnPauseClick(object sender, RoutedEventArgs e)
         {
-            _interactionPaused = !_interactionPaused;
+            if (_interactionPaused)
+            {
+                this.SetValue(GazeInput.InteractionProperty, Interaction.Enabled);
+                _interactionPaused = false;
+                (sender as Button).Content = "\uE769";
+            }
+            else
+            {
+                this.SetValue(GazeInput.InteractionProperty, Interaction.Disabled);
+                _interactionPaused = true;
+                (sender as Button).Content = "\uE768";
+            }
+
         }
 
         private void OnExitClick(object sender, RoutedEventArgs e)
