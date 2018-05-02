@@ -24,8 +24,6 @@ namespace EyeControlToolkitSettings
 
             var gazePointer = GazeInput.GetGazePointer(this);
             gazePointer.LoadSettings(localSettings);
-
-            GazeSettings.GazePointer = gazePointer;
         }
 
         #region Button Handlers
