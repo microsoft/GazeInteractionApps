@@ -13,6 +13,10 @@
 
     <Page.Resources>
         <ResourceDictionary>
+            <SolidColorBrush x:Name="ToolBarBackgroundBrush" Color="#1A1A1A"/>
+            <SolidColorBrush x:Name="ToolBarForegroundBrush" Color="White"/>
+            <SolidColorBrush x:Name="ToolBarPauseOverlayBrush" Color="#99333333"/>
+            
             <Style x:Key="ToolbarButton" TargetType="Button">
                 <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
                 <Setter Property="FontWeight" Value="Bold" />
@@ -21,16 +25,8 @@
                 <Setter Property="VerticalAlignment" Value="Stretch" />
                 <Setter Property="MaxHeight" Value="400" />
                 <Setter Property="MaxWidth" Value="400" />
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="#1A1A1A" />
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Foreground">
-                    <Setter.Value>
-                        <SolidColorBrush Color="White" />
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Background" Value="{StaticResource ToolBarBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource ToolBarForegroundBrush}"/>
             </Style>
 
             <Style x:Key="PhraseButton" TargetType="ButtonBase">
@@ -80,11 +76,13 @@
             <Button Grid.Row="0" Grid.Column="1" Content="&#xE74A;" Style="{StaticResource ToolbarButton}" Click="OnUpClick" />
             <Button Grid.Row="0" Grid.Column="2" Content="&#xE710;" Style="{StaticResource ToolbarButton}" Click="OnAddPhraseClick" />
             <Button Grid.Row="0" Grid.Column="3" Content="&#xE8F4;" Style="{StaticResource ToolbarButton}" Click="OnAddCategoryClick" />
-            <Button Grid.Row="0" Grid.Column="4" Content="&#xE70F;" Style="{StaticResource ToolbarButton}" Click="OnEditClick" />
-            <Button Grid.Row="0" Grid.Column="5" Content="&#xE74D;" Style="{StaticResource ToolbarButton}" Click="OnDeleteClick" />
-            <Button gaze:GazeInput.Interaction="Enabled" Grid.Row="0" Grid.Column="6" Content="&#xE769;" Style="{StaticResource ToolbarButton}" Click="OnPauseClick" />
+            <Button x:Name="EditButton" Grid.Row="0" Grid.Column="4" Content="&#xE70F;" Style="{StaticResource ToolbarButton}" Click="OnEditClick" />
+            <Button x:Name="DeleteButton" Grid.Row="0" Grid.Column="5" Content="&#xE74D;" Style="{StaticResource ToolbarButton}" Click="OnDeleteClick" />
+            <Button x:Name="PauseButton" gaze:GazeInput.Interaction="Enabled" Grid.Row="0" Grid.Column="6" Content="&#xE769;" Style="{StaticResource ToolbarButton}" Click="OnPauseClick" />
             <Button Grid.Row="0" Grid.Column="7" Content="&#xE8BD;" Style="{StaticResource ToolbarButton}" Click="OnSpeechClick" />
             <Button Grid.Row="0" Grid.Column="8" Content="&#xE711;" Style="{StaticResource ToolbarButton}" Click="OnExitClick" />
+            <Rectangle x:Name="PauseIndicator1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="6" Fill="{StaticResource ToolBarPauseOverlayBrush}" Visibility="Collapsed"/>
+            <Rectangle x:Name="PauseIndicator2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="7" Grid.ColumnSpan="2" Fill="{StaticResource ToolBarPauseOverlayBrush}" Visibility="Collapsed"/>
         </Grid>
         <Grid x:Name="PhraseGrid" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 

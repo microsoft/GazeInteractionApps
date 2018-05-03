@@ -88,7 +88,7 @@ namespace Phrasor
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
-            _pageMode = PageMode.Run;
+            SetPageMode(PageMode.Run);            
             _speechSynthesizer = new SpeechSynthesizer();
             _mediaElement = new MediaElement();
             _backgroundBrush = new SolidColorBrush(Colors.Gray);
@@ -371,12 +371,69 @@ namespace Phrasor
 
         private void OnEditClick(object sender, RoutedEventArgs e)
         {
-            _pageMode = (_pageMode == PageMode.Run) ? PageMode.Edit : PageMode.Run;
+            if (_pageMode != PageMode.Edit)
+            {
+                SetPageMode(PageMode.Edit);
+            }
+            else
+            {
+                SetPageMode(PageMode.Run);
+            }
         }
 
         private void OnDeleteClick(object sender, RoutedEventArgs e)
         {
-            _pageMode = (_pageMode == PageMode.Run) ? PageMode.Delete: PageMode.Run;
+            if (_pageMode != PageMode.Delete)
+            {
+                SetPageMode( PageMode.Delete);                
+            }
+            else
+            {                
+                SetPageMode(PageMode.Run);
+            }            
+        }
+
+        private void SetPageMode(PageMode newPageMode)
+        {
+            DeleteButton.Background = Resources["ToolBarBackgroundBrush"] as SolidColorBrush;
+            DeleteButton.Foreground = Resources["ToolBarForegroundBrush"] as SolidColorBrush;
+            EditButton.Background = Resources["ToolBarBackgroundBrush"] as SolidColorBrush;
+            EditButton.Foreground = Resources["ToolBarForegroundBrush"] as SolidColorBrush;
+
+            if (newPageMode == PageMode.Delete)
+            {
+                DeleteButton.Background = Resources["ToolBarForegroundBrush"] as SolidColorBrush;
+                DeleteButton.Foreground = Resources["ToolBarBackgroundBrush"] as SolidColorBrush;
+                SetButtonDwellResponse(true);                
+            }
+            else if (newPageMode == PageMode.Edit)
+            {
+                EditButton.Background = Resources["ToolBarForegroundBrush"] as SolidColorBrush;
+                EditButton.Foreground = Resources["ToolBarBackgroundBrush"] as SolidColorBrush;
+                SetButtonDwellResponse(false);
+            }
+            else
+            {
+                SetButtonDwellResponse(false);
+            }
+            
+            _pageMode = newPageMode;           
+        }
+
+        private void SetButtonDwellResponse(bool toDestructive)
+        {
+            TimeSpan destructiveDwellDuration = new TimeSpan(0, 0, 0, 0, 1500);
+            TimeSpan normalDwellDuration = new TimeSpan(0, 0, 0, 0, 400);
+            TimeSpan targetDwellDuration = normalDwellDuration;
+
+            if (toDestructive)
+            {
+                targetDwellDuration = destructiveDwellDuration;
+            }            
+            foreach (Button childButton in PhraseGrid.Children)
+            {
+                childButton.SetValue(GazeInput.DwellDurationProperty, targetDwellDuration);
+            }
         }
 
         private async void OnGridButtonClick(object sender, RoutedEventArgs e)
@@ -406,9 +463,10 @@ namespace Phrasor
                         // TODO: Add status info somewhere.
                         return;
                     }
+                    SetButtonDwellResponse(false);
                     _curNode.Children.Remove(phraseNode);
                     PhraseGrid.Children.Remove(button);
-                    _pageMode = PageMode.Run;
+                    SetPageMode(PageMode.Run);
                     GotoNode(_curNode);
                     break;
 
@@ -419,8 +477,7 @@ namespace Phrasor
                         CurrentNode = _curNode,
                         ChildNode = phraseNode,
                         NeedsSaving = false
-                    };
-
+                    };                    
                     Frame.Navigate(typeof(KeyboardPage), navParams);
                     break;
 
@@ -448,12 +505,16 @@ namespace Phrasor
                 this.SetValue(GazeInput.InteractionProperty, Interaction.Enabled);
                 _interactionPaused = false;
                 (sender as Button).Content = "\uE769";
+                PauseIndicator1.Visibility = Visibility.Collapsed;
+                PauseIndicator2.Visibility = Visibility.Collapsed;
             }
             else
             {
                 this.SetValue(GazeInput.InteractionProperty, Interaction.Disabled);
                 _interactionPaused = true;
                 (sender as Button).Content = "\uE768";
+                PauseIndicator1.Visibility = Visibility.Visible;
+                PauseIndicator2.Visibility = Visibility.Visible;
             }
 
         }
