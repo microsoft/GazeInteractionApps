@@ -49,10 +49,8 @@ namespace TwoZeroFourEight
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page, INotifyPropertyChanged
+    public sealed partial class MainPage : Page
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public const int BOARD_SIZE = 4;
         public const int MAX_BOARD_CELLS = BOARD_SIZE * BOARD_SIZE;
         private ObservableCollection<int> _board;
@@ -60,19 +58,6 @@ namespace TwoZeroFourEight
 
         public int Score { get; set; }
         public Visibility GameOverStatus { get; set; }
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-        protected bool SetField<T>(ref T field, T value, string propertyName)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-            field = value;
-            OnPropertyChanged(propertyName);
-            return true;
-        }
 
         public MainPage()
         {
