@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using Windows.Devices.Input.Preview;
 using Windows.Graphics.Display;
@@ -53,6 +54,12 @@ namespace Positioning
                 Canvas.SetTop(GazePositionEllipse, args.CurrentPoint.EyeGazePosition.Value.Y);
 
                 sb.Append($"{args.CurrentPoint.EyeGazePosition.Value.X}, {args.CurrentPoint.EyeGazePosition.Value.Y})");
+
+                GazePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+            else
+            {
+                GazePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
             sb.AppendLine(")");
 
@@ -76,7 +83,7 @@ namespace Positioning
                 sb.Append("LeftEyePos  (");
                 if (leftEyePosition != null)
                 {
-                    sb.Append($"{leftEyePosition.Value.X}, {leftEyePosition.Value.Y}, {leftEyePosition.Value.Z})");
+                    sb.Append($"{leftEyePosition.Value.X.ToString("F2", CultureInfo.InvariantCulture)}, {leftEyePosition.Value.Y.ToString("F2", CultureInfo.InvariantCulture)}, {leftEyePosition.Value.Z.ToString("F2", CultureInfo.InvariantCulture)})");
 
                     if (leftEyePosition.Value.X >= 0 &&
                         leftEyePosition.Value.X <= screenSizeMicrometersWidth &&
@@ -113,7 +120,7 @@ namespace Positioning
                             LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
                         }
 
-                        sb.Append($" ({newX}, {newY}, {newZ})");
+                        sb.Append($" ({newX.ToString("F0", CultureInfo.InvariantCulture)}, {newY.ToString("F0", CultureInfo.InvariantCulture)}, {newZ})");
 
                         Canvas.SetLeft(LeftEyePositionEllipse, newX);
                         Canvas.SetTop(LeftEyePositionEllipse, newY);
@@ -130,7 +137,7 @@ namespace Positioning
                 sb.Append("RightEye (");
                 if (rightEyePosition != null)
                 {
-                    sb.Append($"{rightEyePosition.Value.X}, {rightEyePosition.Value.Y}, {rightEyePosition.Value.Z})");
+                    sb.Append($"{rightEyePosition.Value.X.ToString("F2", CultureInfo.InvariantCulture)}, {rightEyePosition.Value.Y.ToString("F2", CultureInfo.InvariantCulture)}, {rightEyePosition.Value.Z.ToString("F2", CultureInfo.InvariantCulture)})");
 
                     if (rightEyePosition.Value.X >= 0 &&
                         rightEyePosition.Value.X <= screenSizeMicrometersWidth &&
@@ -167,7 +174,7 @@ namespace Positioning
                             RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
                         }
 
-                        sb.Append($" ({newX}, {newY}, {newZ}");
+                        sb.Append($" ({newX.ToString("F0", CultureInfo.InvariantCulture)}, {newY.ToString("F0", CultureInfo.InvariantCulture)}, {newZ}");
 
                         Canvas.SetLeft(RightEyePositionEllipse, newX);
                         Canvas.SetTop(RightEyePositionEllipse, newY);
