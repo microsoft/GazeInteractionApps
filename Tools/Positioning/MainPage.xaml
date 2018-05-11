@@ -9,10 +9,34 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="200" />
+        </Grid.ColumnDefinitions>
+
         <Canvas Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <Ellipse x:Name="GazePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Black" />
-            <Ellipse x:Name="LeftEyePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Green" />
-            <Ellipse x:Name="RightEyePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Green" />
+            <Ellipse x:Name="GazePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Black">
+                <Ellipse.RenderTransform>
+                    <CompositeTransform TranslateX="-50" TranslateY="-50"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse x:Name="LeftEyePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Green">
+                <Ellipse.RenderTransform>
+                    <CompositeTransform TranslateX="-50" TranslateY="-50"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse x:Name="RightEyePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Green">
+                <Ellipse.RenderTransform>
+                    <CompositeTransform TranslateX="-50" TranslateY="-50"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
         </Canvas>
+
+        <TextBlock x:Name="StatusTextBlock" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20" Foreground="Black" />
+        <Button x:Name="ExitButton" Content="Exit" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ExitButton_Click" />
     </Grid>
 </Page>
