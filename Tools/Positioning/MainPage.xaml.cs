@@ -1,10 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using Windows.Devices.Input.Preview;
 using Windows.Graphics.Display;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using static Positioning.GazeHidInputReportHelpers;
 
 namespace Positioning
@@ -82,7 +85,33 @@ namespace Positioning
                     {
                         var newX = MapRange(0, screenSizeMicrometersWidth, 0, ActualWidth, leftEyePosition.Value.X);
                         var newY = MapRange(0, screenSizeMicrometersHeight, 0, ActualHeight, leftEyePosition.Value.Y);
-                        var newZ = MapRange(500000, 1300000, 0, 100, leftEyePosition.Value.Z);
+
+                        var newZ = 0;
+                        if (leftEyePosition.Value.Z < 400000)
+                        {
+                            newZ = 1;
+                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
+                        }
+                        else if (leftEyePosition.Value.Z < 500000)
+                        {
+                            newZ = 2;
+                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
+                        }
+                        else if (leftEyePosition.Value.Z < 600000)
+                        {
+                            newZ = 3;
+                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Green);
+                        }
+                        else if (leftEyePosition.Value.Z < 700000)
+                        {
+                            newZ = 2;
+                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
+                        }
+                        else if (leftEyePosition.Value.Z < 800000)
+                        {
+                            newZ = 1;
+                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
+                        }
 
                         sb.Append($" ({newX}, {newY}, {newZ})");
 
@@ -110,7 +139,33 @@ namespace Positioning
                     {
                         var newX = MapRange(0, screenSizeMicrometersWidth, 0, ActualWidth, rightEyePosition.Value.X);
                         var newY = MapRange(0, screenSizeMicrometersHeight, 0, ActualHeight, rightEyePosition.Value.Y);
-                        var newZ = MapRange(500000, 1300000, 0, 100, rightEyePosition.Value.Z);
+
+                        var newZ = 0;
+                        if (rightEyePosition.Value.Z < 400000)
+                        {
+                            newZ = 1;
+                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
+                        }
+                        else if (rightEyePosition.Value.Z < 500000)
+                        {
+                            newZ = 2;
+                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
+                        }
+                        else if (rightEyePosition.Value.Z < 600000)
+                        {
+                            newZ = 3;
+                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Green);
+                        }
+                        else if (rightEyePosition.Value.Z < 700000)
+                        {
+                            newZ = 2;
+                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
+                        }
+                        else if (rightEyePosition.Value.Z < 800000)
+                        {
+                            newZ = 1;
+                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
+                        }
 
                         sb.Append($" ({newX}, {newY}, {newZ}");
 
