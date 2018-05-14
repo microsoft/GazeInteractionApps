@@ -99,8 +99,10 @@ namespace Positioning
 
             private readonly UInt16 _usage = 0x0000;
 
-            public GazeRotationHidParser(GazeDevicePreview gazeDevice)
+            public GazeRotationHidParser(GazeDevicePreview gazeDevice, UInt16 usage)
             {
+                _usage = usage;
+
                 // Find all the head rotation usage from the device's
                 // descriptor and store them for easy access
                 _X = GetGazeUsageFromCollectionId(gazeDevice, GazeExtendedUsages.Usage_RotationX, _usage);
