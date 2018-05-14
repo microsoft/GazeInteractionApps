@@ -1,10 +1,14 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using Windows.Devices.Input.Preview;
 using Windows.Graphics.Display;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using static Positioning.GazeHidInputReportHelpers;
 
 namespace Positioning
@@ -50,6 +54,12 @@ namespace Positioning
                 Canvas.SetTop(GazePositionEllipse, args.CurrentPoint.EyeGazePosition.Value.Y);
 
                 sb.Append($"{args.CurrentPoint.EyeGazePosition.Value.X}, {args.CurrentPoint.EyeGazePosition.Value.Y})");
+
+                GazePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+            else
+            {
+                GazePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
             sb.AppendLine(")");
 
@@ -73,7 +83,7 @@ namespace Positioning
                 sb.Append("LeftEyePos  (");
                 if (leftEyePosition != null)
                 {
-                    sb.Append($"{leftEyePosition.Value.X}, {leftEyePosition.Value.Y}, {leftEyePosition.Value.Z})");
+                    sb.Append($"{leftEyePosition.Value.X.ToString("F2", CultureInfo.InvariantCulture)}, {leftEyePosition.Value.Y.ToString("F2", CultureInfo.InvariantCulture)}, {leftEyePosition.Value.Z.ToString("F2", CultureInfo.InvariantCulture)})");
 
                     if (leftEyePosition.Value.X >= 0 &&
                         leftEyePosition.Value.X <= screenSizeMicrometersWidth &&
@@ -82,9 +92,35 @@ namespace Positioning
                     {
                         var newX = MapRange(0, screenSizeMicrometersWidth, 0, ActualWidth, leftEyePosition.Value.X);
                         var newY = MapRange(0, screenSizeMicrometersHeight, 0, ActualHeight, leftEyePosition.Value.Y);
-                        var newZ = MapRange(500000, 1300000, 0, 100, leftEyePosition.Value.Z);
 
-                        sb.Append($" ({newX}, {newY}, {newZ})");
+                        var newZ = 0;
+                        if (leftEyePosition.Value.Z < 400000)
+                        {
+                            newZ = 1;
+                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
+                        }
+                        else if (leftEyePosition.Value.Z < 500000)
+                        {
+                            newZ = 2;
+                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
+                        }
+                        else if (leftEyePosition.Value.Z < 700000)
+                        {
+                            newZ = 3;
+                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Green);
+                        }
+                        else if (leftEyePosition.Value.Z < 800000)
+                        {
+                            newZ = 2;
+                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
+                        }
+                        else if (leftEyePosition.Value.Z < 900000)
+                        {
+                            newZ = 1;
+                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
+                        }
+
+                        sb.Append($" ({newX.ToString("F0", CultureInfo.InvariantCulture)}, {newY.ToString("F0", CultureInfo.InvariantCulture)}, {newZ})");
 
                         Canvas.SetLeft(LeftEyePositionEllipse, newX);
                         Canvas.SetTop(LeftEyePositionEllipse, newY);
@@ -101,7 +137,7 @@ namespace Positioning
                 sb.Append("RightEye (");
                 if (rightEyePosition != null)
                 {
-                    sb.Append($"{rightEyePosition.Value.X}, {rightEyePosition.Value.Y}, {rightEyePosition.Value.Z})");
+                    sb.Append($"{rightEyePosition.Value.X.ToString("F2", CultureInfo.InvariantCulture)}, {rightEyePosition.Value.Y.ToString("F2", CultureInfo.InvariantCulture)}, {rightEyePosition.Value.Z.ToString("F2", CultureInfo.InvariantCulture)})");
 
                     if (rightEyePosition.Value.X >= 0 &&
                         rightEyePosition.Value.X <= screenSizeMicrometersWidth &&
@@ -110,9 +146,35 @@ namespace Positioning
                     {
                         var newX = MapRange(0, screenSizeMicrometersWidth, 0, ActualWidth, rightEyePosition.Value.X);
                         var newY = MapRange(0, screenSizeMicrometersHeight, 0, ActualHeight, rightEyePosition.Value.Y);
-                        var newZ = MapRange(500000, 1300000, 0, 100, rightEyePosition.Value.Z);
 
-                        sb.Append($" ({newX}, {newY}, {newZ}");
+                        var newZ = 0;
+                        if (rightEyePosition.Value.Z < 400000)
+                        {
+                            newZ = 1;
+                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
+                        }
+                        else if (rightEyePosition.Value.Z < 500000)
+                        {
+                            newZ = 2;
+                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
+                        }
+                        else if (rightEyePosition.Value.Z < 700000)
+                        {
+                            newZ = 3;
+                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Green);
+                        }
+                        else if (rightEyePosition.Value.Z < 800000)
+                        {
+                            newZ = 2;
+                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
+                        }
+                        else if (rightEyePosition.Value.Z < 900000)
+                        {
+                            newZ = 1;
+                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
+                        }
+
+                        sb.Append($" ({newX.ToString("F0", CultureInfo.InvariantCulture)}, {newY.ToString("F0", CultureInfo.InvariantCulture)}, {newZ}");
 
                         Canvas.SetLeft(RightEyePositionEllipse, newX);
                         Canvas.SetTop(RightEyePositionEllipse, newY);
@@ -125,6 +187,21 @@ namespace Positioning
                     }
                 }
                 sb.AppendLine(")");
+
+                var headPostitionParser = new GazePositionHidParser(sourceDevice, GazeExtendedUsages.Usage_HeadPosition);
+                var headPosition = headPostitionParser.GetPosition(hidReport);
+                if (headPosition != null)
+                {
+                    sb.AppendLine($"HeadPosition ({headPosition.Value.X.ToString("F2", CultureInfo.InvariantCulture)}, {headPosition.Value.Y.ToString("F2", CultureInfo.InvariantCulture)}, {headPosition.Value.Z.ToString("F2", CultureInfo.InvariantCulture)})");
+                }
+
+                var headRotationParser = new GazeRotationHidParser(sourceDevice, GazeExtendedUsages.Usage_HeadDirectionPoint);
+                var headRotation = headRotationParser.GetRotation(hidReport);
+
+                if (headRotation != null)
+                {
+                    sb.AppendLine($"HeadRotation ({headRotation.Value.X.ToString("F2", CultureInfo.InvariantCulture)}, {headRotation.Value.Y.ToString("F2", CultureInfo.InvariantCulture)}, {headRotation.Value.Z.ToString("F2", CultureInfo.InvariantCulture)})");
+                }
             }
 
             StatusTextBlock.Text = sb.ToString();
