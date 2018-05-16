@@ -53,7 +53,7 @@ namespace Positioning
                 Canvas.SetLeft(GazePositionEllipse, args.CurrentPoint.EyeGazePosition.Value.X);
                 Canvas.SetTop(GazePositionEllipse, args.CurrentPoint.EyeGazePosition.Value.Y);
 
-                sb.Append($"{args.CurrentPoint.EyeGazePosition.Value.X}, {args.CurrentPoint.EyeGazePosition.Value.Y})");
+                sb.Append($"{args.CurrentPoint.EyeGazePosition.Value.X}, {args.CurrentPoint.EyeGazePosition.Value.Y}");
 
                 GazePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
@@ -83,7 +83,7 @@ namespace Positioning
                 sb.Append("LeftEyePos  (");
                 if (leftEyePosition != null)
                 {
-                    sb.Append($"{leftEyePosition.Value.X.ToString("F2", CultureInfo.InvariantCulture)}, {leftEyePosition.Value.Y.ToString("F2", CultureInfo.InvariantCulture)}, {leftEyePosition.Value.Z.ToString("F2", CultureInfo.InvariantCulture)})");
+                    sb.Append($"{leftEyePosition.Value.X.ToString("F0", CultureInfo.InvariantCulture)}um, {leftEyePosition.Value.Y.ToString("F0", CultureInfo.InvariantCulture)}um, {leftEyePosition.Value.Z.ToString("F0", CultureInfo.InvariantCulture)}um)");
 
                     if (leftEyePosition.Value.X >= 0 &&
                         leftEyePosition.Value.X <= screenSizeMicrometersWidth &&
@@ -93,34 +93,34 @@ namespace Positioning
                         var newX = MapRange(0, screenSizeMicrometersWidth, 0, ActualWidth, leftEyePosition.Value.X);
                         var newY = MapRange(0, screenSizeMicrometersHeight, 0, ActualHeight, leftEyePosition.Value.Y);
 
-                        var newZ = 0;
+                        var newZ = string.Empty;
                         if (leftEyePosition.Value.Z < 400000)
                         {
-                            newZ = 1;
+                            newZ = "Red";
                             LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
                         }
                         else if (leftEyePosition.Value.Z < 500000)
                         {
-                            newZ = 2;
+                            newZ = "Yellow";
                             LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
                         }
                         else if (leftEyePosition.Value.Z < 700000)
                         {
-                            newZ = 3;
+                            newZ = "Green";
                             LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Green);
                         }
                         else if (leftEyePosition.Value.Z < 800000)
                         {
-                            newZ = 2;
+                            newZ = "Yellow";
                             LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
                         }
-                        else if (leftEyePosition.Value.Z < 900000)
+                        else
                         {
-                            newZ = 1;
+                            newZ = "Red";
                             LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
                         }
 
-                        sb.Append($" ({newX.ToString("F0", CultureInfo.InvariantCulture)}, {newY.ToString("F0", CultureInfo.InvariantCulture)}, {newZ})");
+                        sb.Append($" ({newX.ToString("F0", CultureInfo.InvariantCulture)}, {newY.ToString("F0", CultureInfo.InvariantCulture)}, {newZ}");
 
                         Canvas.SetLeft(LeftEyePositionEllipse, newX);
                         Canvas.SetTop(LeftEyePositionEllipse, newY);
@@ -134,10 +134,10 @@ namespace Positioning
                 }
                 sb.AppendLine(")");
 
-                sb.Append("RightEye (");
+                sb.Append("RightEyePos (");
                 if (rightEyePosition != null)
                 {
-                    sb.Append($"{rightEyePosition.Value.X.ToString("F2", CultureInfo.InvariantCulture)}, {rightEyePosition.Value.Y.ToString("F2", CultureInfo.InvariantCulture)}, {rightEyePosition.Value.Z.ToString("F2", CultureInfo.InvariantCulture)})");
+                    sb.Append($"{rightEyePosition.Value.X.ToString("F0", CultureInfo.InvariantCulture)}um, {rightEyePosition.Value.Y.ToString("F0", CultureInfo.InvariantCulture)}um, {rightEyePosition.Value.Z.ToString("F0", CultureInfo.InvariantCulture)}um)");
 
                     if (rightEyePosition.Value.X >= 0 &&
                         rightEyePosition.Value.X <= screenSizeMicrometersWidth &&
@@ -147,30 +147,30 @@ namespace Positioning
                         var newX = MapRange(0, screenSizeMicrometersWidth, 0, ActualWidth, rightEyePosition.Value.X);
                         var newY = MapRange(0, screenSizeMicrometersHeight, 0, ActualHeight, rightEyePosition.Value.Y);
 
-                        var newZ = 0;
+                        var newZ = String.Empty;
                         if (rightEyePosition.Value.Z < 400000)
                         {
-                            newZ = 1;
+                            newZ = "Red";
                             RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
                         }
                         else if (rightEyePosition.Value.Z < 500000)
                         {
-                            newZ = 2;
+                            newZ = "Yellow";
                             RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
                         }
                         else if (rightEyePosition.Value.Z < 700000)
                         {
-                            newZ = 3;
+                            newZ = "Green";
                             RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Green);
                         }
                         else if (rightEyePosition.Value.Z < 800000)
                         {
-                            newZ = 2;
+                            newZ = "Yellow";
                             RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
                         }
-                        else if (rightEyePosition.Value.Z < 900000)
+                        else
                         {
-                            newZ = 1;
+                            newZ = "Red";
                             RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
                         }
 
