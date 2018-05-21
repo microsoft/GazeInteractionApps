@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Text;
@@ -188,6 +186,14 @@ namespace Positioning
                 }
                 sb.AppendLine(")");
 
+                if (rightEyePosition != null && leftEyePosition != null)
+                {
+                    // calculate IPD in mm
+                    var interPupilaryDistance = (rightEyePosition.Value.X - leftEyePosition.Value.X) / 1000.0;
+
+                    sb.AppendLine($"IPD ({interPupilaryDistance.ToString("F2", CultureInfo.InvariantCulture)}mm)");
+                }
+
                 var headPostitionParser = new GazePositionHidParser(sourceDevice, GazeExtendedUsages.Usage_HeadPosition);
                 var headPosition = headPostitionParser.GetPosition(hidReport);
                 if (headPosition != null)
@@ -216,6 +222,20 @@ namespace Positioning
         private void ExitButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             App.Current.Exit();
+        }
+
+        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var scaleFactor = displayInformation.RawPixelsPerViewPixel;
+
+            var conversionFactorX = (displayInformation.RawDpiX / scaleFactor) / 25.4;
+            var conversionFactorY = (displayInformation.RawDpiY / scaleFactor) / 25.4;
+
+            D40.Width   = conversionFactorX * 40;
+            D40.Height  = conversionFactorY * 40;
+
+            D100.Width  = conversionFactorX * 100;
+            D100.Height = conversionFactorY * 100;
         }
     }
 }

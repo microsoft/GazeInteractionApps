@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
@@ -38,5 +39,9 @@
 
         <TextBlock x:Name="StatusTextBlock" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20" Foreground="Black" />
         <Button x:Name="ExitButton" Content="Exit" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ExitButton_Click" />
+
+        <Ellipse x:Name="D100" Width="100" Height="100" Stroke="Black" StrokeThickness="1" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+        <Ellipse x:Name="D40" Width="20"  Height="20" Stroke="Black" StrokeThickness="2" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+        <Ellipse x:Name="D4" Width="4"  Height="4" Stroke="Black" StrokeThickness="2" Grid.ColumnSpan="2" Grid.RowSpan="2" />
     </Grid>
 </Page>
