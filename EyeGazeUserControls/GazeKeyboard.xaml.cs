@@ -1,9 +1,10 @@
-﻿using System.Text;
+﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. 
+//See LICENSE in the project root for license information. 
+
+using System.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace EyeGazeUserControls
 {

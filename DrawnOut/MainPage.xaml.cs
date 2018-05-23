@@ -1,11 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. 
+//See LICENSE in the project root for license information. 
+
+using System.Collections.ObjectModel;
 using Windows.Devices.Input.Preview;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace DrawnOut
 {
@@ -22,9 +23,6 @@ namespace DrawnOut
         }
     }
 
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         private GazeInputSourcePreview gazeInputSourcePreview;
