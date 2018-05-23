@@ -1,5 +1,6 @@
-﻿using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
-using System;
+﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. 
+//See LICENSE in the project root for license information. 
+
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.Foundation.Collections;

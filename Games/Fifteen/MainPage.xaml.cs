@@ -2,7 +2,6 @@
 //See LICENSE in the project root for license information.
 
 using System;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
@@ -11,9 +10,6 @@ using Windows.Foundation;
 
 namespace Fifteen
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         const int BOARD_SIZE = 4;
