@@ -17,10 +17,10 @@ We have provided [designs for a reticle](Reticle\README.md) - a tool used for de
 There is also a hole provided such that a string can be attached. You can use a lenght of string marked for 65cm from the screen to help determine accuracy of the Z axis data that is being reported by the eye tracker.
 
 ### Reticle in use
-![Reticle in use](Reticle\ReticleMounted.jpg)
+![Reticle in use](Reticle/ReticleMounted.jpg)
 
 ### Reticle with String Attached
-![Reticle with String](Reticle\Reticle.jpg)
+![Reticle with String](Reticle/Reticle.jpg)
 
 ## Limitations
 
