@@ -14,7 +14,6 @@ namespace Positioning
     public sealed partial class MainPage : Page
     {
         private GazeInputSourcePreview gazeInputSourcePreview;
-        const int GazeHidPage = 0x12;
 
         private DisplayInformation displayInformation;
         Size screenSize;
