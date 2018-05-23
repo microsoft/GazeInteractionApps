@@ -14,7 +14,6 @@ namespace Positioning
     public sealed partial class MainPage : Page
     {
         private GazeInputSourcePreview gazeInputSourcePreview;
-        const int GazeHidPage = 0x12;
 
         private DisplayInformation displayInformation;
         Size screenSize;
@@ -81,7 +80,7 @@ namespace Positioning
                 sb.Append("LeftEyePos  (");
                 if (leftEyePosition != null)
                 {
-                    sb.Append($"{leftEyePosition.Value.X.ToString("F0", CultureInfo.InvariantCulture)}um, {leftEyePosition.Value.Y.ToString("F0", CultureInfo.InvariantCulture)}um, {leftEyePosition.Value.Z.ToString("F0", CultureInfo.InvariantCulture)}um)");
+                    sb.Append($"{(leftEyePosition.Value.X / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm, {(leftEyePosition.Value.Y / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm, {(leftEyePosition.Value.Z / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm)");
 
                     if (leftEyePosition.Value.X >= 0 &&
                         leftEyePosition.Value.X <= screenSizeMicrometersWidth &&
@@ -135,7 +134,7 @@ namespace Positioning
                 sb.Append("RightEyePos (");
                 if (rightEyePosition != null)
                 {
-                    sb.Append($"{rightEyePosition.Value.X.ToString("F0", CultureInfo.InvariantCulture)}um, {rightEyePosition.Value.Y.ToString("F0", CultureInfo.InvariantCulture)}um, {rightEyePosition.Value.Z.ToString("F0", CultureInfo.InvariantCulture)}um)");
+                    sb.Append($"{(rightEyePosition.Value.X / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm, {(rightEyePosition.Value.Y / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm, {(rightEyePosition.Value.Z / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm)");
 
                     if (rightEyePosition.Value.X >= 0 &&
                         rightEyePosition.Value.X <= screenSizeMicrometersWidth &&
