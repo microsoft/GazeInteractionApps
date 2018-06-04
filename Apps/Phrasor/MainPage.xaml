@@ -8,85 +8,261 @@
     xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     gaze:GazeInput.Interaction="Enabled"
     gaze:GazeInput.CursorRadius="5"
-    gaze:GazeInput.MaxDwellRepeatCount="0"    
-    mc:Ignorable="d">
+    gaze:GazeInput.MaxDwellRepeatCount="0"      
+    mc:Ignorable="d" NavigationCacheMode="Required" FontFamily="Segoe UI" KeyDown="Page_KeyDown">
 
     <Page.Resources>
-        <ResourceDictionary>
-            <SolidColorBrush x:Name="ToolBarBackgroundBrush" Color="#1A1A1A"/>
-            <SolidColorBrush x:Name="ToolBarForegroundBrush" Color="White"/>
-            <SolidColorBrush x:Name="ToolBarPauseOverlayBrush" Color="#99333333"/>
-            
-            <Style x:Key="ToolbarButton" TargetType="Button">
-                <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
-                <Setter Property="FontWeight" Value="Bold" />
-                <Setter Property="FontSize" Value="100" />
-                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                <Setter Property="VerticalAlignment" Value="Stretch" />
-                <Setter Property="MaxHeight" Value="400" />
-                <Setter Property="MaxWidth" Value="400" />
-                <Setter Property="Background" Value="{StaticResource ToolBarBackgroundBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource ToolBarForegroundBrush}"/>
-            </Style>
+        <local:TimeSpanToMillisecondsConverter x:Key="TimeSpanToMillisecondsConverter"/>
+        <SolidColorBrush x:Name="ToolBarBackgroundBrush" Color="#1A1A1A"/>
+        <SolidColorBrush x:Name="ToolBarForegroundBrush" Color="White"/>
+        <SolidColorBrush x:Name="ToolBarPauseOverlayBrush" Color="#99333333"/>
 
-            <Style x:Key="PhraseButton" TargetType="ButtonBase">
-                <Setter Property="FontFamily" Value="Segoe UI" />
-                <Setter Property="FontSize" Value="20" />
-                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                <Setter Property="VerticalAlignment" Value="Stretch" />
-                <Setter Property="MaxHeight" Value="400" />
-                <Setter Property="MaxWidth" Value="400" />
-                <Setter Property="Margin" Value="20" />
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="#1A1A1A" />
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Foreground">
-                    <Setter.Value>
-                        <SolidColorBrush Color="White" />
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </ResourceDictionary>
+        <Style x:Key="ToolbarButton" TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="100" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="MaxHeight" Value="400" />
+            <Setter Property="MaxWidth" Value="400" />
+            <Setter Property="Background" Value="{StaticResource ToolBarBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource ToolBarForegroundBrush}"/>
+        </Style>
 
+        <Style x:Key="PhraseButton" TargetType="ButtonBase">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="{Binding Settings.FontSize}" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="MaxHeight" Value="400" />
+            <Setter Property="MaxWidth" Value="400" />
+            <Setter Property="Margin" Value="20" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="#1A1A1A" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <SolidColorBrush Color="White" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate x:Key="DataTemplate1">
+            <Grid Width="{Binding ElementName=grdvwPhrases, Path=DataContext.TileWidth}" Height="{Binding ElementName=grdvwPhrases, Path=DataContext.TileHeight}">
+                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Click="OnGridButtonClick" Background="Transparent" AllowFocusOnInteraction="False"  >
+                    <gaze:GazeInput.GazeElement>
+                        <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                    </gaze:GazeInput.GazeElement>
+                    <Grid>
+                        <Image Source="Assets/NineGridNotePad.png" NineGrid="10,8,2,2" Stretch="Fill" Margin="8" ></Image>
+                        <Image Source="Assets/NineGridFolderV2.png" NineGrid="41,17,5,5" Stretch="Fill" Visibility="{Binding IsCategory}"  ></Image>
+                        <TextBlock Text="{Binding Caption}" HorizontalAlignment="Center" VerticalAlignment="Center " TextWrapping="WrapWholeWords" Margin="15" TextTrimming="CharacterEllipsis" FontSize="{Binding Path=FontSize, ElementName=grdvwPhrases}" Foreground="{Binding Path=Foreground, ElementName=grdvwPhrases}"/>
+                    </Grid>
+                </Button>
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="GridViewItemStyle1" TargetType="GridViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}"/>
+            <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <ListViewItemPresenter CheckBrush="{ThemeResource GridViewItemCheckBrush}" ContentMargin="{TemplateBinding Padding}" CheckMode="{ThemeResource GridViewItemCheckMode}" ContentTransitions="{TemplateBinding ContentTransitions}" CheckBoxBrush="{ThemeResource GridViewItemCheckBoxBrush}" DragForeground="{ThemeResource GridViewItemDragForeground}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource GridViewItemDragBackground}" FocusBorderBrush="{ThemeResource GridViewItemFocusBorderBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Control.IsTemplateFocusTarget="True" PointerOverForeground="{ThemeResource GridViewItemForegroundPointerOver}" PressedBackground="{ThemeResource GridViewItemBackgroundPressed}" PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}" PointerOverBackground="{ThemeResource GridViewItemBackgroundPointerOver}" ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}" SelectedPressedBackground="{ThemeResource GridViewItemBackgroundSelectedPressed}" SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}" SelectedForeground="{ThemeResource GridViewItemForegroundSelected}" SelectedPointerOverBackground="{ThemeResource GridViewItemBackgroundSelectedPointerOver}" SelectedBackground="{ThemeResource GridViewItemBackgroundSelected}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
 
     <Grid x:Name="AppGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="150" />
+            <RowDefinition Height="Auto" MinHeight="0" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid x:Name="MenuGrid" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Grid.Column="0" Content="&#xE80F;" Style="{StaticResource ToolbarButton}" Click="OnHomeClick" />
-            <Button Grid.Row="0" Grid.Column="1" Content="&#xE74A;" Style="{StaticResource ToolbarButton}" Click="OnUpClick" />
-            <Button Grid.Row="0" Grid.Column="2" Content="&#xE710;" Style="{StaticResource ToolbarButton}" Click="OnAddPhraseClick" />
-            <Button Grid.Row="0" Grid.Column="3" Content="&#xE8F4;" Style="{StaticResource ToolbarButton}" Click="OnAddCategoryClick" />
-            <Button x:Name="EditButton" Grid.Row="0" Grid.Column="4" Content="&#xE70F;" Style="{StaticResource ToolbarButton}" Click="OnEditClick" />
-            <Button x:Name="DeleteButton" Grid.Row="0" Grid.Column="5" Content="&#xE74D;" Style="{StaticResource ToolbarButton}" Click="OnDeleteClick" />
-            <Button x:Name="PauseButton" gaze:GazeInput.Interaction="Enabled" Grid.Row="0" Grid.Column="6" Content="&#xE769;" Style="{StaticResource ToolbarButton}" Click="OnPauseClick" />
-            <Button Grid.Row="0" Grid.Column="7" Content="&#xE8BD;" Style="{StaticResource ToolbarButton}" Click="OnSpeechClick" />
-            <Button Grid.Row="0" Grid.Column="8" Content="&#xE711;" Style="{StaticResource ToolbarButton}" Click="OnExitClick" />
-            <Rectangle x:Name="PauseIndicator1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="6" Fill="{StaticResource ToolBarPauseOverlayBrush}" Visibility="Collapsed"/>
-            <Rectangle x:Name="PauseIndicator2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="7" Grid.ColumnSpan="2" Fill="{StaticResource ToolBarPauseOverlayBrush}" Visibility="Collapsed"/>
-        </Grid>
-        <Grid x:Name="PhraseGrid" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
+            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ToolbarButton}" Click="OnHomeClick" AllowFocusOnInteraction="False" FocusVisualSecondaryThickness="0,0,0,0" FocusVisualPrimaryThickness="0,0,0,0" FocusVisualMargin="0,0,0,0" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch"  >
+                <gaze:GazeInput.GazeElement>
+                    <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                </gaze:GazeInput.GazeElement>
+                <Grid AllowFocusOnInteraction="False">
+                    <TextBlock Text="&#xE80F;" FontFamily="Segoe MDL2 Assets" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" AllowFocusOnInteraction="False" />
+                    <TextBlock Text="&#xF12B;" FontFamily="Segoe MDL2 Assets" FontSize="120" AllowFocusOnInteraction="False" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Grid>
+            </Button>
+
+            <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource ToolbarButton}" Click="OnUpClick" AllowFocusOnInteraction="False" gaze:GazeInput.MaxDwellRepeatCount="20" gaze:GazeInput.RepeatDelayDuration="00:00:00.8000000">
+                <gaze:GazeInput.GazeElement>
+                    <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                </gaze:GazeInput.GazeElement>
+                <Grid>
+                    <TextBlock Text="&#xE72B;" FontFamily="Segoe MDL2 Assets" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Text="&#xF12B;" FontFamily="Segoe MDL2 Assets" FontSize="120" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Text="&#xE72B;" FontFamily="Segoe MDL2 Assets" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"  Foreground="{StaticResource ToolBarPauseOverlayBrush}"  Visibility="{Binding AtRootNode}"/>
+                    <TextBlock Text="&#xF12B;" FontFamily="Segoe MDL2 Assets" FontSize="120" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource ToolBarPauseOverlayBrush}" Visibility="{Binding AtRootNode}" />
+                </Grid>
+            </Button>
+            <Button Grid.Row="0" Grid.Column="3" Content="&#xE8BD;" Style="{StaticResource ToolbarButton}" Click="OnSpeechClick" AllowFocusOnInteraction="False" >
+                <gaze:GazeInput.GazeElement>
+                    <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                </gaze:GazeInput.GazeElement>
+            </Button>
+            <Button x:Name="PauseButton" gaze:GazeInput.Interaction="Enabled" Grid.Row="0" Grid.Column="4" Content="&#xE769;" Style="{StaticResource ToolbarButton}" Click="OnPauseClick" AllowFocusOnInteraction="False" >
+                <gaze:GazeInput.GazeElement>
+                    <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                </gaze:GazeInput.GazeElement>
+            </Button>
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Fill="{StaticResource ToolBarBackgroundBrush}"/>
+            <Grid x:Name="grdTools" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Visibility="Collapsed" Background="{StaticResource ToolBarBackgroundBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Row="0" Style="{StaticResource ToolbarButton}" Click="OnAddPhraseClick" AllowFocusOnInteraction="False" >
+                    <gaze:GazeInput.GazeElement>
+                        <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                    </gaze:GazeInput.GazeElement>
+                    <Grid>
+                        <TextBlock Text="&#xE710;" FontFamily="Segoe MDL2 Assets" FontSize="48" />
+                    </Grid>
+                </Button>
+                <Button Grid.Row="0" Style="{StaticResource ToolbarButton}" Click="OnAddCategoryClick" RenderTransformOrigin="0.5,0.5" AllowFocusOnInteraction="False" Grid.Column="1" >
+                    <gaze:GazeInput.GazeElement>
+                        <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                    </gaze:GazeInput.GazeElement>
+                    <Grid>
+                        <TextBlock Text="&#xE8F4;" FontFamily="Segoe MDL2 Assets" FontSize="100" RenderTransformOrigin="0.5,0.5" >
+                            <TextBlock.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="90"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </TextBlock.RenderTransform></TextBlock>
+                    </Grid>
+                </Button>
+                <Button x:Name="EditButton" Grid.Row="0" Content="&#xE70F;" Style="{StaticResource ToolbarButton}" Click="OnEditClick" AllowFocusOnInteraction="False" Grid.Column="2" >
+                    <gaze:GazeInput.GazeElement>
+                        <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                    </gaze:GazeInput.GazeElement>
+                </Button>
+                <Button x:Name="DeleteButton" Grid.Row="0" Content="&#xE74D;" Style="{StaticResource ToolbarButton}" Click="OnDeleteClick" AllowFocusOnInteraction="False" Grid.Column="3" >
+                    <gaze:GazeInput.GazeElement>
+                        <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                    </gaze:GazeInput.GazeElement>
+                </Button>
+                <Button x:Name="SettingsButton" Grid.Row="0" Content="&#xE713;" Style="{StaticResource ToolbarButton}"  AllowFocusOnInteraction="False" Grid.Column="4" Click="OnSettingsClick" gaze:GazeInput.Interaction="Disabled" >
+                    <gaze:GazeInput.GazeElement>
+                        <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                    </gaze:GazeInput.GazeElement>
+                </Button>
+            </Grid>
+
+            <Button x:Name="ExitButton" Grid.Row="0" Grid.Column="6" Content="&#xE711;" Style="{StaticResource ToolbarButton}" Click="OnExitClick" AllowFocusOnInteraction="False" >
+                <gaze:GazeInput.GazeElement>
+                    <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                </gaze:GazeInput.GazeElement>
+            </Button>
+            <Button x:Name="ToolsButton" Grid.Row="0" Grid.Column="5" Content="&#xEC7A;" Style="{StaticResource ToolbarButton}" AllowFocusOnInteraction="False" Click="OnToolsClick" >
+                <gaze:GazeInput.GazeElement>
+                    <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                </gaze:GazeInput.GazeElement>
+            </Button>
+            <Rectangle x:Name="PauseIndicator1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="4" Fill="{StaticResource ToolBarPauseOverlayBrush}" Visibility="Collapsed"/>
+            <Rectangle x:Name="PauseIndicator2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.ColumnSpan="2" Fill="{StaticResource ToolBarPauseOverlayBrush}" Visibility="Collapsed"/>
+        </Grid>
+        <Grid x:Name="PhraseGrid" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+
+            <Grid.Resources>
+                <CollectionViewSource x:Name="groupTilesCVS" IsSourceGrouped="False"/>
+            </Grid.Resources>
+
+            <GridView x:Name="grdvwPhrases" FontSize="{x:Bind MasterViewModel.Settings.FontSize}"  ItemTemplate="{StaticResource DataTemplate1}" ItemsSource="{Binding Source={StaticResource groupTilesCVS}}" Padding="0" ItemContainerStyle="{StaticResource GridViewItemStyle1}" SizeChanged="grdvwPhrases_SizeChanged" Grid.Row="1" LayoutUpdated="grdvwPhrases_LayoutUpdated" SelectionMode="None" FontFamily="Segoe UI" >
+                <GridView.Foreground>
+                    <SolidColorBrush Color="{x:Bind MasterViewModel.Settings.FontColor, Mode=OneWay}"/>
+                </GridView.Foreground>
+                <GridView.GroupStyle>
+                    <GroupStyle/>
+                </GridView.GroupStyle>
+            </GridView>
+
+            <Grid x:Name="grdNext" HorizontalAlignment="Right" Height="{Binding TileHeight}" VerticalAlignment="Bottom" Width="{Binding TileWidth}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Visibility="Collapsed" >
+                <Button x:Name="butNext" Content="&#xE761;" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="butNext_Click" FontFamily="Segoe MDL2 Assets" FontSize="48" Margin="20" gaze:GazeInput.MaxDwellRepeatCount="20" Background="White" BorderThickness="0,0,0,0">
+                    <gaze:GazeInput.GazeElement>
+                        <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                    </gaze:GazeInput.GazeElement>
+                </Button>
+            </Grid>
+
+            <Grid x:Name="grdBack" HorizontalAlignment="Left" Height="{Binding TileHeight}" VerticalAlignment="Top" Width="{Binding TileWidth}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Row="1" Visibility="Collapsed">
+                <Button x:Name="butBack" Content="&#xE760;" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="butBack_Click" FontFamily="Segoe MDL2 Assets" FontSize="48" Margin="20" gaze:GazeInput.MaxDwellRepeatCount="20" gaze:GazeInput.RepeatDelayDuration="00:00:00.8000000" BorderThickness="0,0,0,0" Background="White">
+                    <gaze:GazeInput.GazeElement>
+                        <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
+                    </gaze:GazeInput.GazeElement>
+                </Button>
+            </Grid>
+        </Grid>
+        <Grid x:Name="SettingsGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="2" Background="{StaticResource ToolBarBackgroundBrush}" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Content="&#xE711;"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Background="{StaticResource ToolBarBackgroundBrush}" Foreground="{StaticResource ToolBarForegroundBrush}" FontFamily="Segoe MDL2 Assets" FontSize="100" Click="OnExitSettings"/>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="0"/>
+                    <ColumnDefinition Width="Auto" MinWidth="0"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock HorizontalAlignment="Left" Text="Normal Dwell Time" VerticalAlignment="Top" FontSize="24" Foreground="White" Margin="20,10,20,0" FontFamily="Segoe UI" />
+                <TextBlock HorizontalAlignment="Left" Text="Destructive Dwell Time" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" FontSize="24" Foreground="White" Margin="20,10,20,0"/>
+                <TextBox HorizontalAlignment="Center" Text="{x:Bind MasterViewModel.Settings.NormalDwellDuration, Converter={StaticResource TimeSpanToMillisecondsConverter}, Mode=TwoWay}" VerticalAlignment="Top" Grid.Column="1" Foreground="White" FontSize="24" Margin="20,10,20,0" FontFamily="Segoe UI"/>
+                <TextBox HorizontalAlignment="Center" Text="{x:Bind MasterViewModel.Settings.DestructiveDwellDuration, Converter={StaticResource TimeSpanToMillisecondsConverter}, Mode=TwoWay}" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Foreground="White" FontSize="24" Margin="20,10,20,0"/>
+                <TextBlock HorizontalAlignment="Left" Text="Row Count" VerticalAlignment="Top" FontSize="24" Foreground="White" Grid.Row="2" Margin="20,10,20,0"/>
+                <TextBlock HorizontalAlignment="Left" Text="Column Count" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="3" FontSize="24" Foreground="White" Margin="20,10,20,0"/>
+                <TextBox HorizontalAlignment="Center" Text="{x:Bind MasterViewModel.Settings.Rows, Mode=TwoWay}" VerticalAlignment="Top" Grid.Column="1" Foreground="White" FontSize="24" Grid.Row="2" Margin="20,10,20,0"/>
+                <TextBox HorizontalAlignment="Center" Text="{x:Bind MasterViewModel.Settings.Cols, Mode=TwoWay}" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" Foreground="White" FontSize="24" Margin="20,10,20,0"/>
+                <CheckBox IsChecked="{x:Bind MasterViewModel.Settings.GazePlusClickMode, Mode=TwoWay}" Content="Gaze Plus Click Mode" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Grid.Row="4" Foreground="White" RequestedTheme="Dark" Margin="20,10,20,0"/>
+                <TextBlock HorizontalAlignment="Center" Text="Font size" VerticalAlignment="Top" FontSize="24" Foreground="White" Margin="20,10,20,0" Grid.Column="3"/>
+                <TextBox HorizontalAlignment="Left" Text="{x:Bind Mode=TwoWay, Path=MasterViewModel.Settings.FontSize}" VerticalAlignment="Top" Grid.Column="4" Foreground="White" FontSize="24" Margin="20,10,20,0"/>
+                <TextBlock HorizontalAlignment="Center" Text="Font color" VerticalAlignment="Top" FontSize="24" Foreground="White" Margin="20,10,20,0" Grid.Column="3" Grid.Row="1" FontFamily="Segoe UI"/>
+                <ColorPicker x:Name="ColorPicker" Color="{x:Bind MasterViewModel.Settings.FontColor, Mode=OneWay}" ColorSpectrumShape="Ring" ColorChanged="ColorPicker_ColorChanged" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="2" />
+            </Grid>
         </Grid>
     </Grid>
-
 </Page>

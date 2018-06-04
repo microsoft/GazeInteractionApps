@@ -30,6 +30,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoZeroFourEight", "Games\TwoZeroFourEight\TwoZeroFourEight.csproj", "{33F8C226-B2F5-449B-8389-81BEA753ED0C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnOut", "DrawnOut\DrawnOut.csproj", "{0A83E4C8-2660-4004-BA8D-D4BB7C7EB290}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{475756FA-BB71-445A-8D3F-1F66D1BF6B34}"
+	ProjectSection(SolutionItems) = preProject
+		BooleanToVisibilityConverter.cs = BooleanToVisibilityConverter.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
