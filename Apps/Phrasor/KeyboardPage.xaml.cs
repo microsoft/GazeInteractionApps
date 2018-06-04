@@ -69,8 +69,7 @@ namespace Phrasor
                     childNode = new PhraseNode();
                     if (_navParams.IsCategory)
                     {
-                        childNode.IsCategory = true;
-                        childNode.Children = new List<PhraseNode>();
+                        childNode.IsCategory = true;                        
                     }
                     _navParams.CurrentNode.Children.Add(childNode);
                 }

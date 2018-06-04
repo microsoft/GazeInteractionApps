@@ -2,7 +2,6 @@
 //See LICENSE in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using Windows.Media.SpeechSynthesis;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -12,33 +11,14 @@ using Windows.Storage;
 using Windows.Data.Json;
 using Windows.UI;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
-using Windows.Foundation.Collections;
-using Windows.Foundation;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml.Automation.Peers;
+using Windows.UI.Xaml.Automation.Provider;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace Phrasor
 {
-    public sealed class PhraseNode
-    {
-        public PhraseNode Parent;
-        public string Caption;
-        public bool IsCategory;
-        public List<PhraseNode> Children;
-    }
-
-    public sealed class PhraseNodeComparer : IComparer<PhraseNode>
-    {
-        public int Compare(PhraseNode a, PhraseNode b)
-        {
-            if ((a.IsCategory) && (!b.IsCategory))
-                return -1;
-            if ((!a.IsCategory) && (b.IsCategory))
-                return 1;
-            return a.Caption.CompareTo(b.Caption); 
-        }
-    }
 
     public enum PageMode
     {
@@ -47,15 +27,6 @@ namespace Phrasor
         Delete
     }
 
-    public sealed class KeyboardPageNavigationParams
-    {
-        public PhraseNode RootNode;
-        public PhraseNode CurrentNode;
-        public PhraseNode ChildNode;
-        public bool IsCategory;
-        public bool NeedsSaving;
-        public bool SpeechMode;
-    }
 
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -63,22 +34,28 @@ namespace Phrasor
     public sealed partial class MainPage : Page
     {
         const string PhraseConfigFile = "PhraseData.phr";
-        PhraseNode _rootNode;
-        PhraseNode _curNode;
-        PhraseNodeComparer _phraseNodeComparer;
         SolidColorBrush _backgroundBrush;
         SolidColorBrush _foregroundBrush;
+        SolidColorBrush _transparentBrush;
+        SolidColorBrush _dwellProgressBrush;
+        TimeSpan _FixationDefault;
         SpeechSynthesizer _speechSynthesizer;
         MediaElement _mediaElement;
         PageMode _pageMode;
         bool _interactionPaused;
+        bool _toolBarToggled = false;
         KeyboardPageNavigationParams _navParams;
-        int _curPageIndex;
+
+        ScrollViewer _tileViewer;
+
+        ViewModel MasterViewModel;
 
         public MainPage()
         {
             this.InitializeComponent();
             this.Loaded += MainPage_Loaded;
+
+            MasterViewModel = new ViewModel();
 
             //var sharedSettings = new ValueSet();
             //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
@@ -88,38 +65,60 @@ namespace Phrasor
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
-            SetPageMode(PageMode.Run);            
+            SetPageMode(PageMode.Run);
             _speechSynthesizer = new SpeechSynthesizer();
             _mediaElement = new MediaElement();
             _backgroundBrush = new SolidColorBrush(Colors.Gray);
             _foregroundBrush = new SolidColorBrush(Colors.Blue);
-            _phraseNodeComparer = new PhraseNodeComparer();
+            _transparentBrush = new SolidColorBrush(Colors.Transparent);
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            _dwellProgressBrush = (SolidColorBrush)GazeInput.DwellFeedbackProgressBrush;
+            _FixationDefault = GazeInput.GetFixationDuration(this);
+
+            GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.DimGray);
+            GazeInput.DwellFeedbackEnterBrush = new SolidColorBrush(Colors.DimGray);
+
+            GazeInput.SetIsCursorVisible(this, false);
+
             if (_navParams != null)
             {
-                _rootNode = _navParams.RootNode;
                 if (_navParams.NeedsSaving)
                 {
                     SaveConfigFile(PhraseConfigFile);
                 }
-                GotoNode(_navParams.CurrentNode);
+                MasterViewModel.GoToNode(_navParams.CurrentNode);
+                ShowHideTileNavigation();
                 _navParams = null;
             }
             else
             {
                 LoadConfigFile(PhraseConfigFile);
+
+                _tileViewer = UIHelper.FindChildControl<ScrollViewer>(grdvwPhrases, "ScrollViewer") as ScrollViewer;
+                _tileViewer.ViewChanged += Viewer_ViewChanged;
+
+                this.DataContext = MasterViewModel;
+                groupTilesCVS.Source = MasterViewModel.Tiles;
+            }            
+            if (MasterViewModel.Settings.GazePlusClickMode)
+            {                
+                GazeInput.SetFixationDuration(this, TimeSpan.FromDays(1));
+            }
+            else
+            {               
+                GazeInput.SetFixationDuration(this, _FixationDefault);
             }
         }
-
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var navParams = e.Parameter as KeyboardPageNavigationParams;
             _navParams = navParams;
+            SetPageMode(PageMode.Run);
         }
 
         private JsonObject SavePhraseNode(PhraseNode node)
@@ -155,7 +154,6 @@ namespace Phrasor
                 Caption = caption,
                 Parent = parent,
                 IsCategory = isCategory,
-                Children = items != null ? new List<PhraseNode>(items.Count) : null
             };
 
             if (items == null)
@@ -168,7 +166,6 @@ namespace Phrasor
                 var childNode = LoadPhraseNode(item, phraseNode);
                 phraseNode.Children.Add(childNode);
             }
-            phraseNode.Children.Sort(_phraseNodeComparer);
             return phraseNode;
         }
 
@@ -186,163 +183,30 @@ namespace Phrasor
 
             var text = await FileIO.ReadTextAsync(file);
             var jsonRoot = JsonValue.Parse(text);
-            _rootNode = LoadPhraseNode(jsonRoot, null);
-            GotoNode(_rootNode);
+            MasterViewModel.RootNode = LoadPhraseNode(jsonRoot, null);
+            MasterViewModel.GoToNode(MasterViewModel.RootNode);
         }
 
         private async void SaveConfigFile(string fileName)
         {
             var folder = ApplicationData.Current.LocalFolder;
             var file = await folder.CreateFileAsync(PhraseConfigFile, CreationCollisionOption.ReplaceExisting);
-            var jsonObject = SavePhraseNode(_rootNode);
+            var jsonObject = SavePhraseNode(MasterViewModel.RootNode);
             await FileIO.WriteTextAsync(file, jsonObject.Stringify());
-        }
-
-        private Button AddButtonToPhraseGrid(Object content, Object tag, int row, int col, bool isCategory, bool navButtons)
-        {
-            var button = new Button();
-            button.Content = isCategory ? content.ToString().ToUpper() : content;
-            button.Background = _backgroundBrush;
-            button.Foreground = _foregroundBrush;
-            button.VerticalAlignment = VerticalAlignment.Stretch;
-            button.HorizontalAlignment = HorizontalAlignment.Stretch;
-            button.Click += OnGridButtonClick;
-            button.Tag = tag;
-            button.Style = navButtons ? Resources["ToolbarButton"] as Style : Resources["PhraseButton"] as Style;
-
-            Grid.SetColumn(button, col);
-            Grid.SetRow(button, row);
-            PhraseGrid.Children.Add(button);
-            return button;
-        }
-
-        private void RecreateGrid(int rows, int cols)
-        {
-            // clear the current grid of all buttons
-            PhraseGrid.Children.Clear();
-            PhraseGrid.RowDefinitions.Clear();
-            PhraseGrid.ColumnDefinitions.Clear();
-            for (int row = 0; row < rows; row++)
-            {
-                PhraseGrid.RowDefinitions.Add(new RowDefinition());
-            }
-
-            for (int col = 0; col < cols; col++)
-            {
-                PhraseGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            }
-
-        }
-
-        private void GotoNode(PhraseNode phraseNode)
-        {
-            int rows;
-            int cols;
-
-            _curNode = phraseNode;
-
-            int numButtons = phraseNode.Children.Count;
-            int buttonsPerPage = GetNumRowColumns(numButtons, out rows, out cols);
-
-            RecreateGrid(rows, cols);
-
-            int numPages = 1;
-            bool addPrevPageButton = false;
-            bool addNextPageButton = false;
-            int curButtonIndex = 0;
-            if (numButtons > buttonsPerPage)
-            {
-                // all pages have a prev and next button, except the first and last
-                // pages, which only have either a next and prev button respectively
-                numPages += (numButtons - 3) / (buttonsPerPage - 2);
-
-                addPrevPageButton = _curPageIndex > 0;
-                addNextPageButton = _curPageIndex != numPages - 1;
-
-                curButtonIndex = _curPageIndex * (buttonsPerPage - 1);
-
-                // if only the prev or next button are going to be added, remove one button, else remove two buttons
-                buttonsPerPage = (addPrevPageButton ^ addNextPageButton) ? buttonsPerPage - 1 : buttonsPerPage - 2;
-            }
-
-            int row;
-            int col;
-
-            row = col = 0;
-            if (addPrevPageButton)
-            {
-                AddButtonToPhraseGrid("\uE72B", "\uE72B", row, col++, false, true);
-            }
-
-            for (row = 0; row < rows; row++)
-            {
-                for (; col < cols; col++)
-                {
-                    var caption = phraseNode.Children[curButtonIndex].Caption;
-                    var category = phraseNode.Children[curButtonIndex].IsCategory;
-                    var tag = phraseNode.Children[curButtonIndex];
-
-                    AddButtonToPhraseGrid(caption, tag, row, col, category, false);
-
-                    curButtonIndex++;
-                    if (curButtonIndex >= numButtons)
-                    {
-                        return;
-                    }
-
-                    buttonsPerPage--;
-                    if (buttonsPerPage == 0)
-                    {
-                        if (addNextPageButton)
-                        {
-                            AddButtonToPhraseGrid("\uE72A", "\uE72A", row, col + 1, false, true);
-                        }
-                        return;
-                    }
-                }
-                col = 0;
-            }
-        }
-
-        private int GetNumRowColumns(int numButtons, out int rows, out int cols)
-        {
-            // TODO: Read these from settings
-            var maxButtonsPerRow = 4;
-            var maxButtonsPerCol = 4;
-
-            var maxButtons = maxButtonsPerRow * maxButtonsPerCol;
-
-            if (numButtons < (int)maxButtons)
-            {
-                rows = (int)Math.Sqrt(numButtons);
-                cols = rows;
-                while (rows * cols < numButtons)
-                {
-                    cols++;
-                }
-            }
-            else
-            {
-                numButtons = (int)maxButtons;
-                rows = (int)maxButtonsPerRow;
-                cols = (int)maxButtonsPerCol;
-            }
-
-            return numButtons;
         }
 
         private void OnHomeClick(object sender, RoutedEventArgs e)
         {
-            _curPageIndex = 0;
-            GotoNode(_rootNode);
+            MasterViewModel.GoToNode(MasterViewModel.RootNode);
+            ShowHideTileNavigation();
         }
 
         private void OnUpClick(object sender, RoutedEventArgs e)
         {
-            if (_curNode.Parent != null)
+            if (MasterViewModel.CurrentNode.Parent != null)
             {
-                _curPageIndex = 0; // TODO: Save current page index
-                GotoNode(_curNode.Parent);
+                MasterViewModel.GoToNode(MasterViewModel.CurrentNode.Parent);
+                ShowHideTileNavigation();
             }
         }
 
@@ -350,11 +214,11 @@ namespace Phrasor
         {
             var navParams = new KeyboardPageNavigationParams
             {
-                RootNode = _rootNode,
-                CurrentNode = _curNode,
+                RootNode = MasterViewModel.RootNode,
+                CurrentNode = MasterViewModel.CurrentNode,
                 ChildNode = null,
                 NeedsSaving = false,
-                IsCategory = isCategory               
+                IsCategory = isCategory
             };
             Frame.Navigate(typeof(KeyboardPage), navParams);
         }
@@ -385,12 +249,12 @@ namespace Phrasor
         {
             if (_pageMode != PageMode.Delete)
             {
-                SetPageMode( PageMode.Delete);                
+                SetPageMode(PageMode.Delete);
             }
             else
-            {                
+            {
                 SetPageMode(PageMode.Run);
-            }            
+            }
         }
 
         private void SetPageMode(PageMode newPageMode)
@@ -404,7 +268,7 @@ namespace Phrasor
             {
                 DeleteButton.Background = Resources["ToolBarForegroundBrush"] as SolidColorBrush;
                 DeleteButton.Foreground = Resources["ToolBarBackgroundBrush"] as SolidColorBrush;
-                SetButtonDwellResponse(true);                
+                SetButtonDwellResponse(true);
             }
             else if (newPageMode == PageMode.Edit)
             {
@@ -415,43 +279,40 @@ namespace Phrasor
             else
             {
                 SetButtonDwellResponse(false);
+                SetToolsToolbarVisible(false);
             }
-            
-            _pageMode = newPageMode;           
+
+            _pageMode = newPageMode;
         }
 
         private void SetButtonDwellResponse(bool toDestructive)
         {
-            TimeSpan destructiveDwellDuration = new TimeSpan(0, 0, 0, 0, 1500);
-            TimeSpan normalDwellDuration = new TimeSpan(0, 0, 0, 0, 400);
-            TimeSpan targetDwellDuration = normalDwellDuration;
+            TimeSpan targetDwellDuration = MasterViewModel.Settings.NormalDwellDuration;
 
             if (toDestructive)
             {
-                targetDwellDuration = destructiveDwellDuration;
-            }            
-            foreach (Button childButton in PhraseGrid.Children)
-            {
-                childButton.SetValue(GazeInput.DwellDurationProperty, targetDwellDuration);
+                targetDwellDuration = MasterViewModel.Settings.DestructiveDwellDuration;
             }
+
+            grdvwPhrases.SetValue(GazeInput.DwellDurationProperty, targetDwellDuration);
         }
 
         private async void OnGridButtonClick(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var phraseNode = button.Tag as PhraseNode;
+            var phraseNode = button.DataContext as PhraseNode;
             var caption = phraseNode != null ? phraseNode.Caption : button.Content.ToString();
 
             if (caption == "\uE72B")
             {
-                _curPageIndex--;
-                GotoNode(_curNode);
+                MasterViewModel.GoToNode(MasterViewModel.CurrentNode);
+                ShowHideTileNavigation();
                 return;
             }
             else if (caption == "\uE72A")
             {
-                _curPageIndex++;
-                GotoNode(_curNode);
+                MasterViewModel.GoToNode(MasterViewModel.CurrentNode);
+                ShowHideTileNavigation();
                 return;
             }
 
@@ -464,27 +325,28 @@ namespace Phrasor
                         return;
                     }
                     SetButtonDwellResponse(false);
-                    _curNode.Children.Remove(phraseNode);
-                    PhraseGrid.Children.Remove(button);
+                    MasterViewModel.CurrentNode.Children.Remove(phraseNode);
                     SetPageMode(PageMode.Run);
-                    GotoNode(_curNode);
+                    MasterViewModel.GoToNode(MasterViewModel.CurrentNode);
+                    ShowHideTileNavigation();
                     break;
 
                 case PageMode.Edit:
                     var navParams = new KeyboardPageNavigationParams
                     {
-                        RootNode = _rootNode,
-                        CurrentNode = _curNode,
+                        RootNode = MasterViewModel.RootNode,
+                        CurrentNode = MasterViewModel.CurrentNode,
                         ChildNode = phraseNode,
                         NeedsSaving = false
-                    };                    
+                    };
                     Frame.Navigate(typeof(KeyboardPage), navParams);
                     break;
 
                 default:
                     if (phraseNode.IsCategory)
                     {
-                        GotoNode(phraseNode);
+                        MasterViewModel.GoToNode(phraseNode);
+                        ShowHideTileNavigation();
                     }
                     else
                     {
@@ -495,7 +357,6 @@ namespace Phrasor
                     }
                     break;
             }
-
         }
 
         private void OnPauseClick(object sender, RoutedEventArgs e)
@@ -516,15 +377,14 @@ namespace Phrasor
                 PauseIndicator1.Visibility = Visibility.Visible;
                 PauseIndicator2.Visibility = Visibility.Visible;
             }
-
         }
 
         private void OnSpeechClick(object sender, RoutedEventArgs e)
         {
             var navParams = new KeyboardPageNavigationParams
             {
-                RootNode = _rootNode,
-                CurrentNode = _curNode,
+                RootNode = MasterViewModel.RootNode,
+                CurrentNode = MasterViewModel.CurrentNode,
                 ChildNode = null,
                 NeedsSaving = false,
                 SpeechMode = true
@@ -535,6 +395,184 @@ namespace Phrasor
         private void OnExitClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
+        }
+
+        private void grdvwPhrases_LayoutUpdated(object sender, object e)
+        {
+            ShowHideTileNavigation();
+        }
+
+        private void OnToolsClick(object sender, RoutedEventArgs e)
+        {
+            if (_toolBarToggled)
+            {
+                SetToolsToolbarVisible(false);
+            }
+            else
+            {
+                SetToolsToolbarVisible(true);
+            }
+        }
+
+        private void SetToolsToolbarVisible(bool show)
+        {
+            if (show)
+            {
+                grdTools.Visibility = Visibility.Visible;
+                _toolBarToggled = true;
+                ToolsButton.Background = Resources["ToolBarForegroundBrush"] as SolidColorBrush;
+                ToolsButton.Foreground = Resources["ToolBarBackgroundBrush"] as SolidColorBrush;
+            }
+            else
+            {
+                grdTools.Visibility = Visibility.Collapsed;
+                _toolBarToggled = false;
+                ToolsButton.Background = Resources["ToolBarBackgroundBrush"] as SolidColorBrush;
+                ToolsButton.Foreground = Resources["ToolBarForegroundBrush"] as SolidColorBrush;
+            }
+        }
+
+        private void OnSettingsClick(object sender, RoutedEventArgs e)
+        {
+            SettingsGrid.Visibility = Visibility.Visible;
+            GazeInput.SetInteraction(MenuGrid, Interaction.Disabled);
+            GazeInput.SetInteraction(PhraseGrid, Interaction.Disabled);
+            GazeInput.SetInteraction(PauseButton, Interaction.Disabled);
+        }
+
+        private void OnExitSettings(object sender, RoutedEventArgs e)
+        {
+            MasterViewModel.Settings.Save();
+            grdvwPhrases.FontSize = MasterViewModel.Settings.FontSize;
+            SettingsGrid.Visibility = Visibility.Collapsed;
+            GazeInput.SetInteraction(MenuGrid, Interaction.Enabled);
+            GazeInput.SetInteraction(PhraseGrid, Interaction.Enabled);
+            GazeInput.SetInteraction(PauseButton, Interaction.Enabled);
+            AdjustTileSize();
+            SetToolsToolbarVisible(false);
+            if (MasterViewModel.Settings.GazePlusClickMode)
+            {                
+                GazeInput.SetFixationDuration(this, TimeSpan.FromDays(1));
+            }
+            else
+            {                
+                GazeInput.SetFixationDuration(this, _FixationDefault);
+            }
+        }
+
+        private void grdvwPhrases_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double targetMenuHeight = this.ActualHeight / (MasterViewModel.Settings.Rows + 1);            
+            MenuGrid.Height = targetMenuHeight;
+
+            //Reposition scroll viewer to top to avoid misalignment of back/next buttons with rows 
+            //that can get partially displayed when resize occurs if scrollviewer is in a nonzero position
+            var viewer = UIHelper.FindChildControl<ScrollViewer>(grdvwPhrases, "ScrollViewer") as ScrollViewer;
+            viewer.ChangeView(null, 0, null, false);
+
+            MasterViewModel.TileHeight = (int)(e.NewSize.Height / MasterViewModel.Settings.Rows);
+            MasterViewModel.TileWidth = (int)(e.NewSize.Width / MasterViewModel.Settings.Cols);
+        }
+
+        private void AdjustTileSize()
+        {
+            double targetMenuHeight = this.ActualHeight / (MasterViewModel.Settings.Rows + 1);            
+            MenuGrid.Height = targetMenuHeight;
+
+            MasterViewModel.TileHeight = (int)(grdvwPhrases.ActualHeight / MasterViewModel.Settings.Rows);
+            MasterViewModel.TileWidth = (int)(grdvwPhrases.ActualWidth / MasterViewModel.Settings.Cols);
+        }
+
+        private void butBack_Click(object sender, RoutedEventArgs e)
+        {
+            var viewer = UIHelper.FindChildControl<ScrollViewer>(grdvwPhrases, "ScrollViewer") as ScrollViewer;
+            var current = viewer.VerticalOffset;
+
+            viewer.ChangeView(null, current - (MasterViewModel.TileHeight), null, false);
+        }
+
+        private void butNext_Click(object sender, RoutedEventArgs e)
+        {
+            var viewer = UIHelper.FindChildControl<ScrollViewer>(grdvwPhrases, "ScrollViewer") as ScrollViewer;
+            var current = viewer.VerticalOffset;
+
+            viewer.ChangeView(null, (MasterViewModel.TileHeight) + current, null, false);
+        }
+
+        private void Viewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            ShowHideTileNavigation();
+        }
+
+        private void ShowHideTileNavigation()
+        {
+            if (_tileViewer == null) return;
+
+            if (_tileViewer.VerticalOffset >= _tileViewer.ExtentHeight - _tileViewer.ActualHeight)
+            {
+                grdNext.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                grdNext.Visibility = Visibility.Visible;
+            }
+
+            if (_tileViewer.VerticalOffset <= 0)
+            {
+                grdBack.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                grdBack.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void ColorPicker_ColorChanged(ColorPicker sender, ColorChangedEventArgs args)
+        {
+            MasterViewModel.Settings.FontColor = args.NewColor;
+        }
+
+        private void GazeElement_Invoked(object sender, DwellInvokedRoutedEventArgs e)
+        {
+            if (MasterViewModel.Settings.GazePlusClickMode)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void GazeElement_DwellProgressFeedback(object sender, DwellProgressEventArgs e)
+        {
+            if (MasterViewModel.Settings.GazePlusClickMode)
+            {
+
+                switch (e.State)
+                {
+                    case DwellProgressState.Fixating:
+
+                        TargetButton = sender as Button;
+                        break;
+
+                    case DwellProgressState.Idle:
+
+                        TargetButton = null;
+                        break;
+                }
+            }
+        }
+
+        Button TargetButton;
+
+        private void Page_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (MasterViewModel.Settings.GazePlusClickMode)
+            {
+                if (TargetButton != null)
+                {
+                    var peer = FrameworkElementAutomationPeer.CreatePeerForElement(TargetButton);
+                    var provider = (IInvokeProvider)peer;
+                    provider.Invoke();
+                }
+            }
         }
     }
 }
