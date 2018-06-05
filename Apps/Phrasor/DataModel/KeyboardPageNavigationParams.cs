@@ -17,6 +17,7 @@ namespace Phrasor
         public bool IsCategory;
         public bool NeedsSaving;
         public bool SpeechMode;
+        public bool GazePlusClickMode;
     }
 
 }
