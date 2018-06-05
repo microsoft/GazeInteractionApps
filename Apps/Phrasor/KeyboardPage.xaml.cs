@@ -46,7 +46,6 @@ namespace Phrasor
                 GazeKeyboard.TextControl.Text = _navParams.ChildNode.Caption;
                 GazeKeyboard.TextControl.SelectAll();
             }
-                             
         }
         private async void OnEnterClick(object sender, RoutedEventArgs e)
         {            
