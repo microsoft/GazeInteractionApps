@@ -213,7 +213,8 @@ namespace Phrasor
                 CurrentNode = MasterViewModel.CurrentNode,
                 ChildNode = null,
                 NeedsSaving = false,
-                IsCategory = isCategory
+                IsCategory = isCategory,
+                GazePlusClickMode = MasterViewModel.Settings.GazePlusClickMode                
             };
             Frame.Navigate(typeof(KeyboardPage), navParams);
         }
@@ -332,7 +333,8 @@ namespace Phrasor
                         RootNode = MasterViewModel.RootNode,
                         CurrentNode = MasterViewModel.CurrentNode,
                         ChildNode = phraseNode,
-                        NeedsSaving = false
+                        NeedsSaving = false,
+                        GazePlusClickMode = MasterViewModel.Settings.GazePlusClickMode
                     };
                     Frame.Navigate(typeof(KeyboardPage), navParams);
                     break;
@@ -382,7 +384,8 @@ namespace Phrasor
                 CurrentNode = MasterViewModel.CurrentNode,
                 ChildNode = null,
                 NeedsSaving = false,
-                SpeechMode = true
+                SpeechMode = true,
+                GazePlusClickMode = MasterViewModel.Settings.GazePlusClickMode
             };
             Frame.Navigate(typeof(KeyboardPage), navParams);
         }

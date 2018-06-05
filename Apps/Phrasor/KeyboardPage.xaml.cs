@@ -33,6 +33,7 @@ namespace Phrasor
         {
             base.OnNavigatedTo(e);
             _navParams = (KeyboardPageNavigationParams)e.Parameter;
+            GazeKeyboard.GazePlusClickMode = _navParams.GazePlusClickMode;
             if (_navParams.SpeechMode)
             {
                 this.GazeKeyboard.EnterButton.Content = "\uE768";
@@ -45,7 +46,6 @@ namespace Phrasor
                 GazeKeyboard.TextControl.Text = _navParams.ChildNode.Caption;
                 GazeKeyboard.TextControl.SelectAll();
             }
-            
         }
         private async void OnEnterClick(object sender, RoutedEventArgs e)
         {            
