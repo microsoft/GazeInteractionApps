@@ -432,20 +432,14 @@ namespace Phrasor
 
         private void OnSettingsClick(object sender, RoutedEventArgs e)
         {
-            SettingsGrid.Visibility = Visibility.Visible;
-            GazeInput.SetInteraction(MenuGrid, Interaction.Disabled);
-            GazeInput.SetInteraction(PhraseGrid, Interaction.Disabled);
-            GazeInput.SetInteraction(PauseButton, Interaction.Disabled);
+            SettingsGrid.Visibility = Visibility.Visible;          
         }
 
         private void OnExitSettings(object sender, RoutedEventArgs e)
         {
             MasterViewModel.Settings.Save();
             grdvwPhrases.FontSize = MasterViewModel.Settings.FontSize;
-            SettingsGrid.Visibility = Visibility.Collapsed;
-            GazeInput.SetInteraction(MenuGrid, Interaction.Enabled);
-            GazeInput.SetInteraction(PhraseGrid, Interaction.Enabled);
-            GazeInput.SetInteraction(PauseButton, Interaction.Enabled);
+            SettingsGrid.Visibility = Visibility.Collapsed;           
             AdjustTileSize();
             SetToolsToolbarVisible(false);
             if (MasterViewModel.Settings.GazePlusClickMode)
@@ -547,7 +541,7 @@ namespace Phrasor
                 {
                     case DwellProgressState.Fixating:
 
-                        TargetButton = sender as Button;
+                        TargetButton = sender as UIElement;
                         break;
 
                     case DwellProgressState.Idle:
@@ -558,17 +552,15 @@ namespace Phrasor
             }
         }
 
-        Button TargetButton;
+        UIElement TargetButton;
 
         private void Page_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
             if (MasterViewModel.Settings.GazePlusClickMode)
-            {
+            {               
                 if (TargetButton != null)
                 {
-                    var peer = FrameworkElementAutomationPeer.CreatePeerForElement(TargetButton);
-                    var provider = (IInvokeProvider)peer;
-                    provider.Invoke();
+                    GazeInput.Invoke(TargetButton);                    
                 }
             }
         }

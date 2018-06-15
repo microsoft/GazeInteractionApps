@@ -38,7 +38,7 @@ namespace EyeGazeUserControls
             get { return textControl; }
         }
 
-        private bool _gazePlusClickMode;
+        private bool _gazePlusClickMode = false;
         public bool GazePlusClickMode
         {
             get
