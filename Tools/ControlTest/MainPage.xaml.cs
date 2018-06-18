@@ -22,6 +22,8 @@ namespace ControlTest
             {
                 var gazePointer = GazeInput.GetGazePointer(this);
                 gazePointer.LoadSettings(sharedSettings);
+
+                CursorVisible.IsChecked = GazeInput.GetIsCursorVisible(this);
             });
         }
 
