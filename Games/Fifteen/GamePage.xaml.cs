@@ -45,6 +45,7 @@ namespace Fifteen
 
         protected override void OnNavigatedTo(NavigationEventArgs e) 
         {
+            base.OnNavigatedTo(e);
             _boardSize = (int)e.Parameter;
         }
 
