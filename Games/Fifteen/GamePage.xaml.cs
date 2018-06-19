@@ -23,7 +23,7 @@ namespace Fifteen
 
         public GamePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
@@ -31,7 +31,7 @@ namespace Fifteen
                 gazePointer.LoadSettings(sharedSettings);
             });
 
-            this.Loaded += GamePage_Loaded;
+            Loaded += GamePage_Loaded;
         }
 
         private void GamePage_Loaded(object sender, RoutedEventArgs e)

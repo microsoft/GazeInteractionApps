@@ -61,7 +61,7 @@ namespace EyeGazeUserControls
 
         public GazeKeyboard()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             _FixationDefault = GazeInput.GetFixationDuration(this);
         }
 

@@ -13,7 +13,7 @@ namespace ControlTest
     {
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             CursorVisible.IsChecked = GazeInput.GetIsCursorVisible(this);
 

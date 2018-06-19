@@ -217,7 +217,7 @@ namespace EyeControlToolkitSettings
             }
             set
             {
-                if (SetProperty(ref _GazeCursorVisibility, value))
+                if (SetProperty(ref _GazePointerIsSwitchEnabled, value))
                 {
                     ApplicationData.Current.LocalSettings.Values["GazePointer.IsSwitchEnabled"] = value;
                 }

@@ -16,7 +16,7 @@ namespace SeeSaw
         private ImageData _imageData;
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
         private async void SelectMedia_Click(object sender, RoutedEventArgs e)
         {

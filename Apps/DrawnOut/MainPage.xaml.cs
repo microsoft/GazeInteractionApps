@@ -35,7 +35,7 @@ namespace DrawnOut
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             MaxGazeHistorySize = 100000;
 

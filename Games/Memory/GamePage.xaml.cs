@@ -30,7 +30,7 @@ namespace Memory
 
         public GamePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             _rnd = new Random();
             _flashTimer = new DispatcherTimer();

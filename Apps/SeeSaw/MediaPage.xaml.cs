@@ -34,7 +34,7 @@ namespace SeeSaw
 
         public MediaPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             _trackViewer = new TrackViewer();
             Loaded += TrackingPage_Loaded;
 

@@ -2,15 +2,10 @@
 //See LICENSE in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Xaml.Media;
 
 namespace Phrasor
 {
