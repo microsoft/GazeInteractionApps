@@ -66,12 +66,14 @@ namespace Phrasor
             _backgroundBrush = new SolidColorBrush(Colors.Gray);
             _foregroundBrush = new SolidColorBrush(Colors.Blue);
             _transparentBrush = new SolidColorBrush(Colors.Transparent);
-        }
+            _FixationDefault = GazeInput.GetFixationDuration(this);
+            _dwellProgressBrush = (SolidColorBrush)GazeInput.DwellFeedbackProgressBrush;
+        }        
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            _dwellProgressBrush = (SolidColorBrush)GazeInput.DwellFeedbackProgressBrush;
-            _FixationDefault = GazeInput.GetFixationDuration(this);
+           
+            
 
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.DimGray);
             GazeInput.DwellFeedbackEnterBrush = new SolidColorBrush(Colors.DimGray);
