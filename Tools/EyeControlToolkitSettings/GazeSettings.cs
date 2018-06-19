@@ -20,6 +20,7 @@ namespace EyeControlToolkitSettings
         private const int DEFAULT_MAX_HISTORY_DURATION = 3000000;
         private const int MAX_SINGLE_SAMPLE_DURATION = 100000;
         private const int GAZE_IDLE_TIME = 2500000;
+        private const bool DEFAULT_SWITCH_ENABLED = false;
 
         // GazeCursor
         private const int DEFAULT_CURSOR_RADIUS = 5;
@@ -195,6 +196,33 @@ namespace EyeControlToolkitSettings
                 }
             }
         }
+
+        bool? _GazePointerIsSwitchEnabled;
+        public bool GazePointerIsSwitchEnabled
+        {
+            get
+            {
+                if (!_GazePointerIsSwitchEnabled.HasValue)
+                {
+                    if (ApplicationData.Current.LocalSettings.Values.Keys.Contains("GazePointer.IsSwitchEnabled"))
+                    {
+                        _GazePointerIsSwitchEnabled = (bool)(ApplicationData.Current.LocalSettings.Values["GazePointer.IsSwitchEnabled"]);
+                    }
+                    else
+                    {
+                        _GazePointerIsSwitchEnabled = DEFAULT_SWITCH_ENABLED;
+                    }
+                }
+                return _GazePointerIsSwitchEnabled.Value;
+            }
+            set
+            {
+                if (SetProperty(ref _GazeCursorVisibility, value))
+                {
+                    ApplicationData.Current.LocalSettings.Values["GazePointer.IsSwitchEnabled"] = value;
+                }
+            }
+        }
         #endregion
 
         #region GazeCursor
@@ -223,7 +251,6 @@ namespace EyeControlToolkitSettings
                     if (SetProperty(ref _GazeCursorRadius, value))
                     {
                         ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorRadius"] = value;
-                        //GazeInput.SetCursorRadius(null, value);
                     }
                 }
             }
@@ -252,7 +279,6 @@ namespace EyeControlToolkitSettings
                 if (SetProperty(ref _GazeCursorVisibility, value))
                 {
                     ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorVisibility"] = value;
-                    //GazeInput.SetIsCursorVisible(null, value);
                 }
             }
         }
@@ -412,6 +438,7 @@ namespace EyeControlToolkitSettings
             GazePointerEnterExitDelay = DEFAULT_ENTER_EXIT_DELAY;
             GazePointerMaxSingleSampleDuration = MAX_SINGLE_SAMPLE_DURATION;
             GazePointerGazeIdleTime = GAZE_IDLE_TIME;
+            GazePointerIsSwitchEnabled = DEFAULT_SWITCH_ENABLED;
 
             GazeCursorRadius = DEFAULT_CURSOR_RADIUS;
             GazeCursorVisibility = DEFAULT_CURSOR_VISIBILITY;

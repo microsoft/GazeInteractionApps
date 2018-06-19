@@ -12,8 +12,6 @@ using Windows.Data.Json;
 using Windows.UI;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml.Automation.Peers;
-using Windows.UI.Xaml.Automation.Provider;
 
 namespace Phrasor
 {
