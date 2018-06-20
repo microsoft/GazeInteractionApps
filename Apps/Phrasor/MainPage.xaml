@@ -179,7 +179,7 @@
                 </Button>
             </Grid>
 
-            <Button x:Name="ExitButton" Grid.Row="0" Grid.Column="6" Content="&#xE711;" Style="{StaticResource ToolbarButton}" Click="OnExitClick" AllowFocusOnInteraction="False" >
+            <Button x:Name="ExitButton" Grid.Row="0" Grid.Column="6" Content="&#xE711;" Style="{StaticResource ToolbarButton}" Click="OnExitClick" AllowFocusOnInteraction="False" gaze:GazeInput.DwellDuration="{x:Bind MasterViewModel.Settings.DestructiveDwellDuration}" >
                 <gaze:GazeInput.GazeElement>
                     <gaze:GazeElement Invoked="GazeElement_Invoked" DwellProgressFeedback="GazeElement_DwellProgressFeedback"/>
                 </gaze:GazeInput.GazeElement>
