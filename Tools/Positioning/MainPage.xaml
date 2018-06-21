@@ -24,7 +24,6 @@
 
         <Rectangle Grid.Row="1" Grid.Column="1" Fill="#FF373737" />
 
-        <Ellipse x:Name="D100" Width="100" Height="100" Stroke="Black" StrokeThickness="1" Grid.ColumnSpan="3" Grid.RowSpan="3" />
         <Ellipse x:Name="D40" Width="20"  Height="20" Stroke="Black" StrokeThickness="2" Grid.ColumnSpan="3" Grid.RowSpan="3" />
         <Ellipse x:Name="D4" Width="4"  Height="4" Stroke="Black" StrokeThickness="2" Grid.ColumnSpan="3" Grid.RowSpan="3" />
 

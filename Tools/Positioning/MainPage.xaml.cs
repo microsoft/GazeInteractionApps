@@ -244,9 +244,6 @@ namespace Positioning
 
             D40.Width   = conversionFactorX * 40;
             D40.Height  = conversionFactorY * 40;
-
-            D100.Width  = conversionFactorX * 100;
-            D100.Height = conversionFactorY * 100;
         }
 
         private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -265,6 +262,18 @@ namespace Positioning
                     break;
                 case Windows.System.VirtualKey.F11:
                     showGaze = !showGaze;
+                    break;
+                case Windows.System.VirtualKey.F10:
+                    if (D40.Visibility == Visibility.Visible)
+                    {
+                        D40.Visibility = Visibility.Collapsed;
+                        D4.Visibility = Visibility.Collapsed;
+                    }
+                    else // if (D40.Visibility == Visibility.Collapsed)
+                    {
+                        D40.Visibility = Visibility.Visible;
+                        D4.Visibility = Visibility.Visible;
+                    }
                     break;
             }
         }
