@@ -8,7 +8,9 @@ using System.Text;
 using Windows.Devices.Input.Preview;
 using Windows.Graphics.Display;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using static Positioning.GazeHidInputReportHelpers;
 
@@ -25,6 +27,8 @@ namespace Positioning
 
         float screenSizeMicrometersWidth;
         float screenSizeMicrometersHeight;
+
+        bool showGaze = true;
 
         public MainPage()
         {
@@ -55,11 +59,18 @@ namespace Positioning
 
                 sb.Append($"{args.CurrentPoint.EyeGazePosition.Value.X}, {args.CurrentPoint.EyeGazePosition.Value.Y}");
 
-                GazePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                if (showGaze)
+                {
+                    GazePositionEllipse.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    GazePositionEllipse.Visibility = Visibility.Collapsed;
+                }
             }
             else
             {
-                GazePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                GazePositionEllipse.Visibility = Visibility.Collapsed;
             }
             sb.AppendLine(")");
 
@@ -83,7 +94,7 @@ namespace Positioning
                 sb.Append("LeftEyePos  (");
                 if (leftEyePosition != null)
                 {
-                    sb.Append($"{(leftEyePosition.Value.X / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm, {(leftEyePosition.Value.Y / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm, {(leftEyePosition.Value.Z / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm)");
+                    sb.Append($"{(leftEyePosition.Value.X / 10000.0):F1}cm, {(leftEyePosition.Value.Y / 10000.0):F1}cm, {(leftEyePosition.Value.Z / 10000.0):F1}cm)");
 
                     if (leftEyePosition.Value.X >= 0 &&
                         leftEyePosition.Value.X <= screenSizeMicrometersWidth &&
@@ -120,16 +131,16 @@ namespace Positioning
                             LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
                         }
 
-                        sb.Append($" ({newX.ToString("F0", CultureInfo.InvariantCulture)}, {newY.ToString("F0", CultureInfo.InvariantCulture)}, {newZ}");
+                        sb.Append($" ({newX:F0}, {newY:F0}, {newZ}");
 
                         Canvas.SetLeft(LeftEyePositionEllipse, newX);
                         Canvas.SetTop(LeftEyePositionEllipse, newY);
 
-                        LeftEyePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                        LeftEyePositionEllipse.Visibility = Visibility.Visible;
                     }
                     else
                     {
-                        LeftEyePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                        LeftEyePositionEllipse.Visibility = Visibility.Collapsed;
                     }
                 }
                 sb.AppendLine(")");
@@ -137,7 +148,7 @@ namespace Positioning
                 sb.Append("RightEyePos (");
                 if (rightEyePosition != null)
                 {
-                    sb.Append($"{(rightEyePosition.Value.X / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm, {(rightEyePosition.Value.Y / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm, {(rightEyePosition.Value.Z / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm)");
+                    sb.Append($"{(rightEyePosition.Value.X / 10000.0):F1}cm, {(rightEyePosition.Value.Y / 10000.0):F1}cm, {(rightEyePosition.Value.Z / 10000.0):F1}cm)");
 
                     if (rightEyePosition.Value.X >= 0 &&
                         rightEyePosition.Value.X <= screenSizeMicrometersWidth &&
@@ -174,16 +185,16 @@ namespace Positioning
                             RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
                         }
 
-                        sb.Append($" ({newX.ToString("F0", CultureInfo.InvariantCulture)}, {newY.ToString("F0", CultureInfo.InvariantCulture)}, {newZ}");
+                        sb.Append($" ({newX:F0}, {newY:F0}, {newZ}");
 
                         Canvas.SetLeft(RightEyePositionEllipse, newX);
                         Canvas.SetTop(RightEyePositionEllipse, newY);
 
-                        RightEyePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                        RightEyePositionEllipse.Visibility = Visibility.Visible;
                     }
                     else
                     {
-                        RightEyePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                        RightEyePositionEllipse.Visibility = Visibility.Collapsed;
                     }
                 }
                 sb.AppendLine(")");
@@ -217,27 +228,45 @@ namespace Positioning
 
         private static double MapRange(double oldStart, double oldEnd, double newStart, double newEnd, double valueToMap)
         {
-            double scalingFactor = (double)(newEnd - newStart) / (oldEnd - oldStart);
-            return (double)(newStart + ((valueToMap - oldStart) * scalingFactor));
+            double scalingFactor = (newEnd - newStart) / (oldEnd - oldStart);
+            return newStart + ((valueToMap - oldStart) * scalingFactor);
         }
 
-        private void ExitButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             App.Current.Exit();
         }
 
-        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var scaleFactor = displayInformation.RawPixelsPerViewPixel;
-
-            var conversionFactorX = (displayInformation.RawDpiX / scaleFactor) / 25.4;
-            var conversionFactorY = (displayInformation.RawDpiY / scaleFactor) / 25.4;
+            var conversionFactorX = (displayInformation.RawDpiX / displayInformation.RawPixelsPerViewPixel) / 25.4;
+            var conversionFactorY = (displayInformation.RawDpiY / displayInformation.RawPixelsPerViewPixel) / 25.4;
 
             D40.Width   = conversionFactorX * 40;
             D40.Height  = conversionFactorY * 40;
 
             D100.Width  = conversionFactorX * 100;
             D100.Height = conversionFactorY * 100;
+        }
+
+        private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            switch(e.Key)
+            {
+                case Windows.System.VirtualKey.F12:
+                    if (StatusTextBlock.Visibility == Visibility.Visible)
+                    {
+                        StatusTextBlock.Visibility = Visibility.Collapsed;
+                    }
+                    else // if (StatusTextBlock.Visibility == Visibility.Collapsed)
+                    {
+                        StatusTextBlock.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case Windows.System.VirtualKey.F11:
+                    showGaze = !showGaze;
+                    break;
+            }
         }
     }
 }
