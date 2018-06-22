@@ -1,9 +1,12 @@
 ﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
 //See LICENSE in the project root for license information.
 
+using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -342,6 +345,13 @@ namespace TwoZeroFourEight
             this.InitializeComponent();
             Board = new Board(4);
             DataContext = Board;
+
+            var sharedSettings = new ValueSet();
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
+            {
+                var gazePointer = GazeInput.GetGazePointer(this);
+                gazePointer.LoadSettings(sharedSettings);
+            });
         }
 
         private void OnNewGame(object sender, RoutedEventArgs e)
