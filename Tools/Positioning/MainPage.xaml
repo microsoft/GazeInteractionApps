@@ -7,41 +7,51 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="Black"
+    Foreground="White">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="200" />
-            <RowDefinition />
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="20*" />
+            <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
 
-        <Canvas Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <Ellipse x:Name="GazePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Black">
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="#FF373737" />
+
+        <Ellipse x:Name="D40" Width="20"  Height="20" Stroke="Black" StrokeThickness="2" Grid.ColumnSpan="3" Grid.RowSpan="3" />
+        <Ellipse x:Name="D4" Width="4"  Height="4" Stroke="Black" StrokeThickness="2" Grid.ColumnSpan="3" Grid.RowSpan="3" />
+
+        <Canvas>
+            <Ellipse x:Name="GazePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="White">
                 <Ellipse.RenderTransform>
-                    <CompositeTransform TranslateX="-50" TranslateY="-50"/>
+                    <TranslateTransform X="-50" Y="-50"/>
                 </Ellipse.RenderTransform>
             </Ellipse>
-            <Ellipse x:Name="LeftEyePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Black">
+            <Ellipse x:Name="LeftEyePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="White">
                 <Ellipse.RenderTransform>
-                    <CompositeTransform TranslateX="-50" TranslateY="-50"/>
+                    <TranslateTransform X="-50" Y="-50"/>
                 </Ellipse.RenderTransform>
             </Ellipse>
-            <Ellipse x:Name="RightEyePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="Black">
+            <Ellipse x:Name="RightEyePositionEllipse" Opacity="0.5" Width="100" Height="100" Canvas.Top="10" Canvas.Left="10" Fill="White">
                 <Ellipse.RenderTransform>
-                    <CompositeTransform TranslateX="-50" TranslateY="-50"/>
+                    <TranslateTransform X="-50" Y="-50"/>
                 </Ellipse.RenderTransform>
             </Ellipse>
         </Canvas>
 
-        <TextBlock x:Name="StatusTextBlock" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20" Foreground="Black" />
-        <Button x:Name="ExitButton" Content="Exit" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ExitButton_Click" />
+        <TextBlock x:Name="StatusTextBlock" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20" Foreground="White" FontFamily="Consolas" />
+        <Button x:Name="ExitButton" Content="Exit" Width="50" Height="50" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ExitButton_Click" Foreground="White" RequestedTheme="Dark"/>
 
-        <Ellipse x:Name="D100" Width="100" Height="100" Stroke="Black" StrokeThickness="1" Grid.ColumnSpan="2" Grid.RowSpan="2" />
-        <Ellipse x:Name="D40" Width="20"  Height="20" Stroke="Black" StrokeThickness="2" Grid.ColumnSpan="2" Grid.RowSpan="2" />
-        <Ellipse x:Name="D4" Width="4"  Height="4" Stroke="Black" StrokeThickness="2" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Bottom">
+            <CheckBox x:Name="DebugInformationCheckbox" Content="Show Debug Data" Click="DebugInformationCheckbox_Click" IsChecked="True" Foreground="White" FontFamily="Consolas" FontSize="20" Margin="0,0,0,20" RequestedTheme="Dark" />
+            <CheckBox x:Name="EyeGazeCheckbox" Content="Show Eye Gaze" Click="EyeGazeCheckbox_Click" IsChecked="True" Foreground="White" FontFamily="Consolas" FontSize="20" Margin="0,0,0,20" RequestedTheme="Dark" />
+            <CheckBox x:Name="PositioningReticleCheckbox" Content="Show Positioning Reticle Guides" Click="PositioningReticleCheckbox_Click" IsChecked="True" Foreground="White" FontFamily="Consolas" FontSize="20" Margin="0,0,0,20" RequestedTheme="Dark" />
+        </StackPanel>
     </Grid>
 </Page>
