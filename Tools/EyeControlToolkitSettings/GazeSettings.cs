@@ -429,8 +429,8 @@ namespace EyeControlToolkitSettings
             GazePointerFixationDelay = DEFAULT_FIXATION_DELAY;
             GazePointerDwellDelay = DEFAULT_DWELL_DELAY;
             GazePointerRepeatDelay = DEFAULT_REPEAT_DELAY;
-            GazePointerEnterExitDelay = DEFAULT_ENTER_EXIT_DELAY;
-            GazePointerMaxSingleSampleDuration = MAX_SINGLE_SAMPLE_DURATION;
+            GazePointerDwellRepeatDelay = DEFAULT_DWELL_REPEAT_DELAY;
+            GazePointerThresholdDelay = DEFAULT_THRESHOLD_DELAY;
             GazePointerGazeIdleTime = GAZE_IDLE_TIME;
             GazePointerIsSwitchEnabled = DEFAULT_SWITCH_ENABLED;
 

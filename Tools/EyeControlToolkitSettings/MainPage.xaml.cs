@@ -54,16 +54,6 @@ namespace EyeControlToolkitSettings
 
         }
 
-        private void GazePointerEnterExitDelay_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            GazeSettings.GazePointerEnterExitDelay -= 50000;
-        }
-
-        private void GazePointerEnterExitDelay_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            GazeSettings.GazePointerEnterExitDelay += 50000;
-        }
-
         private void GazePointerGazeIdleTime_NudgeDown_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             GazeSettings.GazePointerGazeIdleTime -= 10000;
@@ -82,6 +72,16 @@ namespace EyeControlToolkitSettings
         private void GazeCursorRadius_NudgeUp_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             GazeSettings.GazeCursorRadius += 5;
+        }
+
+        private void GazeCursorVisibility_Checkbox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazeCursorVisibility = GazeCursorVisibility_Checkbox.IsChecked.Value;
+        }
+
+        private void GazePointerIsSwitchEnabled_Checkbox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazePointerIsSwitchEnabled = GazePointerIsSwitchEnabled_Checkbox.IsChecked.Value;
         }
 
         private void ResetButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
