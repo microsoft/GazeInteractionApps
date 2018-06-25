@@ -8,7 +8,9 @@ using System.Text;
 using Windows.Devices.Input.Preview;
 using Windows.Graphics.Display;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using static Positioning.GazeHidInputReportHelpers;
 
@@ -25,6 +27,8 @@ namespace Positioning
 
         float screenSizeMicrometersWidth;
         float screenSizeMicrometersHeight;
+
+        bool showGaze = true;
 
         public MainPage()
         {
@@ -47,19 +51,26 @@ namespace Positioning
         {
             var sb = new StringBuilder();
 
-            sb.Append("GazePos (");
+            sb.Append("      GazePos (");
             if (args.CurrentPoint.EyeGazePosition != null)
             {
                 Canvas.SetLeft(GazePositionEllipse, args.CurrentPoint.EyeGazePosition.Value.X);
                 Canvas.SetTop(GazePositionEllipse, args.CurrentPoint.EyeGazePosition.Value.Y);
 
-                sb.Append($"{args.CurrentPoint.EyeGazePosition.Value.X}, {args.CurrentPoint.EyeGazePosition.Value.Y}");
+                sb.Append($"{args.CurrentPoint.EyeGazePosition.Value.X,6}px, {args.CurrentPoint.EyeGazePosition.Value.Y,6}px");
 
-                GazePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                if (showGaze)
+                {
+                    GazePositionEllipse.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    GazePositionEllipse.Visibility = Visibility.Collapsed;
+                }
             }
             else
             {
-                GazePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                GazePositionEllipse.Visibility = Visibility.Collapsed;
             }
             sb.AppendLine(")");
 
@@ -80,127 +91,22 @@ namespace Positioning
                 // (not the tracker). As such, there is a minor difference between the actual
                 // sensor-to-eye distance vs the reported distance for left/right eye position.
 
-                sb.Append("LeftEyePos  (");
-                if (leftEyePosition != null)
-                {
-                    sb.Append($"{(leftEyePosition.Value.X / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm, {(leftEyePosition.Value.Y / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm, {(leftEyePosition.Value.Z / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm)");
-
-                    if (leftEyePosition.Value.X >= 0 &&
-                        leftEyePosition.Value.X <= screenSizeMicrometersWidth &&
-                        leftEyePosition.Value.Y >= 0 &&
-                        leftEyePosition.Value.Y <= screenSizeMicrometersHeight)
-                    {
-                        var newX = MapRange(0, screenSizeMicrometersWidth, 0, ActualWidth, leftEyePosition.Value.X);
-                        var newY = MapRange(0, screenSizeMicrometersHeight, 0, ActualHeight, leftEyePosition.Value.Y);
-
-                        var newZ = string.Empty;
-                        if (leftEyePosition.Value.Z < 400000)
-                        {
-                            newZ = "Red";
-                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
-                        }
-                        else if (leftEyePosition.Value.Z < 500000)
-                        {
-                            newZ = "Yellow";
-                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
-                        }
-                        else if (leftEyePosition.Value.Z < 700000)
-                        {
-                            newZ = "Green";
-                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Green);
-                        }
-                        else if (leftEyePosition.Value.Z < 800000)
-                        {
-                            newZ = "Yellow";
-                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
-                        }
-                        else
-                        {
-                            newZ = "Red";
-                            LeftEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
-                        }
-
-                        sb.Append($" ({newX.ToString("F0", CultureInfo.InvariantCulture)}, {newY.ToString("F0", CultureInfo.InvariantCulture)}, {newZ}");
-
-                        Canvas.SetLeft(LeftEyePositionEllipse, newX);
-                        Canvas.SetTop(LeftEyePositionEllipse, newY);
-
-                        LeftEyePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                    }
-                    else
-                    {
-                        LeftEyePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    }
-                }
-                sb.AppendLine(")");
-
-                sb.Append("RightEyePos (");
-                if (rightEyePosition != null)
-                {
-                    sb.Append($"{(rightEyePosition.Value.X / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm, {(rightEyePosition.Value.Y / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm, {(rightEyePosition.Value.Z / 10000.0).ToString("F1", CultureInfo.InvariantCulture)}cm)");
-
-                    if (rightEyePosition.Value.X >= 0 &&
-                        rightEyePosition.Value.X <= screenSizeMicrometersWidth &&
-                        rightEyePosition.Value.Y >= 0 &&
-                        rightEyePosition.Value.Y <= screenSizeMicrometersHeight)
-                    {
-                        var newX = MapRange(0, screenSizeMicrometersWidth, 0, ActualWidth, rightEyePosition.Value.X);
-                        var newY = MapRange(0, screenSizeMicrometersHeight, 0, ActualHeight, rightEyePosition.Value.Y);
-
-                        var newZ = String.Empty;
-                        if (rightEyePosition.Value.Z < 400000)
-                        {
-                            newZ = "Red";
-                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
-                        }
-                        else if (rightEyePosition.Value.Z < 500000)
-                        {
-                            newZ = "Yellow";
-                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
-                        }
-                        else if (rightEyePosition.Value.Z < 700000)
-                        {
-                            newZ = "Green";
-                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Green);
-                        }
-                        else if (rightEyePosition.Value.Z < 800000)
-                        {
-                            newZ = "Yellow";
-                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Yellow);
-                        }
-                        else
-                        {
-                            newZ = "Red";
-                            RightEyePositionEllipse.Fill = new SolidColorBrush(Colors.Red);
-                        }
-
-                        sb.Append($" ({newX.ToString("F0", CultureInfo.InvariantCulture)}, {newY.ToString("F0", CultureInfo.InvariantCulture)}, {newZ}");
-
-                        Canvas.SetLeft(RightEyePositionEllipse, newX);
-                        Canvas.SetTop(RightEyePositionEllipse, newY);
-
-                        RightEyePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                    }
-                    else
-                    {
-                        RightEyePositionEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    }
-                }
-                sb.AppendLine(")");
+                UpdateEyeData("Left", leftEyePosition, LeftEyePositionEllipse, sb);
+                UpdateEyeData("Right", rightEyePosition, RightEyePositionEllipse, sb);
 
                 if (rightEyePosition != null && leftEyePosition != null)
                 {
                     // calculate IPD in mm
                     var interPupilaryDistance = (rightEyePosition.Value.X - leftEyePosition.Value.X) / 1000.0;
 
-                    sb.AppendLine($"IPD ({interPupilaryDistance.ToString("F2", CultureInfo.InvariantCulture)}mm)");
+                    sb.AppendLine($"          IPD ({interPupilaryDistance,6:F2}mm)");
                 }
 
                 var headPostitionParser = new GazePositionHidParser(sourceDevice, GazeExtendedUsages.Usage_HeadPosition);
                 var headPosition = headPostitionParser.GetPosition(hidReport);
                 if (headPosition != null)
                 {
-                    sb.AppendLine($"HeadPosition ({headPosition.Value.X.ToString("F2", CultureInfo.InvariantCulture)}, {headPosition.Value.Y.ToString("F2", CultureInfo.InvariantCulture)}, {headPosition.Value.Z.ToString("F2", CultureInfo.InvariantCulture)})");
+                    sb.AppendLine($"HeadPosition ({headPosition.Value.X,8:F2}, {headPosition.Value.Y,8:F2}, {headPosition.Value.Z,8:F2})");
                 }
 
                 var headRotationParser = new GazeRotationHidParser(sourceDevice, GazeExtendedUsages.Usage_HeadDirectionPoint);
@@ -208,36 +114,119 @@ namespace Positioning
 
                 if (headRotation != null)
                 {
-                    sb.AppendLine($"HeadRotation ({headRotation.Value.X.ToString("F2", CultureInfo.InvariantCulture)}, {headRotation.Value.Y.ToString("F2", CultureInfo.InvariantCulture)}, {headRotation.Value.Z.ToString("F2", CultureInfo.InvariantCulture)})");
+                    sb.AppendLine($"HeadRotation ({headRotation.Value.X,8:F2}, {headRotation.Value.Y,8:F2}, {headRotation.Value.Z,8:F2})");
                 }
             }
 
             StatusTextBlock.Text = sb.ToString();
         }
 
-        private static double MapRange(double oldStart, double oldEnd, double newStart, double newEnd, double valueToMap)
+        private void UpdateEyeData(string eyeName, System.Numerics.Vector3? eyePosition, Windows.UI.Xaml.Shapes.Ellipse eyeEllipse, StringBuilder sb)
         {
-            double scalingFactor = (double)(newEnd - newStart) / (oldEnd - oldStart);
-            return (double)(newStart + ((valueToMap - oldStart) * scalingFactor));
+            sb.Append($"{eyeName,7}EyePos (");
+            if (eyePosition != null)
+            {
+                sb.Append($"{(eyePosition.Value.X / 1000.0),6:F1}mm, {(eyePosition.Value.Y / 1000.0),6:F1}mm, {(eyePosition.Value.Z / 1000.0),6:F1}mm)");
+
+                if (eyePosition.Value.X >= 0 &&
+                    eyePosition.Value.X <= screenSizeMicrometersWidth &&
+                    eyePosition.Value.Y >= 0 &&
+                    eyePosition.Value.Y <= screenSizeMicrometersHeight)
+                {
+                    var newX = MapRange(0, screenSizeMicrometersWidth, 0, ActualWidth, eyePosition.Value.X);
+                    var newY = MapRange(0, screenSizeMicrometersHeight, 0, ActualHeight, eyePosition.Value.Y);
+
+                    var newZ = string.Empty;
+                    if (eyePosition.Value.Z < 400000)
+                    {
+                        newZ = "Red";
+                        eyeEllipse.Fill = new SolidColorBrush(Colors.Red);
+                    }
+                    else if (eyePosition.Value.Z < 500000)
+                    {
+                        newZ = "Yellow";
+                        eyeEllipse.Fill = new SolidColorBrush(Colors.Yellow);
+                    }
+                    else if (eyePosition.Value.Z < 700000)
+                    {
+                        newZ = "Green";
+                        eyeEllipse.Fill = new SolidColorBrush(Colors.Green);
+                    }
+                    else if (eyePosition.Value.Z < 800000)
+                    {
+                        newZ = "Yellow";
+                        eyeEllipse.Fill = new SolidColorBrush(Colors.Yellow);
+                    }
+                    else
+                    {
+                        newZ = "Red";
+                        eyeEllipse.Fill = new SolidColorBrush(Colors.Red);
+                    }
+
+                    sb.Append($" ({newX,6:F0}, {newY,6:F0}, {newZ}");
+
+                    Canvas.SetLeft(eyeEllipse, newX);
+                    Canvas.SetTop(eyeEllipse, newY);
+
+                    eyeEllipse.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
+                else
+                {
+                    eyeEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                }
+            }
+            sb.AppendLine(")");
         }
 
-        private void ExitButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private static double MapRange(double oldStart, double oldEnd, double newStart, double newEnd, double valueToMap)
+        {
+            double scalingFactor = (newEnd - newStart) / (oldEnd - oldStart);
+            return newStart + ((valueToMap - oldStart) * scalingFactor);
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             App.Current.Exit();
         }
 
-        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var scaleFactor = displayInformation.RawPixelsPerViewPixel;
-
-            var conversionFactorX = (displayInformation.RawDpiX / scaleFactor) / 25.4;
-            var conversionFactorY = (displayInformation.RawDpiY / scaleFactor) / 25.4;
+            var conversionFactorX = (displayInformation.RawDpiX / displayInformation.RawPixelsPerViewPixel) / 25.4;
+            var conversionFactorY = (displayInformation.RawDpiY / displayInformation.RawPixelsPerViewPixel) / 25.4;
 
             D40.Width   = conversionFactorX * 40;
             D40.Height  = conversionFactorY * 40;
+        }
 
-            D100.Width  = conversionFactorX * 100;
-            D100.Height = conversionFactorY * 100;
+        private void DebugInformationCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            if (DebugInformationCheckbox.IsChecked.HasValue && DebugInformationCheckbox.IsChecked.Value)
+            {
+                StatusTextBlock.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                StatusTextBlock.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void PositioningReticleCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            if (PositioningReticleCheckbox.IsChecked.HasValue && PositioningReticleCheckbox.IsChecked.Value)
+            {
+                D40.Visibility = Visibility.Visible;
+                D4.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                D40.Visibility = Visibility.Collapsed;
+                D4.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void EyeGazeCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            showGaze = EyeGazeCheckbox.IsChecked.HasValue && EyeGazeCheckbox.IsChecked.Value;
         }
     }
 }
