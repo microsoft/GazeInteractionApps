@@ -14,7 +14,7 @@
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="Margin" Value="10" />
-            <Setter Property="FontSize" Value="64" />
+            <Setter Property="FontSize" Value="80" />
             <Setter Property="FontFamily" Value="Webdings" />
         </Style>
     </Page.Resources>
