@@ -12,6 +12,8 @@ using Windows.Data.Json;
 using Windows.UI;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.UI.ViewManagement;
+using Windows.Foundation.Collections;
+using Windows.Foundation;
 
 namespace Phrasor
 {
@@ -50,11 +52,12 @@ namespace Phrasor
 
             MasterViewModel = new ViewModel();
 
-            //var sharedSettings = new ValueSet();
-            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
-            //    var gazePointer = GazeInput.GetGazePointer(this);
-            //    gazePointer.LoadSettings(sharedSettings);
-            //});
+            var sharedSettings = new ValueSet();
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
+            {
+                var gazePointer = GazeInput.GetGazePointer(this);
+                gazePointer.LoadSettings(sharedSettings);
+            });
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 

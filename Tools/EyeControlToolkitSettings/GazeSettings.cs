@@ -16,9 +16,8 @@ namespace EyeControlToolkitSettings
         private const int DEFAULT_FIXATION_DELAY = 400000;
         private const int DEFAULT_DWELL_DELAY = 800000;
         private const int DEFAULT_REPEAT_DELAY = int.MaxValue;
-        private const int DEFAULT_ENTER_EXIT_DELAY = 50000;
-        private const int DEFAULT_MAX_HISTORY_DURATION = 3000000;
-        private const int MAX_SINGLE_SAMPLE_DURATION = 100000;
+        private const int DEFAULT_DWELL_REPEAT_DELAY = int.MaxValue;
+        private const int DEFAULT_THRESHOLD_DELAY = 50000;
         private const int GAZE_IDLE_TIME = 2500000;
         private const bool DEFAULT_SWITCH_ENABLED = false;
 
@@ -116,56 +115,56 @@ namespace EyeControlToolkitSettings
             }
         }
 
-        int? _GazePointerEnterExitDelay;
-        public int GazePointerEnterExitDelay
+        int? _GazePointerDwellRepeatDelay;
+        public int GazePointerDwellRepeatDelay
         {
             get
             {
-                if (!_GazePointerEnterExitDelay.HasValue)
+                if (!_GazePointerDwellRepeatDelay.HasValue)
                 {
-                    if (ApplicationData.Current.LocalSettings.Values.Keys.Contains("GazePointer.EnterExitDelay"))
+                    if (ApplicationData.Current.LocalSettings.Values.Keys.Contains("GazePointer.DwellRepeatDelay"))
                     {
-                        _GazePointerEnterExitDelay = (int)(ApplicationData.Current.LocalSettings.Values["GazePointer.EnterExitDelay"]);
+                        _GazePointerDwellRepeatDelay = (int)(ApplicationData.Current.LocalSettings.Values["GazePointer.DwellRepeatDelay"]);
                     }
                     else
                     {
-                        _GazePointerEnterExitDelay = DEFAULT_ENTER_EXIT_DELAY;
+                        _GazePointerDwellRepeatDelay = DEFAULT_DWELL_REPEAT_DELAY;
                     }
                 }
-                return _GazePointerEnterExitDelay.Value;
+                return _GazePointerDwellRepeatDelay.Value;
             }
             set
             {
-                if (SetProperty(ref _GazePointerEnterExitDelay, value))
+                if (SetProperty(ref _GazePointerDwellRepeatDelay, value))
                 {
-                    ApplicationData.Current.LocalSettings.Values["GazePointer.EnterExitDelay"] = value;
+                    ApplicationData.Current.LocalSettings.Values["GazePointer.DwellRepeatDelay"] = value;
                 }
             }
         }
 
-        int? _GazePointerMaxSingleSampleDuration;
-        public int GazePointerMaxSingleSampleDuration
+        int? _GazePointerThresholdDelay;
+        public int GazePointerThresholdDelay
         {
             get
             {
-                if (!_GazePointerMaxSingleSampleDuration.HasValue)
+                if (!_GazePointerThresholdDelay.HasValue)
                 {
-                    if (ApplicationData.Current.LocalSettings.Values.Keys.Contains("GazePointer.MaxSingleSampleDuration"))
+                    if (ApplicationData.Current.LocalSettings.Values.Keys.Contains("GazePointer.ThresholdDelay"))
                     {
-                        _GazePointerMaxSingleSampleDuration = (int)(ApplicationData.Current.LocalSettings.Values["GazePointer.MaxSingleSampleDuration"]);
+                        _GazePointerThresholdDelay = (int)(ApplicationData.Current.LocalSettings.Values["GazePointer.ThresholdDelay"]);
                     }
                     else
                     {
-                        _GazePointerMaxSingleSampleDuration = MAX_SINGLE_SAMPLE_DURATION;
+                        _GazePointerThresholdDelay = DEFAULT_THRESHOLD_DELAY;
                     }
                 }
-                return _GazePointerMaxSingleSampleDuration.Value;
+                return _GazePointerThresholdDelay.Value;
             }
             set
             {
-                if (SetProperty(ref _GazePointerMaxSingleSampleDuration, value))
+                if (SetProperty(ref _GazePointerThresholdDelay, value))
                 {
-                    ApplicationData.Current.LocalSettings.Values["GazePointer.MaxSingleSampleDuration"] = value;
+                    ApplicationData.Current.LocalSettings.Values["GazePointer.ThresholdDelay"] = value;
                 }
             }
         }
@@ -380,19 +379,14 @@ namespace EyeControlToolkitSettings
                 output["GazePointer.RepeatDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.RepeatDelay"];
             }
 
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer.EnterExitDelay"] != null)
+            if (ApplicationData.Current.LocalSettings.Values["GazePointer.DwellRepeatDelay"] != null)
             {
-                output["GazePointer.EnterExitDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.EnterExitDelay"];
+                output["GazePointer.DwellRepeatDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.DwellRepeatDelay"];
             }
 
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer.MaxHistoryDuration"] != null)
+            if (ApplicationData.Current.LocalSettings.Values["GazePointer.ThresholdDelay"] != null)
             {
-                output["GazePointer.MaxHistoryDuration"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.MaxHistoryDuration"];
-            }
-
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer.MaxSingleSampleDuration"] != null)
-            {
-                output["GazePointer.MaxSingleSampleDuration"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.MaxSingleSampleDuration"];
+                output["GazePointer.ThresholdDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.ThresholdDelay"];
             }
 
             if (ApplicationData.Current.LocalSettings.Values["GazePointer.GazeIdleTime"] != null)
