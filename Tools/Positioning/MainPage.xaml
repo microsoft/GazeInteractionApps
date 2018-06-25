@@ -10,7 +10,7 @@
     Background="Black"
     Foreground="White">
 
-    <Grid KeyDown="Grid_KeyDown">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="20*" />
@@ -47,5 +47,11 @@
 
         <TextBlock x:Name="StatusTextBlock" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20" Foreground="White" FontFamily="Consolas" />
         <Button x:Name="ExitButton" Content="Exit" Width="50" Height="50" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ExitButton_Click" Foreground="White" RequestedTheme="Dark"/>
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Bottom">
+            <CheckBox x:Name="DebugInformationCheckbox" Content="Show Debug Data" Click="DebugInformationCheckbox_Click" IsChecked="True" Foreground="White" FontFamily="Consolas" FontSize="20" Margin="0,0,0,20" RequestedTheme="Dark" />
+            <CheckBox x:Name="EyeGazeCheckbox" Content="Show Eye Gaze" Click="EyeGazeCheckbox_Click" IsChecked="True" Foreground="White" FontFamily="Consolas" FontSize="20" Margin="0,0,0,20" RequestedTheme="Dark" />
+            <CheckBox x:Name="PositioningReticleCheckbox" Content="Show Positioning Reticle Guides" Click="PositioningReticleCheckbox_Click" IsChecked="True" Foreground="White" FontFamily="Consolas" FontSize="20" Margin="0,0,0,20" RequestedTheme="Dark" />
+        </StackPanel>
     </Grid>
 </Page>
