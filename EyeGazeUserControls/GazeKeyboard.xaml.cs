@@ -57,7 +57,7 @@ namespace EyeGazeUserControls
                 }
                 _gazePlusClickMode = value;
             }
-        }                    
+        }
 
         public GazeKeyboard()
         {

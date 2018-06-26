@@ -9,6 +9,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -351,6 +352,10 @@ namespace TwoZeroFourEight
             {
                 var gazePointer = GazeInput.GetGazePointer(this);
                 gazePointer.LoadSettings(sharedSettings);
+
+                CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
+                    gazePointer.Click();
+                });
             });
         }
 

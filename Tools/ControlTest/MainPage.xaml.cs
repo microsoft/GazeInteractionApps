@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.Foundation.Collections;
 using Windows.Foundation;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
+using Windows.UI.Core;
 
 namespace ControlTest
 {
@@ -22,6 +23,10 @@ namespace ControlTest
             {
                 var gazePointer = GazeInput.GetGazePointer(this);
                 gazePointer.LoadSettings(sharedSettings);
+
+                CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
+                    gazePointer.Click();
+                });
 
                 CursorVisible.IsChecked = GazeInput.GetIsCursorVisible(this);
             });
