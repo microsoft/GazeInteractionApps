@@ -74,14 +74,24 @@ namespace EyeControlToolkitSettings
             GazeSettings.GazeCursorRadius += 5;
         }
 
-        private void GazeCursorVisibility_Checkbox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void GazePointerIsSwitchEnabled_Checkbox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            GazeSettings.GazeCursorVisibility = GazeCursorVisibility_Checkbox.IsChecked.Value;
+            GazeSettings.GazePointerIsSwitchEnabled = true; ;
         }
 
-        private void GazePointerIsSwitchEnabled_Checkbox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void GazePointerIsSwitchEnabled_Checkbox_Unchecked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            GazeSettings.GazePointerIsSwitchEnabled = GazePointerIsSwitchEnabled_Checkbox.IsChecked.Value;
+            GazeSettings.GazePointerIsSwitchEnabled = false;
+        }
+
+        private void GazeCursorVisibility_Checkbox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazeCursorVisibility = true;
+        }
+
+        private void GazeCursorVisibility_Checkbox_Unchecked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazeCursorVisibility = false;
         }
 
         private void ResetButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
