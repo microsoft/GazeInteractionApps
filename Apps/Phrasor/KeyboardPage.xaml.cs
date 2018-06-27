@@ -18,14 +18,14 @@ namespace Phrasor
 
         public KeyboardPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             _mediaElement = new MediaElement();
             _speechSynthesizer = new SpeechSynthesizer();
 
-            this.GazeKeyboard.EnterButton.Content = "\uE73E";
-            this.GazeKeyboard.EnterButton.Click += OnEnterClick;
-            this.GazeKeyboard.CloseButton.Click += OnCancelClick;
+            GazeKeyboard.EnterButton.Content = "\uE73E";
+            GazeKeyboard.EnterButton.Click += OnEnterClick;
+            GazeKeyboard.CloseButton.Click += OnCancelClick;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -35,11 +35,11 @@ namespace Phrasor
             GazeKeyboard.GazePlusClickMode = _navParams.GazePlusClickMode;
             if (_navParams.SpeechMode)
             {
-                this.GazeKeyboard.EnterButton.Content = "\uE768";
+                GazeKeyboard.EnterButton.Content = "\uE768";
                 GazeKeyboard.TextControl.Focus(FocusState.Programmatic);
                 return;
             }
-            this.GazeKeyboard.EnterButton.Content = "\uE73E";
+            GazeKeyboard.EnterButton.Content = "\uE73E";
             if (_navParams.ChildNode != null)
             {
                 GazeKeyboard.TextControl.Text = _navParams.ChildNode.Caption;

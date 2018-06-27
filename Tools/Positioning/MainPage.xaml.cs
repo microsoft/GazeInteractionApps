@@ -32,7 +32,7 @@ namespace Positioning
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             gazeInputSourcePreview = GazeInputSourcePreview.GetForCurrentView();
             gazeInputSourcePreview.GazeMoved += GazeInputSourcePreview_GazeMoved;

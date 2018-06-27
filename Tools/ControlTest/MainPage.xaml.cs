@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.Foundation.Collections;
 using Windows.Foundation;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
+using Windows.UI.Core;
 
 namespace ControlTest
 {
@@ -13,17 +14,18 @@ namespace ControlTest
     {
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             CursorVisible.IsChecked = GazeInput.GetIsCursorVisible(this);
+
+            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
+                GazeInput.GetGazePointer(this).Click();
+            });
 
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
             {
-                var gazePointer = GazeInput.GetGazePointer(this);
-                gazePointer.LoadSettings(sharedSettings);
-
-                CursorVisible.IsChecked = GazeInput.GetIsCursorVisible(this);
+                GazeInput.LoadSettings(sharedSettings);
             });
         }
 

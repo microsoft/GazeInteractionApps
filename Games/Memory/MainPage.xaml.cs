@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -12,11 +13,14 @@ namespace Memory
         {
             InitializeComponent();
 
+            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
+                GazeInput.GetGazePointer(this).Click();
+            });
+
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
             {
-                var gazePointer = GazeInput.GetGazePointer(this);
-                gazePointer.LoadSettings(sharedSettings);
+                GazeInput.LoadSettings(sharedSettings);
             });
         }
 

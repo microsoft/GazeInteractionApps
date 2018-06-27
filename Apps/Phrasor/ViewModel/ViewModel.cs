@@ -17,12 +17,12 @@ namespace Phrasor
        
         public ViewModel()
         {
-            this.Tiles = new ObservableCollection<PhraseNode>();
+            Tiles = new ObservableCollection<PhraseNode>();
 
-            this.RootNode = new PhraseNode();
+            RootNode = new PhraseNode();
 
-            this.TileWidth = 200;
-            this.TileHeight = 200;           
+            TileWidth = 200;
+            TileHeight = 200;           
 
             Settings = new AppSettings();
             Settings.Load();          

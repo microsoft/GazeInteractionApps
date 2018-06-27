@@ -57,11 +57,11 @@ namespace EyeGazeUserControls
                 }
                 _gazePlusClickMode = value;
             }
-        }                    
+        }
 
         public GazeKeyboard()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             _FixationDefault = GazeInput.GetFixationDuration(this);
         }
 

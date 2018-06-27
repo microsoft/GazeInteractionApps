@@ -83,7 +83,7 @@
         </Grid>
 
         <TextBlock Grid.Row="5" Grid.Column="0" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center">GazePointer - IsSwitchEnabled</TextBlock>
-        <CheckBox x:Name="GazePointerIsSwitchEnabled_Checkbox" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{x:Bind GazeSettings.GazePointerIsSwitchEnabled}" RenderTransformOrigin="0.5,0.5" Content="Enabled" Click="GazePointerIsSwitchEnabled_Checkbox_Click" >
+        <CheckBox x:Name="GazePointerIsSwitchEnabled_Checkbox" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{x:Bind GazeSettings.GazePointerIsSwitchEnabled}" RenderTransformOrigin="0.5,0.5" Content="Enabled" Checked="GazePointerIsSwitchEnabled_Checkbox_Checked" Unchecked="GazePointerIsSwitchEnabled_Checkbox_Unchecked" >
             <CheckBox.RenderTransform>
                 <CompositeTransform ScaleX="3" ScaleY="3"/>
             </CheckBox.RenderTransform>
@@ -102,7 +102,7 @@
         </Grid>
 
         <TextBlock Grid.Row="7" Grid.Column="0" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center">GazeCursor - Visibility</TextBlock>
-        <CheckBox x:Name="GazeCursorVisibility_Checkbox" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{x:Bind GazeSettings.GazeCursorVisibility}" RenderTransformOrigin="0.5,0.5" Content="Visible" Click="GazeCursorVisibility_Checkbox_Click" >
+        <CheckBox x:Name="GazeCursorVisibility_Checkbox" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{x:Bind GazeSettings.GazeCursorVisibility}" RenderTransformOrigin="0.5,0.5" Content="Visible" Checked="GazeCursorVisibility_Checkbox_Checked" Unchecked="GazeCursorVisibility_Checkbox_Unchecked">
             <CheckBox.RenderTransform>
                 <CompositeTransform ScaleX="3" ScaleY="3"/>
             </CheckBox.RenderTransform>

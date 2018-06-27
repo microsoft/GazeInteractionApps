@@ -47,8 +47,8 @@ namespace Phrasor
 
         public MainPage()
         {
-            this.InitializeComponent();
-            this.Loaded += MainPage_Loaded;
+            InitializeComponent();
+            Loaded += MainPage_Loaded;
 
             MasterViewModel = new ViewModel();
 
@@ -98,7 +98,7 @@ namespace Phrasor
                 _tileViewer = UIHelper.FindChildControl<ScrollViewer>(grdvwPhrases, "ScrollViewer") as ScrollViewer;
                 _tileViewer.ViewChanged += Viewer_ViewChanged;
 
-                this.DataContext = MasterViewModel;
+                DataContext = MasterViewModel;
                 groupTilesCVS.Source = MasterViewModel.Tiles;
             }            
             if (MasterViewModel.Settings.GazePlusClickMode)
@@ -363,7 +363,7 @@ namespace Phrasor
         {
             if (_interactionPaused)
             {
-                this.SetValue(GazeInput.InteractionProperty, Interaction.Enabled);
+                SetValue(GazeInput.InteractionProperty, Interaction.Enabled);
                 _interactionPaused = false;
                 (sender as Button).Content = "\uE769";
                 PauseIndicator1.Visibility = Visibility.Collapsed;
@@ -371,7 +371,7 @@ namespace Phrasor
             }
             else
             {
-                this.SetValue(GazeInput.InteractionProperty, Interaction.Disabled);
+                SetValue(GazeInput.InteractionProperty, Interaction.Disabled);
                 _interactionPaused = true;
                 (sender as Button).Content = "\uE768";
                 PauseIndicator1.Visibility = Visibility.Visible;
@@ -457,7 +457,7 @@ namespace Phrasor
 
         private void grdvwPhrases_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            double targetMenuHeight = this.ActualHeight / (MasterViewModel.Settings.Rows + 1);            
+            double targetMenuHeight = ActualHeight / (MasterViewModel.Settings.Rows + 1);            
             MenuGrid.Height = targetMenuHeight;
 
             //Reposition scroll viewer to top to avoid misalignment of back/next buttons with rows 
@@ -471,7 +471,7 @@ namespace Phrasor
 
         private void AdjustTileSize()
         {
-            double targetMenuHeight = this.ActualHeight / (MasterViewModel.Settings.Rows + 1);            
+            double targetMenuHeight = ActualHeight / (MasterViewModel.Settings.Rows + 1);            
             MenuGrid.Height = targetMenuHeight;
 
             MasterViewModel.TileHeight = (int)(grdvwPhrases.ActualHeight / MasterViewModel.Settings.Rows);

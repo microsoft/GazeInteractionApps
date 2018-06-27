@@ -216,7 +216,7 @@ namespace EyeControlToolkitSettings
             }
             set
             {
-                if (SetProperty(ref _GazeCursorVisibility, value))
+                if (SetProperty(ref _GazePointerIsSwitchEnabled, value))
                 {
                     ApplicationData.Current.LocalSettings.Values["GazePointer.IsSwitchEnabled"] = value;
                 }
@@ -364,63 +364,32 @@ namespace EyeControlToolkitSettings
         #region Helpers
         public static void ValueSetFromLocalSettings(ValueSet output)
         {
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer.FixationDelay"] != null)
+            foreach (var key in ApplicationData.Current.LocalSettings.Values.Keys)
             {
-                output["GazePointer.FixationDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.FixationDelay"];
-            }
-
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer.DwellDelay"] != null)
-            {
-                output["GazePointer.DwellDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.DwellDelay"];
-            }
-
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer.RepeatDelay"] != null)
-            {
-                output["GazePointer.RepeatDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.RepeatDelay"];
-            }
-
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer.DwellRepeatDelay"] != null)
-            {
-                output["GazePointer.DwellRepeatDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.DwellRepeatDelay"];
-            }
-
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer.ThresholdDelay"] != null)
-            {
-                output["GazePointer.ThresholdDelay"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.ThresholdDelay"];
-            }
-
-            if (ApplicationData.Current.LocalSettings.Values["GazePointer.GazeIdleTime"] != null)
-            {
-                output["GazePointer.GazeIdleTime"] = (int)ApplicationData.Current.LocalSettings.Values["GazePointer.GazeIdleTime"];
-            }
-
-            if (ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorRadius"] != null)
-            {
-                var cursorRadius = (int)ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorRadius"];
-                if (GazeSettings.IsGazeCursorRadiusValid(cursorRadius))
+                switch(key)
                 {
-                    output["GazeCursor.CursorRadius"] = cursorRadius;
+                    case "GazePointer.FixationDelay":
+                    case "GazePointer.DwellDelay":
+                    case "GazePointer.DwellRepeatDelay":
+                    case "GazePointer.RepeatDelay":
+                    case "GazePointer.ThresholdDelay":
+                    case "GazePointer.GazeIdleTime":
+                    case "GazeCursor.CursorRadius":
+                        output[key] = (int)ApplicationData.Current.LocalSettings.Values[key];
+                        break;
+                    case "GazePointer.IsSwitchEnabled":
+                    case "GazeCursor.CursorVisibility":
+                        output[key] = (bool)ApplicationData.Current.LocalSettings.Values[key];
+                        break;
+                    case "OneEuroFilter.Beta":
+                    case "OneEuroFilter.Cutoff":
+                    case "OneEuroFilter.VelocityCutoff":
+                        output[key] = (float)ApplicationData.Current.LocalSettings.Values[key];
+                        break;
+                    default:
+                        output["ERROR"] = $"Error: Uknown key {key} {ApplicationData.Current.LocalSettings.Values[key]}";
+                        break;
                 }
-            }
-
-            if (ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorVisibility"] != null)
-            {
-                output["GazeCursor.CursorVisibility"] = (bool)ApplicationData.Current.LocalSettings.Values["GazeCursor.CursorVisibility"];
-            }
-
-            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Beta"] != null)
-            {
-                output["OneEuroFilter.Beta"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Beta"];
-            }
-
-            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Cutoff"] != null)
-            {
-                output["OneEuroFilter.Cutoff"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter.Cutoff"];
-            }
-
-            if (ApplicationData.Current.LocalSettings.Values["OneEuroFilter.VelocityCutoff"] != null)
-            {
-                output["OneEuroFilter.VelocityCutoff"] = (float)ApplicationData.Current.LocalSettings.Values["OneEuroFilter.VelocityCutoff"];
             }
         }
 

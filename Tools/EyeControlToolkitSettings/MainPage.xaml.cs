@@ -4,6 +4,7 @@
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 
 namespace EyeControlToolkitSettings
@@ -21,6 +22,10 @@ namespace EyeControlToolkitSettings
 
             var gazePointer = GazeInput.GetGazePointer(this);
             gazePointer.LoadSettings(localSettings);
+
+            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
+                gazePointer.Click();
+            });
         }
 
         #region Button Handlers
@@ -74,14 +79,24 @@ namespace EyeControlToolkitSettings
             GazeSettings.GazeCursorRadius += 5;
         }
 
-        private void GazeCursorVisibility_Checkbox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void GazePointerIsSwitchEnabled_Checkbox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            GazeSettings.GazeCursorVisibility = GazeCursorVisibility_Checkbox.IsChecked.Value;
+            GazeSettings.GazePointerIsSwitchEnabled = true; ;
         }
 
-        private void GazePointerIsSwitchEnabled_Checkbox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void GazePointerIsSwitchEnabled_Checkbox_Unchecked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            GazeSettings.GazePointerIsSwitchEnabled = GazePointerIsSwitchEnabled_Checkbox.IsChecked.Value;
+            GazeSettings.GazePointerIsSwitchEnabled = false;
+        }
+
+        private void GazeCursorVisibility_Checkbox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazeCursorVisibility = true;
+        }
+
+        private void GazeCursorVisibility_Checkbox_Unchecked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GazeSettings.GazeCursorVisibility = false;
         }
 
         private void ResetButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

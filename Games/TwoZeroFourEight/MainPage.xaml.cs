@@ -9,6 +9,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -342,15 +343,18 @@ namespace TwoZeroFourEight
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             Board = new Board(4);
             DataContext = Board;
+
+            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
+                GazeInput.GetGazePointer(this).Click();
+            });
 
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
             {
-                var gazePointer = GazeInput.GetGazePointer(this);
-                gazePointer.LoadSettings(sharedSettings);
+                GazeInput.LoadSettings(sharedSettings);
             });
         }
 

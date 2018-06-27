@@ -17,7 +17,7 @@ namespace MinAAC
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
             _mediaElement = new MediaElement();
