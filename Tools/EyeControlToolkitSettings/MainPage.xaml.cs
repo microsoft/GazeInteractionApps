@@ -4,6 +4,7 @@
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 
 namespace EyeControlToolkitSettings
@@ -21,6 +22,10 @@ namespace EyeControlToolkitSettings
 
             var gazePointer = GazeInput.GetGazePointer(this);
             gazePointer.LoadSettings(localSettings);
+
+            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
+                gazePointer.Click();
+            });
         }
 
         #region Button Handlers

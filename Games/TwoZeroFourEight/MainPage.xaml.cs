@@ -347,15 +347,14 @@ namespace TwoZeroFourEight
             Board = new Board(4);
             DataContext = Board;
 
+            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
+                GazeInput.GetGazePointer(this).Click();
+            });
+
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
             {
-                var gazePointer = GazeInput.GetGazePointer(this);
-                gazePointer.LoadSettings(sharedSettings);
-
-                CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
-                    gazePointer.Click();
-                });
+                GazeInput.LoadSettings(sharedSettings);
             });
         }
 

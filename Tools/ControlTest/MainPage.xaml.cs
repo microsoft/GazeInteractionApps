@@ -18,17 +18,14 @@ namespace ControlTest
 
             CursorVisible.IsChecked = GazeInput.GetIsCursorVisible(this);
 
+            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
+                GazeInput.GetGazePointer(this).Click();
+            });
+
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
             {
-                var gazePointer = GazeInput.GetGazePointer(this);
-                gazePointer.LoadSettings(sharedSettings);
-
-                CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
-                    gazePointer.Click();
-                });
-
-                CursorVisible.IsChecked = GazeInput.GetIsCursorVisible(this);
+                GazeInput.LoadSettings(sharedSettings);
             });
         }
 
