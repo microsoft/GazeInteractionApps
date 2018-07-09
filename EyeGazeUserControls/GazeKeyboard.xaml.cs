@@ -15,9 +15,7 @@ namespace EyeGazeUserControls
     public sealed partial class GazeKeyboard : UserControl
     {
         readonly StringBuilder _theText= new StringBuilder();
-        TimeSpan _FixationDefault;
-        Button _targetButton;
-
+          
         public ButtonBase EnterButton
         {
             get { return enterButton; }
@@ -46,23 +44,14 @@ namespace EyeGazeUserControls
                 return _gazePlusClickMode;
             }
             set
-            {
-                if (value)
-                {
-                    GazeInput.SetFixationDuration(this, TimeSpan.FromDays(1));
-                }
-                else
-                {
-                    GazeInput.SetFixationDuration(this, _FixationDefault);
-                }
+            {              
                 _gazePlusClickMode = value;
             }
         }
 
         public GazeKeyboard()
         {
-            InitializeComponent();
-            _FixationDefault = GazeInput.GetFixationDuration(this);
+            InitializeComponent();            
         }
 
         private void OnChar(object sender, RoutedEventArgs e)
@@ -102,47 +91,6 @@ namespace EyeGazeUserControls
                 _theText.Clear();
             }
             textControl.Text = _theText.ToString();
-        }
-
-        private void GazeElement_Invoked(object sender, DwellInvokedRoutedEventArgs e)
-        {
-            if (GazePlusClickMode)
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void GazeElement_DwellProgressFeedback(object sender, DwellProgressEventArgs e)
-        {
-            if (GazePlusClickMode)
-            {
-
-                switch (e.State)
-                {
-                    case DwellProgressState.Fixating:
-
-                        _targetButton = sender as Button;
-                        break;
-
-                    case DwellProgressState.Idle:
-
-                        _targetButton = null;
-                        break;
-                }
-            }
-        }
-        
-        private void UserControl_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
-        {
-            if (GazePlusClickMode)
-            {
-                if (_targetButton != null)
-                {
-                    var peer = FrameworkElementAutomationPeer.CreatePeerForElement(_targetButton);
-                    var provider = (IInvokeProvider)peer;
-                    provider.Invoke();
-                }
-            }
-        }
+        }     
     }
 }

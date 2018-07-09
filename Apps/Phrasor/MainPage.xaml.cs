@@ -32,8 +32,7 @@ namespace Phrasor
         SolidColorBrush _backgroundBrush;
         SolidColorBrush _foregroundBrush;
         SolidColorBrush _transparentBrush;
-        SolidColorBrush _dwellProgressBrush;
-        TimeSpan _FixationDefault;
+        SolidColorBrush _dwellProgressBrush;        
         SpeechSynthesizer _speechSynthesizer;
         MediaElement _mediaElement;
         PageMode _pageMode;
@@ -45,11 +44,13 @@ namespace Phrasor
 
         ViewModel MasterViewModel;
 
+        GazePointer gazePointer;
+
         public MainPage()
         {
             InitializeComponent();
             Loaded += MainPage_Loaded;
-
+            
             MasterViewModel = new ViewModel();
 
             var sharedSettings = new ValueSet();
@@ -66,9 +67,12 @@ namespace Phrasor
             _mediaElement = new MediaElement();
             _backgroundBrush = new SolidColorBrush(Colors.Gray);
             _foregroundBrush = new SolidColorBrush(Colors.Blue);
-            _transparentBrush = new SolidColorBrush(Colors.Transparent);
-            _FixationDefault = GazeInput.GetFixationDuration(this);
+            _transparentBrush = new SolidColorBrush(Colors.Transparent);            
             _dwellProgressBrush = (SolidColorBrush)GazeInput.DwellFeedbackProgressBrush;
+
+            gazePointer = GazeInput.GetGazePointer(null);
+
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }        
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -102,12 +106,20 @@ namespace Phrasor
                 groupTilesCVS.Source = MasterViewModel.Tiles;
             }            
             if (MasterViewModel.Settings.GazePlusClickMode)
-            {                
-                GazeInput.SetFixationDuration(this, TimeSpan.FromDays(1));
+            {                                
+                GazeInput.SetIsSwitchEnabled(this, true);
             }
             else
-            {               
-                GazeInput.SetFixationDuration(this, _FixationDefault);
+            {                
+                GazeInput.SetIsSwitchEnabled(this, false);
+            }
+        }
+
+        private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
+        {
+            if (MasterViewModel.Settings.GazePlusClickMode)
+            {
+                gazePointer.Click();              
             }
         }
 
@@ -447,11 +459,11 @@ namespace Phrasor
             SetToolsToolbarVisible(false);
             if (MasterViewModel.Settings.GazePlusClickMode)
             {                
-                GazeInput.SetFixationDuration(this, TimeSpan.FromDays(1));
+                GazeInput.SetIsSwitchEnabled(this, true);
             }
             else
             {                
-                GazeInput.SetFixationDuration(this, _FixationDefault);
+                GazeInput.SetIsSwitchEnabled(this, false);
             }
         }
 
@@ -525,47 +537,6 @@ namespace Phrasor
         private void ColorPicker_ColorChanged(ColorPicker sender, ColorChangedEventArgs args)
         {
             MasterViewModel.Settings.FontColor = args.NewColor;
-        }
-
-        private void GazeElement_Invoked(object sender, DwellInvokedRoutedEventArgs e)
-        {
-            if (MasterViewModel.Settings.GazePlusClickMode)
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void GazeElement_DwellProgressFeedback(object sender, DwellProgressEventArgs e)
-        {
-            if (MasterViewModel.Settings.GazePlusClickMode)
-            {
-
-                switch (e.State)
-                {
-                    case DwellProgressState.Fixating:
-
-                        TargetButton = sender as UIElement;
-                        break;
-
-                    case DwellProgressState.Idle:
-
-                        TargetButton = null;
-                        break;
-                }
-            }
-        }
-
-        UIElement TargetButton;
-
-        private void Page_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
-        {
-            if (MasterViewModel.Settings.GazePlusClickMode)
-            {               
-                if (TargetButton != null)
-                {
-                    GazeInput.Invoke(TargetButton);                    
-                }
-            }
-        }
+        }      
     }
 }
