@@ -102,7 +102,7 @@ namespace Maze
                 return;
             }
 
-            var brush = new SolidColorBrush(Windows.UI.Colors.LightBlue);
+            var brush = (SolidColorBrush) this.Resources["BorderBrush"];
 
             var currentContent = _curButton.Content;
             _curButton.Content = null;
@@ -190,6 +190,8 @@ namespace Maze
                     button.Click += OnMazeCellClick;
                     button.Width = cellSize;
                     button.Height = cellSize;
+                    button.Style = (Style) this.Resources["MazeCellStyle"];
+
                     var border = new Border();
                     border.BorderBrush = brush;
                     border.Child = button;
