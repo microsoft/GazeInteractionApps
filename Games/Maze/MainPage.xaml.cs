@@ -95,21 +95,29 @@ namespace Maze
 
         private void OnSolutionTimerTick(object sender, object e)
         {
+            var brush = (SolidColorBrush)this.Resources["SolveBrush"];
+            var cell = MazeGrid.Children.ElementAt(_curRow * _numCols + _curCol) as Border;
+            cell.Background = brush;
+
+            var currentContent = _curButton.Content;
+
             if (_solutionCurIndex >= _solution.Count())
             {
                 _solutionTimer.Stop();
                 _isMazeSolved = true;
+
+                Image _mazeComplete = new Image
+                {
+                    Source = new BitmapImage(new Uri(this.BaseUri, "/Assets/dogInHouse.png")),
+                    VerticalAlignment = VerticalAlignment.Center
+                };                              
+                _curButton.Content = _mazeComplete;
+
                 return;
-            }
+            }            
 
-            var brush = (SolidColorBrush) this.Resources["BorderBrush"];
-
-            var currentContent = _curButton.Content;
-            _curButton.Content = null;
-
-            var cell = MazeGrid.Children.ElementAt(_curRow * _numCols + _curCol) as Border;
-            cell.Background = brush;
-
+           
+            _curButton.Content = null;          
 
             var pos = _solution.ElementAt(_solutionCurIndex);
             if (pos == Direction.Left)
@@ -145,6 +153,8 @@ namespace Maze
 
         private void BuildMaze()
         {
+            _solutionTimer.Stop();
+
             int remainingHeight = (int)(this.ActualHeight - Toolbar.ActualHeight);
             int cellSize = remainingHeight / _numRows;
             _numCols = (int)(this.ActualWidth / cellSize);
@@ -178,7 +188,7 @@ namespace Maze
             }
 
             int borderThickness = 2;
-            var brush = new SolidColorBrush(Windows.UI.Colors.IndianRed);
+            var brush = (SolidColorBrush)this.Resources["BorderBrush"];
 
             for (int i = 0; i < _numRows; i++)
             {
@@ -257,7 +267,7 @@ namespace Maze
         }
         private void OnMazeCellClick(object sender, RoutedEventArgs e)
         {
-            if (_isMazeSolved)
+            if (_isMazeSolved || _solutionTimer.IsEnabled)
             {
                 return;
             }

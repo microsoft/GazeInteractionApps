@@ -12,6 +12,7 @@
 
     <Page.Resources>
         <SolidColorBrush x:Name="BorderBrush" Color="IndianRed"></SolidColorBrush>
+        <SolidColorBrush x:Name="SolveBrush" Color="#FF5CCD5C"></SolidColorBrush>
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />

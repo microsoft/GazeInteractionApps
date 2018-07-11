@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\doghouse.png" />
+    <Content Include="Assets\dogInHouse.png" />
     <Content Include="Assets\luna.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
