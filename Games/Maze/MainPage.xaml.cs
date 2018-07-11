@@ -30,6 +30,7 @@ namespace Maze
 
         Image _mazeRunner;
         Image _mazeEnd;
+        Image _mazeComplete;
 
         bool _isMazeSolved;
         MazeCreator.Core.ICreator _mazeCreator;
@@ -58,6 +59,12 @@ namespace Maze
             _mazeEnd = new Image
             {
                 Source = new BitmapImage(new Uri(this.BaseUri, "/Assets/doghouse.png")),
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            _mazeComplete = new Image
+            {
+                Source = new BitmapImage(new Uri(this.BaseUri, "/Assets/dogInHouse.png")),
                 VerticalAlignment = VerticalAlignment.Center
             };
 
@@ -106,11 +113,7 @@ namespace Maze
                 _solutionTimer.Stop();
                 _isMazeSolved = true;
 
-                Image _mazeComplete = new Image
-                {
-                    Source = new BitmapImage(new Uri(this.BaseUri, "/Assets/dogInHouse.png")),
-                    VerticalAlignment = VerticalAlignment.Center
-                };                              
+                                            
                 _curButton.Content = _mazeComplete;
 
                 return;
@@ -286,6 +289,7 @@ namespace Maze
 
             if ((_curRow == _numRows - 1) && (_curCol == _numCols - 1))
             {
+                _curButton.Content = _mazeComplete;
                 string message = $"Congratulations!! You have solved the maze!";
                 DialogText.Text = message;
                 DialogGrid.Visibility = Visibility.Visible;
