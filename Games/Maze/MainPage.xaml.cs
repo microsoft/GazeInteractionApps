@@ -31,6 +31,7 @@ namespace Maze
         Image _mazeRunner;
         Image _mazeEnd;
         Image _mazeComplete;
+        SolidColorBrush _borderBrush;
 
         bool _isMazeSolved;
         MazeCreator.Core.ICreator _mazeCreator;
@@ -44,6 +45,15 @@ namespace Maze
         Button _curButton;
         Button _targetButton;
         int _solutionCurIndex;
+
+        int _cellSize;
+        int _borderThickness = 2;
+
+        int _currentMazeCell;        
+        List<Point> _mazeCells;
+
+        DispatcherTimer _cellCreationTimer;
+        DispatcherTimer _openCellTimer;
 
         public MainPage()
         {
@@ -68,11 +78,24 @@ namespace Maze
                 VerticalAlignment = VerticalAlignment.Center
             };
 
+            _borderBrush = (SolidColorBrush)this.Resources["BorderBrush"];
+
             _mazeCreator = Creator.GetCreator();
 
             _solutionTimer = new DispatcherTimer();
             _solutionTimer.Interval = TimeSpan.FromSeconds(0.1);
             _solutionTimer.Tick += OnSolutionTimerTick;
+
+            _cellCreationTimer = new DispatcherTimer();
+            _cellCreationTimer.Interval = TimeSpan.FromMilliseconds(50);
+            _cellCreationTimer.Tick += OnCellCreationTimer_Tick;
+
+            _openCellTimer = new DispatcherTimer();
+            _openCellTimer.Interval = TimeSpan.FromMilliseconds(50);
+            _openCellTimer.Tick += OnOpenCellTimer_Tick;
+
+            _mazeCells = new List<Point>();
+
             Loaded += MainPage_Loaded;
         }
 
@@ -102,8 +125,9 @@ namespace Maze
 
         private void OnSolutionTimerTick(object sender, object e)
         {
-            var brush = (SolidColorBrush)this.Resources["SolveBrush"];
-            var cell = MazeGrid.Children.ElementAt(_curRow * _numCols + _curCol) as Border;
+            var brush = (SolidColorBrush)this.Resources["SolveBrush"];            
+            var cell = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == _curRow && Grid.GetColumn(b) == _curCol) as Border;            
+
             cell.Background = brush;
 
             var currentContent = _curButton.Content;
@@ -118,7 +142,6 @@ namespace Maze
 
                 return;
             }            
-
            
             _curButton.Content = null;          
 
@@ -141,12 +164,18 @@ namespace Maze
             }
             _solutionCurIndex++;
 
-            _curButton = FindName($"button_{_curRow}_{_curCol}") as Button;
+            Border curBorder = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == _curRow && Grid.GetColumn(b) == _curCol) as Border;
+            _curButton = curBorder.Child as Button;            
             _curButton.Content = currentContent;
         }
 
         private void OnSolveMaze(object sender, RoutedEventArgs e)
         {
+            if (_cellCreationTimer.IsEnabled || _openCellTimer.IsEnabled)
+            {
+                return;
+            }
+
             var solver = MazeCreator.Solver.Create();
             _solution = solver.Solve(_maze, new Position(_curRow, _curCol), new Position(_numRows - 1, _numCols - 1));
 
@@ -157,10 +186,12 @@ namespace Maze
         private void BuildMaze()
         {
             _solutionTimer.Stop();
+            _cellCreationTimer.Stop();
+            _openCellTimer.Stop();
 
             int remainingHeight = (int)(this.ActualHeight - Toolbar.ActualHeight);
-            int cellSize = remainingHeight / _numRows;
-            _numCols = (int)(this.ActualWidth / cellSize);
+            _cellSize = remainingHeight / _numRows;
+            _numCols = (int)(this.ActualWidth / _cellSize);
 
             _maze = _mazeCreator.Create(_numRows, _numCols);
             _isMazeSolved = false;
@@ -190,43 +221,111 @@ namespace Maze
                 MazeGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            int borderThickness = 2;
-            var brush = (SolidColorBrush)this.Resources["BorderBrush"];
+            MazeGrid.Width = _cellSize * _numCols;                        
 
+            _mazeCells.Clear();
             for (int i = 0; i < _numRows; i++)
             {
                 for (int j = 0; j < _numCols; j++)
                 {
-                    var button = new Button();
-                    button.Name = $"button_{i}_{j}";
-                    button.Tag = i << 16 | j;
-                    button.Click += OnMazeCellClick;
-                    button.Width = cellSize;
-                    button.Height = cellSize;
-                    button.Style = (Style) this.Resources["MazeCellStyle"];
-
-                    var border = new Border();
-                    border.BorderBrush = brush;
-                    border.Child = button;
-
-                    var thickness = new Thickness();
-                    var cell = _maze[i, j];
-                    thickness.Left = (cell.HasLeftWall) ? borderThickness : 0;
-                    thickness.Top = (cell.HasTopWall) ? borderThickness : 0;
-                    thickness.Right = (cell.HasRightWall) ? borderThickness : 0;
-                    thickness.Bottom = (cell.HasBottomWall) ? borderThickness : 0;
-                    border.BorderThickness = thickness;
-
-                    Grid.SetRow(border, i);
-                    Grid.SetColumn(border, j);
-                    MazeGrid.Children.Add(border);
+                    _mazeCells.Add(new Point(j, i));
                 }
             }
+            
+            _mazeCells = ShuffleMazeCells(_mazeCells);
 
-            _curButton = FindName("button_0_0") as Button;
-            _curButton.Content = _mazeRunner;
-            _targetButton = FindName($"button_{_numRows - 1}_{_numCols - 1}") as Button;
-            _targetButton.Content = _mazeEnd;
+            _currentMazeCell = 0;
+
+            _cellCreationTimer.Start();           
+        }
+
+        private List<Point> ShuffleMazeCells(List<Point> mazeCells)
+        {
+            int n = mazeCells.Count();
+            Random rnd = new Random();
+            while (n > 1)
+            {
+                int k = (rnd.Next(0, n) % n);
+                n--;
+                Point value = mazeCells[k];
+                mazeCells[k] = mazeCells[n];
+                mazeCells[n] = value;
+            }
+            return mazeCells;
+        }
+        
+        private void OnCellCreationTimer_Tick(object sender, object e)
+        {            
+            AddButtonToMaze();
+
+            if (_currentMazeCell == _mazeCells.Count() -1)
+            {               
+                _cellCreationTimer.Stop();
+
+                _mazeCells = ShuffleMazeCells(_mazeCells);
+
+                _currentMazeCell = 0;
+
+                _openCellTimer.Start();
+                return;
+            }            
+            _currentMazeCell += 1;            
+        }
+
+        void AddButtonToMaze()
+        {
+            var button = new Button();            
+
+            button.Name = $"button_{_mazeCells[_currentMazeCell].Y}_{_mazeCells[_currentMazeCell].X}";
+            button.Click += OnMazeCellClick;
+            button.Width = _cellSize;
+            button.Height = _cellSize;
+            button.Style = (Style)this.Resources["MazeCellStyle"];
+
+            var border = new Border();
+            border.BorderBrush = _borderBrush;
+            border.Child = button;
+
+            var thickness = new Thickness(_borderThickness);                       
+            border.BorderThickness = thickness;
+
+            Grid.SetRow(border, (int)_mazeCells[_currentMazeCell].Y);
+            Grid.SetColumn(border, (int)_mazeCells[_currentMazeCell].X);
+
+            MazeGrid.Children.Add(border);                       
+        }
+
+        private void OnOpenCellTimer_Tick(object sender, object e)
+        {
+            OpenCellInMaze();
+
+            if (_currentMazeCell == _mazeCells.Count() - 1)
+            {
+                Border curBorder = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == 0 && Grid.GetColumn(b) == 0) as Border;
+                _curButton = curBorder.Child as Button;
+                _curButton.Content = _mazeRunner;
+
+                Border targetBorder = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == _numRows - 1 && Grid.GetColumn(b) == _numCols - 1) as Border;
+                _targetButton = targetBorder.Child as Button;
+                _targetButton.Content = _mazeEnd;
+
+                _openCellTimer.Stop();
+                return;
+            }
+            _currentMazeCell += 1;
+        }
+
+        void OpenCellInMaze()
+        {
+            var border = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == _mazeCells[_currentMazeCell].Y && Grid.GetColumn(b) == _mazeCells[_currentMazeCell].X) as Border;            
+            
+            var thickness = new Thickness();
+            var cell = _maze[(int)_mazeCells[_currentMazeCell].Y, (int)_mazeCells[_currentMazeCell].X];
+            thickness.Left = (cell.HasLeftWall) ? _borderThickness : 0;
+            thickness.Top = (cell.HasTopWall) ? _borderThickness : 0;
+            thickness.Right = (cell.HasRightWall) ? _borderThickness : 0;
+            thickness.Bottom = (cell.HasBottomWall) ? _borderThickness : 0;
+            border.BorderThickness = thickness;
         }
 
         private void TryMoveRunner(int row, int col)
@@ -268,23 +367,25 @@ namespace Maze
                 }
             }
         }
+
         private void OnMazeCellClick(object sender, RoutedEventArgs e)
         {
-            if (_isMazeSolved || _solutionTimer.IsEnabled)
+            if (_isMazeSolved || _solutionTimer.IsEnabled || _cellCreationTimer.IsEnabled || _openCellTimer.IsEnabled)
             {
                 return;
             }
 
-            var button = sender as Button;
-            var tag = (int)button.Tag;
-            var col = tag & 0xFFFF;
-            var row = tag >> 16;
+            var button = sender as Button;            
+
+            var col = Grid.GetColumn(button.Parent as FrameworkElement);
+            var row = Grid.GetRow(button.Parent as FrameworkElement);
 
             TryMoveRunner(row, col);
 
             var curContent = _curButton.Content;
             _curButton.Content = null;
-            _curButton = FindName($"button_{_curRow}_{_curCol}") as Button;
+            Border curBorder = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == _curRow && Grid.GetColumn(b) == _curCol) as Border;
+            _curButton = curBorder.Child as Button;            
             _curButton.Content = curContent;
 
             if ((_curRow == _numRows - 1) && (_curCol == _numCols - 1))
