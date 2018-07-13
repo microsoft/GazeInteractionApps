@@ -37,10 +37,10 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel x:Name="Toolbar"  Grid.Row="0" Orientation="Horizontal">
-                <Button Content="New" Click="OnNewMaze" Style="{StaticResource ResourceKey=ButtonStyle}"/>
-                <Button Content="Bigger" Click="OnBiggerMaze" Style="{StaticResource ResourceKey=ButtonStyle}"/>
-                <Button Content="Smaller" Click="OnSmallerMaze" Style="{StaticResource ResourceKey=ButtonStyle}"/>
-                <Button Content="Solve!" Click="OnSolveMaze" Style="{StaticResource ResourceKey=ButtonStyle}"/>
+                <Button Content="New" Click="OnNewMaze" Style="{StaticResource ResourceKey=ButtonStyle}" Background="#33FFFFFF"/>
+                <Button Content="Bigger" Click="OnBiggerMaze" Style="{StaticResource ResourceKey=ButtonStyle}" Background="#33FFFFFF"/>
+                <Button Content="Smaller" Click="OnSmallerMaze" Style="{StaticResource ResourceKey=ButtonStyle}" Background="#33FFFFFF"/>
+                <Button Content="Solve!" Click="OnSolveMaze" Style="{StaticResource ResourceKey=ButtonStyle}" Background="#33FFFFFF"/>
             </StackPanel>
             <Line VerticalAlignment="Bottom" Margin="10,0,10,5" Stretch="UniformToFill" X2="1" Stroke="Black"/>
             <Border x:Name="MazeBorder" Grid.Row="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="2,2,2,2" HorizontalAlignment="center" Margin="10,0,10,10">
