@@ -12,7 +12,10 @@
 
     <Page.Resources>
         <SolidColorBrush x:Name="BorderBrush" Color="IndianRed"></SolidColorBrush>
-        <SolidColorBrush x:Name="SolveBrush" Color="#FF5CCD5C"></SolidColorBrush>
+        <SolidColorBrush x:Name="SolveBrushSolid" Color="#FF5CCD5C"></SolidColorBrush>
+        <ImageBrush x:Name="GreenBrush" ImageSource="Assets/SolveDot.png"/>
+        <ImageBrush x:Name="BordercrumbBrush" ImageSource="Assets/BorderDot.png"/>
+        <ImageBrush x:Name="SolveBrush" ImageSource="Assets/BreadcrumbDot.png"/>
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -39,7 +42,8 @@
                 <Button Content="Smaller" Click="OnSmallerMaze" Style="{StaticResource ResourceKey=ButtonStyle}"/>
                 <Button Content="Solve!" Click="OnSolveMaze" Style="{StaticResource ResourceKey=ButtonStyle}"/>
             </StackPanel>
-            <Border Grid.Row="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="2,2,2,2" HorizontalAlignment="Center">
+            <Line VerticalAlignment="Bottom" Margin="10,0,10,5" Stretch="UniformToFill" X2="1" Stroke="Black"/>
+            <Border x:Name="MazeBorder" Grid.Row="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="2,2,2,2" HorizontalAlignment="center" Margin="10,0,10,10">
                 <Grid x:Name="MazeGrid"/>
             </Border>
         </Grid>
