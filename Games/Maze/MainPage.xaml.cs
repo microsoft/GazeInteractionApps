@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using MazeCreator.Core;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Core;
+using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -105,6 +107,16 @@ namespace Maze
             _breadCrumbs = new List<Point>();
 
             Loaded += MainPage_Loaded;
+
+            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
+                GazeInput.GetGazePointer(this).Click();
+            });
+
+            var sharedSettings = new ValueSet();
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
+            {
+                GazeInput.LoadSettings(sharedSettings);
+            });
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
