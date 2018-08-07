@@ -111,6 +111,9 @@
     <Content Include="Assets\BreadCrumbDot.png" />
     <Content Include="Assets\doghouse.png" />
     <Content Include="Assets\dogInHouse.png" />
+    <Content Include="Assets\Fireworks.mp4" />
+    <Content Include="Assets\LunaInHerHouse.png" />
+    <Content Include="Assets\Lunashouse.png" />
     <Content Include="Assets\SolveDot.png" />
     <Content Include="Assets\luna.png" />
     <Content Include="Properties\Default.rd.xml" />

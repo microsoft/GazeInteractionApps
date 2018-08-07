@@ -50,16 +50,17 @@
         <Grid x:Name="DialogGrid" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1.5*"/>
             </Grid.RowDefinitions>
             <Border BorderBrush="{ThemeResource AppBarItemForegroundThemeBrush}" BorderThickness="1" Grid.Row="1" Grid.Column="1" Background="{ThemeResource AppBarBackgroundThemeBrush}">
                 <Grid>
+                    <MediaPlayerElement x:Name="FireworksVideoPlayer" Width="800" Height="535" AutoPlay="False" Margin="20,50,20,100"/>
                     <Button x:Name="DialogButton" Content="Close" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="80" Height="80" Margin="0,0,0,10" Click="DialogButton_Click"/>
                     <TextBlock x:Name="DialogText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="16"/>
                 </Grid>

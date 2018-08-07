@@ -16,6 +16,7 @@ using MazeCreator.Core;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Core;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
+using Windows.Media.Core;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -76,13 +77,15 @@ namespace Maze
 
             _mazeEnd = new Image
             {
-                Source = new BitmapImage(new Uri(this.BaseUri, "/Assets/doghouse.png")),
+                //Source = new BitmapImage(new Uri(this.BaseUri, "/Assets/doghouse.png")),
+                Source = new BitmapImage(new Uri(this.BaseUri, "/Assets/LunasHouse.png")),
                 VerticalAlignment = VerticalAlignment.Center
             };
 
             _mazeComplete = new Image
             {
-                Source = new BitmapImage(new Uri(this.BaseUri, "/Assets/dogInHouse.png")),
+                //Source = new BitmapImage(new Uri(this.BaseUri, "/Assets/dogInHouse.png")),
+                Source = new BitmapImage(new Uri(this.BaseUri, "/Assets/LunaInHerHouse.png")),
                 VerticalAlignment = VerticalAlignment.Center
             };
             
@@ -484,6 +487,8 @@ namespace Maze
             if ((_curRow == _numRows - 1) && (_curCol == _numCols - 1))
             {
                 _curButton.Content = _mazeComplete;
+                FireworksVideoPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Fireworks.mp4"));
+                FireworksVideoPlayer.MediaPlayer.Play();
                 string message = $"Congratulations!! You have solved the maze!";
                 DialogText.Text = message;
                 DialogGrid.Visibility = Visibility.Visible;
