@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Gaze Interaction Apps repository is a collection of samples which demonstrate the use of the [Gaze Interaction library](https://github.com/Microsoft/WindowsCommunityToolkit/tree/master/Microsoft.Toolkit.Uwp.Input.GazeInteraction), part of the [Windows Community Toolkit](https://github.com/Microsoft/WindowsCommunityToolkit/). Please refer to the ][documentation](https://github.com/Microsoft/WindowsCommunityToolkit/blob/master/docs/gaze/GazeInteractionLibrary.md) for general usage. The Gaze Interaction library is available on [nuget](https://www.nuget.org/packages/Microsoft.Toolkit.Uwp.Input.GazeInteraction/), such that searching for `GazeInteraction` should find the currently released build.
+The Gaze Interaction Apps repository is a collection of samples which demonstrate the use of the [Gaze Interaction library](https://github.com/Microsoft/WindowsCommunityToolkit/tree/master/Microsoft.Toolkit.Uwp.Input.GazeInteraction), part of the [Windows Community Toolkit](https://github.com/Microsoft/WindowsCommunityToolkit/). Please refer to the [documentation](https://github.com/Microsoft/WindowsCommunityToolkit/blob/master/docs/gaze/GazeInteractionLibrary.md) for general usage. The Gaze Interaction library is available on [nuget](https://www.nuget.org/packages/Microsoft.Toolkit.Uwp.Input.GazeInteraction/), such that searching for `GazeInteraction` should find the currently released build.
 
 ## Build notes
 
