@@ -34,16 +34,16 @@ namespace Positioning
         {
             InitializeComponent();
 
-            gazeInputSourcePreview = GazeInputSourcePreview.GetForCurrentView();
+            gazeInputSourcePreview      = GazeInputSourcePreview.GetForCurrentView();
             gazeInputSourcePreview.GazeMoved += GazeInputSourcePreview_GazeMoved;
 
-            displayInformation = DisplayInformation.GetForCurrentView();
-            screenSize = new Size((int)displayInformation.ScreenWidthInRawPixels,
-                                  (int)displayInformation.ScreenHeightInRawPixels);
-            screenSizeInchesWidth = screenSize.Width / displayInformation.RawDpiX;
-            screenSizeInchesHeight = screenSize.Height / displayInformation.RawDpiY;
+            displayInformation          = DisplayInformation.GetForCurrentView();
+            screenSize                  = new Size((int)displayInformation.ScreenWidthInRawPixels,
+                                                   (int)displayInformation.ScreenHeightInRawPixels);
+            screenSizeInchesWidth       = screenSize.Width / displayInformation.RawDpiX;
+            screenSizeInchesHeight      = screenSize.Height / displayInformation.RawDpiY;
 
-            screenSizeMicrometersWidth = screenSizeInchesWidth * 25400;
+            screenSizeMicrometersWidth  = screenSizeInchesWidth * 25400;
             screenSizeMicrometersHeight = screenSizeInchesHeight * 25400;
         }
 
@@ -86,7 +86,7 @@ namespace Positioning
                 var rightEyePosition = rightEyePositionParser.GetPosition(hidReport);
 
                 // The return values for the left and right eye are in micrometers by default
-                // They are references such that X and Y origin are the top left hand corner 
+                // They are references such that X and Y origin are the top left hand corner
                 // of the calibrated display. The Z origin is the centerpoint of the display
                 // (not the tracker). As such, there is a minor difference between the actual
                 // sensor-to-eye distance vs the reported distance for left/right eye position.
@@ -174,6 +174,10 @@ namespace Positioning
                 {
                     eyeEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 }
+            }
+            else
+            {
+                eyeEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
             sb.AppendLine(")");
         }
