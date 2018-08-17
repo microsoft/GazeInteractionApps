@@ -1,18 +1,15 @@
 ﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. 
 //See LICENSE in the project root for license information. 
 
-using System;
+using GazeHidParsers;
 using System.Drawing;
-using System.Globalization;
 using System.Text;
 using Windows.Devices.Input.Preview;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using static Positioning.GazeHidInputReportHelpers;
 
 namespace Positioning
 {
@@ -79,8 +76,8 @@ namespace Positioning
                 var hidReport = args.CurrentPoint.HidInputReport;
                 var sourceDevice = args.CurrentPoint.SourceDevice;
 
-                var leftEyePositionParser = new GazePositionHidParser(sourceDevice, GazeExtendedUsages.Usage_LeftEyePosition);
-                var rightEyePositionParser = new GazePositionHidParser(sourceDevice, GazeExtendedUsages.Usage_RightEyePosition);
+                var leftEyePositionParser = new GazePositionHidParser(sourceDevice, GazeHidUsages.Usage_LeftEyePosition);
+                var rightEyePositionParser = new GazePositionHidParser(sourceDevice, GazeHidUsages.Usage_RightEyePosition);
 
                 var leftEyePosition = leftEyePositionParser.GetPosition(hidReport);
                 var rightEyePosition = rightEyePositionParser.GetPosition(hidReport);
@@ -102,14 +99,14 @@ namespace Positioning
                     sb.AppendLine($"          IPD ({interPupilaryDistance,6:F2}mm)");
                 }
 
-                var headPostitionParser = new GazePositionHidParser(sourceDevice, GazeExtendedUsages.Usage_HeadPosition);
+                var headPostitionParser = new GazePositionHidParser(sourceDevice, GazeHidUsages.Usage_HeadPosition);
                 var headPosition = headPostitionParser.GetPosition(hidReport);
                 if (headPosition != null)
                 {
                     sb.AppendLine($"HeadPosition ({headPosition.Value.X,8:F2}, {headPosition.Value.Y,8:F2}, {headPosition.Value.Z,8:F2})");
                 }
 
-                var headRotationParser = new GazeRotationHidParser(sourceDevice, GazeExtendedUsages.Usage_HeadDirectionPoint);
+                var headRotationParser = new GazeRotationHidParser(sourceDevice, GazeHidUsages.Usage_HeadDirectionPoint);
                 var headRotation = headRotationParser.GetRotation(hidReport);
 
                 if (headRotation != null)
@@ -121,7 +118,7 @@ namespace Positioning
             StatusTextBlock.Text = sb.ToString();
         }
 
-        private void UpdateEyeData(string eyeName, System.Numerics.Vector3? eyePosition, Windows.UI.Xaml.Shapes.Ellipse eyeEllipse, StringBuilder sb)
+        private void UpdateEyeData(string eyeName, Long3? eyePosition, Windows.UI.Xaml.Shapes.Ellipse eyeEllipse, StringBuilder sb)
         {
             sb.Append($"{eyeName,7}EyePos (");
             if (eyePosition != null)

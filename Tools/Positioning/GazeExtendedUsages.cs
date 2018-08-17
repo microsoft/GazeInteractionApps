@@ -3,13 +3,13 @@
 
 using System;
 
-namespace Positioning
+namespace GazeHidParsers
 {
     /// <summary>
     /// Usage page and usages from the EyeHeadTracker HID specification
     /// </summary>
     /// <see cref="http://www.usb.org/developers/hidpage/HUTRR74_-_Usage_Page_for_Head_and_Eye_Trackers.pdf"/>
-    public sealed class GazeExtendedUsages
+    public sealed class GazeHidUsages
     {
         public const UInt16 UsagePage_EyeHeadTracker            = 0x0012;   // TYPE
         public const UInt16 Usage_EyeTracker                    = 0x0001;   // CA
