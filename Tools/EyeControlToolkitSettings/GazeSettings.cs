@@ -245,7 +245,7 @@ namespace EyeControlToolkitSettings
             }
             set
             {
-                if (GazeSettings.IsGazeCursorRadiusValid(value))
+                if (IsGazeCursorRadiusValid(value))
                 {
                     if (SetProperty(ref _GazeCursorRadius, value))
                     {

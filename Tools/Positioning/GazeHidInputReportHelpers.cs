@@ -14,7 +14,7 @@ namespace GazeHidParsers
         public long Z;
     }
 
-    public sealed class GazePositionHidParser
+    public sealed class GazeHidPositionParser
     {
         private readonly HidNumericControlDescription _X = null;
         private readonly HidNumericControlDescription _Y = null;
@@ -22,7 +22,7 @@ namespace GazeHidParsers
 
         private readonly UInt16 _usage = 0x0000;
 
-        public GazePositionHidParser(GazeDevicePreview gazeDevice, UInt16 usage)
+        public GazeHidPositionParser(GazeDevicePreview gazeDevice, UInt16 usage)
         {
             _usage = usage;
 
@@ -71,7 +71,7 @@ namespace GazeHidParsers
         }
     }
 
-    public sealed class GazeRotationHidParser
+    public sealed class GazeHidRotationParser
     {
         private readonly HidNumericControlDescription _X = null;
         private readonly HidNumericControlDescription _Y = null;
@@ -79,7 +79,7 @@ namespace GazeHidParsers
 
         private readonly UInt16 _usage = 0x0000;
 
-        public GazeRotationHidParser(GazeDevicePreview gazeDevice, UInt16 usage)
+        public GazeHidRotationParser(GazeDevicePreview gazeDevice, UInt16 usage)
         {
             _usage = usage;
 
@@ -147,5 +147,65 @@ namespace GazeHidParsers
             }
             return null;
         }
+    }
+
+    public sealed class LeftEyePositionParser
+    {
+        public LeftEyePositionParser(GazeDevicePreview gazeDevice)
+        {
+            gazeHidPositionParser = new GazeHidPositionParser(gazeDevice, GazeHidUsages.Usage_LeftEyePosition);
+        }
+
+        public Long3? GetPosition(HidInputReport report)
+        {
+            return gazeHidPositionParser.GetPosition(report);
+        }
+
+        private GazeHidPositionParser gazeHidPositionParser;
+    }
+
+    public sealed class RightEyePositionParser
+    {
+        public RightEyePositionParser(GazeDevicePreview gazeDevice)
+        {
+            gazeHidPositionParser = new GazeHidPositionParser(gazeDevice, GazeHidUsages.Usage_RightEyePosition);
+        }
+
+        public Long3? GetPosition(HidInputReport report)
+        {
+            return gazeHidPositionParser.GetPosition(report);
+        }
+
+        private GazeHidPositionParser gazeHidPositionParser;
+    }
+
+    public sealed class HeadPositionParser
+    {
+        public HeadPositionParser(GazeDevicePreview gazeDevice)
+        {
+            gazeHidPositionParser = new GazeHidPositionParser(gazeDevice, GazeHidUsages.Usage_HeadPosition);
+        }
+
+        public Long3? GetPosition(HidInputReport report)
+        {
+            return gazeHidPositionParser.GetPosition(report);
+        }
+
+        private GazeHidPositionParser gazeHidPositionParser;
+    }
+
+    public sealed class HeadRotationParser
+    {
+        public HeadRotationParser(GazeDevicePreview gazeDevice)
+        {
+            gazeHidRotationParser = new GazeHidRotationParser(gazeDevice, GazeHidUsages.Usage_HeadDirectionPoint);
+        }
+
+        public Long3? GetPosition(HidInputReport report)
+        {
+            return gazeHidRotationParser.GetRotation(report);
+        }
+
+        private GazeHidRotationParser gazeHidRotationParser;
     }
 }

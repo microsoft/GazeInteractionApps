@@ -77,7 +77,7 @@ namespace DrawnOut
         {
             if (e.Key == Windows.System.VirtualKey.Escape)
             {
-                App.Current.Exit();
+                Application.Current.Exit();
             }
             else if (e.Key == Windows.System.VirtualKey.Delete ||
                 e.Key == Windows.System.VirtualKey.Back)

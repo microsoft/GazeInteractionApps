@@ -16,6 +16,8 @@ namespace Positioning
     public sealed partial class MainPage : Page
     {
         private GazeInputSourcePreview gazeInputSourcePreview;
+        private LeftEyePositionParser leftEyePositionParser;
+        private RightEyePositionParser rightEyePositionParser;
 
         private DisplayInformation displayInformation;
         Size screenSize;
@@ -76,8 +78,14 @@ namespace Positioning
                 var hidReport = args.CurrentPoint.HidInputReport;
                 var sourceDevice = args.CurrentPoint.SourceDevice;
 
-                var leftEyePositionParser = new GazePositionHidParser(sourceDevice, GazeHidUsages.Usage_LeftEyePosition);
-                var rightEyePositionParser = new GazePositionHidParser(sourceDevice, GazeHidUsages.Usage_RightEyePosition);
+                if (leftEyePositionParser == null)
+                {
+                    leftEyePositionParser = new LeftEyePositionParser(sourceDevice);
+                }
+                if (rightEyePositionParser == null)
+                {
+                    rightEyePositionParser = new RightEyePositionParser(sourceDevice);
+                }
 
                 var leftEyePosition = leftEyePositionParser.GetPosition(hidReport);
                 var rightEyePosition = rightEyePositionParser.GetPosition(hidReport);
@@ -99,14 +107,14 @@ namespace Positioning
                     sb.AppendLine($"          IPD ({interPupilaryDistance,6:F2}mm)");
                 }
 
-                var headPostitionParser = new GazePositionHidParser(sourceDevice, GazeHidUsages.Usage_HeadPosition);
+                var headPostitionParser = new GazeHidPositionParser(sourceDevice, GazeHidUsages.Usage_HeadPosition);
                 var headPosition = headPostitionParser.GetPosition(hidReport);
                 if (headPosition != null)
                 {
                     sb.AppendLine($"HeadPosition ({headPosition.Value.X,8:F2}, {headPosition.Value.Y,8:F2}, {headPosition.Value.Z,8:F2})");
                 }
 
-                var headRotationParser = new GazeRotationHidParser(sourceDevice, GazeHidUsages.Usage_HeadDirectionPoint);
+                var headRotationParser = new GazeHidRotationParser(sourceDevice, GazeHidUsages.Usage_HeadDirectionPoint);
                 var headRotation = headRotationParser.GetRotation(hidReport);
 
                 if (headRotation != null)
@@ -165,16 +173,16 @@ namespace Positioning
                     Canvas.SetLeft(eyeEllipse, newX);
                     Canvas.SetTop(eyeEllipse, newY);
 
-                    eyeEllipse.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    eyeEllipse.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    eyeEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    eyeEllipse.Visibility = Visibility.Collapsed;
                 }
             }
             else
             {
-                eyeEllipse.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                eyeEllipse.Visibility = Visibility.Collapsed;
             }
             sb.AppendLine(")");
         }
@@ -187,7 +195,7 @@ namespace Positioning
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            App.Current.Exit();
+            Application.Current.Exit();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
