@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="EyeVolume.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EyeVolume"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:g="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
+    g:GazeInput.Interaction="Enabled"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <Style x:Key="VolumeButtonStyle" TargetType="ButtonBase">
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="AllowFocusOnInteraction" Value="False" />
+            <Setter Property="g:GazeInput.RepeatDelayDuration" Value="0:0:0.8"/>
+            <Setter Property="g:GazeInput.MaxDwellRepeatCount" Value="20" />
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="0" Grid.Column="0" Click="OnMute" Content="Mute" Style="{StaticResource VolumeButtonStyle}" g:GazeInput.MaxDwellRepeatCount="0" />
+        <Button Grid.Row="1" Grid.Column="0" Click="OnVolumeDown" Content="Less" Style="{StaticResource VolumeButtonStyle}" />
+        <Slider x:Name="VolumeSlider" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Minimum="0" TickFrequency="10"  Maximum="100" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="25" SmallChange="5" StepFrequency="5" LargeChange="20" />
+        <Button Grid.Row="1" Grid.Column="4" Click="OnVolumeUp" Content="More" Style="{StaticResource VolumeButtonStyle}" />
+    </Grid>
+</Page>
