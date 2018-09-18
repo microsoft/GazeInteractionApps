@@ -8,7 +8,7 @@
     xmlns:g="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     g:GazeInput.Interaction="Enabled"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="#FF6B6B6B" Height="600" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center">
 
     <Page.Resources>
         <Style x:Key="VolumeButtonStyle" TargetType="ButtonBase">
@@ -23,7 +23,7 @@
             <Setter Property="g:GazeInput.MaxDwellRepeatCount" Value="20" />
         </Style>
     </Page.Resources>
-    <Grid>
+    <Grid Background="#FF6B6B6B" >
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -35,9 +35,15 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Grid.Column="0" Click="OnMute" Content="Mute" Style="{StaticResource VolumeButtonStyle}" g:GazeInput.MaxDwellRepeatCount="0" />
-        <Button Grid.Row="1" Grid.Column="0" Click="OnVolumeDown" Content="Less" Style="{StaticResource VolumeButtonStyle}" />
-        <Slider x:Name="VolumeSlider" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Minimum="0" TickFrequency="10"  Maximum="100" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="25" SmallChange="5" StepFrequency="5" LargeChange="20" />
-        <Button Grid.Row="1" Grid.Column="4" Click="OnVolumeUp" Content="More" Style="{StaticResource VolumeButtonStyle}" />
+        <ToggleButton x:Name="MuteToggle" Grid.Row="0" Grid.Column="0" Content="&#xe74f;" Style="{StaticResource VolumeButtonStyle}" g:GazeInput.MaxDwellRepeatCount="0" FontFamily="Segoe MDL2 Assets" FontSize="72" Foreground="White" Background="#FF6B6B6B" />
+        <Rectangle Height="1" VerticalAlignment="Bottom" Grid.ColumnSpan="4" Fill="White" ></Rectangle>
+        <Button Grid.Column="3" HorizontalAlignment="Stretch" Content="&#xe711;" VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="72" Click="OnExit"></Button>
+        <Button Grid.Row="2" Grid.Column="0" Click="OnVolumeDown" Content="&#xe992;" Style="{StaticResource VolumeButtonStyle}" FontFamily="Segoe MDL2 Assets" FontSize="72" Background="#FF6B6B6B" Foreground="White" />
+        <StackPanel HorizontalAlignment="Stretch" Margin="0,0,0,0" Orientation="Vertical" VerticalAlignment="Center" d:LayoutOverrides="Height" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock x:Name="VolumeText" HorizontalAlignment="Center" Margin="0,0,0,0" Text="{x:Bind Mode=OneWay, Path=VolumeSlider.Value}" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="72" Foreground="{ThemeResource SystemControlHighlightAccentBrush}" FontFamily="Segoe UI"/>
+            <ProgressBar x:Name="VolumeSlider" Minimum="0"  Maximum="100" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="25" SmallChange="5"  LargeChange="20" Margin="0,0,0,0" Value="78" FontFamily="Segoe UI"  />
+        </StackPanel>
+        <!--<Slider x:Name="VolumeSlider" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Minimum="0" TickFrequency="10"  Maximum="100" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="25" SmallChange="5" StepFrequency="5" LargeChange="20" />-->
+        <Button Grid.Row="2" Grid.Column="4" Click="OnVolumeUp" Content="&#xe995;" Style="{StaticResource VolumeButtonStyle}" FontFamily="Segoe MDL2 Assets" FontSize="72" Background="#FF6B6B6B" Foreground="White" />
     </Grid>
 </Page>
