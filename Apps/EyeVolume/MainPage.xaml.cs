@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -29,10 +32,28 @@ namespace EyeVolume
         public MainPage()
         {
             this.InitializeComponent();
+
+            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+
+            var view = ApplicationView.GetForCurrentView();
+            if (view.IsFullScreenMode)
+            {
+                view.ExitFullScreenMode();
+            }
+            view.SetPreferredMinSize(new Size(800, 600));
+            view.TryResizeView(new Size(800, 600));
+
             _volumeControl = new VolumeControl();
             VolumeSlider.Value = (int)(_volumeControl.Volume * 100);
 
             LoadTestAudioAsync();
+
+            MuteToggle.IsChecked = _volumeControl.Mute;
+
+            MuteToggle.Checked += OnMute;
         }
 
         private async void LoadTestAudioAsync()
@@ -62,6 +83,11 @@ namespace EyeVolume
             _volumeControl.Volume = _volumeControl.Volume - 0.05f;
             VolumeSlider.Value = (int)(_volumeControl.Volume * 100);
             _mediaElement.Play();
+        }
+
+        private void OnExit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
         }
     }
 }
