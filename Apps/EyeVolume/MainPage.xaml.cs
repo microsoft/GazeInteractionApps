@@ -8,6 +8,7 @@ using Windows.ApplicationModel.Core;
 using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.Devices;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.ViewManagement;
@@ -27,89 +28,99 @@ namespace EyeVolume
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
-    {
-        private MediaElement _mediaElement;
-        private VolumeControl _volumeControl;
-
-        ObservableCollection<DeviceInformation> PlaybackDeviceList = new ObservableCollection<DeviceInformation>();
+    {        
+        private VolumeControl _volumeControl;                       
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            var view = ApplicationView.GetForCurrentView();            
+            view.TryResizeView(new Size(VolumeControlGrid.Width, VolumeControlGrid.Height - 32));
+
+            ApplicationViewTitleBar formattableTitleBar = view.TitleBar;
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
             CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
             coreTitleBar.ExtendViewIntoTitleBar = true;
-
-            ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
-
-            var view = ApplicationView.GetForCurrentView();
-            view.SetPreferredMinSize(new Size(800, 600));
-            view.TryResizeView(new Size(800, 600));
-            view.TryEnterFullScreenMode();            
 
             _volumeControl = new VolumeControl();
             VolumeSlider.Value = (int)(_volumeControl.Volume * 100);
+                        
+            ShowPlaybackDevice(MediaDevice.GetDefaultAudioRenderId(AudioDeviceRole.Default));
 
-            LoadTestAudioAsync();
+            MediaDevice.DefaultAudioRenderDeviceChanged += MediaDevice_DefaultAudioRenderDeviceChanged;
 
             MuteToggle.IsChecked = _volumeControl.Mute;
 
-            MuteToggle.Click += OnMute;
+            MuteToggle.Checked += OnMuteOn;
+            MuteToggle.Unchecked += OnMuteOff;            
         }
 
-        private async void LoadTestAudioAsync()
-        {
-            _mediaElement = new MediaElement();
-            var path = Windows.ApplicationModel.Package.Current.InstalledLocation.Path + "\\Assets";
-            var folder = await StorageFolder.GetFolderFromPathAsync(path);
-            var file = await folder.GetFileAsync("Windows Background.wav");
-            var stream = await file.OpenReadAsync();
-            _mediaElement.SetSource(stream, file.ContentType);
+        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
+        {            
+            var _titleBarHeight = CoreApplication.GetCurrentView().TitleBar.Height;
+            var view = ApplicationView.GetForCurrentView();
+            view.SetPreferredMinSize(new Size(VolumeControlGrid.Width, VolumeControlGrid.Height - _titleBarHeight));
+            view.TryResizeView(new Size(VolumeControlGrid.Width, VolumeControlGrid.Height - _titleBarHeight));            
+            view.TryEnterFullScreenMode();
         }
 
-        private async void GetPlaybackDevices()
+        private void MediaDevice_DefaultAudioRenderDeviceChanged(object sender, DefaultAudioRenderDeviceChangedEventArgs args)
         {
+            ShowPlaybackDevice(args.Id);
+        }       
 
-            var deviceList = await DeviceInformation.FindAllAsync(DeviceClass.AudioRender);
-
-            PlaybackDeviceList.Clear();
+        private async void ShowPlaybackDevice(string defaultDeviceId)
+        {
+            var deviceList = await DeviceInformation.FindAllAsync(DeviceClass.AudioRender);                             
 
             foreach (var deviceInfo in deviceList)
             {
-                PlaybackDeviceList.Add(deviceInfo);
+                if (deviceInfo.Id == defaultDeviceId)
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        PlaybackDeviceText.Text = deviceInfo.Name;
+                    });
+                   
+                    return;
+                }
             }
-            
+            PlaybackDeviceText.Text = "";
         }
 
-        private void OnMute(object sender, RoutedEventArgs e)
+        private void OnMuteOn(object sender, RoutedEventArgs e)
+        {            
+            _volumeControl.Mute = true;
+            MuteToggle.IsChecked = _volumeControl.Mute;            
+        }
+
+        private void OnMuteOff(object sender, RoutedEventArgs e)
         {
-            _volumeControl.Mute = !_volumeControl.Mute;
+            _volumeControl.Mute = false;
+            MuteToggle.IsChecked = _volumeControl.Mute;
         }
 
         private void OnVolumeUp(object sender, RoutedEventArgs e)
         {
             _volumeControl.Volume = _volumeControl.Volume + 0.05f;
-            VolumeSlider.Value = (int)(_volumeControl.Volume * 100);
-            _mediaElement.Play();
+            VolumeSlider.Value = (int)(_volumeControl.Volume * 100);            
+            AudioPlayer.Position = new TimeSpan(0);
+            AudioPlayer.Play();
         }
 
         private void OnVolumeDown(object sender, RoutedEventArgs e)
         {
             _volumeControl.Volume = _volumeControl.Volume - 0.05f;
             VolumeSlider.Value = (int)(_volumeControl.Volume * 100);
-            _mediaElement.Play();
+            AudioPlayer.Position = new TimeSpan(0);
+            AudioPlayer.Play();
         }
 
         private void OnExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
-        }
-
-        private void NextPlaybackDevice(object sender, RoutedEventArgs e)
-        {
-            //GetPlaybackDevices();
-        }
+        }           
     }
 }
