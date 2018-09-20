@@ -77,8 +77,9 @@ namespace EyeVolume
         void SetChannelVolumeLevel(uint nChannel, float fLevelDB, Guid* pguidEventContext);
         void SetChannelVolumeLevelScalar(uint nChannel, float fLevel, Guid* pguidEventContext);
         float GetChannelVolumeLevel(uint nChannel);
-        float GetChannelVolumeLevelScalar(uint nChannel);
-        void SetMute(bool bMute, Guid* pguidEventContext);
+        float GetChannelVolumeLevelScalar(uint nChannel);        
+        void SetMute([In] [MarshalAs(UnmanagedType.Bool)] bool bMute, [In] [MarshalAs(UnmanagedType.LPStruct)] Guid pguidEventContext);
+        [return: MarshalAs(UnmanagedType.Bool)]
         bool GetMute();
         void GetVolumeStepInfo(out uint pnStep, out uint pnStepCount);
         void VolumeStepUp(Guid* pguidEventContext);
@@ -109,7 +110,7 @@ namespace EyeVolume
             var hr = ActivateAudioInterfaceAsync(defaultAudioRenderDevice, typeof(IAudioEndpointVolume).GetTypeInfo().GUID, IntPtr.Zero, (IActivateAudioInterfaceCompletionHandler)activateAudioInterfaceCompletionHandler, out activateOperation);
             Debug.Assert(hr == HResult.S_OK);
 
-            _audioEndpointVolume = activateAudioInterfaceCompletionHandler.WaitForCompletion();
+            _audioEndpointVolume = activateAudioInterfaceCompletionHandler.WaitForCompletion();            
             Debug.Assert(_audioEndpointVolume != null);
         }
 
@@ -117,8 +118,8 @@ namespace EyeVolume
         {
             get { return _audioEndpointVolume.GetMute(); }
             set
-            {
-                _audioEndpointVolume.SetMute(value, null);
+            {                
+                _audioEndpointVolume.SetMute(value, Guid.Empty);
             }
         }
 

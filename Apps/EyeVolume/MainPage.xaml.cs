@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
+using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -29,6 +31,8 @@ namespace EyeVolume
         private MediaElement _mediaElement;
         private VolumeControl _volumeControl;
 
+        ObservableCollection<DeviceInformation> PlaybackDeviceList = new ObservableCollection<DeviceInformation>();
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -38,13 +42,12 @@ namespace EyeVolume
             CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
 
+            ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+
             var view = ApplicationView.GetForCurrentView();
-            if (view.IsFullScreenMode)
-            {
-                view.ExitFullScreenMode();
-            }
             view.SetPreferredMinSize(new Size(800, 600));
             view.TryResizeView(new Size(800, 600));
+            view.TryEnterFullScreenMode();            
 
             _volumeControl = new VolumeControl();
             VolumeSlider.Value = (int)(_volumeControl.Volume * 100);
@@ -53,7 +56,7 @@ namespace EyeVolume
 
             MuteToggle.IsChecked = _volumeControl.Mute;
 
-            MuteToggle.Checked += OnMute;
+            MuteToggle.Click += OnMute;
         }
 
         private async void LoadTestAudioAsync()
@@ -64,6 +67,20 @@ namespace EyeVolume
             var file = await folder.GetFileAsync("Windows Background.wav");
             var stream = await file.OpenReadAsync();
             _mediaElement.SetSource(stream, file.ContentType);
+        }
+
+        private async void GetPlaybackDevices()
+        {
+
+            var deviceList = await DeviceInformation.FindAllAsync(DeviceClass.AudioRender);
+
+            PlaybackDeviceList.Clear();
+
+            foreach (var deviceInfo in deviceList)
+            {
+                PlaybackDeviceList.Add(deviceInfo);
+            }
+            
         }
 
         private void OnMute(object sender, RoutedEventArgs e)
@@ -88,6 +105,11 @@ namespace EyeVolume
         private void OnExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
+        }
+
+        private void NextPlaybackDevice(object sender, RoutedEventArgs e)
+        {
+            //GetPlaybackDevices();
         }
     }
 }
