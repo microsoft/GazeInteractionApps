@@ -1,24 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
 using Windows.Devices.Enumeration;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
+
+using Windows.Graphics.Display;
 using Windows.Media.Devices;
-using Windows.Storage;
+
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -33,15 +24,15 @@ namespace EyeVolume
 
         public MainPage()
         {
-            this.InitializeComponent();
+            MaximizeWindowOnLoad();
 
-            var view = ApplicationView.GetForCurrentView();            
-            view.TryResizeView(new Size(VolumeControlGrid.Width, VolumeControlGrid.Height - 32));
+            this.InitializeComponent();
+                       
+            var view = ApplicationView.GetForCurrentView();                        
 
             ApplicationViewTitleBar formattableTitleBar = view.TitleBar;
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;            
             coreTitleBar.ExtendViewIntoTitleBar = true;
 
             _volumeControl = new VolumeControl();
@@ -57,14 +48,17 @@ namespace EyeVolume
             MuteToggle.Unchecked += OnMuteOff;            
         }
 
-        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
-        {            
-            var _titleBarHeight = CoreApplication.GetCurrentView().TitleBar.Height;
-            var view = ApplicationView.GetForCurrentView();
-            view.SetPreferredMinSize(new Size(VolumeControlGrid.Width, VolumeControlGrid.Height - _titleBarHeight));
-            view.TryResizeView(new Size(VolumeControlGrid.Width, VolumeControlGrid.Height - _titleBarHeight));            
-            view.TryEnterFullScreenMode();
-        }
+        void MaximizeWindowOnLoad()
+        {
+            var view = DisplayInformation.GetForCurrentView();
+                        
+            var resolution = new Size(view.ScreenWidthInRawPixels, view.ScreenHeightInRawPixels);                       
+            var scale = view.ResolutionScale == ResolutionScale.Invalid ? 1 : view.RawPixelsPerViewPixel;                      
+            var bounds = new Size(resolution.Width / scale, resolution.Height / scale);
+
+            ApplicationView.PreferredLaunchViewSize = new Size(bounds.Width, bounds.Height);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;          
+        }       
 
         private void MediaDevice_DefaultAudioRenderDeviceChanged(object sender, DefaultAudioRenderDeviceChangedEventArgs args)
         {
