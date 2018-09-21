@@ -8,14 +8,14 @@
     xmlns:g="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     g:GazeInput.Interaction="Enabled"
     mc:Ignorable="d"
-   Background="#FF6B6B6B"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="800" Height="568" >
+    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
 
     <Page.Resources>
         <Style x:Key="VolumeButtonStyle" TargetType="ButtonBase">
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="FontWeight" Value="Normal" />
             <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Margin" Value="1"/>
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="AllowFocusOnInteraction" Value="False" />
@@ -23,7 +23,7 @@
             <Setter Property="g:GazeInput.MaxDwellRepeatCount" Value="20" />
         </Style>
     </Page.Resources>
-    <Grid>
+    <Grid  Background="#FF6B6B6B">
         <Grid x:Name="VolumeControlGrid" Background="#FF6B6B6B" Height="600" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -38,8 +38,13 @@
         </Grid.ColumnDefinitions>
         <MediaElement x:Name="AudioPlayer" Visibility="Collapsed" Source="Assets/Windows Background.wav" AutoPlay="False"></MediaElement>
         <ToggleButton x:Name="MuteToggle" Grid.Row="0" Grid.Column="0" Content="&#xe74f;" Style="{StaticResource VolumeButtonStyle}" g:GazeInput.MaxDwellRepeatCount="0" FontFamily="Segoe MDL2 Assets" FontSize="72" Foreground="White" Background="#FF6B6B6B" />
-        <Rectangle Height="1" VerticalAlignment="Bottom" Grid.ColumnSpan="4" Fill="White" ></Rectangle>
-        <Button Grid.Column="3" HorizontalAlignment="Stretch" Content="&#xe711;" VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="72" Click="OnExit"></Button>
+            <Rectangle Height="1" VerticalAlignment="Bottom" Grid.ColumnSpan="4" Fill="White" ></Rectangle>
+            <Rectangle Height="1" VerticalAlignment="Top" Grid.ColumnSpan="4" Fill="Gray" ></Rectangle>
+            <Rectangle Width="1" HorizontalAlignment="Left" Grid.RowSpan="3" Fill="Gray" ></Rectangle>
+            <Rectangle Width="1" HorizontalAlignment="Right"  Grid.Column="3" Grid.RowSpan="3" Fill="Gray" ></Rectangle>
+            <Rectangle Height="1" VerticalAlignment="Bottom" Grid.Row="2" Grid.ColumnSpan="4" Fill="Gray" ></Rectangle>
+            
+            <Button Grid.Column="3" HorizontalAlignment="Stretch" Content="&#xe711;" VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="72" Click="OnExit"></Button>
 
         <TextBlock x:Name="PlaybackDeviceText" Grid.Row="1" Grid.ColumnSpan="4" FontSize="36" Foreground="White" Text="Playback device" FontStretch="SemiCondensed" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe UI"></TextBlock>
 
