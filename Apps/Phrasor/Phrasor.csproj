@@ -153,10 +153,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.1.7</Version>
+      <Version>6.1.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Input.GazeInteraction">
-      <Version>5.0.0-build.10</Version>
+      <Version>5.0.0-build.106</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
