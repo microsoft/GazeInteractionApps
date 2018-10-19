@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
+using Windows.Devices.Enumeration;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage;
+
+using Windows.Graphics.Display;
+using Windows.Media.Devices;
+
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -25,69 +19,102 @@ namespace EyeVolume
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
-    {
-        private MediaElement _mediaElement;
-        private VolumeControl _volumeControl;
+    {        
+        private VolumeControl _volumeControl;                       
 
         public MainPage()
         {
-            this.InitializeComponent();
+            MaximizeWindowOnLoad();
 
-            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            this.InitializeComponent();
+                       
+            var view = ApplicationView.GetForCurrentView();                        
+
+            ApplicationViewTitleBar formattableTitleBar = view.TitleBar;
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;            
             coreTitleBar.ExtendViewIntoTitleBar = true;
 
-            var view = ApplicationView.GetForCurrentView();
-            if (view.IsFullScreenMode)
-            {
-                view.ExitFullScreenMode();
-            }
-            view.SetPreferredMinSize(new Size(800, 600));
-            view.TryResizeView(new Size(800, 600));
-                        
             _volumeControl = new VolumeControl();
             VolumeSlider.Value = (int)(_volumeControl.Volume * 100);
+                        
+            ShowPlaybackDevice(MediaDevice.GetDefaultAudioRenderId(AudioDeviceRole.Default));
 
-            LoadTestAudioAsync();
+            MediaDevice.DefaultAudioRenderDeviceChanged += MediaDevice_DefaultAudioRenderDeviceChanged;
 
             MuteToggle.IsChecked = _volumeControl.Mute;
 
-            MuteToggle.Checked += OnMute;
+            MuteToggle.Checked += OnMuteOn;
+            MuteToggle.Unchecked += OnMuteOff;            
         }
 
-        private async void LoadTestAudioAsync()
+        void MaximizeWindowOnLoad()
         {
-            _mediaElement = new MediaElement();
-            var path = Windows.ApplicationModel.Package.Current.InstalledLocation.Path + "\\Assets";
-            var folder = await StorageFolder.GetFolderFromPathAsync(path);
-            var file = await folder.GetFileAsync("Windows Background.wav");
-            var stream = await file.OpenReadAsync();
-            _mediaElement.SetSource(stream, file.ContentType);
+            var view = DisplayInformation.GetForCurrentView();
+                        
+            var resolution = new Size(view.ScreenWidthInRawPixels, view.ScreenHeightInRawPixels);                       
+            var scale = view.ResolutionScale == ResolutionScale.Invalid ? 1 : view.RawPixelsPerViewPixel;                      
+            var bounds = new Size(resolution.Width / scale, resolution.Height / scale);
+
+            ApplicationView.PreferredLaunchViewSize = new Size(bounds.Width, bounds.Height);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;          
+        }       
+
+        private void MediaDevice_DefaultAudioRenderDeviceChanged(object sender, DefaultAudioRenderDeviceChangedEventArgs args)
+        {
+            ShowPlaybackDevice(args.Id);
+        }       
+
+        private async void ShowPlaybackDevice(string defaultDeviceId)
+        {
+            var deviceList = await DeviceInformation.FindAllAsync(DeviceClass.AudioRender);                             
+
+            foreach (var deviceInfo in deviceList)
+            {
+                if (deviceInfo.Id == defaultDeviceId)
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        PlaybackDeviceText.Text = deviceInfo.Name;
+                    });
+                   
+                    return;
+                }
+            }
+            PlaybackDeviceText.Text = "";
         }
 
-        private void OnMute(object sender, RoutedEventArgs e)
+        private void OnMuteOn(object sender, RoutedEventArgs e)
+        {            
+            _volumeControl.Mute = true;
+            MuteToggle.IsChecked = _volumeControl.Mute;            
+        }
+
+        private void OnMuteOff(object sender, RoutedEventArgs e)
         {
-            _volumeControl.Mute = !_volumeControl.Mute;
+            _volumeControl.Mute = false;
+            MuteToggle.IsChecked = _volumeControl.Mute;
         }
 
         private void OnVolumeUp(object sender, RoutedEventArgs e)
         {
             _volumeControl.Volume = _volumeControl.Volume + 0.05f;
-            VolumeSlider.Value = (int)(_volumeControl.Volume * 100);
-            _mediaElement.Play();
+            VolumeSlider.Value = (int)(_volumeControl.Volume * 100);            
+            AudioPlayer.Position = new TimeSpan(0);
+            AudioPlayer.Play();
         }
 
         private void OnVolumeDown(object sender, RoutedEventArgs e)
         {
             _volumeControl.Volume = _volumeControl.Volume - 0.05f;
             VolumeSlider.Value = (int)(_volumeControl.Volume * 100);
-            _mediaElement.Play();
+            AudioPlayer.Position = new TimeSpan(0);
+            AudioPlayer.Play();
         }
 
         private void OnExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
-        }
+        }           
     }
 }

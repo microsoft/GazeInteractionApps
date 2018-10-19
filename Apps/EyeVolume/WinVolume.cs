@@ -9,7 +9,7 @@ namespace EyeVolume
 {
     //http://pastebin.com/cPhVCyWj
 
-    enum HResult
+    internal enum HResult : uint
     {
         S_OK = 0
     }
@@ -19,7 +19,9 @@ namespace EyeVolume
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     interface IActivateAudioInterfaceAsyncOperation
     {
-        void GetActivateResult([MarshalAs(UnmanagedType.Error)]out HResult activateResult, [MarshalAs(UnmanagedType.IUnknown)]out object activatedInterface);
+        void GetActivateResult(
+            [MarshalAs(UnmanagedType.Error)]out uint activateResult, 
+            [MarshalAs(UnmanagedType.IUnknown)]out object activatedInterface);
     }
 
     [ComImport]
@@ -39,10 +41,10 @@ namespace EyeVolume
 
         public void ActivateCompleted(IActivateAudioInterfaceAsyncOperation operation)
         {
-            HResult operationHR;
-            object activatedInterface;
-            operation.GetActivateResult(out operationHR, out activatedInterface);
-            Debug.Assert(operationHR == HResult.S_OK);
+           
+            operation.GetActivateResult(out var operationHR, out var activatedInterface);
+
+            Debug.Assert(operationHR == (uint)HResult.S_OK);
 
             m_Result = (T)activatedInterface;
 
@@ -69,22 +71,63 @@ namespace EyeVolume
     {
         void RegisterControlChangeNotify(object pNotify);
         void UnregisterControlChangeNotify(object pNotify);
+
+        [return: MarshalAs(UnmanagedType.U4)]
         uint GetChannelCount();
-        void SetMasterVolumeLevel(float fLevelDB, Guid* pguidEventContext);
-        void SetMasterVolumeLevelScalar(float fLevel, Guid* pguidEventContext);
+
+        void SetMasterVolumeLevel(
+            [In] [MarshalAs(UnmanagedType.R4)] float fLevelDB,
+            [In] [MarshalAs(UnmanagedType.LPStruct)] Guid pguidEventContext);
+
+        void SetMasterVolumeLevelScalar(
+            [In] [MarshalAs(UnmanagedType.R4)] float fLevel,
+            [In] [MarshalAs(UnmanagedType.LPStruct)] Guid pguidEventContext);
+
+        [return: MarshalAs(UnmanagedType.R4)]
         float GetMasterVolumeLevel();
+
+        [return: MarshalAs(UnmanagedType.R4)]
         float GetMasterVolumeLevelScalar();
-        void SetChannelVolumeLevel(uint nChannel, float fLevelDB, Guid* pguidEventContext);
-        void SetChannelVolumeLevelScalar(uint nChannel, float fLevel, Guid* pguidEventContext);
-        float GetChannelVolumeLevel(uint nChannel);
-        float GetChannelVolumeLevelScalar(uint nChannel);
-        void SetMute(bool bMute, Guid* pguidEventContext);
+
+        void SetChannelVolumeLevel(
+            [In] [MarshalAs(UnmanagedType.U4)] uint nChannel,
+            [In] [MarshalAs(UnmanagedType.R4)] float fLevelDB,
+            [In] [MarshalAs(UnmanagedType.LPStruct)] Guid pguidEventContext);
+
+        void SetChannelVolumeLevelScalar(
+            [In] [MarshalAs(UnmanagedType.U4)] uint nChannel,
+            [In] [MarshalAs(UnmanagedType.R4)]float fLevel,
+            [In] [MarshalAs(UnmanagedType.LPStruct)]Guid pguidEventContext);
+
+        void GetChannelVolumeLevel(
+             [In] [MarshalAs(UnmanagedType.U4)] uint nChannel,
+             [Out] [MarshalAs(UnmanagedType.R4)] out float level);
+
+        [return: MarshalAs(UnmanagedType.R4)]
+        float GetChannelVolumeLevelScalar([In] [MarshalAs(UnmanagedType.U4)] uint nChannel);        
+
+        void SetMute(
+            [In] [MarshalAs(UnmanagedType.Bool)] bool bMute, 
+            [In] [MarshalAs(UnmanagedType.LPStruct)] Guid pguidEventContext);
+
+        [return: MarshalAs(UnmanagedType.Bool)]
         bool GetMute();
-        void GetVolumeStepInfo(out uint pnStep, out uint pnStepCount);
-        void VolumeStepUp(Guid* pguidEventContext);
-        void VolumeStepDown(Guid* pguidEventContext);
+
+        void GetVolumeStepInfo(
+            [Out] [MarshalAs(UnmanagedType.U4)] out uint pnStep,
+            [Out] [MarshalAs(UnmanagedType.U4)] out uint pnStepCount);
+
+        void VolumeStepUp([In] [MarshalAs(UnmanagedType.LPStruct)] Guid pguidEventContext);
+
+        void VolumeStepDown([In] [MarshalAs(UnmanagedType.LPStruct)] Guid pguidEventContext);
+
+        [return: MarshalAs(UnmanagedType.U4)] // bit mask
         uint QueryHardwareSupport();
-        void GetVolumeRange(out float pflVolumeMindB, out float pflVolumeMaxdB, out float pflVolumeIncrementdB);
+
+        void GetVolumeRange(
+            [Out] [MarshalAs(UnmanagedType.R4)] out float pflVolumeMindB,
+            [Out] [MarshalAs(UnmanagedType.R4)] out float pflVolumeMaxdB,
+            [Out] [MarshalAs(UnmanagedType.R4)] out float pflVolumeIncrementdB);
     }
 
     class VolumeControl
@@ -92,13 +135,31 @@ namespace EyeVolume
         [DllImport("Mmdevapi.dll")]
         [return: MarshalAs(UnmanagedType.Error)]
         static extern HResult ActivateAudioInterfaceAsync(
-            [MarshalAs(UnmanagedType.LPWStr)]string deviceInterfacePath,
-            [MarshalAs(UnmanagedType.LPStruct)]Guid riid,
-            IntPtr activationParams,
-            IActivateAudioInterfaceCompletionHandler completionHandler,
+            [In, MarshalAs(UnmanagedType.LPWStr)]string deviceInterfacePath,
+            [In, MarshalAs(UnmanagedType.LPStruct)]Guid riid,
+            [In] IntPtr activationParams,
+            [In] IActivateAudioInterfaceCompletionHandler completionHandler,
             out IActivateAudioInterfaceAsyncOperation activationOperation);
 
         private IAudioEndpointVolume _audioEndpointVolume;
+
+        private static IAudioEndpointVolume GetAudioEndpointVolumeInterface()
+
+        {
+            var speakerId = MediaDevice.GetDefaultAudioRenderId(AudioDeviceRole.Default);
+            var completionHandler = new ActivateAudioInterfaceCompletionHandler<IAudioEndpointVolume>();
+
+            var hr = ActivateAudioInterfaceAsync(
+                speakerId,
+                typeof(IAudioEndpointVolume).GetTypeInfo().GUID,
+                IntPtr.Zero,
+                completionHandler,
+                out var activateOperation);
+
+            Debug.Assert(hr == (uint)HResult.S_OK);
+
+            return completionHandler.WaitForCompletion();
+        }
 
         public VolumeControl()
         {
@@ -108,8 +169,9 @@ namespace EyeVolume
             IActivateAudioInterfaceAsyncOperation activateOperation;
             var hr = ActivateAudioInterfaceAsync(defaultAudioRenderDevice, typeof(IAudioEndpointVolume).GetTypeInfo().GUID, IntPtr.Zero, (IActivateAudioInterfaceCompletionHandler)activateAudioInterfaceCompletionHandler, out activateOperation);
             Debug.Assert(hr == HResult.S_OK);
+                       
+            _audioEndpointVolume = GetAudioEndpointVolumeInterface();
 
-            _audioEndpointVolume = activateAudioInterfaceCompletionHandler.WaitForCompletion();
             Debug.Assert(_audioEndpointVolume != null);
         }
 
@@ -118,7 +180,14 @@ namespace EyeVolume
             get { return _audioEndpointVolume.GetMute(); }
             set
             {
-                _audioEndpointVolume.SetMute(value, null);
+                try
+                {
+                    _audioEndpointVolume.SetMute(value, Guid.Empty);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Set Mute to: " + value + " failed: " + e.Message);
+                }
             }
         }
 
@@ -139,9 +208,12 @@ namespace EyeVolume
                         value = 0;
                     }
 
-                    _audioEndpointVolume.SetMasterVolumeLevelScalar(value, null);
+                    _audioEndpointVolume.SetMasterVolumeLevelScalar(value, Guid.Empty);
                 }
-                catch { }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Set Master Volume to: " + value + " failed: " + e.Message);
+                }
             }
         }
     }
