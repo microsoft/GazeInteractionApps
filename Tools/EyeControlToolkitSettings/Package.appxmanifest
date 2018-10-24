@@ -1,10 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package
-  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
-  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
-  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
-  IgnorableNamespaces="uap mp">
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" IgnorableNamespaces="uap mp">
   <Identity Name="Microsoft.EyeControlToolkitSettings" Publisher="CN=Microsoft Corporation" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="2a00001a-9739-489c-92c0-c260eeb46c55" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
@@ -19,12 +14,13 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application 
-      Id="EctkSettings.App"
-      Executable="$targetnametoken$.exe" 
-      EntryPoint="EyeControlToolkitSettings.App">
+    <Application Id="EctkSettings.App" Executable="$targetnametoken$.exe" EntryPoint="EyeControlToolkitSettings.App">
       <uap:VisualElements DisplayName="Eye Control Toolkit Settings" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="An application used to configure, store and provide common settings for applications which use the Eye Control Toolkit" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Eye Control Settings">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+          </uap:ShowNameOnTiles>
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
