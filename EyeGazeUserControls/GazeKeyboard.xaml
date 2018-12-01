@@ -10,85 +10,12 @@
     d:DesignHeight="600"
     d:DesignWidth="800">
 
-    <UserControl.Resources>
-        <Style x:Key="KeyboardButtonAlpha" TargetType="ButtonBase">
-            <Setter Property="FontSize" Value="30"/>
-            <Setter Property="FontWeight" Value="Normal" />
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="Margin" Value="4"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="VerticalAlignment" Value="Stretch" />
-            <Setter Property="AllowFocusOnInteraction" Value="False" />
-            <Setter Property="g:GazeInput.RepeatDelayDuration" Value="0:0:0.8"/>
-            <Setter Property="g:GazeInput.MaxDwellRepeatCount" Value="1" />
-        </Style>
-
-        <Style x:Key="KeyboardButtonSymbol" TargetType="ButtonBase">
-            <Setter Property="FontSize" Value="50"/>
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-            <Setter Property="Margin" Value="4"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="VerticalAlignment" Value="Stretch" />
-            <Setter Property="AllowFocusOnInteraction" Value="False" />
-        </Style>
-    </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        <Grid x:Name="DummyHiddenGrid" Visibility="Collapsed">
+            <Button local:Keyboard.KeyType="Normal"/>
+        </Grid>
+        <Grid x:Name="LayoutRoot">
 
-        <Button     x:Name="settingsButton" Grid.Row="0" Grid.Column="0" Content="&#xE115;" Style="{StaticResource KeyboardButtonSymbol}"/>
-        <TextBox    x:Name="textControl" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="7" TextWrapping="Wrap" FontSize="45" Margin="3,3,0,3" IsReadOnly="True"/>
-        <Button     x:Name="enterButton" Grid.Row="0" Grid.Column="8" Content="&#xE768;" Style="{StaticResource KeyboardButtonSymbol}"/>
-        <Button     x:Name="closeButton" Grid.Row="0" Grid.Column="9" Content="&#xE711;" Style="{StaticResource KeyboardButtonSymbol}"/>
-
-        <Button     Grid.Row="1" Grid.Column="0" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="q" />
-        <Button     Grid.Row="1" Grid.Column="1" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="w" />
-        <Button     Grid.Row="1" Grid.Column="2" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="e" />
-        <Button     Grid.Row="1" Grid.Column="3" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="r" />
-        <Button     Grid.Row="1" Grid.Column="4" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="t" />
-        <Button     Grid.Row="1" Grid.Column="5" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="y" />
-        <Button     Grid.Row="1" Grid.Column="6" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="u" />
-        <Button     Grid.Row="1" Grid.Column="7" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="i" />
-        <Button     Grid.Row="1" Grid.Column="8" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="o" />
-        <Button     Grid.Row="1" Grid.Column="9" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="p" />
-
-        <Button     Grid.Row="2" Grid.Column="0" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="a" />
-        <Button     Grid.Row="2" Grid.Column="1" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="s" />
-        <Button     Grid.Row="2" Grid.Column="2" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="d" />
-        <Button     Grid.Row="2" Grid.Column="3" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="f" />
-        <Button     Grid.Row="2" Grid.Column="4" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="g" />
-        <Button     Grid.Row="2" Grid.Column="5" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="h" />
-        <Button     Grid.Row="2" Grid.Column="6" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="j" />
-        <Button     Grid.Row="2" Grid.Column="7" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="k" />
-        <Button     Grid.Row="2" Grid.Column="8" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="l" />
-        <Button     Grid.Row="2" Grid.Column="9" Style="{StaticResource KeyboardButtonSymbol}" Click="OnBackspace" Content="&#xE750;" />
-
-        <Button     Grid.Row="3" Grid.Column="0" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="z" />
-        <Button     Grid.Row="3" Grid.Column="1" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="x" />
-        <Button     Grid.Row="3" Grid.Column="2" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="c" />
-        <Button     Grid.Row="3" Grid.Column="3" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="v" />
-        <Button     Grid.Row="3" Grid.Column="4" Style="{StaticResource KeyboardButtonSymbol}" Click="OnSpace" Content="&#xE75D;" Grid.ColumnSpan="2"/>
-        <Button     Grid.Row="3" Grid.Column="6" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="b" />
-        <Button     Grid.Row="3" Grid.Column="7" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="n" />
-        <Button     Grid.Row="3" Grid.Column="8" Style="{StaticResource KeyboardButtonAlpha}" Click="OnChar" Content="m" />
-        <Button     Grid.Row="3" Grid.Column="9" Style="{StaticResource KeyboardButtonSymbol}" Click="OnWordDelete" Content="&#xE74D;" />
-
+        </Grid>
     </Grid>
 </UserControl>

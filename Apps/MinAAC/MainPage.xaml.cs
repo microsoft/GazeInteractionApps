@@ -22,6 +22,12 @@ namespace MinAAC
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
             _mediaElement = new MediaElement();
             _speechSynthesizer = new SpeechSynthesizer();
+            Loaded += MainPage_Loaded;
+        }
+
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            await GazeKeyboard.LoadLayout("MinAAC.xaml");
             GazeKeyboard.EnterButton.Click += OnSpeak;
             GazeKeyboard.CloseButton.Click += OnExit;
         }

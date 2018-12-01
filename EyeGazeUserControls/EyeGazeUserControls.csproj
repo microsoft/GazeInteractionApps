@@ -109,6 +109,7 @@
     <Compile Include="GazeKeyboard.xaml.cs">
       <DependentUpon>GazeKeyboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Keyboard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\EyeGazeUserControls.rd.xml" />
   </ItemGroup>
@@ -125,6 +126,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Content Include="Layouts\MinAAC.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
