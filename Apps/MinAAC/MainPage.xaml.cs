@@ -27,14 +27,13 @@ namespace MinAAC
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            GazeKeyboard.Target = TextControl;
             await GazeKeyboard.LoadLayout("MinAAC.xaml");
-            GazeKeyboard.EnterButton.Click += OnSpeak;
-            GazeKeyboard.CloseButton.Click += OnExit;
         }
 
         private async void OnSpeak(object sender, RoutedEventArgs e)
         {
-            var text = GazeKeyboard.TextControl.Text.ToString();
+            var text = TextControl.Text.ToString();
             var stream = await _speechSynthesizer.SynthesizeTextToStreamAsync(text);
             _mediaElement.SetSource(stream, stream.ContentType);
             _mediaElement.AutoPlay = true;

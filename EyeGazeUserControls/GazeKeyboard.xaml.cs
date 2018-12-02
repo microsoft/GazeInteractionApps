@@ -27,38 +27,9 @@ namespace EyeGazeUserControls
 
         InputInjector _injector;
 
-        ButtonBase _enterButton;
-        ButtonBase _closeButton;
-        ButtonBase _settingsButton;
-        TextBox    _textControl;
-        String     _layoutFile;
-
         List<ButtonBase> _keyboardButtons;
 
-        public ButtonBase EnterButton
-        {
-            get { return _enterButton; }
-        }
-
-        public ButtonBase CloseButton
-        {
-            get { return _closeButton; }
-        }
-
-        public ButtonBase SettingsButton
-        {
-            get { return _settingsButton; }
-        }
-
-        public TextBox TextControl
-        {
-            get { return _textControl; }
-        }
-
-        public string LayoutFile
-        {
-            get { return _layoutFile; }
-        }
+        public Control Target;
 
         private bool _gazePlusClickMode = false;
         public bool GazePlusClickMode
@@ -103,11 +74,6 @@ namespace EyeGazeUserControls
                 var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri);
                 var xaml = await FileIO.ReadTextAsync(storageFile);
                 var xamlNode = XamlReader.Load(xaml) as FrameworkElement;
-                //Load known variables
-                _enterButton = xamlNode.FindName("enterButton") as Button;
-                _settingsButton = xamlNode.FindName("settingsButton") as Button;
-                _closeButton = xamlNode.FindName("closeButton") as Button;
-                _textControl = xamlNode.FindName("textControl") as TextBox;
 
                 _keyboardButtons = new List<ButtonBase>();
                 FindChildren<ButtonBase>(_keyboardButtons, xamlNode);
@@ -123,7 +89,6 @@ namespace EyeGazeUserControls
             {
                 Debug.WriteLine(e.Message);
             }
-            _layoutFile = layoutFile;
         }
 
         private void HandleVirtualKey(int vk)
@@ -162,7 +127,7 @@ namespace EyeGazeUserControls
         private async void OnKeyboardButtonClick(object sender, RoutedEventArgs e)
         {
             var button = sender as ButtonBase;
-            _textControl.Focus(FocusState.Programmatic);
+            Target.Focus(FocusState.Programmatic);
             await Task.Delay(1);
 
             var vk = Keyboard.GetVK(button);

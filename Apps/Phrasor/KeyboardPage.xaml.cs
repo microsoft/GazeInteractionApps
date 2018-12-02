@@ -22,6 +22,7 @@ namespace Phrasor
 
             _mediaElement = new MediaElement();
             _speechSynthesizer = new SpeechSynthesizer();
+            GazeKeyboard.Target = TextControl;
             Loaded += KeyboardPage_Loaded;
 
         }
@@ -30,21 +31,18 @@ namespace Phrasor
         {
             await GazeKeyboard.LoadLayout("MinAAC.xaml");
 
-            GazeKeyboard.EnterButton.Click += OnEnterClick;
-            GazeKeyboard.CloseButton.Click += OnCancelClick;
-
             GazeKeyboard.GazePlusClickMode = _navParams.GazePlusClickMode;
             if (_navParams.SpeechMode)
             {
-                GazeKeyboard.EnterButton.Content = "\uE768";
-                GazeKeyboard.TextControl.Focus(FocusState.Programmatic);
+                EnterButton.Content = "\uE768";
+                TextControl.Focus(FocusState.Programmatic);
                 return;
             }
-            GazeKeyboard.EnterButton.Content = "\uE73E";
+            EnterButton.Content = "\uE73E";
             if (_navParams.ChildNode != null)
             {
-                GazeKeyboard.TextControl.Text = _navParams.ChildNode.Caption;
-                GazeKeyboard.TextControl.SelectAll();
+                TextControl.Text = _navParams.ChildNode.Caption;
+                TextControl.SelectAll();
             }
         }
 
@@ -57,7 +55,7 @@ namespace Phrasor
         {            
             if (_navParams.SpeechMode)
             {
-                var text = GazeKeyboard.TextControl.Text.ToString();
+                var text = TextControl.Text.ToString();
                 var stream = await _speechSynthesizer.SynthesizeTextToStreamAsync(text);
                 _mediaElement.SetSource(stream, stream.ContentType);
                 _mediaElement.AutoPlay = true;
@@ -75,7 +73,7 @@ namespace Phrasor
                     }
                     _navParams.CurrentNode.Children.Add(childNode);
                 }
-                childNode.Caption = GazeKeyboard.TextControl.Text;
+                childNode.Caption = TextControl.Text;
                 childNode.Parent = _navParams.CurrentNode;
                 _navParams.NeedsSaving = true;
                 Frame.Navigate(typeof(MainPage), _navParams);

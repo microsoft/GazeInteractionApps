@@ -63,5 +63,26 @@ namespace EyeGazeUserControls
             obj.SetValue(VKListProperty, value);
         }
 
+        public static readonly DependencyProperty PageListProperty =
+            DependencyProperty.RegisterAttached("PageList", typeof(List<string>), typeof(Keyboard), new PropertyMetadata(0));
+
+        public static List<string> GetPageList(DependencyObject obj)
+        {
+            var value = obj.GetValue(PageListProperty);
+            var list = value as List<string>;
+            if (list == null)
+            {
+                list = new List<string>();
+                SetPageList(obj, list);
+            }
+            return list;
+        }
+
+        public static void SetPageList(DependencyObject obj, List<string> value)
+        {
+            obj.SetValue(PageListProperty, value);
+        }
+
+
     }
 }
