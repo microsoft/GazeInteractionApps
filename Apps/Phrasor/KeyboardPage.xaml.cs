@@ -22,16 +22,17 @@ namespace Phrasor
 
             _mediaElement = new MediaElement();
             _speechSynthesizer = new SpeechSynthesizer();
+            Loaded += KeyboardPage_Loaded;
 
-            GazeKeyboard.EnterButton.Content = "\uE73E";
-            GazeKeyboard.EnterButton.Click += OnEnterClick;
-            GazeKeyboard.CloseButton.Click += OnCancelClick;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        private async void KeyboardPage_Loaded(object sender, RoutedEventArgs e)
         {
-            base.OnNavigatedTo(e);
-            _navParams = (KeyboardPageNavigationParams)e.Parameter;
+            await GazeKeyboard.LoadLayout("MinAAC.xaml");
+
+            GazeKeyboard.EnterButton.Click += OnEnterClick;
+            GazeKeyboard.CloseButton.Click += OnCancelClick;
+
             GazeKeyboard.GazePlusClickMode = _navParams.GazePlusClickMode;
             if (_navParams.SpeechMode)
             {
@@ -45,6 +46,12 @@ namespace Phrasor
                 GazeKeyboard.TextControl.Text = _navParams.ChildNode.Caption;
                 GazeKeyboard.TextControl.SelectAll();
             }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            _navParams = (KeyboardPageNavigationParams)e.Parameter;
         }
         private async void OnEnterClick(object sender, RoutedEventArgs e)
         {            

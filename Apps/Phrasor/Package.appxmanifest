@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" IgnorableNamespaces="uap mp rescap">
   <Identity Name="595b6251-f208-46aa-a35d-ec91260a5697" Publisher="CN=harishsk" Version="1.0.5.0" />
   <mp:PhoneIdentity PhoneProductId="595b6251-f208-46aa-a35d-ec91260a5697" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
@@ -28,6 +28,7 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
+    <rescap:Capability Name="inputInjectionBrokered" />
     <DeviceCapability Name="gazeInput" />
   </Capabilities>
 </Package>
