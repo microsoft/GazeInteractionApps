@@ -43,6 +43,19 @@ namespace EyeGazeUserControls
             obj.SetValue(VKProperty, value);
         }
 
+        public static readonly DependencyProperty UnicodeProperty =
+            DependencyProperty.RegisterAttached("Unicode", typeof(string), typeof(Keyboard), new PropertyMetadata(0));
+
+        public static string GetUnicode(DependencyObject obj)
+        {
+            return obj.GetValue(UnicodeProperty) as string;
+        }
+
+        public static void SetUnicode(DependencyObject obj, string value)
+        {
+            obj.SetValue(UnicodeProperty, value);
+        }
+
         public static readonly DependencyProperty VKListProperty =
             DependencyProperty.RegisterAttached("VKList", typeof(List<int>), typeof(Keyboard), new PropertyMetadata(0));
 
@@ -84,5 +97,44 @@ namespace EyeGazeUserControls
         }
 
 
+        public static readonly DependencyProperty PageContainerProperty =
+            DependencyProperty.RegisterAttached("PageContainer", typeof(string), typeof(Keyboard), new PropertyMetadata(0));
+
+        public static string GetPageContainer(DependencyObject obj)
+        {
+            return obj.GetValue(PageContainerProperty) as string;
+        }
+
+        public static void SetPageContainer(DependencyObject obj, string value)
+        {
+            obj.SetValue(PageContainerProperty, value);
+        }
+
+
+        public static readonly DependencyProperty TemporaryPageProperty =
+            DependencyProperty.RegisterAttached("TemporaryPage", typeof(string), typeof(Keyboard), new PropertyMetadata(0));
+
+        public static string GetTemporaryPage(DependencyObject obj)
+        {
+            return obj.GetValue(TemporaryPageProperty) as string;
+        }
+
+        public static void SetTemporaryPage(DependencyObject obj, string value)
+        {
+            obj.SetValue(TemporaryPageProperty, value);
+        }
+
+        public static readonly DependencyProperty NewPageProperty =
+            DependencyProperty.RegisterAttached("NewPage", typeof(string), typeof(Keyboard), new PropertyMetadata(0));
+
+        public static string GetNewPage(DependencyObject obj)
+        {
+            return obj.GetValue(NewPageProperty) as string;
+        }
+
+        public static void SetNewPage(DependencyObject obj, string value)
+        {
+            obj.SetValue(NewPageProperty, value);
+        }
     }
 }

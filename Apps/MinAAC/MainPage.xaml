@@ -34,13 +34,13 @@
                 <Setter Property="AllowFocusOnInteraction" Value="False" />
             </Style>
         </Grid.Resources>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Row="0" Grid.Column="0">
@@ -57,12 +57,12 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button     x:Name="SettingsButton" Grid.Row="0" Grid.Column="0" Content="&#xE115;" Style="{StaticResource Symbol}" />
-            <TextBox    x:Name="TextControl" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="7" TextWrapping="Wrap" FontSize="45" Margin="3,3,0,3" />
+            <TextBox    x:Name="TextControl" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="7" TextWrapping="Wrap" FontSize="45" Margin="3,3,0,3" AcceptsReturn="True" />
             <Button     x:Name="EnterButton" Grid.Row="0" Grid.Column="8" Content="&#xE768;" Style="{StaticResource Symbol}" Click="OnSpeak"/>
             <Button     x:Name="CloseButton" Grid.Row="0" Grid.Column="9" Content="&#xE711;" Style="{StaticResource Symbol}" Click="OnExit"/>
         </Grid>
 
-        <gk:GazeKeyboard x:Name="GazeKeyboard" Grid.Row="1" Grid.Column="0" />
+        <gk:GazeKeyboard x:Name="GazeKeyboard" Grid.Row="1"  Grid.Column="0" />
     </Grid>
 
 </Page>

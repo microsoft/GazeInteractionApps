@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Input.Preview.Injection;
@@ -21,28 +22,33 @@ using Windows.UI.Xaml.Media;
 
 namespace EyeGazeUserControls
 {
+    internal class KeyboardPage
+    {
+        public FrameworkElement Page;
+        public KeyboardPage Parent;
+        public List<string> ChildrenNames;
+        public List<KeyboardPage> Children;
+        public KeyboardPage CurrentChild;
+        public KeyboardPage PrevChild;
+
+        public KeyboardPage(FrameworkElement page, KeyboardPage parent)
+        {
+            Page = page;
+            Parent = parent;
+            ChildrenNames = new List<string>();
+            Children = new List<KeyboardPage>();
+        }
+    }
+
     public sealed partial class GazeKeyboard : UserControl
     {
-        readonly StringBuilder _theText= new StringBuilder();
-
         InputInjector _injector;
-
         List<ButtonBase> _keyboardButtons;
+        KeyboardPage _rootPage;
 
         public Control Target;
 
-        private bool _gazePlusClickMode = false;
-        public bool GazePlusClickMode
-        {
-            get
-            {
-                return _gazePlusClickMode;
-            }
-            set
-            {              
-                _gazePlusClickMode = value;
-            }
-        }
+        public bool GazePlusClickMode;
 
         public GazeKeyboard()
         {
@@ -66,6 +72,27 @@ namespace EyeGazeUserControls
             }
         }
 
+        private void BuildPageHierarchy(KeyboardPage parent)
+        {
+            var children = Keyboard.GetPageList(parent.Page);
+            foreach (var childName in children)
+            {
+                var node = parent.Page.FindName(childName) as FrameworkElement;
+                if (node != null)
+                {
+                    var childPage = new KeyboardPage(node, parent);
+                    parent.ChildrenNames.Add(childName);
+                    parent.Children.Add(childPage);
+                    BuildPageHierarchy(childPage);
+                }
+            }
+
+            if (parent.Children.Count > 0)
+            {
+                parent.CurrentChild = parent.Children[0];
+            }
+        }
+
         public async Task LoadLayout(string layoutFile)
         {
             try
@@ -83,6 +110,9 @@ namespace EyeGazeUserControls
                     button.Click += OnKeyboardButtonClick;
                 }
 
+                _rootPage = new KeyboardPage(xamlNode, null);
+                BuildPageHierarchy(_rootPage);
+
                 LayoutRoot.Children.Add(xamlNode);
             }
             catch (Exception e)
@@ -91,18 +121,19 @@ namespace EyeGazeUserControls
             }
         }
 
-        private void HandleVirtualKey(int vk)
+        private bool HandleVirtualKey(int vk)
         {
             if (vk < 0)
             {
-                return;
+                return false;
             }
             var key = new InjectedInputKeyboardInfo();
             key.VirtualKey = (ushort)vk;
             _injector.InjectKeyboardInput(new[] { key });
+            return true;
         }
 
-        private void HandleVirtualKeyList(List<int> vkList)
+        private bool HandleVirtualKeyList(List<int> vkList)
         {
             var state = new Dictionary<int, bool>();
             var keys = new List<InjectedInputKeyboardInfo>();
@@ -122,6 +153,99 @@ namespace EyeGazeUserControls
                 keys.Add(key);
             }
             _injector.InjectKeyboardInput(keys);
+            return true;
+        }
+
+        private bool HandleUnicodeChar(string unicode)
+        {
+            var curContent = Clipboard.GetContent();
+            Clipboard.Clear();
+            var dp = new DataPackage();
+            dp.SetText(unicode);
+            Clipboard.SetContent(dp);
+
+            var keyList = new List<int>();
+            keyList.Add((int)VirtualKey.Control);
+            keyList.Add((int)VirtualKey.V);
+            keyList.Add((int)VirtualKey.V);
+            keyList.Add((int)VirtualKey.Control);
+
+            return HandleVirtualKeyList(keyList);
+        }
+
+        private KeyboardPage FindContainer(KeyboardPage kbdPage, string containerName)
+        {
+            if (kbdPage.Page.Name == containerName)
+            {
+                return kbdPage;
+            }
+            KeyboardPage containerPage = null;
+            for (int i = 0; i < kbdPage.Children.Count; i++)
+            {
+                containerPage = FindContainer(kbdPage.Children[i], containerName);
+                if (containerPage != null)
+                {
+                    return containerPage;
+                }
+            }
+            return null;
+        }
+
+        private void HandlePageChange(string containerName, ButtonBase sender)
+        {
+            var container = FindContainer(_rootPage, containerName);
+
+            var tempPage = Keyboard.GetTemporaryPage(sender);
+            var newPage = Keyboard.GetNewPage(sender);
+            string pageName;
+
+            pageName = (tempPage != null) ? tempPage : newPage;
+
+            // find the new page among its siblings
+            var children = container.Children;
+            for (int i = 0; i < children.Count; i++)
+            {
+                if (children[i].Page.Name == pageName)
+                {
+                    // hide the current page
+                    container.CurrentChild.Page.Visibility = Visibility.Collapsed;
+                    container.Children[i].Page.Visibility = Visibility.Visible;
+                    if (tempPage != null)
+                    {
+                        container.PrevChild = container.CurrentChild;
+                    }
+                    container.CurrentChild = container.Children[i];
+                }
+            }
+        }
+
+        private void RevertTempPage(ButtonBase button)
+        {
+            // This logic is based on the assumption that the button is placed in a grid or other container
+            // which is the parent page. This is the temp page that has to be reverted back. So we navigate
+            // to the grandparent of that page to identify the siblings of the parent page
+            var page = button.Parent as FrameworkElement;
+            if (page == null)
+            {
+                return;
+            }
+
+            var container = page.Parent as FrameworkElement;
+            if (container == null)
+            {
+                return;
+            }
+
+            var containerPage = FindContainer(_rootPage, container.Name);
+            if ((containerPage == null) || (containerPage.PrevChild == null))
+            {
+                return;
+            }
+
+            containerPage.CurrentChild.Page.Visibility = Visibility.Collapsed;
+            containerPage.PrevChild.Page.Visibility = Visibility.Visible;
+            containerPage.CurrentChild = containerPage.PrevChild;
+            containerPage.PrevChild = null;
         }
 
         private async void OnKeyboardButtonClick(object sender, RoutedEventArgs e)
@@ -130,25 +254,41 @@ namespace EyeGazeUserControls
             Target.Focus(FocusState.Programmatic);
             await Task.Delay(1);
 
-            var vk = Keyboard.GetVK(button);
-            if (vk != 0)
+            string unicode;
+            string container;
+            int vk;
+            List<int> vkList;
+            bool injected = false;
+
+            if ((container = Keyboard.GetPageContainer(button)) != null)
             {
-                HandleVirtualKey(vk);
-                return;
+                HandlePageChange(container, button);
+            }
+            else if((vk = Keyboard.GetVK(button)) != 0)
+            {
+                injected = HandleVirtualKey(vk);
+            }
+            else if (((vkList = Keyboard.GetVKList(button)) != null) && (vkList.Count > 0))
+            {
+                injected = HandleVirtualKeyList(vkList);
+            }
+            else if ((unicode = Keyboard.GetUnicode(button)) != null)
+            {
+                injected = HandleUnicodeChar(unicode);
+            }
+            else
+            {
+                var key = new InjectedInputKeyboardInfo();
+                key.ScanCode = button.Content.ToString()[0];
+                key.KeyOptions = InjectedInputKeyOptions.Unicode;
+                _injector.InjectKeyboardInput(new[] { key });
+                injected = true;
             }
 
-            var vkList = Keyboard.GetVKList(button);
-            if ((vkList != null) && (vkList.Count > 0)) 
+            if (injected)
             {
-                HandleVirtualKeyList(vkList);
-                return;
+                RevertTempPage(button);
             }
-
-            // default case
-            var key = new InjectedInputKeyboardInfo();
-            key.ScanCode = (ushort)button.Content.ToString()[0];
-            key.KeyOptions = InjectedInputKeyOptions.Unicode;
-            _injector.InjectKeyboardInput(new[] { key });
         }
     }
 }
