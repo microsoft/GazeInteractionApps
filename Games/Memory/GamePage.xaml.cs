@@ -12,6 +12,12 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Hosting;
+using Windows.UI.Composition;
+using System.Numerics;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
+
 
 namespace Memory
 {
@@ -31,6 +37,8 @@ namespace Memory
         public GamePage()
         {
             InitializeComponent();
+
+            GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
 
             _rnd = new Random();
             _flashTimer = new DispatcherTimer();
@@ -179,6 +187,37 @@ namespace Memory
                 _secondButton = btn;
             }
 
+            //Flip button visual
+            var btnVisual = ElementCompositionPreview.GetElementVisual(btn);
+            var compositor = btnVisual.Compositor;
+
+            //Get a visual for the content
+            var btnContent = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(btn, 0), 0);
+            var btnContentVisual = ElementCompositionPreview.GetElementVisual(btnContent as FrameworkElement);
+
+            var easing = compositor.CreateLinearEasingFunction();
+
+            ScalarKeyFrameAnimation flipAnimation = compositor.CreateScalarKeyFrameAnimation();
+            flipAnimation.InsertKeyFrame(0.000001f, 180);
+            flipAnimation.InsertKeyFrame(1f, 0, easing);
+            flipAnimation.Duration = TimeSpan.FromMilliseconds(800);
+            flipAnimation.IterationBehavior = AnimationIterationBehavior.Count;
+            flipAnimation.IterationCount = 1;
+            btnVisual.CenterPoint = new Vector3((float)(0.5 * btn.ActualWidth), (float)(0.5f * btn.ActualHeight), (float)(btn.ActualWidth / 4));
+            btnVisual.RotationAxis = new Vector3(0.0f, 1f, 0f);
+
+            ScalarKeyFrameAnimation appearAnimation = compositor.CreateScalarKeyFrameAnimation();
+            appearAnimation.InsertKeyFrame(0.0f, 0);
+            appearAnimation.InsertKeyFrame(0.499999f, 0);
+            appearAnimation.InsertKeyFrame(0.5f, 1);
+            appearAnimation.InsertKeyFrame(1f, 1);
+            appearAnimation.Duration = TimeSpan.FromMilliseconds(800);
+            appearAnimation.IterationBehavior = AnimationIterationBehavior.Count;
+            appearAnimation.IterationCount = 1;
+
+            btnVisual.StartAnimation(nameof(btnVisual.RotationAngleInDegrees), flipAnimation);
+            btnContentVisual.StartAnimation(nameof(btnContentVisual.Opacity), appearAnimation);
+
             if (_usePictures)
             {
                 var file = await StorageFile.GetFileFromPathAsync(btn.Tag.ToString());
@@ -231,6 +270,11 @@ namespace Memory
         {
             Frame.Navigate(typeof(MainPage));
             DialogGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void OnExit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
         }
     }
 }
