@@ -16,6 +16,11 @@ using MazeCreator.Core;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Core;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
+using Windows.UI.Composition;
+using Windows.UI.Xaml.Hosting;
+using System.Numerics;
+using Windows.UI;
+
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -63,9 +68,33 @@ namespace Maze
         DispatcherTimer _cellCreationTimer;
         DispatcherTimer _openCellTimer;
 
+        SpriteVisual _mazeRunnerVisual;
+        Compositor _compositor;
+
+        bool _animationIsRunning = false;
+        CompositionScopedBatch _batch;
+
+        CompositionSurfaceBrush _breadCrumbBrush;
+
+        enum TravelSpeed
+        {
+            Walk,
+            Run,
+            Jump
+        }
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
+
+            _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
+
+            LoadedImageSurface loadedSurface = LoadedImageSurface.StartLoadFromUri(new Uri("ms-appx:///Assets/BorderDot.png"), new Size(_cellSize, _cellSize));
+            _breadCrumbBrush = _compositor.CreateSurfaceBrush();
+            _breadCrumbBrush.Surface = loadedSurface;
+
             _numRows = MIN_ROWS;
 
             _mazeRunner = new Image
@@ -122,11 +151,15 @@ namespace Maze
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             BuildMaze();
+            LoadMazeRunnerVisual();
+            AnimateMazeRunnerVisualToCell(0, 0, TravelSpeed.Jump, 0);
         }
 
         private void OnNewMaze(object sender, RoutedEventArgs e)
         {
             BuildMaze();
+            LoadMazeRunnerVisual();
+            AnimateMazeRunnerVisualToCell(0, 0, TravelSpeed.Jump, 0);
         }
 
         private void OnBiggerMaze(object sender, RoutedEventArgs e)
@@ -134,6 +167,8 @@ namespace Maze
             _numRows++;
             _numCols++;
             BuildMaze();
+            LoadMazeRunnerVisual();
+            AnimateMazeRunnerVisualToCell(0, 0, TravelSpeed.Jump, 0);
         }
 
         private void OnSmallerMaze(object sender, RoutedEventArgs e)
@@ -141,6 +176,8 @@ namespace Maze
             _numCols = (_numCols > 3) ? _numCols - 1 : _numCols;
             _numRows = (_numRows > 3) ? _numRows - 1 : _numRows;
             BuildMaze();
+            LoadMazeRunnerVisual();
+            AnimateMazeRunnerVisualToCell(0, 0, TravelSpeed.Jump, 0);
         }
 
         private void OnSolutionTimerTick(object sender, object e)
@@ -157,28 +194,35 @@ namespace Maze
                 _isMazeSolved = true;
                                             
                 _curButton.Content = _mazeComplete;
-
+                HideMazeRunnerVisual(0);
                 return;
             }            
            
             _curButton.Content = null;          
 
             var pos = _solution.ElementAt(_solutionCurIndex);
+            //If cell has visualchild remove it            
+            ElementCompositionPreview.SetElementChildVisual(cell, null);
+
             if (pos == Direction.Left)
             {
                 _curCol--;
+                AnimateMazeRunnerVisualToCell(_curCol, _curRow, TravelSpeed.Run, 0);
             }
             if (pos == Direction.Right)
             {
                 _curCol++;
+                AnimateMazeRunnerVisualToCell(_curCol, _curRow, TravelSpeed.Run, 0);
             }
             if (pos == Direction.Up)
             {
                 _curRow--;
+                AnimateMazeRunnerVisualToCell(_curCol, _curRow, TravelSpeed.Run, 0);
             }
             if (pos == Direction.Down)
             {
                 _curRow++;
+                AnimateMazeRunnerVisualToCell(_curCol, _curRow, TravelSpeed.Run, 0);
             }
             _solutionCurIndex++;
 
@@ -229,14 +273,16 @@ namespace Maze
             {
                 //Reset to resolve
                 ClearSolution();
+                AnimateMazeRunnerVisualToCell(0, 0, TravelSpeed.Jump, 0);
+                _mazeRunnerVisual.IsVisible = true;
+                _mazeRunnerVisual.Opacity = 1;
                 Border endBorder = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == _numRows - 1 && Grid.GetColumn(b) == _numCols - 1) as Border;
                 Button endButton = endBorder.Child as Button;
                 endButton.Content = _mazeEnd;
                 _curRow = 0;
                 _curCol = 0;
                 Border curBorder = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == _curRow && Grid.GetColumn(b) == _curCol) as Border;
-                _curButton = curBorder.Child as Button;
-                _curButton.Content = _mazeRunner;
+                _curButton = curBorder.Child as Button;                
                 _isMazeSolved = false;
             }
             var solver = MazeCreator.Solver.Create();
@@ -364,8 +410,7 @@ namespace Maze
                 if (_currentMazeCell == _mazeCells.Count() - 1)
                 {
                     Border curBorder = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == 0 && Grid.GetColumn(b) == 0) as Border;
-                    _curButton = curBorder.Child as Button;
-                    _curButton.Content = _mazeRunner;
+                    _curButton = curBorder.Child as Button;                    
 
                     Border targetBorder = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == _numRows - 1 && Grid.GetColumn(b) == _numCols - 1) as Border;
                     _targetButton = targetBorder.Child as Button;
@@ -400,26 +445,32 @@ namespace Maze
             _newBorder.Child = _newButton;
         }
 
-        private void TryMoveRunner(int row, int col)
+        private int TryMoveRunner(int row, int col)
         {
+            int crumbNum = 0;
             if (row == _curRow)
             {
                 if (_curCol < col)
                 {
                     while ((!_maze[_curRow, _curCol].HasRightWall) && (_curCol < col))
                     {
-                        DropBreadCrumb();
-                        _curCol++;                        
+                        crumbNum++;
+                        DropBreadCrumb(_curCol, _curRow, TravelSpeed.Walk, crumbNum);
+                        _curCol++;
+                        AnimateMazeRunnerVisualToCell(_curCol, _curRow, TravelSpeed.Walk, crumbNum);
                     }
-                    return;
+                    return crumbNum;
                 }
                 else if (_curCol > col)
                 {
                     while ((!_maze[_curRow, _curCol].HasLeftWall) && (_curCol > col))
                     {
-                        DropBreadCrumb();
+                        crumbNum++;
+                        DropBreadCrumb(_curCol, _curRow, TravelSpeed.Walk, crumbNum);
                         _curCol--;
+                        AnimateMazeRunnerVisualToCell(_curCol, _curRow, TravelSpeed.Walk, crumbNum);
                     }
+                    return crumbNum;
                 }
             }
             else if (col == _curCol)
@@ -428,28 +479,62 @@ namespace Maze
                 {
                     while ((!_maze[_curRow, _curCol].HasBottomWall) && (_curRow < row))
                     {
-                        DropBreadCrumb();
+                        crumbNum++;
+                        DropBreadCrumb(_curCol, _curRow, TravelSpeed.Walk, crumbNum);
                         _curRow++;
+                        AnimateMazeRunnerVisualToCell(_curCol, _curRow, TravelSpeed.Walk, crumbNum);
                     }
-                    return;
+                    return crumbNum;
                 }
                 else if (_curRow > row)
                 {
                     while ((!_maze[_curRow, _curCol].HasTopWall) && (_curRow > row))
                     {
-                        DropBreadCrumb();
+                        crumbNum++;
+                        DropBreadCrumb(_curCol, _curRow, TravelSpeed.Walk, crumbNum);
                         _curRow--;
+                        AnimateMazeRunnerVisualToCell(_curCol, _curRow, TravelSpeed.Walk, crumbNum);
                     }
+                    return crumbNum;
                 }
             }
+            return 0;
         }
 
-        private void DropBreadCrumb()
+        private void DropBreadCrumb(int col, int row, TravelSpeed travelSpeed, int crumbCount)
         {
-            _breadCrumbs.Add(new Point(_curCol, _curRow));            
-            var brush = BordercrumbBrush;
+            var visual = _compositor.CreateSpriteVisual();
+            visual.Size = new Vector2(_cellSize, _cellSize);
+            visual.Brush = _breadCrumbBrush;
+            visual.Opacity = 0;
+
             var cell = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == _curRow && Grid.GetColumn(b) == _curCol) as Border;
-            cell.Background = brush;
+            ElementCompositionPreview.SetElementChildVisual(cell, visual);
+
+            var animation = _compositor.CreateScalarKeyFrameAnimation();
+            var easing = _compositor.CreateLinearEasingFunction();
+
+            animation.InsertKeyFrame(1.0f, 1, easing);
+
+            switch (travelSpeed)
+            {
+                case TravelSpeed.Walk:
+                    animation.Duration = TimeSpan.FromMilliseconds(500);
+                    animation.DelayTime = TimeSpan.FromMilliseconds(500 * crumbCount);
+                    break;
+
+                case TravelSpeed.Run:
+                    animation.Duration = TimeSpan.FromSeconds(0.1 * crumbCount);
+                    animation.DelayTime = TimeSpan.FromMilliseconds(0.1 * crumbCount);
+                    break;
+
+                case TravelSpeed.Jump:
+                    animation.Duration = TimeSpan.FromMilliseconds(1 * crumbCount);
+                    animation.DelayTime = TimeSpan.FromMilliseconds(1 * crumbCount);
+                    break;
+            }
+            visual.StartAnimation(nameof(visual.Opacity), animation);
+
         }
 
         private void ClearBreadCrumbs()
@@ -463,6 +548,8 @@ namespace Maze
 
         private void OnMazeCellClick(object sender, RoutedEventArgs e)
         {
+            if (_animationIsRunning) return;
+
             if (_isMazeSolved || _solutionTimer.IsEnabled || _cellCreationTimer.IsEnabled || _openCellTimer.IsEnabled)
             {
                 return;
@@ -473,7 +560,7 @@ namespace Maze
             var col = Grid.GetColumn(button.Parent as FrameworkElement);
             var row = Grid.GetRow(button.Parent as FrameworkElement);
 
-            TryMoveRunner(row, col);
+            var crumbNum = TryMoveRunner(row, col);
 
             var curContent = _curButton.Content;
             _curButton.Content = null;
@@ -484,9 +571,11 @@ namespace Maze
             if ((_curRow == _numRows - 1) && (_curCol == _numCols - 1))
             {
                 _curButton.Content = _mazeComplete;
+                HideMazeRunnerVisual(crumbNum);
                 string message = $"Congratulations!! You have solved the maze!";
                 DialogText.Text = message;
                 DialogGrid.Visibility = Visibility.Visible;
+                _isMazeSolved = true;
             }
         }
 
@@ -497,5 +586,82 @@ namespace Maze
 
             OnNewMaze(this, null);
         }
+
+        private void LoadMazeRunnerVisual()
+        {
+            if (_mazeRunnerVisual != null) _mazeRunnerVisual.Dispose();
+
+            _mazeRunnerVisual = _compositor.CreateSpriteVisual();
+            _mazeRunnerVisual.Size = new Vector2(_cellSize, _cellSize);
+
+            LoadedImageSurface loadedSurface = LoadedImageSurface.StartLoadFromUri(new Uri("ms-appx:///Assets/luna.png"), new Size(_cellSize, _cellSize));
+            CompositionSurfaceBrush surfaceBrush = _compositor.CreateSurfaceBrush();
+            surfaceBrush.Surface = loadedSurface;
+            _mazeRunnerVisual.Brush = surfaceBrush;
+
+            ElementCompositionPreview.SetElementChildVisual(MazeGrid, _mazeRunnerVisual);
+            _mazeRunnerVisual.IsVisible = true;
+            _mazeRunnerVisual.Opacity = 1;
+        }
+
+        private void HideMazeRunnerVisual(int crumbCount)
+        {
+            var animation = _compositor.CreateScalarKeyFrameAnimation();
+            var easing = _compositor.CreateLinearEasingFunction();
+
+            animation.InsertKeyFrame(1.0f, 0, easing);
+            animation.Duration = TimeSpan.FromMilliseconds(50);
+            if (crumbCount > 1) crumbCount -= 1;
+            animation.DelayTime = TimeSpan.FromMilliseconds(500 * crumbCount);
+
+            _mazeRunnerVisual.StartAnimation(nameof(_mazeRunnerVisual.Opacity), animation);
+        }
+
+        private void AnimateMazeRunnerVisualToCell(int col, int row, TravelSpeed travelSpeed, int crumbCount)
+        {
+            _animationIsRunning = true;
+
+            if (_batch != null)
+            {
+                _batch.Dispose();
+            }
+            _batch = _compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
+
+            var animation = _compositor.CreateVector3KeyFrameAnimation();
+            var easing = _compositor.CreateLinearEasingFunction();
+
+            var destination = new Vector3((float)(col * _cellSize), (float)(row * _cellSize), 0.0F);
+
+            animation.InsertKeyFrame(1.0f, destination, easing);
+
+            switch (travelSpeed)
+            {
+                case TravelSpeed.Walk:
+                    animation.Duration = TimeSpan.FromMilliseconds(500 * crumbCount);
+                    break;
+
+                case TravelSpeed.Run:
+                    animation.Duration = TimeSpan.FromSeconds(0.1);
+                    break;
+
+                case TravelSpeed.Jump:
+                    animation.Duration = TimeSpan.FromMilliseconds(1);
+                    break;
+            }
+            _mazeRunnerVisual.StartAnimation(nameof(_mazeRunnerVisual.Offset), animation);
+            _batch.End();
+            _batch.Completed += _batch_Completed;
+        }
+
+        private void _batch_Completed(object sender, CompositionBatchCompletedEventArgs args)
+        {
+            _animationIsRunning = false;
+        }
+
+        private void OnExit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
+
     }
 }
