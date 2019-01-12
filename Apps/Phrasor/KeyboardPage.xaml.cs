@@ -22,35 +22,40 @@ namespace Phrasor
 
             _mediaElement = new MediaElement();
             _speechSynthesizer = new SpeechSynthesizer();
+            GazeKeyboard.Target = TextControl;
+            Loaded += KeyboardPage_Loaded;
 
-            GazeKeyboard.EnterButton.Content = "\uE73E";
-            GazeKeyboard.EnterButton.Click += OnEnterClick;
-            GazeKeyboard.CloseButton.Click += OnCancelClick;
+        }
+
+        private async void KeyboardPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            await GazeKeyboard.LoadLayout("MinAAC.xaml");
+
+            GazeKeyboard.GazePlusClickMode = _navParams.GazePlusClickMode;
+            if (_navParams.SpeechMode)
+            {
+                EnterButton.Content = "\uE768";
+                TextControl.Focus(FocusState.Programmatic);
+                return;
+            }
+            EnterButton.Content = "\uE73E";
+            if (_navParams.ChildNode != null)
+            {
+                TextControl.Text = _navParams.ChildNode.Caption;
+                TextControl.SelectAll();
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             _navParams = (KeyboardPageNavigationParams)e.Parameter;
-            GazeKeyboard.GazePlusClickMode = _navParams.GazePlusClickMode;
-            if (_navParams.SpeechMode)
-            {
-                GazeKeyboard.EnterButton.Content = "\uE768";
-                GazeKeyboard.TextControl.Focus(FocusState.Programmatic);
-                return;
-            }
-            GazeKeyboard.EnterButton.Content = "\uE73E";
-            if (_navParams.ChildNode != null)
-            {
-                GazeKeyboard.TextControl.Text = _navParams.ChildNode.Caption;
-                GazeKeyboard.TextControl.SelectAll();
-            }
         }
         private async void OnEnterClick(object sender, RoutedEventArgs e)
         {            
             if (_navParams.SpeechMode)
             {
-                var text = GazeKeyboard.TextControl.Text.ToString();
+                var text = TextControl.Text.ToString();
                 var stream = await _speechSynthesizer.SynthesizeTextToStreamAsync(text);
                 _mediaElement.SetSource(stream, stream.ContentType);
                 _mediaElement.AutoPlay = true;
@@ -68,7 +73,7 @@ namespace Phrasor
                     }
                     _navParams.CurrentNode.Children.Add(childNode);
                 }
-                childNode.Caption = GazeKeyboard.TextControl.Text;
+                childNode.Caption = TextControl.Text;
                 childNode.Parent = _navParams.CurrentNode;
                 _navParams.NeedsSaving = true;
                 Frame.Navigate(typeof(MainPage), _navParams);

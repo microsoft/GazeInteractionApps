@@ -3,94 +3,292 @@
 
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
+using Windows.System;
+using Windows.UI.Input.Preview.Injection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Automation.Provider;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media;
 
 namespace EyeGazeUserControls
 {
+    internal class KeyboardPage
+    {
+        public FrameworkElement Page;
+        public KeyboardPage Parent;
+        public List<string> ChildrenNames;
+        public List<KeyboardPage> Children;
+        public KeyboardPage CurrentChild;
+        public KeyboardPage PrevChild;
+
+        public KeyboardPage(FrameworkElement page, KeyboardPage parent)
+        {
+            Page = page;
+            Parent = parent;
+            ChildrenNames = new List<string>();
+            Children = new List<KeyboardPage>();
+        }
+    }
+
     public sealed partial class GazeKeyboard : UserControl
     {
-        readonly StringBuilder _theText= new StringBuilder();
-          
-        public ButtonBase EnterButton
-        {
-            get { return enterButton; }
-        }
+        InputInjector _injector;
+        List<ButtonBase> _keyboardButtons;
+        KeyboardPage _rootPage;
 
-        public ButtonBase CloseButton
-        {
-            get { return closeButton; }
-        }
+        public Control Target;
 
-        public ButtonBase SettingsButton
-        {
-            get { return settingsButton; }
-        }
-
-        public TextBox TextControl
-        {
-            get { return textControl; }
-        }
-
-        private bool _gazePlusClickMode = false;
-        public bool GazePlusClickMode
-        {
-            get
-            {
-                return _gazePlusClickMode;
-            }
-            set
-            {              
-                _gazePlusClickMode = value;
-            }
-        }
+        public bool GazePlusClickMode;
 
         public GazeKeyboard()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            _injector = InputInjector.TryCreate();
         }
 
-        private void OnChar(object sender, RoutedEventArgs e)
+        internal static void FindChildren<T>(List<T> results, DependencyObject startNode)
+          where T : DependencyObject
         {
-            var button = (Button)sender;
-            var content = button.Content.ToString();
-            _theText.Append(content);
-            textControl.Text = _theText.ToString();
-        }
-
-        private void OnSpace(object sender, RoutedEventArgs e)
-        {
-            _theText.Append(' ');
-            textControl.Text = _theText.ToString();
-        }
-
-        private void OnBackspace(object sender, RoutedEventArgs e)
-        {
-            if (_theText.Length != 0)
+            int count = VisualTreeHelper.GetChildrenCount(startNode);
+            for (int i = 0; i < count; i++)
             {
-                _theText.Remove(_theText.Length - 1, 1);
-                textControl.Text = _theText.ToString();
+                DependencyObject current = VisualTreeHelper.GetChild(startNode, i);
+                if ((current.GetType()).Equals(typeof(T)) || (current.GetType().GetTypeInfo().IsSubclassOf(typeof(T))))
+                {
+                    T asType = (T)current;
+                    results.Add(asType);
+                }
+                FindChildren<T>(results, current);
             }
         }
 
-        private void OnWordDelete(object sender, RoutedEventArgs e)
+        private void BuildPageHierarchy(KeyboardPage parent)
         {
-            var text = _theText.ToString();
-            int lastSpace = text.LastIndexOf(' ');
-            if (lastSpace > 0)
+            var children = Keyboard.GetPageList(parent.Page);
+            foreach (var childName in children)
             {
-                _theText.Remove(lastSpace, _theText.Length - lastSpace);
+                var node = parent.Page.FindName(childName) as FrameworkElement;
+                if (node != null)
+                {
+                    var childPage = new KeyboardPage(node, parent);
+                    parent.ChildrenNames.Add(childName);
+                    parent.Children.Add(childPage);
+                    BuildPageHierarchy(childPage);
+                }
+            }
+
+            if (parent.Children.Count > 0)
+            {
+                parent.CurrentChild = parent.Children[0];
+            }
+        }
+
+        public async Task LoadLayout(string layoutFile)
+        {
+            try
+            {
+                var uri = new Uri($"ms-appx:///EyeGazeUserControls/Layouts/{layoutFile}");
+                var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri);
+                var xaml = await FileIO.ReadTextAsync(storageFile);
+                var xamlNode = XamlReader.Load(xaml) as FrameworkElement;
+
+                _keyboardButtons = new List<ButtonBase>();
+                FindChildren<ButtonBase>(_keyboardButtons, xamlNode);
+
+                foreach (var button in _keyboardButtons)
+                {
+                    button.Click += OnKeyboardButtonClick;
+                }
+
+                _rootPage = new KeyboardPage(xamlNode, null);
+                BuildPageHierarchy(_rootPage);
+
+                LayoutRoot.Children.Add(xamlNode);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
+
+        private bool HandleVirtualKey(int vk)
+        {
+            if (vk < 0)
+            {
+                return false;
+            }
+            var key = new InjectedInputKeyboardInfo();
+            key.VirtualKey = (ushort)vk;
+            _injector.InjectKeyboardInput(new[] { key });
+            return true;
+        }
+
+        private bool HandleVirtualKeyList(List<int> vkList)
+        {
+            var state = new Dictionary<int, bool>();
+            var keys = new List<InjectedInputKeyboardInfo>();
+            foreach (var vk in vkList)
+            {
+                var key = new InjectedInputKeyboardInfo();
+                key.VirtualKey = (ushort)vk;
+                if (state.ContainsKey(vk))
+                {
+                    key.KeyOptions = InjectedInputKeyOptions.KeyUp;
+                    state.Remove(vk);
+                }
+                else
+                {
+                    state.Add(vk, true);
+                }
+                keys.Add(key);
+            }
+            _injector.InjectKeyboardInput(keys);
+            return true;
+        }
+
+        private bool HandleUnicodeChar(string unicode)
+        {
+            var curContent = Clipboard.GetContent();
+            Clipboard.Clear();
+            var dp = new DataPackage();
+            dp.SetText(unicode);
+            Clipboard.SetContent(dp);
+
+            var keyList = new List<int>();
+            keyList.Add((int)VirtualKey.Control);
+            keyList.Add((int)VirtualKey.V);
+            keyList.Add((int)VirtualKey.V);
+            keyList.Add((int)VirtualKey.Control);
+
+            return HandleVirtualKeyList(keyList);
+        }
+
+        private KeyboardPage FindContainer(KeyboardPage kbdPage, string containerName)
+        {
+            if (kbdPage.Page.Name == containerName)
+            {
+                return kbdPage;
+            }
+            KeyboardPage containerPage = null;
+            for (int i = 0; i < kbdPage.Children.Count; i++)
+            {
+                containerPage = FindContainer(kbdPage.Children[i], containerName);
+                if (containerPage != null)
+                {
+                    return containerPage;
+                }
+            }
+            return null;
+        }
+
+        private void HandlePageChange(string containerName, ButtonBase sender)
+        {
+            var container = FindContainer(_rootPage, containerName);
+
+            var tempPage = Keyboard.GetTemporaryPage(sender);
+            var newPage = Keyboard.GetNewPage(sender);
+            string pageName;
+
+            pageName = (tempPage != null) ? tempPage : newPage;
+
+            // find the new page among its siblings
+            var children = container.Children;
+            for (int i = 0; i < children.Count; i++)
+            {
+                if (children[i].Page.Name == pageName)
+                {
+                    // hide the current page
+                    container.CurrentChild.Page.Visibility = Visibility.Collapsed;
+                    container.Children[i].Page.Visibility = Visibility.Visible;
+                    if (tempPage != null)
+                    {
+                        container.PrevChild = container.CurrentChild;
+                    }
+                    container.CurrentChild = container.Children[i];
+                }
+            }
+        }
+
+        private void RevertTempPage(ButtonBase button)
+        {
+            // This logic is based on the assumption that the button is placed in a grid or other container
+            // which is the parent page. This is the temp page that has to be reverted back. So we navigate
+            // to the grandparent of that page to identify the siblings of the parent page
+            var page = button.Parent as FrameworkElement;
+            if (page == null)
+            {
+                return;
+            }
+
+            var container = page.Parent as FrameworkElement;
+            if (container == null)
+            {
+                return;
+            }
+
+            var containerPage = FindContainer(_rootPage, container.Name);
+            if ((containerPage == null) || (containerPage.PrevChild == null))
+            {
+                return;
+            }
+
+            containerPage.CurrentChild.Page.Visibility = Visibility.Collapsed;
+            containerPage.PrevChild.Page.Visibility = Visibility.Visible;
+            containerPage.CurrentChild = containerPage.PrevChild;
+            containerPage.PrevChild = null;
+        }
+
+        private async void OnKeyboardButtonClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as ButtonBase;
+            Target.Focus(FocusState.Programmatic);
+            await Task.Delay(1);
+
+            string unicode;
+            string container;
+            int vk;
+            List<int> vkList;
+            bool injected = false;
+
+            if ((container = Keyboard.GetPageContainer(button)) != null)
+            {
+                HandlePageChange(container, button);
+            }
+            else if((vk = Keyboard.GetVK(button)) != 0)
+            {
+                injected = HandleVirtualKey(vk);
+            }
+            else if (((vkList = Keyboard.GetVKList(button)) != null) && (vkList.Count > 0))
+            {
+                injected = HandleVirtualKeyList(vkList);
+            }
+            else if ((unicode = Keyboard.GetUnicode(button)) != null)
+            {
+                injected = HandleUnicodeChar(unicode);
             }
             else
             {
-                // no space found, so empty the textbox
-                _theText.Clear();
+                var key = new InjectedInputKeyboardInfo();
+                key.ScanCode = button.Content.ToString()[0];
+                key.KeyOptions = InjectedInputKeyOptions.Unicode;
+                _injector.InjectKeyboardInput(new[] { key });
+                injected = true;
             }
-            textControl.Text = _theText.ToString();
-        }     
+
+            if (injected)
+            {
+                RevertTempPage(button);
+            }
+        }
     }
 }
