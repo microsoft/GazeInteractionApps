@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Devices.Enumeration;
 using Windows.Foundation;
@@ -27,7 +28,9 @@ namespace EyeVolume
             MaximizeWindowOnLoad();
 
             this.InitializeComponent();
-                       
+
+            VersionTextBlock.Text = GetAppVersion();
+
             var view = ApplicationView.GetForCurrentView();                        
 
             ApplicationViewTitleBar formattableTitleBar = view.TitleBar;
@@ -115,6 +118,15 @@ namespace EyeVolume
         private void OnExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
-        }           
+        }
+
+        public static string GetAppVersion()
+        {
+            Package package = Package.Current;
+            PackageId packageId = package.Id;
+            PackageVersion version = packageId.Version;
+
+            return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
+        }
     }
 }

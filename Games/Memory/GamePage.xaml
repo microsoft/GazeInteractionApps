@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     gaze:GazeInput.Interaction="Enabled"
+    gaze:GazeInput.IsCursorVisible="False"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -26,7 +27,10 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource ButtonStyle}" Click="OnExit" Content="Exit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe UI" FontSize="36" Width="100" Height="100"/>
+            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource ButtonStyle}" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100"/>
+
+            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource ButtonStyle}" Click="OnBack" Content="&#xe72b;" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100"/>
+
 
             <Grid x:Name="buttonMatrix" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Row="1">
                 <Grid.RowDefinitions>

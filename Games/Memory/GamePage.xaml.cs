@@ -90,7 +90,7 @@ namespace Memory
 
         async Task<List<string>> GetPicturesContent(int len)
         {
-            StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
+            StorageFolder picturesFolder = KnownFolders.PicturesLibrary;            
             IReadOnlyList<StorageFile> pictures = await picturesFolder.GetFilesAsync();
             List<string> list = new List<string>();
 
@@ -145,7 +145,15 @@ namespace Memory
             List<string> listContent;
             if (_usePictures)
             {
-                listContent = await GetPicturesContent(8);
+                try
+                {                
+                    listContent = await GetPicturesContent(8);
+                }
+                catch
+                {
+                    listContent = GetSymbolContent(8);
+                    _usePictures = false;
+                }
             }
             else
             {
@@ -275,6 +283,11 @@ namespace Memory
         private void OnExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
+        }
+
+        private void OnBack(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
         }
     }
 }

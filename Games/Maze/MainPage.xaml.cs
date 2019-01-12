@@ -20,6 +20,8 @@ using Windows.UI.Composition;
 using Windows.UI.Xaml.Hosting;
 using System.Numerics;
 using Windows.UI;
+using Windows.UI.ViewManagement;
+using Windows.ApplicationModel;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -86,6 +88,10 @@ namespace Maze
         public MainPage()
         {
             this.InitializeComponent();
+
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
+
+            VersionTextBlock.Text = GetAppVersion();
 
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
 
@@ -663,5 +669,13 @@ namespace Maze
             Application.Current.Exit();
         }
 
+        public static string GetAppVersion()
+        {
+            Package package = Package.Current;
+            PackageId packageId = package.Id;
+            PackageVersion version = packageId.Version;
+
+            return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
+        }
     }
 }

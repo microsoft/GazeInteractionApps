@@ -7,8 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     gaze:GazeInput.Interaction="Enabled"
+    gaze:GazeInput.IsCursorVisible="False"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" FontFamily="Segoe UI">
 
     <Page.Resources>
         <SolidColorBrush x:Name="BorderBrush" Color="IndianRed"></SolidColorBrush>
@@ -42,7 +43,7 @@
                 <Button Content="Smaller" Click="OnSmallerMaze" Style="{StaticResource ResourceKey=ButtonStyle}" Background="#33FFFFFF"/>
                 <Button Content="Solve!" Click="OnSolveMaze" Style="{StaticResource ResourceKey=ButtonStyle}" Background="#33FFFFFF"/>
             </StackPanel>
-            <Button Grid.Row="0" Style="{StaticResource ButtonStyle}" Click="OnExit" Content="Exit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe UI" FontSize="36" Width="100" Height="100"/>
+            <Button Grid.Row="0" Style="{StaticResource ButtonStyle}" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top"  FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100"/>
             <Line VerticalAlignment="Bottom" Margin="10,0,10,5" Stretch="UniformToFill" X2="1" Stroke="Black"/>
             <Border x:Name="MazeBorder" Grid.Row="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="2,2,2,2" HorizontalAlignment="Center" Margin="10,0,10,10">
                 <Grid x:Name="MazeGrid"/>
@@ -67,5 +68,6 @@
             </Border>
         </Grid>
 
+        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Padding="0,0,10,10" FontFamily="Segoe UI"></TextBlock>
     </Grid>
 </Page>
