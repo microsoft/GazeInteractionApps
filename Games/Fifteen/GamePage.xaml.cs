@@ -248,5 +248,15 @@ namespace Fifteen
 
             Frame.Navigate(typeof(MainPage));
         }
+
+        private void OnExit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
+
+        private void OnBack(object sender, RoutedEventArgs e)
+        {            
+            Frame.Navigate(typeof(MainPage));
+        }
     }
 }

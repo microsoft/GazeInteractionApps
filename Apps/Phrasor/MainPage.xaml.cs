@@ -14,6 +14,7 @@ using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.UI.ViewManagement;
 using Windows.Foundation.Collections;
 using Windows.Foundation;
+using Windows.ApplicationModel;
 
 namespace Phrasor
 {
@@ -49,6 +50,9 @@ namespace Phrasor
         public MainPage()
         {
             InitializeComponent();
+
+            VersionTextBlock.Text = GetAppVersion();
+
             Loaded += MainPage_Loaded;
             
             MasterViewModel = new ViewModel();
@@ -537,6 +541,16 @@ namespace Phrasor
         private void ColorPicker_ColorChanged(ColorPicker sender, ColorChangedEventArgs args)
         {
             MasterViewModel.Settings.FontColor = args.NewColor;
-        }      
+        }
+
+
+        public static string GetAppVersion()
+        {
+            Package package = Package.Current;
+            PackageId packageId = package.Id;
+            PackageVersion version = packageId.Version;
+
+            return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
+        }
     }
 }
