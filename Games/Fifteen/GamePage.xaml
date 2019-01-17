@@ -25,9 +25,20 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource ButtonStyle}" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100"/>
-        
-        <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource ButtonStyle}" Click="OnBack" Content="&#xe72b;" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100"/>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100" gaze:GazeInput.DwellDuration="00:00:01.5000000"/>
+
+            <Button Grid.Column="2" Style="{StaticResource ButtonStyle}"  Content="&#xE769;" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100" Click="OnPause"/>
+            
+            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnBack" Content="&#xe72b;" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100" gaze:GazeInput.DwellDuration="00:00:01.5000000"/>
+        </Grid>
+
 
         <Grid Grid.Row="1" x:Name="GameGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         </Grid>

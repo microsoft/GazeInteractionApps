@@ -22,13 +22,15 @@ namespace Fifteen
         int _blankRow;
         int _blankCol;
         int _numMoves;
+        bool _interactionPaused = false;
 
         SolidColorBrush _solidTileBrush = new SolidColorBrush(Colors.Silver);
         SolidColorBrush _blankTileBrush = new SolidColorBrush(Colors.White);
+        SolidColorBrush _pausedButtonBrush = new SolidColorBrush(Colors.Black);
 
         public GamePage()
         {
-            InitializeComponent();
+            InitializeComponent();            
 
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
@@ -195,7 +197,7 @@ namespace Fifteen
             blankBtn.Visibility = Visibility.Visible;
 
             //Disable eye control for the new empty button so that there are no inappropriate dwell indicators
-            GazeInput.SetInteraction(blankBtn, Interaction.Enabled);
+            GazeInput.SetInteraction(blankBtn, Interaction.Inherited);
             GazeInput.SetInteraction(btn, Interaction.Disabled);
 
             return true;
@@ -257,6 +259,28 @@ namespace Fifteen
         private void OnBack(object sender, RoutedEventArgs e)
         {            
             Frame.Navigate(typeof(MainPage));
+        }
+
+        private void OnPause(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            if (_interactionPaused)
+            {
+                button.Content = "\uE769";
+                button.Foreground = _pausedButtonBrush;
+                button.Background = _solidTileBrush;
+                GazeInput.SetInteraction(GameGrid, Interaction.Enabled);
+                _interactionPaused = false;
+            }
+            else
+            {
+                button.Content = "\uE768";
+                button.Foreground = _solidTileBrush;
+                button.Background = _pausedButtonBrush;
+                GazeInput.SetInteraction(GameGrid, Interaction.Disabled);
+                _interactionPaused = true;
+            }
         }
     }
 }

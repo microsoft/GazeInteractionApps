@@ -30,6 +30,7 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <Button Grid.Column="2" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100" Margin="50,20,20,50"  gaze:GazeInput.DwellDuration="00:00:01.5000000" />
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" FontSize="48"  HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalTextAlignment="Center"> Select your game</TextBlock>
         <Button Grid.Row="1" Grid.Column="0" Tag="2" Click="OnBoardSizeSelected">3</Button>
         <Button Grid.Row="1" Grid.Column="1" Tag="3" Click="OnBoardSizeSelected">8</Button>
