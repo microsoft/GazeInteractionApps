@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
+using Windows.UI.Composition;
 
 namespace Fifteen
 {
@@ -23,10 +24,13 @@ namespace Fifteen
         int _blankCol;
         int _numMoves;
         bool _interactionPaused = false;
-
-        SolidColorBrush _solidTileBrush = new SolidColorBrush(Colors.Silver);
-        SolidColorBrush _blankTileBrush = new SolidColorBrush(Colors.White);
+        
+        SolidColorBrush _solidTileBrush = new SolidColorBrush(Color.FromArgb(255,78,77,153));        
+        SolidColorBrush _blankTileBrush = new SolidColorBrush(Colors.Transparent);
+        SolidColorBrush _toolButtonBrush = new SolidColorBrush(Color.FromArgb(255, 68, 98, 248));
         SolidColorBrush _pausedButtonBrush = new SolidColorBrush(Colors.Black);
+
+        CompositionScopedBatch _slideBatchAnimation;
 
         public GamePage()
         {
@@ -48,10 +52,12 @@ namespace Fifteen
             {
                 ResetBoard();
             }
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
             Button blankBtn = _buttons[_blankRow, _blankCol];
             blankBtn.Background = _blankTileBrush;
             blankBtn.Visibility = Visibility.Visible;
+            MoveCountTextBlock.Text = "0";
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) 
@@ -165,6 +171,15 @@ namespace Fifteen
 
             var easing = compositor.CreateLinearEasingFunction();
 
+            if (_slideBatchAnimation != null)
+            {
+                _slideBatchAnimation.Completed -= SlideBatchAnimation_Completed;
+                _slideBatchAnimation.Dispose();
+            }
+
+            _slideBatchAnimation = compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
+            _slideBatchAnimation.Completed += SlideBatchAnimation_Completed;
+
             //Create an animation to first move the blank button with its updated contents to
             //instantly appear in the position position of the selected button
             //then slide that button back into its original position
@@ -175,6 +190,7 @@ namespace Fifteen
 
             //Apply the slide anitmation to the blank button
             blankBtnVisual.StartAnimation(nameof(btnVisual.Offset), slideAnimation);
+            _slideBatchAnimation.End();
 
             //Swap content of the selected button with the blank button and clear the selected button
             _buttons[_blankRow, _blankCol].Content = _buttons[row, col].Content;
@@ -203,7 +219,13 @@ namespace Fifteen
             return true;
         }
 
-        private void OnButtonClick(object sender, RoutedEventArgs e)
+
+        private void SlideBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
+        {
+            CheckCompletion();
+        }
+
+            private void OnButtonClick(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             int cellNumber = int.Parse(button.Tag.ToString());
@@ -213,7 +235,7 @@ namespace Fifteen
             if (SwapBlank(row, col))
             {
                 _numMoves++;
-                CheckCompletion();
+                MoveCountTextBlock.Text = _numMoves.ToString();                
             }
         }
 
@@ -237,8 +259,8 @@ namespace Fifteen
             {
                 return;
             }
-
-            string message = $"Congratulations!! You solved it in {_numMoves} moves";
+            
+            string message = $"You solved the puzzle in {_numMoves} moves";
             DialogText.Text = message;
             DialogGrid.Visibility = Visibility.Visible;
         }
@@ -267,17 +289,15 @@ namespace Fifteen
 
             if (_interactionPaused)
             {
-                button.Content = "\uE769";
-                button.Foreground = _pausedButtonBrush;
-                button.Background = _solidTileBrush;
+                PauseButtonText.Text = "\uE769";               
+                PauseButtonBorder.Background = _toolButtonBrush;
                 GazeInput.SetInteraction(GameGrid, Interaction.Enabled);
                 _interactionPaused = false;
             }
             else
             {
-                button.Content = "\uE768";
-                button.Foreground = _solidTileBrush;
-                button.Background = _pausedButtonBrush;
+                PauseButtonText.Text = "\uE768";               
+                PauseButtonBorder.Background = _pausedButtonBrush;
                 GazeInput.SetInteraction(GameGrid, Interaction.Disabled);
                 _interactionPaused = true;
             }

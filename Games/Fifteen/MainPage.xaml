@@ -9,7 +9,7 @@
     gaze:GazeInput.Interaction="Enabled"
     gaze:GazeInput.IsCursorVisible="False"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" FontFamily="Segoe UI">
+    FontFamily="Segoe UI" >
 
     <Page.Resources>
         <Style TargetType="Button">
@@ -19,24 +19,43 @@
             <Setter Property="Margin" Value="50"/>
         </Style>
     </Page.Resources>
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,0.5" StartPoint="0.5,1" MappingMode="RelativeToBoundingBox">
+            <GradientStop Color="#FFC3D6FF" Offset="1"/>
+            <GradientStop Color="#FF5EA5FB" Offset="0"/>
+        </LinearGradientBrush>
+    </Page.Background>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="0"/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="137.5" />
+            <ColumnDefinition/>
             <ColumnDefinition />
             <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" MinWidth="0"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="2" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100" Margin="50,20,20,50"  gaze:GazeInput.DwellDuration="00:00:01.5000000" />
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" FontSize="48"  HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalTextAlignment="Center"> Select your game</TextBlock>
-        <Button Grid.Row="1" Grid.Column="0" Tag="2" Click="OnBoardSizeSelected">3</Button>
-        <Button Grid.Row="1" Grid.Column="1" Tag="3" Click="OnBoardSizeSelected">8</Button>
-        <Button Grid.Row="1" Grid.Column="2" Tag="4" Click="OnBoardSizeSelected">15</Button>
-        
-        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="2" Padding="0,0,10,10" FontFamily="Segoe UI"></TextBlock>
+        <Button Grid.Column="4"  Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="00:00:01.5000000" FontWeight="ExtraBold" Margin="0,40,40,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Foreground="White" Grid.Row="0
+                ">
+            <Border Background="#FF4462F8" CornerRadius="5" HorizontalAlignment="Stretch">
+                <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold"></TextBlock>
+            </Border>
+        </Button>
+        <!--<Button Grid.Column="2" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100" Margin="50,20,20,50"  gaze:GazeInput.DwellDuration="00:00:01.5000000" />-->
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="5" FontSize="48" VerticalAlignment="Top" HorizontalTextAlignment="Center" Margin="0,22,0,0" Foreground="#FF4E4D99" FontWeight="Bold">15 Puzzle</TextBlock>
+        <TextBlock Grid.Row="2" Grid.ColumnSpan="5" FontSize="36" VerticalAlignment="Top" HorizontalTextAlignment="Center" Margin="0,22.5,0,0"  Foreground="#FF4E4D99" FontWeight="Bold">Select a puzzle size</TextBlock>
+        <Button Grid.Row="4" Grid.Column="1" Tag="2" Click="OnBoardSizeSelected" Background="#FF4E4D99" Foreground="White" Margin="0,0,20,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">3</Button>
+        <Button Grid.Row="4" Grid.Column="2" Tag="3" Click="OnBoardSizeSelected" Background="#FF4E4D99" Foreground="White" Margin="20,0,20,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">8</Button>
+        <Button Grid.Row="4" Grid.Column="3" Tag="4" Click="OnBoardSizeSelected" Background="#FF4E4D99" Foreground="White" Margin="20,0,0,10"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">15</Button>
+
+        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="5" Grid.Column="4" Padding="0,0,10,10" FontFamily="Segoe UI"></TextBlock>
     </Grid>
 
 </Page>
