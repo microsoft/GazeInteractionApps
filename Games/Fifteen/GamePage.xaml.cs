@@ -104,6 +104,8 @@ namespace Fifteen
 
         void ResetBoard()
         {
+            _numMoves = 0;
+            MoveCountTextBlock.Text = _numMoves.ToString();
             for (int i = 0; i < _boardSize; i++)
             {
                 for (int j = 0; j < _boardSize; j++)
@@ -267,9 +269,16 @@ namespace Fifteen
 
         private void DialogButton_Click(object sender, RoutedEventArgs e)
         {
-            //ResetBoard();
             DialogGrid.Visibility = Visibility.Collapsed;
+            while (IsSolved())
+            {
+                ResetBoard();
+            }                                    
+        }
 
+        private void DialogButton2_Click(object sender, RoutedEventArgs e)
+        {
+            DialogGrid.Visibility = Visibility.Collapsed;
             Frame.Navigate(typeof(MainPage));
         }
 
@@ -301,6 +310,6 @@ namespace Fifteen
                 GazeInput.SetInteraction(GameGrid, Interaction.Disabled);
                 _interactionPaused = true;
             }
-        }
+        }       
     }
 }
