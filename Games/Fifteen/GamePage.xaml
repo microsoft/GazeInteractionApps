@@ -144,9 +144,7 @@
 
         <Grid Grid.Row="1" Margin="40,30,40,40">
             <Rectangle Fill="#19000000" RadiusX="10" RadiusY="10"></Rectangle>
-            <Grid x:Name="GameGrid" Margin="10">
-                
-            </Grid>
+            <Grid x:Name="GameGrid" Margin="10"/>
         </Grid>
         <Grid Grid.Row="1" x:Name="DialogGrid" Visibility="Collapsed" Background="#B2000000" Margin="0,0,0,140" >
             <Grid.ColumnDefinitions>

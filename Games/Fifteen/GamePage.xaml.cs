@@ -24,20 +24,27 @@ namespace Fifteen
         int _blankCol;
         int _numMoves;
         bool _interactionPaused = false;
-        
-        SolidColorBrush _solidTileBrush = new SolidColorBrush(Color.FromArgb(255,78,77,153));        
+
+        SolidColorBrush _solidTileBrush = new SolidColorBrush(Color.FromArgb(255, 78, 77, 153));
         SolidColorBrush _blankTileBrush = new SolidColorBrush(Colors.Transparent);
         SolidColorBrush _toolButtonBrush = new SolidColorBrush(Color.FromArgb(255, 68, 98, 248));
         SolidColorBrush _pausedButtonBrush = new SolidColorBrush(Colors.Black);
 
         CompositionScopedBatch _slideBatchAnimation;
 
+        DispatcherTimer WaitForCompositionTimer;
+
         public GamePage()
         {
-            InitializeComponent();            
+            InitializeComponent();
+
+            WaitForCompositionTimer = new DispatcherTimer();
+            WaitForCompositionTimer.Tick += WaitForCompositionTimer_Tick;
+            WaitForCompositionTimer.Interval = TimeSpan.FromMilliseconds(50);
 
             var sharedSettings = new ValueSet();
-            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) => {
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
+            {
                 var gazePointer = GazeInput.GetGazePointer(this);
                 gazePointer.LoadSettings(sharedSettings);
             });
@@ -45,22 +52,32 @@ namespace Fifteen
             Loaded += GamePage_Loaded;
         }
 
+        private void WaitForCompositionTimer_Tick(object sender, object e)
+        {
+            if (IsButtonCompositionReady())
+            {
+                Button blankBtn;
+                while (IsSolved())
+                {
+                    ResetBoard();
+                }
+                blankBtn = _buttons[_blankRow, _blankCol];
+                blankBtn.Background = _blankTileBrush;
+                blankBtn.Visibility = Visibility.Visible;
+                MoveCountTextBlock.Text = "0";
+                WaitForCompositionTimer.Stop();
+            }
+        }
+
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
             InitializeButtonArray();
-            while(IsSolved())
-            {
-                ResetBoard();
-            }
+            WaitForCompositionTimer.Start();
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
-            Button blankBtn = _buttons[_blankRow, _blankCol];
-            blankBtn.Background = _blankTileBrush;
-            blankBtn.Visibility = Visibility.Visible;
-            MoveCountTextBlock.Text = "0";
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             _boardSize = (int)e.Parameter;
@@ -68,6 +85,8 @@ namespace Fifteen
 
         void InitializeButtonArray()
         {
+            GazeInput.SetInteraction(GameGrid, Interaction.Disabled);
+
             GameGrid.Children.Clear();
             GameGrid.RowDefinitions.Clear();
             GameGrid.ColumnDefinitions.Clear();
@@ -85,8 +104,17 @@ namespace Fifteen
                 for (int col = 0; col < _boardSize; col++)
                 {
                     var button = new Button();
+                    button.Background = _solidTileBrush;
                     button.Name = "button" + "_" + col + "_" + row;
-                    button.Content = ((row * _boardSize) + col + 1).ToString();
+                    if (!(row == _boardSize - 1 && col == _boardSize - 1))
+                    {
+                        button.Content = ((row * _boardSize) + col + 1).ToString();
+                    }
+                    else
+                    {
+                        button.Content = "";
+                        button.Background = _blankTileBrush;
+                    }
                     button.Tag = (row * _boardSize) + col;
                     button.Click += OnButtonClick;
                     button.Style = Resources["ButtonStyle"] as Style;
@@ -129,7 +157,7 @@ namespace Fifteen
                 int col = _blankCol;
                 if (changeRow)
                 {
-                    row = decrement ? row - 1 : row + 1;    
+                    row = decrement ? row - 1 : row + 1;
                 }
                 else
                 {
@@ -146,6 +174,23 @@ namespace Fifteen
                     shuffleCount--;
                 }
             }
+            GazeInput.SetInteraction(GameGrid, Interaction.Enabled);
+        }
+
+        private bool IsButtonCompositionReady()
+        {
+            for (int row = 0; row < _boardSize; row++)
+            {
+                for (int col = 0; col < _boardSize; col++)
+                {
+                    var btnVisual = ElementCompositionPreview.GetElementVisual(_buttons[row, col]);
+                    if (btnVisual.Offset.X == 0 && btnVisual.Offset.Y == 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         bool SwapBlank(int row, int col)
@@ -167,7 +212,7 @@ namespace Fifteen
             Button blankBtn = _buttons[_blankRow, _blankCol];
 
             //Get Visuals for the selected button that is going to appear to slide and for the blank button
-            var btnVisual = ElementCompositionPreview.GetElementVisual(btn);            
+            var btnVisual = ElementCompositionPreview.GetElementVisual(btn);
             var compositor = btnVisual.Compositor;
             var blankBtnVisual = ElementCompositionPreview.GetElementVisual(blankBtn);
 
@@ -205,7 +250,7 @@ namespace Fifteen
             //Force selected button to the bottom and the blank button to the top
             Canvas.SetZIndex(btn, -_boardSize);
             Canvas.SetZIndex(blankBtn, 0);
-            
+
             //Update the background colors of the two buttons to reflect their new condition
             btn.Background = _blankTileBrush;
             blankBtn.Background = _solidTileBrush;
@@ -227,7 +272,7 @@ namespace Fifteen
             CheckCompletion();
         }
 
-            private void OnButtonClick(object sender, RoutedEventArgs e)
+        private void OnButtonClick(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             int cellNumber = int.Parse(button.Tag.ToString());
@@ -237,7 +282,7 @@ namespace Fifteen
             if (SwapBlank(row, col))
             {
                 _numMoves++;
-                MoveCountTextBlock.Text = _numMoves.ToString();                
+                MoveCountTextBlock.Text = _numMoves.ToString();
             }
         }
 
@@ -261,7 +306,7 @@ namespace Fifteen
             {
                 return;
             }
-            
+
             string message = $"You solved the puzzle in {_numMoves} moves";
             DialogText.Text = message;
             DialogGrid.Visibility = Visibility.Visible;
@@ -273,7 +318,7 @@ namespace Fifteen
             while (IsSolved())
             {
                 ResetBoard();
-            }                                    
+            }
         }
 
         private void DialogButton2_Click(object sender, RoutedEventArgs e)
@@ -288,7 +333,7 @@ namespace Fifteen
         }
 
         private void OnBack(object sender, RoutedEventArgs e)
-        {            
+        {
             Frame.Navigate(typeof(MainPage));
         }
 
@@ -298,18 +343,18 @@ namespace Fifteen
 
             if (_interactionPaused)
             {
-                PauseButtonText.Text = "\uE769";               
+                PauseButtonText.Text = "\uE769";
                 PauseButtonBorder.Background = _toolButtonBrush;
                 GazeInput.SetInteraction(GameGrid, Interaction.Enabled);
                 _interactionPaused = false;
             }
             else
             {
-                PauseButtonText.Text = "\uE768";               
+                PauseButtonText.Text = "\uE768";
                 PauseButtonBorder.Background = _pausedButtonBrush;
                 GazeInput.SetInteraction(GameGrid, Interaction.Disabled);
                 _interactionPaused = true;
             }
-        }       
+        }
     }
 }
