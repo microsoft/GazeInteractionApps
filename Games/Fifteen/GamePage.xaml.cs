@@ -24,10 +24,10 @@ namespace Fifteen
         int _blankCol;
         int _numMoves;
         bool _interactionPaused = false;
-
-        SolidColorBrush _solidTileBrush = new SolidColorBrush(Color.FromArgb(255, 78, 77, 153));
+        
+        SolidColorBrush _solidTileBrush;
         SolidColorBrush _blankTileBrush = new SolidColorBrush(Colors.Transparent);
-        SolidColorBrush _toolButtonBrush = new SolidColorBrush(Color.FromArgb(255, 68, 98, 248));
+        SolidColorBrush _toolButtonBrush;
         SolidColorBrush _pausedButtonBrush = new SolidColorBrush(Colors.Black);
 
         CompositionScopedBatch _slideBatchAnimation;
@@ -37,6 +37,9 @@ namespace Fifteen
         public GamePage()
         {
             InitializeComponent();
+
+            _solidTileBrush = (SolidColorBrush)this.Resources["TileBackground"];
+            _toolButtonBrush = (SolidColorBrush)this.Resources["ToolBarButtonBackground"]; 
 
             WaitForCompositionTimer = new DispatcherTimer();
             WaitForCompositionTimer.Tick += WaitForCompositionTimer_Tick;
