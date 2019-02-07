@@ -20,6 +20,7 @@
         </Style>
         <SolidColorBrush x:Key="TileBackground" Color="#FF4D4D99"/>
         <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FF4461F7"/>
+        <x:Double x:Key="HelpTextFontSize">30</x:Double>
     </Page.Resources>
     <Page.Background>
         <LinearGradientBrush EndPoint="0.5,0.0" StartPoint="0.5,1" MappingMode="RelativeToBoundingBox">
@@ -31,32 +32,283 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="0"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="137.5" />
+            <ColumnDefinition Width="40" />
             <ColumnDefinition/>
             <ColumnDefinition />
             <ColumnDefinition />
-            <ColumnDefinition Width="Auto" MinWidth="0"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="40"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="4"  Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="00:00:01.5000000" FontWeight="ExtraBold" Margin="0,40,40,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Foreground="White" Grid.Row="0">
+        <Button Grid.Column="4"  Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="00:00:01.5000000" FontWeight="ExtraBold" Margin="0,40,0,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Foreground="White" Grid.Row="0">
             <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                 <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold"></TextBlock>
             </Border>
         </Button>
         <!--<Button Grid.Column="2" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100" Margin="50,20,20,50"  gaze:GazeInput.DwellDuration="00:00:01.5000000" />-->
-        <TextBlock Grid.Row="1" Grid.ColumnSpan="5" FontSize="48" VerticalAlignment="Top" HorizontalTextAlignment="Center" Margin="0,22,0,0" Foreground="{StaticResource TileBackground}" FontWeight="Bold">15 Puzzle</TextBlock>
-        <TextBlock Grid.Row="2" Grid.ColumnSpan="5" FontSize="36" VerticalAlignment="Top" HorizontalTextAlignment="Center" Margin="0,22.5,0,0"  Foreground="{StaticResource TileBackground}" FontWeight="Bold">Select a puzzle size</TextBlock>
-        <Button Grid.Row="4" Grid.Column="1" Tag="2" Click="OnBoardSizeSelected" Background="{StaticResource TileBackground}" Foreground="White" Margin="0,0,20,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">3</Button>
-        <Button Grid.Row="4" Grid.Column="2" Tag="3" Click="OnBoardSizeSelected" Background="{StaticResource TileBackground}" Foreground="White" Margin="20,0,20,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">8</Button>
-        <Button Grid.Row="4" Grid.Column="3" Tag="4" Click="OnBoardSizeSelected" Background="{StaticResource TileBackground}" Foreground="White" Margin="20,0,0,10"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">15</Button>
+        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="72" VerticalAlignment="Top" HorizontalTextAlignment="Center" Margin="0,22,0,0" Foreground="{StaticResource TileBackground}" FontWeight="Bold" FontFamily="Segoe MDL2 Assets">Tile Slide</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" FontSize="36" VerticalAlignment="Bottom" HorizontalTextAlignment="Center"  Foreground="{StaticResource TileBackground}" Margin="0,0,0,20" FontFamily="Segoe UI">Select a puzzle size</TextBlock>
+        <Grid Grid.Row="3" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="0"/>
+                <RowDefinition Height="Auto" MinHeight="0"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
 
-        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="5" Grid.Column="4" Padding="0,0,10,10" FontFamily="Segoe UI"></TextBlock>
+            <Button Grid.Row="0" Grid.Column="1" Tag="2" Click="OnBoardSizeSelected" Background="{x:Null}" Foreground="White" Margin="0,0,20,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="200" FontFamily="Segoe UI">
+            <Border Background="White" CornerRadius="10" Padding="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Column="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1"></Rectangle>
+                    <Rectangle Margin="2" RadiusX="2" RadiusY="2" Stroke="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="1" StrokeThickness="2"/>
+
+                </Grid>
+            </Border>
+        </Button>
+        <Button Grid.Row="0" Grid.Column="2" Tag="3" Click="OnBoardSizeSelected" Background="{x:Null}" Foreground="White" Margin="20,0,20,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="200" Height="200">
+            <Border Background="White" CornerRadius="10" Padding="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Column="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="0" Grid.Column="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1" Grid.Column="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1" Grid.Column="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="2" Grid.Column="1"></Rectangle>
+                    <Rectangle Margin="2" RadiusX="2" RadiusY="2" Stroke="{StaticResource TileBackground}" Grid.Row="2" Grid.Column="2" StrokeThickness="2"/>
+
+                </Grid>
+            </Border>
+        </Button>
+        <Button Grid.Row="0" Grid.Column="3" Tag="4" Click="OnBoardSizeSelected" Background="{x:Null}" Foreground="White" Margin="20,0,20,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="200">
+            <Border Background="White" CornerRadius="10" Padding="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Column="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="0" Grid.Column="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1" Grid.Column="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1" Grid.Column="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="2" Grid.Column="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="2" Grid.Column="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="2" Grid.Column="3"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="3"/>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="3" Grid.Column="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="3" Grid.Column="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Column="3"/>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1" Grid.Column="3"></Rectangle>
+                    <Rectangle Margin="2" RadiusX="2" RadiusY="2" Stroke="{StaticResource TileBackground}" Grid.Row="3" Grid.Column="3" StrokeThickness="2"/>
+
+                </Grid>
+            </Border>
+        </Button>
+        <Button Grid.Row="0" Grid.Column="4" Tag="5" Click="OnBoardSizeSelected" Background="{x:Null}" Foreground="White" Margin="20,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="198" Height="200">
+            <Border Background="White" CornerRadius="10,10,10,10" Padding="5,5,5,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Column="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="0" Grid.Column="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1" Grid.Column="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1" Grid.Column="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="2" Grid.Column="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="2" Grid.Column="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="2" Grid.Column="3"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="3"/>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="3" Grid.Column="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="3" Grid.Column="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Column="3"/>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1" Grid.Column="3"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="3" Grid.Column="3"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="4"/>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="4" Grid.Column="1"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="4" Grid.Column="2"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="4" Grid.Column="3"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Column="4"/>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="1" Grid.Column="4"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="2" Grid.Column="4"></Rectangle>
+                    <Rectangle Fill="{StaticResource TileBackground}" Margin="2" RadiusX="2" RadiusY="2" Grid.Row="3" Grid.Column="4"></Rectangle>
+
+                    <Rectangle Margin="2" RadiusX="2" RadiusY="2" Stroke="{StaticResource TileBackground}" Grid.Row="14" Grid.Column="4" StrokeThickness="2"/>
+
+                </Grid>
+            </Border>
+        </Button>
+
+        <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="Bold">3 tiles</TextBlock>
+        <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="Bold">8 tiles</TextBlock>
+        <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="Bold">15 tiles</TextBlock>
+        <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="Bold">24 tiles</TextBlock>
+        </Grid>
+
+        <Button Background="{x:Null}" Foreground="White" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="OnHowToPlayButton" FontSize="24" Height="100" FontWeight="Bold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1">
+            <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="10,10,10,10">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,20,0" FontFamily="Segoe UI">
+                    How to Play
+                </TextBlock>
+            </Border>
+        </Button>
+        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="5" Grid.Column="5" Padding="0,0,40,20" FontFamily="Segoe UI" Grid.ColumnSpan="2"></TextBlock>
+        <Grid Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="6" x:Name="HelpDialogGrid" Visibility="Collapsed" Background="#99FFFFFF" Margin="0,0,0,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="{ThemeResource AppBarItemForegroundThemeBrush}" BorderThickness="1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="{StaticResource TileBackground}" CornerRadius="20,20,20,20" Margin="20,0,18,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <Button x:Name="HelpNavRightButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,10,20,10"  Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="OnHelpNavRight">
+                        <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
+                            <TextBlock Text="&#xe76c;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="Bold" FontFamily="Segoe MDL2 Assets" FontSize="72"></TextBlock>
+                        </Border>
+                    </Button>
+                    <Button x:Name="HelpNavLeftButton" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"   Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" Padding="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="20,10,20,10" Click="OnHelpNavLeft" IsEnabled="False">
+                        <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
+                            <TextBlock Text="&#xe76b;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="Bold" FontFamily="Segoe MDL2 Assets" FontSize="72"></TextBlock>
+                        </Border>
+                    </Button>
+                    <Grid x:Name="HelpScreen1" Grid.Column="1" Visibility="Visible" Margin="50,0,50,0" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150px"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Eyes First Tile Slide is a game with four puzzle boards of increasing difficulty. You may choose from a 3, 8, 15 or 24 board, each with the corresponding number of slidding tiles plus one empty space." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.Row="1"/>
+                        <TextBlock Text="1 of 3" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Grid x:Name="HelpScreen2" Grid.Column="1" Visibility="Collapsed" Margin="50,0,50,0" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150px"/>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI" Grid.ColumnSpan="2"/>
+                        <TextBlock Text="2 of 3" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="The goal of the game is to unscramble the puzzle board by getting all the tiles back in order." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.RowSpan="2" Grid.Row="1"/>
+                        <Image Source="/Assets/Solved15.PNG" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20,20,20,20" Grid.Column="1" Grid.RowSpan="2" Grid.Row="1"/>
+                    </Grid>
+                    <Grid x:Name="HelpScreen3" Grid.Column="1" Visibility="Collapsed" Margin="50,0,50,0" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150px"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI"/>
+                        <TextBlock Text="3 of 3" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
+                        <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="20px"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50"  Background="{x:Null}" FontWeight="ExtraBold" Margin="16,0,0,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+                                <Border x:Name="PauseButtonBorder" Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
+                                    <TextBlock x:Name="PauseButtonText" Text="&#xE769;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
+                                </Border>
+                            </Button>
+                            <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Grid.Column="1">The pause button allows you to pause the game and study the board by temporarily locking down all tiles.</TextBlock>
+
+                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50" Background="{x:Null}" FontWeight="ExtraBold" Margin="16,0,0,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="2">
+                                <Border Background="Black" CornerRadius="5" HorizontalAlignment="Stretch">
+                                    <TextBlock Text="&#xE768;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
+                                </Border>
+                            </Button>
+                            <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Grid.Column="8" Grid.Row="2" FontFamily="Segoe MDL2 Assets">Press play to resume the game.</TextBlock>
+
+                        </Grid>
+                        
+                    </Grid>
+                    <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontSize="52" Height="100" Background="{x:Null}" FontWeight="ExtraBold" Margin="0,20,20,20" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton">
+                        <Border Background="White" CornerRadius="5" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Stretch">
+                            <!--<TextBlock Text="&#xe8bb;" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold" ></TextBlock>-->
+                            <TextBlock Text="Back to game" Foreground="{StaticResource ToolBarButtonBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" FontWeight="ExtraBold" FontSize="24" Padding="60,0,60,0" ></TextBlock>
+                        </Border>
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 
 </Page>

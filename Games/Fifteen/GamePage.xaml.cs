@@ -312,11 +312,13 @@ namespace Fifteen
 
             string message = $"You solved the puzzle in {_numMoves} moves";
             DialogText.Text = message;
-            DialogGrid.Visibility = Visibility.Visible;
+            GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
+            DialogGrid.Visibility = Visibility.Visible;            
         }
 
         private void DialogButton_Click(object sender, RoutedEventArgs e)
         {
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             DialogGrid.Visibility = Visibility.Collapsed;
             while (IsSolved())
             {
@@ -326,8 +328,15 @@ namespace Fifteen
 
         private void DialogButton2_Click(object sender, RoutedEventArgs e)
         {
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             DialogGrid.Visibility = Visibility.Collapsed;
             Frame.Navigate(typeof(MainPage));
+        }
+
+        private void DismissButton(object sender, RoutedEventArgs e)
+        {
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+            DialogGrid.Visibility = Visibility.Collapsed;
         }
 
         private void OnExit(object sender, RoutedEventArgs e)
@@ -358,6 +367,6 @@ namespace Fifteen
                 GazeInput.SetInteraction(GameGrid, Interaction.Disabled);
                 _interactionPaused = true;
             }
-        }
+        }      
     }
 }
