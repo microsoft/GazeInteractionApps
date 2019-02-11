@@ -11,6 +11,19 @@
     mc:Ignorable="d" FontFamily="Segoe UI">
 
     <Page.Resources>
+        <Style  x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="42" />
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -19,8 +32,9 @@
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Margin" Value="10" />
-            <Setter Property="FontSize" Value="64" />
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="42" />
+            <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -81,17 +95,17 @@
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <Grid CornerRadius="10,10,10,10" Background="{TemplateBinding Background}" >
-                                <Rectangle Stroke="#FFC3D6FF" Margin="10,10,10,10" RadiusX="5" RadiusY="5" ></Rectangle>
                                 <ContentPresenter x:Name="ContentPresenter"
                               BorderBrush="{TemplateBinding BorderBrush}"
-                              BorderThickness="{TemplateBinding BorderThickness}"
-                              Content="{TemplateBinding Content}"
+                              BorderThickness="{TemplateBinding BorderThickness}"                             
                               ContentTransitions="{TemplateBinding ContentTransitions}"
                               ContentTemplate="{TemplateBinding ContentTemplate}"
                               Padding="{TemplateBinding Padding}"
                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                              AutomationProperties.AccessibilityView="Raw"/>
+                              AutomationProperties.AccessibilityView="Raw">
+                                    <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{TemplateBinding FontFamily}" Margin="0,-4,0,0"/>
+                                </ContentPresenter>
                             </Grid>
 
                         </Grid>
@@ -101,12 +115,13 @@
 
         </Style>
         <SolidColorBrush x:Key="TileBackground" Color="#FF4D4D99"/>
-        <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FF4461F7"/>
+        <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FF2292a6"/>
     </Page.Resources>
     <Page.Background>
-        <LinearGradientBrush EndPoint="0.5,0.0" StartPoint="0.5,1" MappingMode="RelativeToBoundingBox">
-            <GradientStop Color="#FFC2D6FF" Offset="0.69"/>
-            <GradientStop Color="#FF5Ba4fa" Offset="0"/>
+        <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1.2" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
+            <GradientStop Color="#c6ffff" Offset="0.8"/>
+            <GradientStop Color="#FFc6beff" Offset="0.009"/>
+            <GradientStop Color="White" Offset="1"/>
         </LinearGradientBrush>
     </Page.Background>
 
@@ -124,24 +139,24 @@
             </Grid.ColumnDefinitions>
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="150,0,0,0" FontSize="36" FontWeight="Bold" Foreground="{StaticResource TileBackground}" FontFamily="Segoe UI">15 PUZZLE</TextBlock>
-                <TextBlock Foreground="{StaticResource TileBackground}" FontSize="24" VerticalAlignment="Center" Margin="40,0,0,0">Moves</TextBlock>
+                <TextBlock Foreground="{StaticResource TileBackground}" FontSize="24" VerticalAlignment="Center" Margin="40,0,0,0" FontFamily="Segoe UI">Moves</TextBlock>
                 <TextBlock Foreground="{StaticResource TileBackground}" x:Name="MoveCountTextBlock" FontSize="24" VerticalAlignment="Center" FontWeight="Bold" Margin="20,0,0,0" FontFamily="Segoe UI"></TextBlock>
             </StackPanel>
-            <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="00:00:01.5000000" Background="{x:Null}" FontWeight="ExtraBold" Margin="0,0,0,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+            <Button Grid.Column="2" Style="{StaticResource ActionButtonStyle}" Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="00:00:01.5000000" Background="{x:Null}" FontWeight="ExtraBold" Margin="0,0,0,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
                 <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
-                    <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold"></TextBlock>
+                    <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
                 </Border>
             </Button>
 
-            <Button Grid.Column="2" Style="{StaticResource ButtonStyle}"  HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Click="OnPause" Background="{x:Null}" FontWeight="ExtraBold" Margin="0,0,0,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+            <Button Grid.Column="2" Style="{StaticResource ActionButtonStyle}"  HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Click="OnPause" Background="{x:Null}" FontWeight="ExtraBold" Margin="0,0,0,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
                 <Border x:Name="PauseButtonBorder" Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                     <TextBlock x:Name="PauseButtonText" Text="&#xE769;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold" FontFamily="Segoe MDL2 Assets"></TextBlock>
                 </Border>
             </Button>
 
-            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnBack" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="00:00:01.5000000"  Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="False" Padding="0,0,0,0" BorderBrush="{x:Null}" Background="{x:Null}" FocusVisualPrimaryBrush="{x:Null}">
+            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ActionButtonStyle}" Click="OnBack" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="00:00:01.5000000"  Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="False" Padding="0,0,0,0" BorderBrush="{x:Null}" Background="{x:Null}" FocusVisualPrimaryBrush="{x:Null}">
                 <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
-                    <TextBlock Text="&#xe72b;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold"></TextBlock>
+                    <TextBlock Text="&#xe72b;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
                 </Border>
             </Button>
         </Grid>
@@ -168,7 +183,7 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="1" Style="{StaticResource ButtonStyle}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Background="{x:Null}" FontWeight="ExtraBold" Margin="0,20,20,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton" Visibility="Collapsed">
+                    <Button Grid.Column="1" Style="{StaticResource ActionButtonStyle}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Background="{x:Null}" FontWeight="ExtraBold" Margin="0,20,20,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton" Visibility="Collapsed">
                         <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="96">
                             <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold" ></TextBlock>
                         </Border>
@@ -184,8 +199,8 @@
                             <TextBlock Text="Change Puzzle Size" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="Bold" Foreground="{StaticResource ToolBarButtonBackground}"></TextBlock>
                         </Border>
                     </Button>
-                    <TextBlock x:Name="CongratsText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Congratulations!" VerticalAlignment="Top" Margin="0,50,0,0" FontSize="48" Foreground="White" FontWeight="Bold" Grid.ColumnSpan="2"/>
-                    <TextBlock x:Name="DialogText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontSize="24" Foreground="White" Margin="0,150,0,0" Grid.ColumnSpan="2"/>
+                    <TextBlock x:Name="CongratsText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Congratulations" VerticalAlignment="Top" Margin="0,50,0,0" FontSize="48" Foreground="White" FontWeight="Bold" Grid.ColumnSpan="2"/>
+                    <TextBlock x:Name="DialogText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontSize="30" Foreground="White" Margin="0,150,0,0" Grid.ColumnSpan="2"/>
                 </Grid>
             </Border>
         </Grid>

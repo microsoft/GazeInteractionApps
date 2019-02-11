@@ -19,13 +19,14 @@
             <Setter Property="Margin" Value="50"/>
         </Style>
         <SolidColorBrush x:Key="TileBackground" Color="#FF4D4D99"/>
-        <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FF4461F7"/>
+        <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FF2292a6"/>
         <x:Double x:Key="HelpTextFontSize">30</x:Double>
     </Page.Resources>
     <Page.Background>
-        <LinearGradientBrush EndPoint="0.5,0.0" StartPoint="0.5,1" MappingMode="RelativeToBoundingBox">
-            <GradientStop Color="#FFC2D6FF" Offset="0.69"/>
-            <GradientStop Color="#FF5Ba4fa" Offset="0"/>
+        <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1.2" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
+            <GradientStop Color="#c6ffff" Offset="0.8"/>
+            <GradientStop Color="#FFc6beff" Offset="0.009"/>
+            <GradientStop Color="White" Offset="1"/>
         </LinearGradientBrush>
     </Page.Background>
 
@@ -52,7 +53,7 @@
             </Border>
         </Button>
         <!--<Button Grid.Column="2" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100" Margin="50,20,20,50"  gaze:GazeInput.DwellDuration="00:00:01.5000000" />-->
-        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="72" VerticalAlignment="Top" HorizontalTextAlignment="Center" Margin="0,22,0,0" Foreground="{StaticResource TileBackground}" FontWeight="Bold" FontFamily="Segoe MDL2 Assets">Tile Slide</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="72" VerticalAlignment="Top" HorizontalTextAlignment="Center" Margin="0,22,0,0" Foreground="{StaticResource TileBackground}" FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets">Tile Slide</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" FontSize="36" VerticalAlignment="Bottom" HorizontalTextAlignment="Center"  Foreground="{StaticResource TileBackground}" Margin="0,0,0,20" FontFamily="Segoe UI">Select a puzzle size</TextBlock>
         <Grid Grid.Row="3" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="4">
             <Grid.RowDefinitions>
@@ -202,7 +203,7 @@
         <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="Bold">24 tiles</TextBlock>
         </Grid>
 
-        <Button Background="{x:Null}" Foreground="White" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="OnHowToPlayButton" FontSize="24" Height="100" FontWeight="Bold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1">
+        <Button Background="{x:Null}" Foreground="White" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="OnHowToPlayButton" FontSize="24" Height="100" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1">
             <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="10,10,10,10">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,20,0" FontFamily="Segoe UI">
                     How to Play
@@ -246,7 +247,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Eyes First Tile Slide is a game with four puzzle boards of increasing difficulty. You may choose from a 3, 8, 15 or 24 board, each with the corresponding number of slidding tiles plus one empty space." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.Row="1"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Eyes First Tile Slide is a game with four puzzle boards of increasing difficulty.&#x0d;&#x0d; You may choose from a 3, 8, 15 or 24 board, each with the corresponding number of sliding tiles plus one empty space." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.Row="1"/>
                         <TextBlock Text="1 of 3" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
                     <Grid x:Name="HelpScreen2" Grid.Column="1" Visibility="Collapsed" Margin="50,0,50,0" >
@@ -290,7 +291,7 @@
                             </Button>
                             <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Grid.Column="1">The pause button allows you to pause the game and study the board by temporarily locking down all tiles.</TextBlock>
 
-                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50" Background="{x:Null}" FontWeight="ExtraBold" Margin="16,0,0,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="2">
+                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50" Background="{x:Null}" FontWeight="ExtraBold" Margin="20,0,0,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="2">
                                 <Border Background="Black" CornerRadius="5" HorizontalAlignment="Stretch">
                                     <TextBlock Text="&#xE768;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
                                 </Border>

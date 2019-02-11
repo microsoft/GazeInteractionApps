@@ -310,7 +310,7 @@ namespace Fifteen
                 return;
             }
 
-            string message = $"You solved the puzzle in {_numMoves} moves";
+            string message = $"You solved the puzzle in {_numMoves} moves!";
             DialogText.Text = message;
             GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
             DialogGrid.Visibility = Visibility.Visible;            
