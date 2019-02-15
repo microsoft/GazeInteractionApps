@@ -47,9 +47,9 @@
             <ColumnDefinition />
             <ColumnDefinition Width="40"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="4"  Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="00:00:01.5000000" FontWeight="ExtraBold" Margin="0,40,0,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Foreground="White" Grid.Row="0">
+        <Button Grid.Column="4"  Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="00:00:01.5000000" FontWeight="SemiBold" Margin="0,40,0,0" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Foreground="White" Grid.Row="0" Background="{x:Null}">
             <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
-                <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold"></TextBlock>
+                <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold"></TextBlock>
             </Border>
         </Button>
         <!--<Button Grid.Column="2" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100" Margin="50,20,20,50"  gaze:GazeInput.DwellDuration="00:00:01.5000000" />-->
@@ -197,10 +197,10 @@
             </Border>
         </Button>
 
-        <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="Bold">3 tiles</TextBlock>
-        <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="Bold">8 tiles</TextBlock>
-        <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="Bold">15 tiles</TextBlock>
-        <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="Bold">24 tiles</TextBlock>
+        <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="SemiBold">3 tiles</TextBlock>
+        <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="SemiBold">8 tiles</TextBlock>
+        <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="SemiBold">15 tiles</TextBlock>
+        <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="SemiBold">24 tiles</TextBlock>
         </Grid>
 
         <Button Background="{x:Null}" Foreground="White" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="OnHowToPlayButton" FontSize="24" Height="100" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1">
@@ -233,12 +233,12 @@
 
                     <Button x:Name="HelpNavRightButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,10,20,10"  Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="OnHelpNavRight">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
-                            <TextBlock Text="&#xe76c;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="Bold" FontFamily="Segoe MDL2 Assets" FontSize="72"></TextBlock>
+                            <TextBlock Text="&#xe76c;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" FontSize="72"></TextBlock>
                         </Border>
                     </Button>
                     <Button x:Name="HelpNavLeftButton" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"   Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" Padding="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="20,10,20,10" Click="OnHelpNavLeft" IsEnabled="False">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
-                            <TextBlock Text="&#xe76b;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="Bold" FontFamily="Segoe MDL2 Assets" FontSize="72"></TextBlock>
+                            <TextBlock Text="&#xe76b;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" FontSize="72"></TextBlock>
                         </Border>
                     </Button>
                     <Grid x:Name="HelpScreen1" Grid.Column="1" Visibility="Visible" Margin="50,0,50,0" >
@@ -284,16 +284,16 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50"  Background="{x:Null}" FontWeight="ExtraBold" Margin="16,0,0,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50"  Background="{x:Null}" FontWeight="SemiBold" Margin="16,0,0,0"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
                                 <Border x:Name="PauseButtonBorder" Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
-                                    <TextBlock x:Name="PauseButtonText" Text="&#xE769;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
+                                    <TextBlock x:Name="PauseButtonText" Text="&#xE769;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
                                 </Border>
                             </Button>
                             <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Grid.Column="1">The pause button allows you to pause the game and study the board by temporarily locking down all tiles.</TextBlock>
 
-                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50" Background="{x:Null}" FontWeight="ExtraBold" Margin="20,0,0,0" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="2">
+                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50" Background="{x:Null}" FontWeight="SemiBold" Margin="20,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="2">
                                 <Border Background="Black" CornerRadius="5" HorizontalAlignment="Stretch">
-                                    <TextBlock Text="&#xE768;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
+                                    <TextBlock Text="&#xE768;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
                                 </Border>
                             </Button>
                             <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Grid.Column="8" Grid.Row="2" FontFamily="Segoe MDL2 Assets">Press play to resume the game.</TextBlock>
@@ -301,10 +301,10 @@
                         </Grid>
                         
                     </Grid>
-                    <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontSize="52" Height="100" Background="{x:Null}" FontWeight="ExtraBold" Margin="0,20,20,20" FocusVisualPrimaryBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton">
+                    <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontSize="52" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,20" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Stretch">
-                            <!--<TextBlock Text="&#xe8bb;" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="ExtraBold" ></TextBlock>-->
-                            <TextBlock Text="Back to game" Foreground="{StaticResource ToolBarButtonBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" FontWeight="ExtraBold" FontSize="24" Padding="60,0,60,0" ></TextBlock>
+                            <!--<TextBlock Text="&#xe8bb;" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" ></TextBlock>-->
+                            <TextBlock Text="Back to game" Foreground="{StaticResource ToolBarButtonBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="24" Padding="60,0,60,0" ></TextBlock>
                         </Border>
                     </Button>
                 </Grid>

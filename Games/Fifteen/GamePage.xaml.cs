@@ -34,6 +34,8 @@ namespace Fifteen
 
         DispatcherTimer WaitForCompositionTimer;
 
+        bool _gameOver = false;
+
         public GamePage()
         {
             InitializeComponent();
@@ -135,6 +137,7 @@ namespace Fifteen
 
         void ResetBoard()
         {
+            _gameOver = false;
             _numMoves = 0;
             MoveCountTextBlock.Text = _numMoves.ToString();
             for (int i = 0; i < _boardSize; i++)
@@ -177,7 +180,7 @@ namespace Fifteen
                     shuffleCount--;
                 }
             }
-            GazeInput.SetInteraction(GameGrid, Interaction.Enabled);
+            GazeInput.SetInteraction(GameGrid, Interaction.Enabled);            
         }
 
         private bool IsButtonCompositionReady()
@@ -199,7 +202,7 @@ namespace Fifteen
         bool SwapBlank(int row, int col)
         {
             //Prevent tile slides once puzzle is solved
-            if (DialogGrid.Visibility == Visibility.Visible)
+            if (DialogGrid.Visibility == Visibility.Visible || _gameOver)
             {
                 return false;
             }
@@ -313,7 +316,8 @@ namespace Fifteen
             string message = $"You solved the puzzle in {_numMoves} moves!";
             DialogText.Text = message;
             GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
-            DialogGrid.Visibility = Visibility.Visible;            
+            DialogGrid.Visibility = Visibility.Visible;
+            _gameOver = true;
         }
 
         private void DialogButton_Click(object sender, RoutedEventArgs e)
@@ -337,6 +341,14 @@ namespace Fifteen
         {
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             DialogGrid.Visibility = Visibility.Collapsed;
+
+            RootGrid.Children.Remove(PlayAgainButton);
+            Grid.SetColumn(PlayAgainButton, Grid.GetColumn(_buttons[_boardSize - 1, _boardSize - 1]));
+            Grid.SetRow(PlayAgainButton, Grid.GetRow(_buttons[_boardSize - 1, _boardSize - 1]));
+            PlayAgainButton.MaxWidth = _buttons[_boardSize - 1, _boardSize - 1].ActualWidth;
+            PlayAgainButton.MaxHeight = _buttons[_boardSize - 1, _boardSize - 1].ActualHeight;
+            GameGrid.Children.Add(PlayAgainButton);
+            PlayAgainButton.Visibility = Visibility.Visible;
         }
 
         private void OnExit(object sender, RoutedEventArgs e)
@@ -367,6 +379,18 @@ namespace Fifteen
                 GazeInput.SetInteraction(GameGrid, Interaction.Disabled);
                 _interactionPaused = true;
             }
-        }      
+        }
+
+        private void PlayAgainButton_Click(object sender, RoutedEventArgs e)
+        {
+            GameGrid.Children.Remove(PlayAgainButton);
+            RootGrid.Children.Add(PlayAgainButton);
+            PlayAgainButton.Visibility = Visibility.Collapsed;
+            while (IsSolved())
+            {
+                ResetBoard();
+            }
+
+        }
     }
 }
