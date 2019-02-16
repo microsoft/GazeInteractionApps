@@ -36,6 +36,8 @@ namespace Fifteen
 
         bool _gameOver = false;
 
+        bool _animationActive = false;
+
         public GamePage()
         {
             InitializeComponent();
@@ -242,6 +244,7 @@ namespace Fifteen
             slideAnimation.Duration = TimeSpan.FromMilliseconds(500);
 
             //Apply the slide anitmation to the blank button
+            _animationActive = true;
             blankBtnVisual.StartAnimation(nameof(btnVisual.Offset), slideAnimation);
             _slideBatchAnimation.End();
 
@@ -276,10 +279,13 @@ namespace Fifteen
         private void SlideBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
         {
             CheckCompletion();
+            _animationActive = false;
         }
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
+            if (_animationActive) return;
+
             var button = sender as Button;
             int cellNumber = int.Parse(button.Tag.ToString());
             int row = cellNumber / _boardSize;
