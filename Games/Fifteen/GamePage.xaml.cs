@@ -8,6 +8,9 @@ using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.Foundation.Collections;
 using Windows.Foundation;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Hosting;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
 
 namespace Fifteen
 {
@@ -20,6 +23,8 @@ namespace Fifteen
         int _blankCol;
         int _numMoves;
 
+        SolidColorBrush _solidTileBrush = new SolidColorBrush(Colors.Silver);
+        SolidColorBrush _blankTileBrush = new SolidColorBrush(Colors.White);
 
         public GamePage()
         {
@@ -41,6 +46,10 @@ namespace Fifteen
             {
                 ResetBoard();
             }
+            GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
+            Button blankBtn = _buttons[_blankRow, _blankCol];
+            blankBtn.Background = _blankTileBrush;
+            blankBtn.Visibility = Visibility.Visible;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) 
@@ -131,16 +140,64 @@ namespace Fifteen
 
         bool SwapBlank(int row, int col)
         {
+            //Prevent tile slides once puzzle is solved
+            if (DialogGrid.Visibility == Visibility.Visible)
+            {
+                return false;
+            }
+
             if (!((((row == _blankRow - 1) || (row == _blankRow + 1)) && (col == _blankCol)) ||
                  (((col == _blankCol - 1) || (col == _blankCol + 1)) && (row == _blankRow))))
             {
                 return false;
             }
 
+            //Slide button visual
+            Button btn = _buttons[row, col];
+            Button blankBtn = _buttons[_blankRow, _blankCol];
+
+            //Get Visuals for the selected button that is going to appear to slide and for the blank button
+            var btnVisual = ElementCompositionPreview.GetElementVisual(btn);            
+            var compositor = btnVisual.Compositor;
+            var blankBtnVisual = ElementCompositionPreview.GetElementVisual(blankBtn);
+
+            var easing = compositor.CreateLinearEasingFunction();
+
+            //Create an animation to first move the blank button with its updated contents to
+            //instantly appear in the position position of the selected button
+            //then slide that button back into its original position
+            var slideAnimation = compositor.CreateVector3KeyFrameAnimation();
+            slideAnimation.InsertKeyFrame(0f, btnVisual.Offset);
+            slideAnimation.InsertKeyFrame(1f, blankBtnVisual.Offset, easing);
+            slideAnimation.Duration = TimeSpan.FromMilliseconds(500);
+
+            //Apply the slide anitmation to the blank button
+            blankBtnVisual.StartAnimation(nameof(btnVisual.Offset), slideAnimation);
+
+            //Swap content of the selected button with the blank button and clear the selected button
             _buttons[_blankRow, _blankCol].Content = _buttons[row, col].Content;
             _buttons[row, col].Content = "";
             _blankRow = row;
             _blankCol = col;
+
+
+            //Note there is some redunancy in the following settings that corrects the UI at board load as well as tile slide 
+            //Force selected button to the bottom and the blank button to the top
+            Canvas.SetZIndex(btn, -_boardSize);
+            Canvas.SetZIndex(blankBtn, 0);
+            
+            //Update the background colors of the two buttons to reflect their new condition
+            btn.Background = _blankTileBrush;
+            blankBtn.Background = _solidTileBrush;
+
+            //Update the visibility to collapse the selected button that is now blank
+            btn.Visibility = Visibility.Collapsed;
+            blankBtn.Visibility = Visibility.Visible;
+
+            //Disable eye control for the new empty button so that there are no inappropriate dwell indicators
+            GazeInput.SetInteraction(blankBtn, Interaction.Enabled);
+            GazeInput.SetInteraction(btn, Interaction.Disabled);
+
             return true;
         }
 
@@ -189,6 +246,16 @@ namespace Fifteen
             //ResetBoard();
             DialogGrid.Visibility = Visibility.Collapsed;
 
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private void OnExit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
+
+        private void OnBack(object sender, RoutedEventArgs e)
+        {            
             Frame.Navigate(typeof(MainPage));
         }
     }

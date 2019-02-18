@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     gaze:GazeInput.Interaction="Enabled"
+    gaze:GazeInput.IsCursorVisible="False"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -16,11 +17,23 @@
             <Setter Property="Margin" Value="10" />
             <Setter Property="FontSize" Value="80" />
             <Setter Property="FontFamily" Value="Webdings" />
+            <Setter Property="Background" Value="Silver" />
         </Style>
     </Page.Resources>
     <Grid>
-        <Grid x:Name="buttonMatrix" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource ButtonStyle}" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100"/>
+
+            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource ButtonStyle}" Click="OnBack" Content="&#xe72b;" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100"/>
+
+
+            <Grid x:Name="buttonMatrix" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Row="1">
+                <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -49,6 +62,7 @@
             <Button Grid.Row="3" Grid.Column="1" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
             <Button Grid.Row="3" Grid.Column="2" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
             <Button Grid.Row="3" Grid.Column="3" Click="OnButtonClick" Style="{StaticResource ButtonStyle}"/>
+        </Grid>
         </Grid>
         <Grid x:Name="DialogGrid" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
