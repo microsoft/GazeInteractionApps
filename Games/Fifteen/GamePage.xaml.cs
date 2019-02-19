@@ -17,8 +17,8 @@ namespace Fifteen
 {
     public sealed partial class GamePage : Page
     {
-        int _boardSize = 4;
-
+        int _boardSize = 4; 
+        
         Button[,] _buttons;
         int _blankRow;
         int _blankCol;
@@ -81,7 +81,7 @@ namespace Fifteen
             InitializeButtonArray();
             WaitForCompositionTimer.Start();
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
-            GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
+            GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);                
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -214,7 +214,10 @@ namespace Fifteen
             {
                 return false;
             }
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.Transparent);
 
+            _animationActive = true;
+            GazeInput.SetInteraction(GameGrid, Interaction.Disabled);
             //Slide button visual
             Button btn = _buttons[row, col];
             Button blankBtn = _buttons[_blankRow, _blankCol];
@@ -242,9 +245,8 @@ namespace Fifteen
             slideAnimation.InsertKeyFrame(0f, btnVisual.Offset);
             slideAnimation.InsertKeyFrame(1f, blankBtnVisual.Offset, easing);
             slideAnimation.Duration = TimeSpan.FromMilliseconds(500);
-
-            //Apply the slide anitmation to the blank button
-            _animationActive = true;
+            
+            //Apply the slide animation to the blank button            
             blankBtnVisual.StartAnimation(nameof(btnVisual.Offset), slideAnimation);
             _slideBatchAnimation.End();
 
@@ -269,7 +271,7 @@ namespace Fifteen
             blankBtn.Visibility = Visibility.Visible;
 
             //Disable eye control for the new empty button so that there are no inappropriate dwell indicators
-            GazeInput.SetInteraction(blankBtn, Interaction.Inherited);
+            GazeInput.SetInteraction(blankBtn, Interaction.Inherited);          
             GazeInput.SetInteraction(btn, Interaction.Disabled);
 
             return true;
@@ -280,6 +282,8 @@ namespace Fifteen
         {
             CheckCompletion();
             _animationActive = false;
+            GazeInput.SetInteraction(GameGrid, Interaction.Enabled);
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);            
         }
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
