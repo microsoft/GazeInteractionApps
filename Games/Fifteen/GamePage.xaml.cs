@@ -283,7 +283,10 @@ namespace Fifteen
             CheckCompletion();
             _animationActive = false;
             GazeInput.SetInteraction(GameGrid, Interaction.Enabled);
-            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);            
+            if (!_gameOver)
+            {
+                GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+            }            
         }
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
