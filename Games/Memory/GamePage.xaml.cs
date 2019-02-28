@@ -34,9 +34,21 @@ namespace Memory
         int _numMoves;
         bool _usePictures;
 
+        bool _interactionPaused = false;
+
+        SolidColorBrush _solidTileBrush;        
+        SolidColorBrush _toolButtonBrush;
+        SolidColorBrush _pausedButtonBrush = new SolidColorBrush(Colors.Black);
+
+        int _boardRows = 6;
+        int _boardColumns = 11;
+
         public GamePage()
         {
             InitializeComponent();
+
+            _solidTileBrush = (SolidColorBrush)this.Resources["TileBackground"];
+            _toolButtonBrush = (SolidColorBrush)this.Resources["ToolBarButtonBackground"];
 
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
 
@@ -57,13 +69,74 @@ namespace Memory
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
-            _usePictures = (bool)e.Parameter;
+            base.OnNavigatedTo(e);            
+
+            switch (e.Parameter.ToString())
+            {
+                case "16":
+                    _boardRows = 4;
+                    _boardColumns = 4;
+                    break;
+
+                case "24":
+                    _boardRows = 4;
+                    _boardColumns = 6;
+                    break;
+
+                case "36":
+                    _boardRows = 6;
+                    _boardColumns = 6;
+                    break;
+
+                case "66":
+                    _boardRows = 6;
+                    _boardColumns = 11;
+                    break;
+
+                default:
+                    _boardRows = 4;
+                    _boardColumns = 4;
+                    break;
+            }
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            ArrangeBoardLayout();
             ResetBoard();
+        }
+
+        private void ArrangeBoardLayout()
+        {
+            buttonMatrix.Children.Clear();
+            buttonMatrix.RowDefinitions.Clear();
+            buttonMatrix.ColumnDefinitions.Clear();
+
+            for (int row = 0; row < _boardRows; row++)
+            {
+                buttonMatrix.RowDefinitions.Add(new RowDefinition());                
+            }
+
+            for (int column = 0; column < _boardColumns; column++)
+            {
+                buttonMatrix.ColumnDefinitions.Add(new ColumnDefinition());
+
+            }
+
+            for (int row = 0; row < _boardRows; row++)
+            {
+                for (int col = 0; col < _boardColumns; col++)
+                {
+                    var button = new Button();
+                    button.Click += OnButtonClick;
+                    button.Style = Resources["ButtonStyle"] as Style;
+                    Grid.SetRow(button, row);
+                    Grid.SetColumn(button, col);
+                    buttonMatrix.Children.Add(button);
+                }
+            }
+
+            buttonMatrix.UpdateLayout();
         }
 
         private void OnFlashTimerTick(object sender, object e)
@@ -127,7 +200,7 @@ namespace Memory
 
         List<Button> GetButtonList()
         {
-            List<Button> list = new List<Button>();
+            List<Button> list = new List<Button>();            
             foreach (Button button in buttonMatrix.Children)
             {
                 list.Add(button);
@@ -140,29 +213,31 @@ namespace Memory
             _firstButton = null;
             _secondButton = null;
             _numMoves = 0;
-            _remaining = 16;
+            MoveCountTextBlock.Text = _numMoves.ToString();            
+            _remaining = _boardRows * _boardColumns;
+            var pairs = (_boardRows * _boardColumns) / 2;
 
             List<string> listContent;
             if (_usePictures)
             {
                 try
                 {                
-                    listContent = await GetPicturesContent(8);
+                    listContent = await GetPicturesContent(pairs);
                 }
                 catch
                 {
-                    listContent = GetSymbolContent(8);
+                    listContent = GetSymbolContent(pairs);
                     _usePictures = false;
                 }
             }
             else
             {
-                listContent = GetSymbolContent(8);
+                listContent = GetSymbolContent(pairs);
             }
 
             List<Button> listButtons = GetButtonList();
 
-            for (int i = 0; i < 16; i += 2)
+            for (int i = 0; i < _boardRows * _boardColumns; i += 2)
             {
                 listButtons[i].Content = null;
                 listButtons[i + 1].Content = null;
@@ -185,6 +260,7 @@ namespace Memory
             }
 
             _numMoves++;
+            MoveCountTextBlock.Text = _numMoves.ToString();
 
             if (_firstButton == null)
             {
@@ -269,15 +345,59 @@ namespace Memory
                 return;
             }
 
-            string message = $"Congratulations!! You solved it in {_numMoves} moves";
+            string message = $"You solved the puzzle in {_numMoves} moves!";
             DialogText.Text = message;
             DialogGrid.Visibility = Visibility.Visible;           
         }
 
         private void DialogButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(MainPage));
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             DialogGrid.Visibility = Visibility.Collapsed;
+            ResetBoard();
+        }
+
+        private void DialogButton2_Click(object sender, RoutedEventArgs e)
+        {
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+            DialogGrid.Visibility = Visibility.Collapsed;
+            Frame.Navigate(typeof(MainPage));
+        }
+
+
+        private void DismissButton(object sender, RoutedEventArgs e)
+        {
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+            DialogGrid.Visibility = Visibility.Collapsed;
+
+            //RootGrid.Children.Remove(PlayAgainButton);
+            //Grid.SetColumn(PlayAgainButton, Grid.GetColumn(_buttons[_boardSize - 1, _boardSize - 1]));
+            //Grid.SetRow(PlayAgainButton, Grid.GetRow(_buttons[_boardSize - 1, _boardSize - 1]));
+            //PlayAgainButton.MaxWidth = _buttons[_boardSize - 1, _boardSize - 1].ActualWidth;
+            //PlayAgainButton.MaxHeight = _buttons[_boardSize - 1, _boardSize - 1].ActualHeight;
+            //GameGrid.Children.Add(PlayAgainButton);
+            //PlayAgainButton.Visibility = Visibility.Visible;
+        }
+
+
+        private void OnPause(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            if (_interactionPaused)
+            {
+                PauseButtonText.Text = "\uE769";
+                PauseButtonBorder.Background = _toolButtonBrush;
+                GazeInput.SetInteraction(buttonMatrix, Interaction.Enabled);
+                _interactionPaused = false;
+            }
+            else
+            {
+                PauseButtonText.Text = "\uE768";
+                PauseButtonBorder.Background = _pausedButtonBrush;
+                GazeInput.SetInteraction(buttonMatrix, Interaction.Disabled);
+                _interactionPaused = true;
+            }
         }
 
         private void OnExit(object sender, RoutedEventArgs e)

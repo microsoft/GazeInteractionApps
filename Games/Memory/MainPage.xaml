@@ -9,32 +9,320 @@
     gaze:GazeInput.Interaction="Enabled"
     gaze:GazeInput.IsCursorVisible="False"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    >
 
     <Page.Resources>
+        <SolidColorBrush x:Key="TileBackground" Color="#FF4D4D99"/>
+        <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FF2292a6"/>
+        <Duration x:Key="DestructiveDwellDuration">00:00:01.0000000</Duration>
         <Style TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="FontSize" Value="64" />
             <Setter Property="Margin" Value="50"/>
+            <Setter Property="Background" Value="{StaticResource TileBackground}"/>
+            <Setter Property="Foreground" Value="White"/>
         </Style>
     </Page.Resources>
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1.2" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
+            <GradientStop Color="#c6ffff" Offset="0.8"/>
+            <GradientStop Color="#FFc6beff" Offset="0.009"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Page.Background>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" MinHeight="0" />
+            <RowDefinition/>
+            <RowDefinition Height="Auto" MinHeight="0"/>
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="40px" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="40px"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" FontSize="48"  HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalTextAlignment="Center"> Select your game</TextBlock>
-        
-        <Button Grid.Column="0" Click="OnStartGame" Tag="0" Content="Symbols" Grid.Row="1" />
-        <Button Grid.Column="1" Click="OnStartGame" Tag="1" Content="Pictures" Grid.Row="1" />
+        <Button Grid.Column="2"  Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}" FontWeight="SemiBold" Margin="0,40,0,0" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Foreground="White" Grid.Row="0" Background="{x:Null}">
+            <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
+                <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold"></TextBlock>
+            </Border>
+        </Button>
+        <Button Background="{x:Null}" Foreground="White" Margin="0,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OnHowToPlayButton" FontSize="24" Height="100" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1">
+            <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="10,10,10,10">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,20,0" FontFamily="Segoe UI">
+                    How to Play
+                </TextBlock>
+            </Border>
+        </Button>
 
-        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Padding="0,0,10,10" FontFamily="Segoe UI"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="4" FontSize="72" VerticalAlignment="Top" HorizontalTextAlignment="Center" Foreground="{StaticResource TileBackground}" FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets">MATCH TWO</TextBlock>
+        <TextBlock Grid.ColumnSpan="4" FontSize="36" VerticalAlignment="Top" HorizontalTextAlignment="Center" Grid.Row="2" HorizontalAlignment="Stretch" Foreground="{StaticResource TileBackground}" Margin="0,0,0,20"> Select a board size</TextBlock>
+
+        <Grid Grid.Row="3" Grid.ColumnSpan="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="0"/>
+                <RowDefinition Height="Auto" MinHeight="0"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width=".2*" />
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width=".2*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width=".2*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="1" Tag="16" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" FontFamily="Segoe UI">
+                <Border Background="White" CornerRadius="10" Padding="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="3"/>
+
+                    </Grid>
+                </Border>
+            </Button>
+            <Button Grid.Row="0" Grid.Column="3" Tag="24" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="200" Height="150">
+                <Border Background="White" CornerRadius="10" Padding="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="5"/>
+
+                    </Grid>
+                </Border>
+            </Button>
+            <Button Grid.Row="0" Grid.Column="5" Tag="36" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Border Background="White" CornerRadius="10" Padding="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="5"/>
+
+                    </Grid>
+                </Border>
+            </Button>
+            <Button Grid.Row="0" Grid.Column="7" Tag="66" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Border Background="White" CornerRadius="10,10,10,10" Padding="5,5,5,5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="6"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="7"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="8"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="9"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="0" Grid.Column="10"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="6"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="7"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="8"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="9"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="1" Grid.Column="10"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="6"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="7"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="8"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="9"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="2" Grid.Column="10"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="6"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="7"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="8"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="9"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="3" Grid.Column="10"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="6"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="7"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="8"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="9"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="4" Grid.Column="10"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="4"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="5"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="6"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="7"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="8"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="9"/>
+                        <Rectangle Fill="{StaticResource TileBackground}" Margin="0.5" RadiusX="1" RadiusY="1" Grid.Row="5" Grid.Column="10"/>
+
+                    </Grid>
+                </Border>
+            </Button>
+
+            <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,0">16 tiles</TextBlock>
+            <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,0">24 tiles</TextBlock>
+            <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,0">36 tiles</TextBlock>
+            <TextBlock Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,0">66 tiles</TextBlock>
+        </Grid>
+
+
+        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="3" Padding="0,0,10,10" FontFamily="Segoe UI" Margin="0,0,10,0"/>
     </Grid>
 </Page>

@@ -33,8 +33,9 @@ namespace Memory
         private void OnStartGame(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            bool usePictures = int.Parse(button.Tag.ToString()) == 1;
-            Frame.Navigate(typeof(GamePage), usePictures);
+            var tileCount = int.Parse(button.Tag.ToString());
+
+            Frame.Navigate(typeof(GamePage), tileCount);
         }
 
         public static string GetAppVersion()
@@ -46,5 +47,22 @@ namespace Memory
             return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
         }
 
+        private void OnHowToPlayButton(object sender, RoutedEventArgs e)
+        {
+            //GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
+
+            //HelpScreen1.Visibility = Visibility.Visible;
+            //HelpScreen2.Visibility = Visibility.Collapsed;
+            //HelpScreen3.Visibility = Visibility.Collapsed;
+            //HelpNavLeftButton.IsEnabled = false;
+            //HelpNavRightButton.IsEnabled = true;
+
+            //HelpDialogGrid.Visibility = Visibility.Visible;
+        }
+
+        private void OnExit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
     }
 }
