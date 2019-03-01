@@ -1,22 +1,22 @@
 ﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
 //See LICENSE in the project root for license information.
 
+using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
+using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.UI;
+using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
-using Windows.Foundation.Collections;
-using Windows.Foundation;
-using Windows.UI.Xaml.Navigation;
-using Windows.Storage;
-using Windows.UI.Xaml.Media.Imaging;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Hosting;
-using Windows.UI.Composition;
-using System.Numerics;
 using Windows.UI.Xaml.Media;
-using Windows.UI;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 
 
 namespace Memory
@@ -36,12 +36,20 @@ namespace Memory
 
         bool _interactionPaused = false;
 
+        bool _animationActive = false;
+        bool _reverseAnimationActive = false;
+
+        bool _gameOver = false;
+
         SolidColorBrush _solidTileBrush;        
         SolidColorBrush _toolButtonBrush;
         SolidColorBrush _pausedButtonBrush = new SolidColorBrush(Colors.Black);
 
         int _boardRows = 6;
         int _boardColumns = 11;
+
+        CompositionScopedBatch _reverseFlipBatchAnimation;
+        CompositionScopedBatch _flipBatchAnimation;
 
         public GamePage()
         {
@@ -141,11 +149,65 @@ namespace Memory
 
         private void OnFlashTimerTick(object sender, object e)
         {
+            _reverseAnimationActive = true;
+
+            //Flip button visual
+            var btn1Visual = ElementCompositionPreview.GetElementVisual(_firstButton);
+            var btn2Visual = ElementCompositionPreview.GetElementVisual(_secondButton);
+            var compositor = btn1Visual.Compositor;
+
+            //Get a visual for the content
+            var btn1Content = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(_firstButton, 0), 0);
+            var btn1ContentVisual = ElementCompositionPreview.GetElementVisual(btn1Content as FrameworkElement);
+            var btn2Content = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(_secondButton, 0), 0);
+            var btn2ContentVisual = ElementCompositionPreview.GetElementVisual(btn2Content as FrameworkElement);
+
+            var easing = compositor.CreateLinearEasingFunction();
+
+            if (_reverseFlipBatchAnimation != null)
+            {
+                _reverseFlipBatchAnimation.Completed -= ReverseFlipBatchAnimation_Completed;
+                _reverseFlipBatchAnimation.Dispose();
+            }
+
+            _reverseFlipBatchAnimation = compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
+            _reverseFlipBatchAnimation.Completed += ReverseFlipBatchAnimation_Completed;
+
+            ScalarKeyFrameAnimation flipAnimation = compositor.CreateScalarKeyFrameAnimation();
+            flipAnimation.InsertKeyFrame(0.000001f, 0);
+            flipAnimation.InsertKeyFrame(1f, 180, easing);
+            flipAnimation.Duration = TimeSpan.FromMilliseconds(400);
+            flipAnimation.IterationBehavior = AnimationIterationBehavior.Count;
+            flipAnimation.IterationCount = 1;
+            btn1Visual.CenterPoint = new Vector3((float)(0.5 * _firstButton.ActualWidth), (float)(0.5f * _firstButton.ActualHeight), (float)(_firstButton.ActualWidth / 4));
+            btn1Visual.RotationAxis = new Vector3(0.0f, 1f, 0f);
+
+            ScalarKeyFrameAnimation appearAnimation = compositor.CreateScalarKeyFrameAnimation();
+            appearAnimation.InsertKeyFrame(0.0f, 1);
+            appearAnimation.InsertKeyFrame(0.499999f, 1);
+            appearAnimation.InsertKeyFrame(0.5f, 0);
+            appearAnimation.InsertKeyFrame(1f, 0);
+            appearAnimation.Duration = TimeSpan.FromMilliseconds(400);
+            appearAnimation.IterationBehavior = AnimationIterationBehavior.Count;
+            appearAnimation.IterationCount = 1;
+
+            btn1Visual.StartAnimation(nameof(btn1Visual.RotationAngleInDegrees), flipAnimation);
+            btn2Visual.StartAnimation(nameof(btn2Visual.RotationAngleInDegrees), flipAnimation);
+            btn1ContentVisual.StartAnimation(nameof(btn1ContentVisual.Opacity), appearAnimation);
+            btn2ContentVisual.StartAnimation(nameof(btn2ContentVisual.Opacity), appearAnimation);
+            _reverseFlipBatchAnimation.End();
+           
+            _flashTimer.Stop();
+            GazeInput.SetInteraction(buttonMatrix, Interaction.Enabled);
+        }
+
+        private void ReverseFlipBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
+        {
             _firstButton.Content = null;
             _secondButton.Content = null;
             _firstButton = null;
             _secondButton = null;
-            _flashTimer.Stop();
+            _reverseAnimationActive = false;
         }
 
         List<Button> ShuffleList(List<Button> list)
@@ -210,6 +272,8 @@ namespace Memory
 
         async void ResetBoard()
         {
+            PlayAgainText.Visibility = Visibility.Collapsed;
+            _gameOver = false;
             _firstButton = null;
             _secondButton = null;
             _numMoves = 0;
@@ -249,16 +313,26 @@ namespace Memory
 
         private async void OnButtonClick(object sender, RoutedEventArgs e)
         {
-            var btn = sender as Button;
-            if (btn.Content != null)
-            {
+            if (_animationActive || _reverseAnimationActive) return;
+
+            if (_gameOver)
+            {                
                 return;
             }
+
+            var btn = sender as Button;
+            if (btn.Content != null)
+            {             
+                return;
+            }          
+
             if (_flashTimer.IsEnabled)
             {
-                OnFlashTimerTick(null, null);
+                return;
+                //OnFlashTimerTick(null, null);  //Unclear about the original idea of this
             }
 
+            _animationActive = true;
             _numMoves++;
             MoveCountTextBlock.Text = _numMoves.ToString();
 
@@ -281,6 +355,15 @@ namespace Memory
 
             var easing = compositor.CreateLinearEasingFunction();
 
+            if (_flipBatchAnimation != null)
+            {
+                _flipBatchAnimation.Completed -= FlipBatchAnimation_Completed;
+                _flipBatchAnimation.Dispose();
+            }
+
+            _flipBatchAnimation = compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
+            _flipBatchAnimation.Completed += FlipBatchAnimation_Completed;
+
             ScalarKeyFrameAnimation flipAnimation = compositor.CreateScalarKeyFrameAnimation();
             flipAnimation.InsertKeyFrame(0.000001f, 180);
             flipAnimation.InsertKeyFrame(1f, 0, easing);
@@ -301,6 +384,7 @@ namespace Memory
 
             btnVisual.StartAnimation(nameof(btnVisual.RotationAngleInDegrees), flipAnimation);
             btnContentVisual.StartAnimation(nameof(btnContentVisual.Opacity), appearAnimation);
+            _flipBatchAnimation.End();
 
             if (_usePictures)
             {
@@ -317,7 +401,12 @@ namespace Memory
             else
             {
                 btn.Content = btn.Tag.ToString();
-            }
+            }           
+        }
+
+        private void FlipBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
+        {
+            _animationActive = false;
 
             if (_secondButton == null)
             {
@@ -326,10 +415,11 @@ namespace Memory
 
             if (_secondButton.Tag.ToString() != _firstButton.Tag.ToString())
             {
-                _flashTimer.Start();
+                GazeInput.SetInteraction(buttonMatrix, Interaction.Disabled);
+                _flashTimer.Start();            
             }
-            else
-            {
+            else            
+            {            
                 _firstButton = null;
                 _secondButton = null;
                 _remaining -= 2;
@@ -345,9 +435,10 @@ namespace Memory
                 return;
             }
 
-            string message = $"You solved the puzzle in {_numMoves} moves!";
+            string message = $"You completed the board in {_numMoves} moves!";
             DialogText.Text = message;
-            DialogGrid.Visibility = Visibility.Visible;           
+            DialogGrid.Visibility = Visibility.Visible;
+            _gameOver = true;
         }
 
         private void DialogButton_Click(object sender, RoutedEventArgs e)
@@ -377,6 +468,9 @@ namespace Memory
             //PlayAgainButton.MaxHeight = _buttons[_boardSize - 1, _boardSize - 1].ActualHeight;
             //GameGrid.Children.Add(PlayAgainButton);
             //PlayAgainButton.Visibility = Visibility.Visible;
+
+            PlayAgainText.Visibility = Visibility.Visible;
+            OnPause(PauseButton, null);
         }
 
 
@@ -390,6 +484,10 @@ namespace Memory
                 PauseButtonBorder.Background = _toolButtonBrush;
                 GazeInput.SetInteraction(buttonMatrix, Interaction.Enabled);
                 _interactionPaused = false;
+                if (_gameOver)
+                {
+                    ResetBoard();
+                }
             }
             else
             {

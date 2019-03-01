@@ -68,7 +68,7 @@
                     </Border>
                 </Button>
 
-                <Button Grid.Column="2" Style="{StaticResource ActionButtonStyle}"  HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Click="OnPause" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+                <Button x:Name="PauseButton" Grid.Column="2" Style="{StaticResource ActionButtonStyle}"  HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Click="OnPause" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
                     <Border x:Name="PauseButtonBorder" Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                         <TextBlock x:Name="PauseButtonText" Text="&#xE769;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets"></TextBlock>
                     </Border>
@@ -81,7 +81,8 @@
                 </Button>
             </Grid>
 
-
+            <TextBlock x:Name="PlayAgainText" Grid.Row="1" HorizontalAlignment="Center" Text="Select Play to Play Again" Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Top" Visibility="Collapsed"/>
+            
             <Grid Grid.Row="1" Margin="40,30,40,40">
 
                 <Rectangle Fill="#1926334D" RadiusX="10" RadiusY="10" />
@@ -147,7 +148,7 @@
                     </Button>
                     <Button x:Name="DialogButton2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="300" Height="150" Margin="0,0,0,40" Click="DialogButton2_Click"  Foreground="White" FontSize="24" Padding="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
-                            <TextBlock Text="Change Puzzle Size" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" Foreground="{StaticResource ToolBarButtonBackground}"></TextBlock>
+                            <TextBlock Text="Change Board Size" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" Foreground="{StaticResource ToolBarButtonBackground}"></TextBlock>
                         </Border>
                     </Button>
                     <TextBlock x:Name="CongratsText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Congratulations" VerticalAlignment="Top" Margin="0,50,0,0" FontSize="48" Foreground="White" FontWeight="SemiBold" Grid.ColumnSpan="2"/>
