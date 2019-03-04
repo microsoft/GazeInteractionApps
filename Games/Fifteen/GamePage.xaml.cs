@@ -139,6 +139,7 @@ namespace Fifteen
 
         void ResetBoard()
         {
+            PlayAgainText.Visibility = Visibility.Collapsed;
             _gameOver = false;
             _numMoves = 0;
             MoveCountTextBlock.Text = _numMoves.ToString();
@@ -355,13 +356,16 @@ namespace Fifteen
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             DialogGrid.Visibility = Visibility.Collapsed;
 
-            RootGrid.Children.Remove(PlayAgainButton);
-            Grid.SetColumn(PlayAgainButton, Grid.GetColumn(_buttons[_boardSize - 1, _boardSize - 1]));
-            Grid.SetRow(PlayAgainButton, Grid.GetRow(_buttons[_boardSize - 1, _boardSize - 1]));
-            PlayAgainButton.MaxWidth = _buttons[_boardSize - 1, _boardSize - 1].ActualWidth;
-            PlayAgainButton.MaxHeight = _buttons[_boardSize - 1, _boardSize - 1].ActualHeight;
-            GameGrid.Children.Add(PlayAgainButton);
-            PlayAgainButton.Visibility = Visibility.Visible;
+            //RootGrid.Children.Remove(PlayAgainButton);
+            //Grid.SetColumn(PlayAgainButton, Grid.GetColumn(_buttons[_boardSize - 1, _boardSize - 1]));
+            //Grid.SetRow(PlayAgainButton, Grid.GetRow(_buttons[_boardSize - 1, _boardSize - 1]));
+            //PlayAgainButton.MaxWidth = _buttons[_boardSize - 1, _boardSize - 1].ActualWidth;
+            //PlayAgainButton.MaxHeight = _buttons[_boardSize - 1, _boardSize - 1].ActualHeight;
+            //GameGrid.Children.Add(PlayAgainButton);
+            //PlayAgainButton.Visibility = Visibility.Visible;
+
+            PlayAgainText.Visibility = Visibility.Visible;
+            OnPause(PauseButton, null);
         }
 
         private void OnExit(object sender, RoutedEventArgs e)
@@ -384,6 +388,10 @@ namespace Fifteen
                 PauseButtonBorder.Background = _toolButtonBrush;
                 GazeInput.SetInteraction(GameGrid, Interaction.Enabled);
                 _interactionPaused = false;
+                if (_gameOver)
+                {
+                    ResetBoard();
+                }
             }
             else
             {

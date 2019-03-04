@@ -90,10 +90,17 @@ namespace Fifteen
             {
                 HelpScreen2.Visibility = Visibility.Collapsed;
                 HelpScreen3.Visibility = Visibility.Visible;
-                HelpNavRightButton.IsEnabled = false;
+                HelpNavRightButton.IsEnabled = true;
                 HelpNavLeftButton.IsEnabled = true;
             }
             else if (HelpScreen3.Visibility == Visibility.Visible)
+            {
+                HelpScreen3.Visibility = Visibility.Collapsed;
+                HelpScreen4.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = false;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen4.Visibility == Visibility.Visible)
             {
                 HelpNavRightButton.IsEnabled = false;
                 HelpNavLeftButton.IsEnabled = true;
@@ -118,6 +125,14 @@ namespace Fifteen
             {
                 HelpScreen3.Visibility = Visibility.Collapsed;
                 HelpScreen2.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = false;
+                HelpNavRightButton.IsEnabled = true;
+            }
+
+            else if (HelpScreen4.Visibility == Visibility.Visible)
+            {
+                HelpScreen4.Visibility = Visibility.Collapsed;
+                HelpScreen3.Visibility = Visibility.Visible;
                 HelpNavLeftButton.IsEnabled = true;
                 HelpNavRightButton.IsEnabled = true;
             }
