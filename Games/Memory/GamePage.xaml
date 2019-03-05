@@ -81,8 +81,10 @@
                 </Button>
             </Grid>
 
-            <TextBlock x:Name="PlayAgainText" Grid.Row="1" HorizontalAlignment="Center" Text="Select Play to Play Again" Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Top" Visibility="Collapsed"/>
-            
+            <TextBlock x:Name="PlayAgainText" Grid.Row="1" HorizontalAlignment="Center" Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Top" Visibility="Collapsed" FontFamily="Segoe UI" Margin="0,-3,0,0">
+                    Select <Run FontFamily="Segoe MDL2 Assets">&#xE768;</Run> to Play Again
+            </TextBlock>
+
             <Grid Grid.Row="1" Margin="40,30,40,40">
 
                 <Rectangle Fill="#1926334D" RadiusX="10" RadiusY="10" />
