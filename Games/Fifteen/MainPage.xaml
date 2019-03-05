@@ -335,14 +335,14 @@
                                     <TextBlock x:Name="ExitButtonText" Text="&#xE8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
                                 </Border>
                             </Button>
-                            <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Grid.Column="8" Grid.Row="1" FontFamily="Segoe MDL2 Assets">: exit game entirely</TextBlock>
+                            <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,-5,0,0" TextWrapping="Wrap" Grid.Column="8" Grid.Row="1" FontFamily="Segoe MDL2 Assets"> exit game entirely</TextBlock>
 
-                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="2" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}">
+                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50" Background="{x:Null}" FontWeight="SemiBold" Margin="0,5,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="2" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}">
                                 <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                                     <TextBlock Text="&#xe72b;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
                                     </Border>
                                 </Button>
-                            <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Grid.Column="8" Grid.Row="2" FontFamily="Segoe MDL2 Assets">: close game and return to home page</TextBlock>
+                            <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,-5,0,0" TextWrapping="Wrap" Grid.Column="8" Grid.Row="2" FontFamily="Segoe MDL2 Assets"> close game and return to home page</TextBlock>
 
                             </Grid>
 
