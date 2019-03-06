@@ -353,6 +353,11 @@
                             <TextBlock Text="Back to game" Foreground="{StaticResource ToolBarButtonBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="24" Padding="60,0,60,0" ></TextBlock>
                         </Border>
                     </Button>
+                    <HyperlinkButton NavigateUri="https://go.microsoft.com/fwlink/?LinkId=521839" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Column="1" Height="75" Width="150" Margin="50,0,0,20" Foreground="White" FontFamily="Segoe UI" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                        <Border CornerRadius="5" Background="{StaticResource ToolBarButtonBackground}">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Privacy &amp; Cookies</TextBlock>
+                        </Border>
+                    </HyperlinkButton>
                 </Grid>
             </Border>
         </Grid>
