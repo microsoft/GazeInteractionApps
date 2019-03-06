@@ -328,6 +328,6 @@
         </Grid>
 
 
-        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="3" Padding="0,0,10,10" FontFamily="Segoe UI" Margin="0,0,10,0"/>
+        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="2" Padding="0,0,10,10" FontFamily="Segoe UI" Margin="0,0,10,0" Grid.ColumnSpan="2"/>
     </Grid>
 </Page>
