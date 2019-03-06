@@ -50,6 +50,7 @@ namespace Memory
 
         CompositionScopedBatch _reverseFlipBatchAnimation;
         CompositionScopedBatch _flipBatchAnimation;
+        CompositionScopedBatch _resetBatchAnimation;
 
         public GamePage()
         {
@@ -81,7 +82,7 @@ namespace Memory
 
             switch (e.Parameter.ToString())
             {
-                case "16":
+                case "16":                    
                     _boardRows = 4;
                     _boardColumns = 4;
                     break;
@@ -163,7 +164,7 @@ namespace Memory
             var btn2ContentVisual = ElementCompositionPreview.GetElementVisual(btn2Content as FrameworkElement);
 
             var easing = compositor.CreateLinearEasingFunction();
-
+            
             if (_reverseFlipBatchAnimation != null)
             {
                 _reverseFlipBatchAnimation.Completed -= ReverseFlipBatchAnimation_Completed;
@@ -208,6 +209,42 @@ namespace Memory
             _firstButton = null;
             _secondButton = null;
             _reverseAnimationActive = false;
+        }
+
+        private void FlipCardFaceDown(Button card)
+        {
+            if (card.Content == null) return;
+
+            //Flip button visual
+            var btn1Visual = ElementCompositionPreview.GetElementVisual(card);            
+            var compositor = btn1Visual.Compositor;
+
+            //Get a visual for the content
+            var btn1Content = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(card, 0), 0);
+            var btn1ContentVisual = ElementCompositionPreview.GetElementVisual(btn1Content as FrameworkElement);
+
+            var easing = compositor.CreateLinearEasingFunction();
+
+            ScalarKeyFrameAnimation flipAnimation = compositor.CreateScalarKeyFrameAnimation();
+            flipAnimation.InsertKeyFrame(0.000001f, 0);
+            flipAnimation.InsertKeyFrame(1f, 180, easing);
+            flipAnimation.Duration = TimeSpan.FromMilliseconds(400);
+            flipAnimation.IterationBehavior = AnimationIterationBehavior.Count;
+            flipAnimation.IterationCount = 1;
+            btn1Visual.CenterPoint = new Vector3((float)(0.5 * card.ActualWidth), (float)(0.5f * card.ActualHeight), (float)(card.ActualWidth / 4));
+            btn1Visual.RotationAxis = new Vector3(0.0f, 1f, 0f);
+
+            ScalarKeyFrameAnimation appearAnimation = compositor.CreateScalarKeyFrameAnimation();
+            appearAnimation.InsertKeyFrame(0.0f, 1);
+            appearAnimation.InsertKeyFrame(0.499999f, 1);
+            appearAnimation.InsertKeyFrame(0.5f, 0);
+            appearAnimation.InsertKeyFrame(1f, 0);
+            appearAnimation.Duration = TimeSpan.FromMilliseconds(400);
+            appearAnimation.IterationBehavior = AnimationIterationBehavior.Count;
+            appearAnimation.IterationCount = 1;
+
+            btn1Visual.StartAnimation(nameof(btn1Visual.RotationAngleInDegrees), flipAnimation);            
+            btn1ContentVisual.StartAnimation(nameof(btn1ContentVisual.Opacity), appearAnimation);                        
         }
 
         List<Button> ShuffleList(List<Button> list)
@@ -301,13 +338,38 @@ namespace Memory
 
             List<Button> listButtons = GetButtonList();
 
+            var compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
+            if (_resetBatchAnimation != null)
+            {
+                _resetBatchAnimation.Completed -= ResetBatchAnimation_Completed;
+                _resetBatchAnimation.Dispose();
+            }
+
+            _resetBatchAnimation = compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
+            _resetBatchAnimation.Completed += ResetBatchAnimation_Completed; ;
+
+            foreach (Button button in listButtons)
+            {
+                FlipCardFaceDown(button);
+            }
+            _resetBatchAnimation.End();
+
+            for (int i = 0; i < _boardRows * _boardColumns; i += 2)
+            {
+              
+                listButtons[i].Tag = listContent[i / 2];
+                listButtons[i + 1].Tag = listContent[i / 2];
+            }
+        }
+
+        private void ResetBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
+        {
+            List<Button> listButtons = GetButtonList();
+
             for (int i = 0; i < _boardRows * _boardColumns; i += 2)
             {
                 listButtons[i].Content = null;
-                listButtons[i + 1].Content = null;
-
-                listButtons[i].Tag = listContent[i / 2];
-                listButtons[i + 1].Tag = listContent[i / 2];
+                listButtons[i + 1].Content = null;               
             }
         }
 
