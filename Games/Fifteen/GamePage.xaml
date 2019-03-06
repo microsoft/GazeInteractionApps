@@ -163,7 +163,7 @@
             </Button>
         </Grid>
 
-        <TextBlock x:Name="PlayAgainText" Grid.Row="1" HorizontalAlignment="Center" Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Top" Visibility="Collapsed">
+        <TextBlock x:Name="PlayAgainText" Grid.Row="1" HorizontalAlignment="Center" Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Top" Visibility="Collapsed" Margin="0,-3,0,0">
             Select <Run FontFamily="Segoe MDL2 Assets">&#xE768;</Run> to Play Again
         </TextBlock>
 
