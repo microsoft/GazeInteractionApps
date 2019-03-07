@@ -63,7 +63,7 @@ namespace Memory
 
             _rnd = new Random();
             _flashTimer = new DispatcherTimer();
-            _flashTimer.Interval = new TimeSpan(0, 0, 2);
+            _flashTimer.Interval = new TimeSpan(0, 0, 1);
             _flashTimer.Tick += OnFlashTimerTick;
             _usePictures = false;
 
@@ -179,14 +179,14 @@ namespace Memory
             flipAnimation.InsertKeyFrame(1f, 180, easing);
             flipAnimation.Duration = TimeSpan.FromMilliseconds(400);
             flipAnimation.IterationBehavior = AnimationIterationBehavior.Count;
-            flipAnimation.IterationCount = 1;
-            btn1Visual.CenterPoint = new Vector3((float)(0.5 * _firstButton.ActualWidth), (float)(0.5f * _firstButton.ActualHeight), (float)(_firstButton.ActualWidth / 4));
+            flipAnimation.IterationCount = 1;            
+            btn1Visual.CenterPoint = new Vector3((float)(0.5 * _firstButton.ActualWidth), (float)(0.5f * _firstButton.ActualHeight), 0f);
             btn1Visual.RotationAxis = new Vector3(0.0f, 1f, 0f);
 
             ScalarKeyFrameAnimation appearAnimation = compositor.CreateScalarKeyFrameAnimation();
             appearAnimation.InsertKeyFrame(0.0f, 1);
-            appearAnimation.InsertKeyFrame(0.499999f, 1);
-            appearAnimation.InsertKeyFrame(0.5f, 0);
+            appearAnimation.InsertKeyFrame(0.399999f, 1);
+            appearAnimation.InsertKeyFrame(0.4f, 0);
             appearAnimation.InsertKeyFrame(1f, 0);
             appearAnimation.Duration = TimeSpan.FromMilliseconds(400);
             appearAnimation.IterationBehavior = AnimationIterationBehavior.Count;
@@ -230,14 +230,14 @@ namespace Memory
             flipAnimation.InsertKeyFrame(1f, 180, easing);
             flipAnimation.Duration = TimeSpan.FromMilliseconds(400);
             flipAnimation.IterationBehavior = AnimationIterationBehavior.Count;
-            flipAnimation.IterationCount = 1;
-            btn1Visual.CenterPoint = new Vector3((float)(0.5 * card.ActualWidth), (float)(0.5f * card.ActualHeight), (float)(card.ActualWidth / 4));
+            flipAnimation.IterationCount = 1;            
+            btn1Visual.CenterPoint = new Vector3((float)(0.5 * card.ActualWidth), (float)(0.5f * card.ActualHeight), 0.0f);
             btn1Visual.RotationAxis = new Vector3(0.0f, 1f, 0f);
 
             ScalarKeyFrameAnimation appearAnimation = compositor.CreateScalarKeyFrameAnimation();
             appearAnimation.InsertKeyFrame(0.0f, 1);
-            appearAnimation.InsertKeyFrame(0.499999f, 1);
-            appearAnimation.InsertKeyFrame(0.5f, 0);
+            appearAnimation.InsertKeyFrame(0.399999f, 1);
+            appearAnimation.InsertKeyFrame(0.4f, 0);
             appearAnimation.InsertKeyFrame(1f, 0);
             appearAnimation.Duration = TimeSpan.FromMilliseconds(400);
             appearAnimation.IterationBehavior = AnimationIterationBehavior.Count;
@@ -371,7 +371,29 @@ namespace Memory
                 listButtons[i].Content = null;
                 listButtons[i + 1].Content = null;               
             }
+            ApplyPerspective();
         }
+
+        private void ApplyPerspective()
+        {
+            //Apply the perspective to the environment
+
+            var pageVisual = ElementCompositionPreview.GetElementVisual(this);            
+            Vector2 pageSize = new Vector2((float)this.ActualWidth, (float)this.ActualHeight);
+
+            Matrix4x4 perspective = new Matrix4x4(
+
+                                    1.0f, 0f, 0f, 0,
+                                      0f, 1f, 0f, 0,
+                                      0f, 0f, 1f, 1/pageSize.X,
+                                      0f, 0f, 0f, 1f);
+
+            pageVisual.TransformMatrix =
+                            Matrix4x4.CreateTranslation(-pageSize.X / 2, -pageSize.Y / 2, 0f) *  // Translate to origin
+                            perspective *                                                        // Apply perspective at origin
+                            Matrix4x4.CreateTranslation(pageSize.X / 2, pageSize.Y / 2, 0f);     // Translate back to original position
+        }
+
 
         private async void OnButtonClick(object sender, RoutedEventArgs e)
         {
@@ -431,14 +453,14 @@ namespace Memory
             flipAnimation.InsertKeyFrame(1f, 0, easing);
             flipAnimation.Duration = TimeSpan.FromMilliseconds(800);
             flipAnimation.IterationBehavior = AnimationIterationBehavior.Count;
-            flipAnimation.IterationCount = 1;
-            btnVisual.CenterPoint = new Vector3((float)(0.5 * btn.ActualWidth), (float)(0.5f * btn.ActualHeight), (float)(btn.ActualWidth / 4));
+            flipAnimation.IterationCount = 1;            
+            btnVisual.CenterPoint = new Vector3((float)(0.5 * btn.ActualWidth), (float)(0.5f * btn.ActualHeight), 0f);
             btnVisual.RotationAxis = new Vector3(0.0f, 1f, 0f);
 
             ScalarKeyFrameAnimation appearAnimation = compositor.CreateScalarKeyFrameAnimation();
-            appearAnimation.InsertKeyFrame(0.0f, 0);
-            appearAnimation.InsertKeyFrame(0.499999f, 0);
-            appearAnimation.InsertKeyFrame(0.5f, 1);
+            appearAnimation.InsertKeyFrame(0.0f, 0);            
+            appearAnimation.InsertKeyFrame(0.599999f, 0);
+            appearAnimation.InsertKeyFrame(0.6f, 0.5f);
             appearAnimation.InsertKeyFrame(1f, 1);
             appearAnimation.Duration = TimeSpan.FromMilliseconds(800);
             appearAnimation.IterationBehavior = AnimationIterationBehavior.Count;
@@ -497,7 +519,7 @@ namespace Memory
                 return;
             }
 
-            string message = $"You completed the board in {_numMoves} moves!";
+            string message = $"You matched the {_boardRows * _boardColumns} cards in {_numMoves} moves!";
             DialogText.Text = message;
             DialogGrid.Visibility = Visibility.Visible;
             _gameOver = true;
