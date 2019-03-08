@@ -8,7 +8,7 @@
     xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     gaze:GazeInput.Interaction="Enabled"
     gaze:GazeInput.IsCursorVisible="False"
-    mc:Ignorable="d">
+    mc:Ignorable="d" SizeChanged="Page_SizeChanged">
 
     <Page.Resources>
         <Duration x:Key="DestructiveDwellDuration">00:00:01.0000000</Duration>
@@ -28,6 +28,7 @@
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="0"/>
             <Setter Property="Margin" Value="10" />
             <Setter Property="FontSize" Value="80" />
             <Setter Property="FontFamily" Value="Webdings" />

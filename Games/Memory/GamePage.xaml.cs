@@ -148,6 +148,38 @@ namespace Memory
             buttonMatrix.UpdateLayout();
         }
 
+        private void AdjustFontSizes()
+        {            
+            var buttons = GetButtonList();
+            var shortEdge = buttons[0].ActualHeight;
+            if (shortEdge > buttons[0].ActualWidth)
+            {
+                shortEdge = buttons[0].ActualWidth;
+            }
+
+            var tb = new TextBlock();
+            tb.FontFamily = buttons[0].FontFamily;
+            tb.FontSize = shortEdge * 0.8;
+            tb.Text = "g";
+
+            tb.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
+            var height = tb.DesiredSize.Height;            
+
+            foreach (Button button in buttons)
+            {
+                button.FontSize = height;
+            }
+        }
+
+        private void RepositionButtons()
+        {
+            var buttons = GetButtonList();
+            foreach (Button button in buttons)
+            {
+                var btn1Visual = ElementCompositionPreview.GetElementVisual(button);                
+            }
+        }
+
         private void OnFlashTimerTick(object sender, object e)
         {
             _reverseAnimationActive = true;
@@ -176,12 +208,15 @@ namespace Memory
 
             ScalarKeyFrameAnimation flipAnimation = compositor.CreateScalarKeyFrameAnimation();
             flipAnimation.InsertKeyFrame(0.000001f, 0);
-            flipAnimation.InsertKeyFrame(1f, 180, easing);
+            flipAnimation.InsertKeyFrame(0.999999f, 180, easing);
+            flipAnimation.InsertKeyFrame(1f, 0);
             flipAnimation.Duration = TimeSpan.FromMilliseconds(400);
             flipAnimation.IterationBehavior = AnimationIterationBehavior.Count;
             flipAnimation.IterationCount = 1;            
             btn1Visual.CenterPoint = new Vector3((float)(0.5 * _firstButton.ActualWidth), (float)(0.5f * _firstButton.ActualHeight), 0f);
             btn1Visual.RotationAxis = new Vector3(0.0f, 1f, 0f);
+            btn2Visual.CenterPoint = new Vector3((float)(0.5 * _secondButton.ActualWidth), (float)(0.5f * _secondButton.ActualHeight), 0f);
+            btn2Visual.RotationAxis = new Vector3(0.0f, 1f, 0f);
 
             ScalarKeyFrameAnimation appearAnimation = compositor.CreateScalarKeyFrameAnimation();
             appearAnimation.InsertKeyFrame(0.0f, 1);
@@ -225,14 +260,18 @@ namespace Memory
 
             var easing = compositor.CreateLinearEasingFunction();
 
+            TimeSpan rndDelay = TimeSpan.FromMilliseconds(_rnd.NextDouble() * 200);
+
             ScalarKeyFrameAnimation flipAnimation = compositor.CreateScalarKeyFrameAnimation();
             flipAnimation.InsertKeyFrame(0.000001f, 0);
-            flipAnimation.InsertKeyFrame(1f, 180, easing);
+            flipAnimation.InsertKeyFrame(0.999999f, 180, easing);
+            flipAnimation.InsertKeyFrame(1f, 0);
             flipAnimation.Duration = TimeSpan.FromMilliseconds(400);
             flipAnimation.IterationBehavior = AnimationIterationBehavior.Count;
             flipAnimation.IterationCount = 1;            
             btn1Visual.CenterPoint = new Vector3((float)(0.5 * card.ActualWidth), (float)(0.5f * card.ActualHeight), 0.0f);
             btn1Visual.RotationAxis = new Vector3(0.0f, 1f, 0f);
+            flipAnimation.DelayTime = rndDelay;
 
             ScalarKeyFrameAnimation appearAnimation = compositor.CreateScalarKeyFrameAnimation();
             appearAnimation.InsertKeyFrame(0.0f, 1);
@@ -242,6 +281,7 @@ namespace Memory
             appearAnimation.Duration = TimeSpan.FromMilliseconds(400);
             appearAnimation.IterationBehavior = AnimationIterationBehavior.Count;
             appearAnimation.IterationCount = 1;
+            appearAnimation.DelayTime = rndDelay;
 
             btn1Visual.StartAnimation(nameof(btn1Visual.RotationAngleInDegrees), flipAnimation);            
             btn1ContentVisual.StartAnimation(nameof(btn1ContentVisual.Opacity), appearAnimation);                        
@@ -372,10 +412,11 @@ namespace Memory
                 listButtons[i + 1].Content = null;               
             }
             ApplyPerspective();
+            AdjustFontSizes();
         }
 
         private void ApplyPerspective()
-        {
+        {            
             //Apply the perspective to the environment
 
             var pageVisual = ElementCompositionPreview.GetElementVisual(this);            
@@ -394,6 +435,14 @@ namespace Memory
                             Matrix4x4.CreateTranslation(pageSize.X / 2, pageSize.Y / 2, 0f);     // Translate back to original position
         }
 
+        private void ClearBoard()
+        {
+            List<Button> listButtons = GetButtonList();
+            foreach (Button button in listButtons)
+            {                
+                FlipCardFaceDown(button);
+            }
+        }
 
         private async void OnButtonClick(object sender, RoutedEventArgs e)
         {
@@ -532,10 +581,12 @@ namespace Memory
             ResetBoard();
         }
 
-        private void DialogButton2_Click(object sender, RoutedEventArgs e)
+        private async void DialogButton2_Click(object sender, RoutedEventArgs e)
         {
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             DialogGrid.Visibility = Visibility.Collapsed;
+            ClearBoard();
+            await Task.Delay(400);
             Frame.Navigate(typeof(MainPage));
         }
 
@@ -587,9 +638,17 @@ namespace Memory
             Application.Current.Exit();
         }
 
-        private void OnBack(object sender, RoutedEventArgs e)
+        private async void OnBack(object sender, RoutedEventArgs e)
         {
+            ClearBoard();
+            await Task.Delay(400);
             Frame.Navigate(typeof(MainPage));
+        }
+        
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            AdjustFontSizes();
+            RepositionButtons();
         }
     }
 }
