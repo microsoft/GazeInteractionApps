@@ -126,7 +126,7 @@ namespace Fifteen
             {
                 HelpScreen3.Visibility = Visibility.Collapsed;
                 HelpScreen2.Visibility = Visibility.Visible;
-                HelpNavLeftButton.IsEnabled = false;
+                HelpNavLeftButton.IsEnabled = true;
                 HelpNavRightButton.IsEnabled = true;
             }
 
