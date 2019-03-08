@@ -2,20 +2,26 @@
 using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace Memory
 {
     public sealed partial class MainPage : Page
     {
+        SolidColorBrush _solidTileBrush;
+
         public MainPage()
         {
             InitializeComponent();
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
+
+            _solidTileBrush = (SolidColorBrush)this.Resources["TileBackground"];
 
             VersionTextBlock.Text = GetAppVersion();
 
@@ -49,15 +55,82 @@ namespace Memory
 
         private void OnHowToPlayButton(object sender, RoutedEventArgs e)
         {
-            //GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
+            GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
 
-            //HelpScreen1.Visibility = Visibility.Visible;
-            //HelpScreen2.Visibility = Visibility.Collapsed;
-            //HelpScreen3.Visibility = Visibility.Collapsed;
-            //HelpNavLeftButton.IsEnabled = false;
-            //HelpNavRightButton.IsEnabled = true;
+            HelpScreen1.Visibility = Visibility.Visible;
+            HelpScreen2.Visibility = Visibility.Collapsed;
+            HelpScreen3.Visibility = Visibility.Collapsed;
+            HelpNavLeftButton.IsEnabled = false;
+            HelpNavRightButton.IsEnabled = true;
 
-            //HelpDialogGrid.Visibility = Visibility.Visible;
+            HelpDialogGrid.Visibility = Visibility.Visible;
+        }
+
+        private void OnHelpNavRight(object sender, RoutedEventArgs e)
+        {
+            if (HelpScreen1.Visibility == Visibility.Visible)
+            {
+                HelpScreen1.Visibility = Visibility.Collapsed;
+                HelpScreen2.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = true;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen2.Visibility == Visibility.Visible)
+            {
+                HelpScreen2.Visibility = Visibility.Collapsed;
+                HelpScreen3.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = true;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen3.Visibility == Visibility.Visible)
+            {
+                HelpScreen3.Visibility = Visibility.Collapsed;
+                HelpScreen4.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = false;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen4.Visibility == Visibility.Visible)
+            {
+                HelpNavRightButton.IsEnabled = false;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+        }
+
+        private void OnHelpNavLeft(object sender, RoutedEventArgs e)
+        {
+            if (HelpScreen1.Visibility == Visibility.Visible)
+            {
+                HelpNavLeftButton.IsEnabled = false;
+                HelpNavRightButton.IsEnabled = true;
+            }
+            else if (HelpScreen2.Visibility == Visibility.Visible)
+            {
+                HelpScreen2.Visibility = Visibility.Collapsed;
+                HelpScreen1.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = false;
+                HelpNavRightButton.IsEnabled = true;
+            }
+            else if (HelpScreen3.Visibility == Visibility.Visible)
+            {
+                HelpScreen3.Visibility = Visibility.Collapsed;
+                HelpScreen2.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = true;
+                HelpNavRightButton.IsEnabled = true;
+            }
+
+            else if (HelpScreen4.Visibility == Visibility.Visible)
+            {
+                HelpScreen4.Visibility = Visibility.Collapsed;
+                HelpScreen3.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = true;
+                HelpNavRightButton.IsEnabled = true;
+            }
+        }
+
+        private void DismissButton(object sender, RoutedEventArgs e)
+        {
+            HelpDialogGrid.Visibility = Visibility.Collapsed;
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
         }
 
         private void OnExit(object sender, RoutedEventArgs e)
