@@ -13,6 +13,8 @@
 
     <Page.Resources>
         <Duration x:Key="DestructiveDwellDuration">00:00:01.0000000</Duration>
+        <Duration x:Key="RepeatDelayDuration">00:00:00.8000000</Duration>
+        <Duration x:Key="RepeatDuration">00:00:00.8000000</Duration>
         <Style TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -241,12 +243,12 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="HelpNavRightButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,10,20,10"  Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="OnHelpNavRight">
+                    <Button x:Name="HelpNavRightButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,10,20,10"  Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="OnHelpNavRight" gaze:GazeInput.MaxDwellRepeatCount="5" gaze:GazeInput.RepeatDelayDuration="{StaticResource RepeatDelayDuration}" gaze:GazeInput.DwellRepeatDuration="{StaticResource RepeatDuration}">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
                             <TextBlock Text="&#xe76c;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" FontSize="72"></TextBlock>
                         </Border>
                     </Button>
-                    <Button x:Name="HelpNavLeftButton" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"   Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" Padding="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="20,10,20,10" Click="OnHelpNavLeft" IsEnabled="False">
+                    <Button x:Name="HelpNavLeftButton" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"   Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" Padding="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="20,10,20,10" Click="OnHelpNavLeft" IsEnabled="False" gaze:GazeInput.MaxDwellRepeatCount="5" gaze:GazeInput.RepeatDelayDuration="{StaticResource RepeatDelayDuration}" gaze:GazeInput.DwellRepeatDuration="{StaticResource RepeatDuration}">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
                             <TextBlock Text="&#xe76b;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" FontSize="72"></TextBlock>
                         </Border>
@@ -402,9 +404,11 @@
                     <GradientStop Color="White" Offset="1"/>
                 </LinearGradientBrush>
             </Grid.Background>
-            <WebView x:Name="PrivacyWebView"  Margin="50,50,50,230" NavigationCompleted="PrivacyWebView_NavigationCompleted">
-                
-            </WebView>
+
+            <Border Margin="50,50,50,230" BorderBrush="{StaticResource TileBackground}" BorderThickness="1,1,1,1" >
+                <WebView x:Name="PrivacyWebView" NavigationCompleted="PrivacyWebView_NavigationCompleted"/>
+            </Border>
+
             <TextBlock x:Name="WebViewLoadingText" Visibility="Collapsed" Text="Loading.." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Margin="0,0,0,200" Foreground="{StaticResource ToolBarButtonBackground}" FontFamily="Segoe UI" />
             <Button x:Name="PrivacyViewScrollUpButton" Content="&#xe971;" Width="150" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,50,50,50" Click="PrivacyViewScrollUpButton_Click" Background="{StaticResource ToolBarButtonBackground}" Foreground="White" FontFamily="Segoe MDL2 Assets" gaze:GazeInput.MaxDwellRepeatCount="99"></Button>
 
