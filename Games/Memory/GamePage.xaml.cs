@@ -290,12 +290,16 @@ namespace Memory
         List<Button> ShuffleList(List<Button> list)
         {
             var len = list.Count;
-            for (var i = 0; i < len; i++)
+            var repeatCount = _rnd.Next(1, 5);
+            for (var repeat = 0; repeat < repeatCount; repeat++)
             {
-                var j = _rnd.Next(0, len);
-                var k = list[i];
-                list[i] = list[j];
-                list[j] = k;
+                for (var i = 0; i < len; i++)
+                {
+                    var j = _rnd.Next(0, len);
+                    var k = list[i];
+                    list[i] = list[j];
+                    list[j] = k;
+                }
             }
             return list;
         }
@@ -344,7 +348,7 @@ namespace Memory
             {
                 list.Add(button);
             }
-            return ShuffleList(list);
+            return list;            
         }
 
         async void ResetBoard()
@@ -376,7 +380,7 @@ namespace Memory
                 listContent = GetSymbolContent(pairs);
             }
 
-            List<Button> listButtons = GetButtonList();
+            List<Button> listButtons = ShuffleList(GetButtonList());
 
             var compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
             if (_resetBatchAnimation != null)
