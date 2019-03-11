@@ -183,7 +183,7 @@ namespace Memory
         private void OnFlashTimerTick(object sender, object e)
         {
             _reverseAnimationActive = true;
-
+           
             //Flip button visual
             var btn1Visual = ElementCompositionPreview.GetElementVisual(_firstButton);
             var btn2Visual = ElementCompositionPreview.GetElementVisual(_secondButton);
@@ -391,6 +391,7 @@ namespace Memory
             foreach (Button button in listButtons)
             {
                 FlipCardFaceDown(button);
+                GazeInput.SetInteraction(button, Interaction.Inherited);                
             }
             _resetBatchAnimation.End();
 
@@ -552,7 +553,10 @@ namespace Memory
                 _flashTimer.Start();            
             }
             else            
-            {            
+            {
+                GazeInput.SetInteraction(_firstButton, Interaction.Disabled);
+                GazeInput.SetInteraction(_secondButton, Interaction.Disabled);
+
                 _firstButton = null;
                 _secondButton = null;
                 _remaining -= 2;
