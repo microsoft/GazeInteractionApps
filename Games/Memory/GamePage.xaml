@@ -65,6 +65,19 @@
                 </StackPanel>
 
                 <Button x:Name="PauseButton" Grid.Column="2" Style="{StaticResource ActionButtonStyle}"  HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Click="OnPause" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+                    <Button.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.ThemeDictionaries>
+                                <ResourceDictionary x:Key="Dark">
+                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="DarkGray"/>
+                                </ResourceDictionary>
+                                <ResourceDictionary x:Key="Light">
+                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="DarkGray"/>
+                                </ResourceDictionary>
+                            </ResourceDictionary.ThemeDictionaries>
+                        </ResourceDictionary>
+                    </Button.Resources>
+
                     <Border x:Name="PauseButtonBorder" Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                         <TextBlock x:Name="PauseButtonText" Text="&#xE769;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets"></TextBlock>
                     </Border>
