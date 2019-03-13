@@ -410,11 +410,23 @@
             </Border>
 
             <TextBlock x:Name="WebViewLoadingText" Visibility="Collapsed" Text="Loading.." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Margin="0,0,0,200" Foreground="{StaticResource ToolBarButtonBackground}" FontFamily="Segoe UI" />
-            <Button x:Name="PrivacyViewScrollUpButton" Content="&#xe971;" Width="150" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,50,50,50" Click="PrivacyViewScrollUpButton_Click" Background="{StaticResource ToolBarButtonBackground}" Foreground="White" FontFamily="Segoe MDL2 Assets" gaze:GazeInput.MaxDwellRepeatCount="99"></Button>
+            <Button x:Name="PrivacyViewScrollUpButton"  Width="150" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,50,50,50" Click="PrivacyViewScrollUpButton_Click" Background="{x:Null}" Foreground="White" FontFamily="Segoe MDL2 Assets" gaze:GazeInput.MaxDwellRepeatCount="99" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+                <Border CornerRadius="5" Background="{StaticResource ToolBarButtonBackground}">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" >&#xe971;</TextBlock>
+                </Border>
+            </Button>
 
-            <Button x:Name="PrivacyViewScrollDownButton" Content="&#xe972;" Width="150" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="400,50,0,50" Click="PrivacyViewScrollDownButton_Click" Background="{StaticResource ToolBarButtonBackground}" Foreground="White" FontFamily="Segoe MDL2 Assets" gaze:GazeInput.MaxDwellRepeatCount="99"/>
+            <Button x:Name="PrivacyViewScrollDownButton" Width="150" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="400,50,0,50" Click="PrivacyViewScrollDownButton_Click" Background="{x:Null}" Foreground="White" FontFamily="Segoe MDL2 Assets" gaze:GazeInput.MaxDwellRepeatCount="99" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+                <Border CornerRadius="5" Background="{StaticResource ToolBarButtonBackground}">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" >&#xe972;</TextBlock>
+                </Border>
+            </Button>
 
-            <Button x:Name="PrivacyViewContinueButton" Width="300" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,50,150,50" Click="PrivacyViewContinueButton_Click" Background="{StaticResource ToolBarButtonBackground}" Foreground="White" Content="Continue" FontSize="24"/>
+            <Button x:Name="PrivacyViewContinueButton" Width="300" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,50,150,50" Click="PrivacyViewContinueButton_Click" Foreground="White" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" BorderThickness="0" Background="{x:Null}" >
+                <Border CornerRadius="5" Background="{StaticResource ToolBarButtonBackground}">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" >Continue</TextBlock>
+                </Border>
+            </Button>
 
         </Grid>
     </Grid>
