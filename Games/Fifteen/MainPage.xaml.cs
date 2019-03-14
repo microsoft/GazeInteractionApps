@@ -185,7 +185,10 @@ namespace Fifteen
 
         private void UseTermsHyperlink_Click(object sender, RoutedEventArgs e)
         {
-
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.Transparent);
+            WebViewLoadingText.Visibility = Visibility.Visible;
+            PrivacyWebView.Navigate(new System.Uri("https://www.microsoft.com/en-us/servicesagreement/default.aspx"));
+            PrivacyViewGrid.Visibility = Visibility.Visible;
         }
 
         private void PrivacyWebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
