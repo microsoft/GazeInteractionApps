@@ -5,87 +5,132 @@
     xmlns:local="using:TwoZeroFourEight"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:g="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
-    g:GazeInput.Interaction="Enabled"
-    g:GazeInput.IsCursorVisible="False"
+    xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
+    gaze:GazeInput.Interaction="Enabled"
+    gaze:GazeInput.IsCursorVisible="False"
     mc:Ignorable="d"
-    KeyUp="OnPageKeyUp"  Loaded="Page_Loaded">
+    KeyUp="OnPageKeyUp"  Loaded="Page_Loaded" FontFamily="Segoe UI">
 
     <Page.Resources>
+        <Duration x:Key="DestructiveDwellDuration">00:00:01.0000000</Duration>
+        <Style  x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="42" />
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="150" />
             <Setter Property="Height" Value="150" />
             <Setter Property="FontSize" Value="64" />
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
             <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="0"/>
         </Style>
-        
+
         <local:IntegerToStringConverter x:Key="IntegerToStringConverter" />
         <local:ValueToBackgroundColorConverter x:Key="ValueToBackgroundColorConverter" />
-
+        <SolidColorBrush x:Key="TileBackground" Color="#FF4D4D99"/>
+        <SolidColorBrush x:Key="TileForeground" Color="#FFD1D1D1"/>
+        <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FF2292a6"/>
     </Page.Resources>
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1.2" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
+            <GradientStop Color="#c6ffff" Offset="0.8"/>
+            <GradientStop Color="#FFc6beff" Offset="0.009"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Page.Background>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid >
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" MinHeight="0" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" MinHeight="0" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left" Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalAlignment="Top">
-            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnNewGame" Content="New" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI" FontSize="36" Width="100" Height="100"/>
 
-       
-            <Border Width="400" Margin="50,10,0,0" IsHitTestVisible="False"  >
-                <Grid IsHitTestVisible="False">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="Score"  HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Chocolate" FontSize="32" IsHitTestVisible="False" />
-                    <TextBlock Text="{x:Bind Path=Board.Score, Mode=OneWay}"   HorizontalTextAlignment="Center" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="Chocolate" FontSize="32" Grid.Column="1" IsHitTestVisible="False" />
-
-                    <TextBlock Text="High Score"  HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Chocolate" FontSize="32" Grid.Row="1" Margin="0,0,50,0" IsHitTestVisible="False"  />
-                    <TextBlock Text="{x:Bind Path=Board.HighScore, Mode=OneWay}"   HorizontalTextAlignment="Center" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="Chocolate" FontSize="32" Grid.Row="1" Grid.Column="1" IsHitTestVisible="False" />
-                    
-                </Grid>
-            </Border>
-        </StackPanel>
-
-        <Button   Style="{StaticResource ButtonStyle}" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100" Grid.Column="2" Grid.RowSpan="2"/>
-        
-        
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="Game Over" Visibility="{x:Bind Path=Board.GameOver, Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="32" Foreground="Chocolate" Margin="0,0,150,150" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-
-        <Grid Grid.Row="1" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="3" Margin="40,40,40,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="OnUpClick" Content="&#xF0AD;" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-            <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="OnDownClick" Content="&#xF0AE;" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnLeftClick" Content="&#xF0B0;" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-            <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonStyle}" Click="OnRightClick" Content="&#xF0AF;" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            
-            <GridView x:Name="GameBoardBackGroundGrid" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" FontFamily="Segoe UI" Grid.Row="1" Grid.Column="1"  >
+            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnNewGame" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI" FontSize="24" Width="100" Height="100" Background="{x:Null}" Margin="0,0,0,0" Foreground="White" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+                <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
+                    <TextBlock Text="New" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+            </Button>
+
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Grid.ColumnSpan="2">
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="150,0,0,0" FontSize="36" FontWeight="SemiBold" Foreground="{StaticResource TileBackground}" FontFamily="Segoe UI">DOUBLE UP</TextBlock>
+
+            </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,100,0" Grid.ColumnSpan="2">
+                <Border Width="400" Margin="0,0,0,0" IsHitTestVisible="False"  >
+                    <Grid IsHitTestVisible="False">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Score"  HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource TileBackground}" FontSize="32" IsHitTestVisible="False" />
+                        <TextBlock Text="{x:Bind Path=Board.Score, Mode=OneWay}"   HorizontalTextAlignment="Center" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="{StaticResource TileBackground}" FontSize="32" Grid.Column="1" IsHitTestVisible="False" />
+
+                        <TextBlock Text="High Score"  HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource TileBackground}" FontSize="32" Grid.Row="1" Margin="0,0,50,0" IsHitTestVisible="False"  />
+                        <TextBlock Text="{x:Bind Path=Board.HighScore, Mode=OneWay}"   HorizontalTextAlignment="Center" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="{StaticResource TileBackground}" FontSize="32" Grid.Row="1" Grid.Column="1" IsHitTestVisible="False" />
+
+                    </Grid>
+                </Border>
+            </StackPanel>
+
+
+            <Button Grid.Column="2" Style="{StaticResource ActionButtonStyle}" Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}" Background="{x:Null}" FontWeight="SemiBold" Margin="2,0,0,0" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+                <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
+                    <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
+                </Border>
+            </Button>
+        </Grid>
+
+
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="0" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" MinHeight="0" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="0" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Rectangle Grid.Column="1" Height="180"/>
+            <Rectangle Grid.Row="2" Grid.Column="1" Height="180"/>
+            <Rectangle Grid.Row="1" Width="180"/>
+            <Rectangle Grid.Row="1" Grid.Column="2" Width="180"/>
+
+
+            <GridView x:Name="GameBoardBackGroundGrid" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" FontFamily="Segoe UI" Grid.Row="1" Grid.Column="1" Padding="0,0,0,0" FocusVisualPrimaryThickness="0,0,0,0" FocusVisualMargin="0,0,0,-1" FocusVisualSecondaryThickness="0,0,0,0"  >
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -94,23 +139,23 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="local:Cell">
-                        <Border Width="75" Height="75" Background="LightGray"  CornerRadius="5" BorderBrush="DarkGray" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border Width="{x:Bind CellSize, Mode=OneWay}" Height="{x:Bind CellSize, Mode=OneWay}" Background="Transparent"  CornerRadius="5" BorderBrush="DarkGray" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" >
 
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </GridView>
-                
-            <GridView x:Name="GameBoardGrid" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" Grid.Row="1" Grid.Column="1">
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                     <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="local:Cell">
-                        <Border Width="75" Height="75" Background="{x:Bind Path=IntVal, Mode=OneWay, Converter={StaticResource ValueToBackgroundColorConverter}}"  BorderBrush="DarkGray" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <GridView x:Name="GameBoardGrid" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" Grid.Row="1" Grid.Column="1" SizeChanged="GameBoardGrid_SizeChanged" FontFamily="Segoe UI" Padding="0,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" FocusVisualMargin="0,0,0,0" FocusVisualPrimaryThickness="0,0,0,0" FocusVisualSecondaryThickness="0,0,0,0">
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="local:Cell">
+                        <Border Width="{x:Bind CellSize, Mode=OneWay}" Height="{x:Bind CellSize, Mode=OneWay}" Background="{x:Bind Path=IntVal, Mode=OneWay, Converter={StaticResource ValueToBackgroundColorConverter}}"  BorderBrush="DarkGray" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Grid>
                                 <TextBlock Text="{x:Bind Path=IntVal, Mode=OneWay, Converter={StaticResource IntegerToStringConverter}}" TextAlignment="Center" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 <Canvas>
@@ -119,10 +164,47 @@
                             </Grid>
                         </Border>
                     </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </GridView>
-        
+                </ItemsControl.ItemTemplate>
+            </GridView>
+
         </Grid>
-        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2" Padding="0,0,10,10" FontFamily="Segoe UI"></TextBlock>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition  Height="Auto"  />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition  />
+            </Grid.ColumnDefinitions>
+
+            <Rectangle Width="{x:Bind GameBoardGrid.ActualWidth}" Height="{x:Bind GameBoardGrid.ActualHeight}" Grid.Row="1" Grid.Column="1"></Rectangle>
+
+            <Button x:Name="UpButton"  Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="OnUpClick" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Foreground="{StaticResource TileForeground}" Width="{x:Bind Board.CellSpace, Mode=OneWay}" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
+                <Border Background="{StaticResource TileBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
+                    <TextBlock Text="&#xe70e;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
+                </Border>
+            </Button>
+            <Button x:Name="DownButton" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="OnDownClick" HorizontalAlignment="Stretch" VerticalAlignment="Top" Foreground="{StaticResource TileForeground}" Width="{x:Bind Board.CellSpace, Mode=OneWay}" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <Border Background="{StaticResource TileBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
+                    <TextBlock Text="&#xe70d;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
+                </Border>
+            </Button>
+            <Button x:Name="LeftButton" Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnLeftClick" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="{x:Null}" Foreground="{StaticResource TileForeground}" Height="{x:Bind Board.CellSpace, Mode=OneWay}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <Border Background="{StaticResource TileBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
+                    <TextBlock Text="&#xe76b;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
+                </Border>
+            </Button>
+            <Button x:Name="RightButton" Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonStyle}" Click="OnRightClick" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="{x:Null}" Foreground="{StaticResource TileForeground}" Height="{x:Bind Board.CellSpace, Mode=OneWay}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <Border Background="{StaticResource TileBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
+                    <TextBlock Text="&#xe76c;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
+                </Border>
+            </Button>
+        </Grid>
+        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Padding="0,0,10,10" FontFamily="Segoe UI" Grid.RowSpan="2"></TextBlock>
+        <TextBlock  Grid.Row="1" Grid.Column="1" Text="Game Over" Visibility="{x:Bind Path=Board.GameOver, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Foreground="{StaticResource ToolBarButtonBackground}" Grid.RowSpan="2" Grid.ColumnSpan="3" FontFamily="Segoe UI" FontWeight="SemiBold" Margin="0,-20,0,0" />
     </Grid>
 </Page>

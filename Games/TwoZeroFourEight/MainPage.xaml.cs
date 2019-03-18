@@ -46,7 +46,8 @@ namespace TwoZeroFourEight
     {
         private static Brush[] _backgroundColors = new Brush[]
         {
-            new SolidColorBrush(Colors.LightGray),
+            
+            new SolidColorBrush(Colors.Transparent),
 
             new SolidColorBrush(Colors.PaleTurquoise),
             new SolidColorBrush(Colors.LightBlue),
@@ -128,13 +129,13 @@ namespace TwoZeroFourEight
             }
         }
 
-        private Point _anchorPoint;
-        public Point AnchorPoint
+        private Double _cellSize;
+        public Double CellSize
         {
-            get { return _anchorPoint; }
+            get { return _cellSize; }
             set
             {
-                SetField<Point>(ref _anchorPoint, value, "AnchorPoint");
+                SetField<Double>(ref _cellSize, value, "CellSize");
             }
         }
     }
@@ -217,6 +218,28 @@ namespace TwoZeroFourEight
             }
         }
 
+        private Double _cellSpace = 75;
+        public Double CellSpace
+        {
+            get { return _cellSpace; }
+            set
+            {
+                SetField<Double>(ref _cellSpace, value, "CellSpace");
+                UpdateCellSizes();
+            }
+        }
+
+        private void UpdateCellSizes()
+        {
+            double borderSpace = _boardSize * 4; // cells get default margin of 4
+            double cellSize = (this.CellSpace - borderSpace) / _boardSize;
+
+            foreach (Cell cell in Cells)
+            {
+                cell.CellSize = cellSize;
+            }
+        }
+
         public List<Cell> Cells { get; set; }
         private List<FrameworkElement> Buttons { get; set; }
 
@@ -236,16 +259,12 @@ namespace TwoZeroFourEight
 
         public void LoadButtonsList(GridView GameBoardGrid)
         {
-            Buttons = new List<FrameworkElement>();
-            var i = 0;
+            Buttons = new List<FrameworkElement>();            
             var controls = (GameBoardGrid.ItemsPanelRoot as ItemsWrapGrid).Children;
             foreach (FrameworkElement b in controls)
             {
                 Buttons.Add(b);
-                var buttonTranform = b.TransformToVisual(GameBoardGrid);
-                buttonTranform.TransformPoint(new Point(0, 0));
-                Cells[i].AnchorPoint = buttonTranform.TransformPoint(new Point(0, 0)); ;
-                i++;
+                var newButtonVisual = ElementCompositionPreview.GetElementVisual(b);              
             }
         }
 
@@ -391,19 +410,11 @@ namespace TwoZeroFourEight
                     var easing = compositor.CreateLinearEasingFunction();
 
                     ///slideAnimation
-                    ///
-                    var initialToOffset = new Vector3((float)Cells[cur].AnchorPoint.X, (float)Cells[cur].AnchorPoint.Y, 0.0f);
-                    var initialFromOffset = new Vector3((float)Cells[j].AnchorPoint.X, (float)Cells[j].AnchorPoint.Y, 0.0f);
+                    ///                    
+                    var initialToOffset = slideToCellVisual.Offset;
+                    var initialFromOffset = slideFromCellVisual.Offset;
 
-                    if (slideToCellVisual.Offset.X != Cells[cur].AnchorPoint.X || slideFromCellVisual.Offset.X != Cells[j].AnchorPoint.X)
-                    {
-                        var warmUpAnimation = compositor.CreateVector3KeyFrameAnimation();
-                        warmUpAnimation.InsertKeyFrame(0f, initialFromOffset);
-                        warmUpAnimation.InsertKeyFrame(1f, initialToOffset);
-                        warmUpAnimation.Duration = TimeSpan.FromMilliseconds(1);
 
-                        slideToCellVisual.StartAnimation(nameof(slideToCellVisual.Offset), warmUpAnimation);
-                    }
 
                     var slideAnimation = compositor.CreateVector3KeyFrameAnimation();
                     slideAnimation.InsertKeyFrame(0f, initialFromOffset);
@@ -663,6 +674,8 @@ namespace TwoZeroFourEight
     {
         public Board Board;
 
+        private SolidColorBrush _solidTileForegroundBrush;
+
         public MainPage()
         {
             InitializeComponent();
@@ -689,7 +702,7 @@ namespace TwoZeroFourEight
         private void OnNewGame(object sender, RoutedEventArgs e)
         {
             Board.Reset();
-            Board.LoadButtonsList(GameBoardGrid);
+            Board.LoadButtonsList(GameBoardGrid);            
         }
 
         private void OnUpClick(object sender, RoutedEventArgs e)
@@ -765,6 +778,18 @@ namespace TwoZeroFourEight
 
             var boardVisual = ElementCompositionPreview.GetElementVisual(GameBoardGrid);
             boardVisual.BorderMode = CompositionBorderMode.Soft;
+
+            var controls = (GameBoardGrid.ItemsPanelRoot as ItemsWrapGrid).Children;
+            foreach (FrameworkElement b in controls)
+            {                
+                var newButtonVisual = ElementCompositionPreview.GetElementVisual(b);             
+            }
+
+            _solidTileForegroundBrush = (SolidColorBrush)this.Resources["TileForeground"];
+
+            GazeInput.DwellFeedbackProgressBrush = _solidTileForegroundBrush;
+            GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
+
         }
 
         public static string GetAppVersion()
@@ -776,5 +801,14 @@ namespace TwoZeroFourEight
             return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
         }
 
+        private void GameBoardGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Double narrowEdge = GameBoardGrid.ActualHeight ;
+            if (GameBoardGrid.ActualWidth  < narrowEdge)
+            {
+                narrowEdge = GameBoardGrid.ActualWidth ;
+            }
+            Board.CellSpace = narrowEdge;
+        }
     }
 }
