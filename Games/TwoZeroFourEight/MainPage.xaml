@@ -146,10 +146,10 @@
                 </ItemsControl.ItemTemplate>
             </GridView>
 
-            <GridView x:Name="GameBoardGrid" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" Grid.Row="1" Grid.Column="1" SizeChanged="GameBoardGrid_SizeChanged" FontFamily="Segoe UI" Padding="0,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" FocusVisualMargin="0,0,0,0" FocusVisualPrimaryThickness="0,0,0,0" FocusVisualSecondaryThickness="0,0,0,0">
+            <GridView x:Name="GameBoardGrid" x:FieldModifier="public" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" Grid.Row="1" Grid.Column="1" SizeChanged="GameBoardGrid_SizeChanged" FontFamily="Segoe UI" Padding="0,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" FocusVisualMargin="0,0,0,0" FocusVisualPrimaryThickness="0,0,0,0" FocusVisualSecondaryThickness="0,0,0,0">
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="10" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
 

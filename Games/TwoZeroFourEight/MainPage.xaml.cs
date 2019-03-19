@@ -176,8 +176,7 @@ namespace TwoZeroFourEight
     {
         private int _SlideSpeed = 200;
         private int _AddSpeed = 500;
-        private int _SpawnSpeed = 25;
-        private int _boardSize;
+        private int _SpawnSpeed = 25;        
         private int _maxCells;
         private Random _random = new Random();
 
@@ -190,6 +189,14 @@ namespace TwoZeroFourEight
         {
             get { return _gameOver; }
             set { SetField<bool>(ref _gameOver, value, "GameOver"); }
+        }
+
+
+        private int _boardSize;
+        public int BoardSize
+        {
+            get { return _boardSize; }
+            set { SetField<int>(ref _boardSize, value, "BoardSize"); }
         }
 
         private int _highScore;
@@ -246,7 +253,7 @@ namespace TwoZeroFourEight
         public Board(int boardSize)
         {
             _boardSize = boardSize;
-            _maxCells = _boardSize * _boardSize;
+            _maxCells = _boardSize * _boardSize;                       
 
             Cells = new List<Cell>(_maxCells);
             for (int i = 0; i < _maxCells; i++)
@@ -679,7 +686,7 @@ namespace TwoZeroFourEight
     {
         public Board Board;
 
-        private SolidColorBrush _solidTileForegroundBrush;
+        private SolidColorBrush _solidTileForegroundBrush;       
 
         public MainPage()
         {
@@ -690,7 +697,6 @@ namespace TwoZeroFourEight
             VersionTextBlock.Text = GetAppVersion();
 
             Board = new Board(4);
-            DataContext = Board;
 
             CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args)
             {
@@ -777,9 +783,13 @@ namespace TwoZeroFourEight
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            ItemsWrapGrid itemsWrapGrid = GameBoardGrid.ItemsPanelRoot as ItemsWrapGrid;
+            itemsWrapGrid.MaximumRowsOrColumns = Board.BoardSize;
+            DataContext = Board;
+
             TurnOffGridViewClipping();
             Board.LoadButtonsList(GameBoardGrid);
-            Board.Reset();
+            Board.Reset();            
 
             var boardVisual = ElementCompositionPreview.GetElementVisual(GameBoardGrid);
             boardVisual.BorderMode = CompositionBorderMode.Soft;
@@ -814,6 +824,6 @@ namespace TwoZeroFourEight
                 narrowEdge = GameBoardGrid.ActualWidth ;
             }
             Board.CellSpace = narrowEdge;
-        }
+        }       
     }
 }
