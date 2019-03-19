@@ -47,7 +47,7 @@ namespace TwoZeroFourEight
         private static Brush[] _backgroundColors = new Brush[]
         {
             
-            new SolidColorBrush(Colors.Transparent),
+            new SolidColorBrush(Colors.Transparent),            
 
             new SolidColorBrush(Colors.PaleTurquoise),
             new SolidColorBrush(Colors.LightBlue),
@@ -125,7 +125,7 @@ namespace TwoZeroFourEight
             get { return _refIndex; }
             set
             {
-                SetField<int>(ref _refIndex, value, "IntVal");
+                SetField<int>(ref _refIndex, value, "RefIndex");
             }
         }
 

@@ -37,14 +37,27 @@
 
         <local:IntegerToStringConverter x:Key="IntegerToStringConverter" />
         <local:ValueToBackgroundColorConverter x:Key="ValueToBackgroundColorConverter" />
-        <SolidColorBrush x:Key="TileBackground" Color="#FF4D4D99"/>
+        
+        <!--original palette-->
+        <!--<SolidColorBrush x:Key="TileBackground" Color="#FF4D4D99"/>
         <SolidColorBrush x:Key="TileForeground" Color="#FFD1D1D1"/>
-        <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FF2292a6"/>
+        <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FF2292a6"/>-->
+
+        <SolidColorBrush x:Key="TileBackground" Color="#FF465c6f"/>
+        <SolidColorBrush x:Key="TileForeground" Color="#FFD1D1D1"/>
+        <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FF6995ac"/>
     </Page.Resources>
     <Page.Background>
+        <!--Original palette
         <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1.2" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
             <GradientStop Color="#c6ffff" Offset="0.8"/>
             <GradientStop Color="#FFc6beff" Offset="0.009"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>-->
+
+        <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1.2" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
+            <GradientStop Color="#a9cbdb" Offset="0.8"/>
+            <GradientStop Color="#FFe7feff" Offset="0.009"/>
             <GradientStop Color="White" Offset="1"/>
         </LinearGradientBrush>
     </Page.Background>
@@ -77,8 +90,12 @@
             </Button>
 
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Grid.ColumnSpan="2">
-                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="150,0,0,0" FontSize="36" FontWeight="SemiBold" Foreground="{StaticResource TileBackground}" FontFamily="Segoe UI">DOUBLE UP</TextBlock>
-
+                <StackPanel Orientation="Vertical">
+                <Border Background="#FFE31386" FocusVisualPrimaryBrush="White" Margin="150,0,0,0" VerticalAlignment="Center" Padding="10,0,10,2" CornerRadius="5,5,5,5" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
+                    <TextBlock Foreground="White" FontWeight="SemiBold" FontSize="11">EYES FIRST</TextBlock>
+                </Border>
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="150,-5,0,0" FontSize="36" FontWeight="SemiBold" Foreground="{StaticResource TileBackground}" FontFamily="Segoe UI">DOUBLE UP</TextBlock>
+                </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,100,0" Grid.ColumnSpan="2">
                 <Border Width="400" Margin="0,0,0,0" IsHitTestVisible="False"  >
