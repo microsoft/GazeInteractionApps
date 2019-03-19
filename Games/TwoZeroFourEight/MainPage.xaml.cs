@@ -295,8 +295,13 @@ namespace TwoZeroFourEight
             for (int i = 0; i < _boardSize; i++)
             {
                 for (int j = 0; j < _boardSize; j++)
-                {
+                {                    
                     var cur = Cells[i * _boardSize + j];
+                    if (cur.IntVal == 0)
+                    {
+                        return false;
+                    }
+
                     var above = (i > 0) ? Cells[((i - 1) * _boardSize) + j] : null;
                     var below = (i < _boardSize - 1) ? Cells[((i + 1) * _boardSize) + j] : null;
                     var left = (j > 0) ? Cells[(i * _boardSize) + j - 1] : null;
@@ -470,8 +475,8 @@ namespace TwoZeroFourEight
                     var answerText = VisualTreeHelper.GetChild(grid, 1);
 
                     var answerTextVisual = ElementCompositionPreview.GetElementVisual(answerText as FrameworkElement);
-                    var cellTextVisual = ElementCompositionPreview.GetElementVisual(cellText as FrameworkElement);                    
-
+                    var cellTextVisual = ElementCompositionPreview.GetElementVisual(cellText as FrameworkElement);
+                   
                     var easing = compositor.CreateLinearEasingFunction();
 
                     ///Scale the ToCell to breifly be twice the size and then back down to regular size
@@ -601,7 +606,7 @@ namespace TwoZeroFourEight
             if (change)
             {
                 OnPropertyChanged("Score");
-            }
+            }            
         }
 
         private void AddAdjacentBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)

@@ -159,7 +159,7 @@
                             <Grid>
                                 <TextBlock Text="{x:Bind Path=IntVal, Mode=OneWay, Converter={StaticResource IntegerToStringConverter}}" TextAlignment="Center" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 <Canvas>
-                                    <TextBlock x:Name="AnswerText" Text="{x:Bind Path=AnswerString, Mode=OneWay}" TextAlignment="Center" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FFFF0707"/>
+                                    <TextBlock Canvas.Top="5" Canvas.Left="5" x:Name="AnswerText" Text="{x:Bind Path=AnswerString, Mode=OneWay}" TextAlignment="Center" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FFFF0707"/>
                                 </Canvas>
                             </Grid>
                         </Border>
