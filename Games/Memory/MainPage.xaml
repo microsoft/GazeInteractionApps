@@ -15,8 +15,14 @@
         <!--<SolidColorBrush x:Key="TileBackground" Color="#FF4D4D99"/>
         <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FF2292a6"/>-->
 
+        <!--Dry Wheat
         <SolidColorBrush x:Key="TileBackground" Color="#FF6f5b3f"/>
-        <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FFba7f4d"/>
+        <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FFba7f4d"/>-->
+
+        <!--Garden Green-->
+        <SolidColorBrush x:Key="TileBackground" Color="#FF466d46"/>
+        <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#FF63a162"/>
+        
         <Duration x:Key="DestructiveDwellDuration">00:00:01.0000000</Duration>
         <Duration x:Key="RepeatDelayDuration">00:00:00.8000000</Duration>
         <Duration x:Key="RepeatDuration">00:00:00.8000000</Duration>
@@ -37,9 +43,18 @@
             <GradientStop Color="White" Offset="1"/>
         </LinearGradientBrush>-->
 
+        
+        <!-- Dry Wheat 
         <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1.2" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
             <GradientStop Color="#f5cd9e" Offset="0.28"/>
             <GradientStop Color="#FFfff4c9" Offset="0.95"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>-->
+           
+        <!--Garden Green-->
+        <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1.2" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
+            <GradientStop Color="#d0f0c7" Offset="0.55"/>
+            <GradientStop Color="#FFd3e5f7" Offset="0.7"/>
             <GradientStop Color="White" Offset="1"/>
         </LinearGradientBrush>
     </Page.Background>
