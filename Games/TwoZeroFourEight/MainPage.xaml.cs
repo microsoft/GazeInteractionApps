@@ -686,7 +686,8 @@ namespace TwoZeroFourEight
     {
         public Board Board;
 
-        private SolidColorBrush _solidTileForegroundBrush;       
+        private SolidColorBrush _solidTileForegroundBrush;
+        private SolidColorBrush _solidTileBrush;
 
         public MainPage()
         {
@@ -801,6 +802,7 @@ namespace TwoZeroFourEight
             }
 
             _solidTileForegroundBrush = (SolidColorBrush)this.Resources["TileForeground"];
+            _solidTileBrush = (SolidColorBrush)this.Resources["TileBackground"];
 
             GazeInput.DwellFeedbackProgressBrush = _solidTileForegroundBrush;
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
@@ -816,6 +818,21 @@ namespace TwoZeroFourEight
             return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
         }
 
+        private void OnHowToPlayButton(object sender, RoutedEventArgs e)
+        {
+            GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
+
+            HelpScreen1.Visibility = Visibility.Visible;
+            HelpScreen2.Visibility = Visibility.Collapsed;
+            HelpScreen3.Visibility = Visibility.Collapsed;
+            HelpScreen4.Visibility = Visibility.Collapsed;
+            HelpScreen5.Visibility = Visibility.Collapsed;
+            HelpNavLeftButton.IsEnabled = false;
+            HelpNavRightButton.IsEnabled = true;
+
+            HelpDialogGrid.Visibility = Visibility.Visible;
+        }
+
         private void GameBoardGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Double narrowEdge = GameBoardGrid.ActualHeight ;
@@ -824,6 +841,125 @@ namespace TwoZeroFourEight
                 narrowEdge = GameBoardGrid.ActualWidth ;
             }
             Board.CellSpace = narrowEdge;
-        }       
+        }
+
+        private void OnHelpNavRight(object sender, RoutedEventArgs e)
+        {
+            if (HelpScreen1.Visibility == Visibility.Visible)
+            {
+                HelpScreen1.Visibility = Visibility.Collapsed;
+                HelpScreen2.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = true;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen2.Visibility == Visibility.Visible)
+            {
+                HelpScreen2.Visibility = Visibility.Collapsed;
+                HelpScreen3.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = true;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen3.Visibility == Visibility.Visible)
+            {
+                HelpScreen3.Visibility = Visibility.Collapsed;
+                HelpScreen4.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = true;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen4.Visibility == Visibility.Visible)
+            {
+                HelpScreen4.Visibility = Visibility.Collapsed;
+                HelpScreen5.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = false;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen5.Visibility == Visibility.Visible)
+            {
+                HelpNavRightButton.IsEnabled = false;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+        }
+
+        private void OnHelpNavLeft(object sender, RoutedEventArgs e)
+        {
+            if (HelpScreen1.Visibility == Visibility.Visible)
+            {
+                HelpNavLeftButton.IsEnabled = false;
+                HelpNavRightButton.IsEnabled = true;
+            }
+            else if (HelpScreen2.Visibility == Visibility.Visible)
+            {
+                HelpScreen2.Visibility = Visibility.Collapsed;
+                HelpScreen1.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = false;
+                HelpNavRightButton.IsEnabled = true;
+            }
+            else if (HelpScreen3.Visibility == Visibility.Visible)
+            {
+                HelpScreen3.Visibility = Visibility.Collapsed;
+                HelpScreen2.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = true;
+                HelpNavRightButton.IsEnabled = true;
+            }
+
+            else if (HelpScreen4.Visibility == Visibility.Visible)
+            {
+                HelpScreen4.Visibility = Visibility.Collapsed;
+                HelpScreen3.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = true;
+                HelpNavRightButton.IsEnabled = true;
+            }
+
+            else if (HelpScreen5.Visibility == Visibility.Visible)
+            {
+                HelpScreen5.Visibility = Visibility.Collapsed;
+                HelpScreen4.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = true;
+                HelpNavRightButton.IsEnabled = true;
+            }
+        }
+
+        private void DismissButton(object sender, RoutedEventArgs e)
+        {
+            HelpDialogGrid.Visibility = Visibility.Collapsed;
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+        }
+
+        private async void PrivacyViewScrollUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0,-" + PrivacyWebView.ActualHeight / 2 + ") " });
+        }
+
+        private void PrivacyViewScrollDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0," + PrivacyWebView.ActualHeight / 2 + ") " });
+        }
+
+        private void PrivacyViewContinueButton_Click(object sender, RoutedEventArgs e)
+        {
+            PrivacyViewGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void PrivacyHyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.Transparent);
+            WebViewLoadingText.Visibility = Visibility.Visible;
+            PrivacyWebView.Navigate(new System.Uri("https://go.microsoft.com/fwlink/?LinkId=521839"));
+            PrivacyViewGrid.Visibility = Visibility.Visible;
+        }
+
+        private void UseTermsHyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.Transparent);
+            WebViewLoadingText.Visibility = Visibility.Visible;
+            PrivacyWebView.Navigate(new System.Uri("https://www.microsoft.com/en-us/servicesagreement/default.aspx"));
+            PrivacyViewGrid.Visibility = Visibility.Visible;
+        }
+
+        private void PrivacyWebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        {
+            GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
+            WebViewLoadingText.Visibility = Visibility.Collapsed;
+        }
     }
 }
