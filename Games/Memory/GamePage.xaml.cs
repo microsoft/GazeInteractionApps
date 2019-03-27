@@ -208,7 +208,7 @@ namespace Memory
 
             ScalarKeyFrameAnimation flipAnimation = compositor.CreateScalarKeyFrameAnimation();
             flipAnimation.InsertKeyFrame(0.000001f, 0);
-            flipAnimation.InsertKeyFrame(0.999999f, 180, easing);
+            flipAnimation.InsertKeyFrame(0.999999f, -180, easing);
             flipAnimation.InsertKeyFrame(1f, 0);
             flipAnimation.Duration = TimeSpan.FromMilliseconds(400);
             flipAnimation.IterationBehavior = AnimationIterationBehavior.Count;
