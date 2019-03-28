@@ -558,8 +558,29 @@ namespace Memory
             }
             else            
             {
+                //Do Match confirmation animation
+
+                //Flip button visual
+                var btn1Visual = ElementCompositionPreview.GetElementVisual(_firstButton);
+                var btn2Visual = ElementCompositionPreview.GetElementVisual(_secondButton);
+                var compositor = btn1Visual.Compositor;
+                var springSpeed = 50;
+
                 GazeInput.SetInteraction(_firstButton, Interaction.Disabled);
                 GazeInput.SetInteraction(_secondButton, Interaction.Disabled);
+
+                btn1Visual.CenterPoint = new System.Numerics.Vector3((float)_firstButton.ActualWidth / 2, (float)_firstButton.ActualHeight / 2, 0f);
+                btn2Visual.CenterPoint = new System.Numerics.Vector3((float)_secondButton.ActualWidth / 2, (float)_secondButton.ActualHeight / 2, 0f);
+
+                var scaleAnimation = compositor.CreateSpringVector3Animation();
+                scaleAnimation.InitialValue = new System.Numerics.Vector3(0.9f, 0.9f, 0f);
+                scaleAnimation.FinalValue = new System.Numerics.Vector3(1.0f, 1.0f, 0f);
+
+                scaleAnimation.DampingRatio = 0.4f;
+                scaleAnimation.Period = TimeSpan.FromMilliseconds(springSpeed);
+
+                btn1Visual.StartAnimation(nameof(btn1Visual.Scale), scaleAnimation);
+                btn2Visual.StartAnimation(nameof(btn2Visual.Scale), scaleAnimation);
 
                 _firstButton = null;
                 _secondButton = null;
