@@ -23,8 +23,8 @@ namespace Memory
 {
     public sealed partial class GamePage : Page
     {
-        const byte MIN_CHAR = 0x21;
-        const byte MAX_CHAR = 0xE8;
+        const byte MIN_CHAR = 0x21;        
+        const byte MAX_CHAR = 0xff;
 
         Random _rnd;
         Button _firstButton;
@@ -246,6 +246,67 @@ namespace Memory
             _reverseAnimationActive = false;
         }
 
+        private async void FlipCardFaceUp(Button btn)
+        {
+            //Flip button visual
+            var btnVisual = ElementCompositionPreview.GetElementVisual(btn);
+            var compositor = btnVisual.Compositor;
+
+            //Get a visual for the content
+            var btnContent = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(btn, 0), 0);
+            var btnContentVisual = ElementCompositionPreview.GetElementVisual(btnContent as FrameworkElement);
+
+            var easing = compositor.CreateLinearEasingFunction();
+
+            if (_flipBatchAnimation != null)
+            {
+                _flipBatchAnimation.Completed -= FlipBatchAnimation_Completed;
+                _flipBatchAnimation.Dispose();
+            }
+
+            _flipBatchAnimation = compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
+            _flipBatchAnimation.Completed += FlipBatchAnimation_Completed;
+
+            ScalarKeyFrameAnimation flipAnimation = compositor.CreateScalarKeyFrameAnimation();
+            flipAnimation.InsertKeyFrame(0.000001f, 180);
+            flipAnimation.InsertKeyFrame(1f, 0, easing);
+            flipAnimation.Duration = TimeSpan.FromMilliseconds(800);
+            flipAnimation.IterationBehavior = AnimationIterationBehavior.Count;
+            flipAnimation.IterationCount = 1;
+            btnVisual.CenterPoint = new Vector3((float)(0.5 * btn.ActualWidth), (float)(0.5f * btn.ActualHeight), 0f);
+            btnVisual.RotationAxis = new Vector3(0.0f, 1f, 0f);
+
+            ScalarKeyFrameAnimation appearAnimation = compositor.CreateScalarKeyFrameAnimation();
+            appearAnimation.InsertKeyFrame(0.0f, 0);
+            appearAnimation.InsertKeyFrame(0.599999f, 0);
+            appearAnimation.InsertKeyFrame(0.6f, 0.5f);
+            appearAnimation.InsertKeyFrame(1f, 1);
+            appearAnimation.Duration = TimeSpan.FromMilliseconds(800);
+            appearAnimation.IterationBehavior = AnimationIterationBehavior.Count;
+            appearAnimation.IterationCount = 1;
+
+            btnVisual.StartAnimation(nameof(btnVisual.RotationAngleInDegrees), flipAnimation);
+            btnContentVisual.StartAnimation(nameof(btnContentVisual.Opacity), appearAnimation);
+            _flipBatchAnimation.End();
+
+            if (_usePictures)
+            {
+                var file = await StorageFile.GetFileFromPathAsync(btn.Tag.ToString());
+                using (var stream = await file.OpenAsync(FileAccessMode.Read))
+                {
+                    var image = new Image();
+                    var bmp = new BitmapImage();
+                    await bmp.SetSourceAsync(stream);
+                    image.Source = bmp;
+                    btn.Content = image;
+                }
+            }
+            else
+            {
+                btn.Content = btn.Tag.ToString();
+            }
+        }
+
         private void FlipCardFaceDown(Button card)
         {
             if (card.Content == null) return;
@@ -449,7 +510,16 @@ namespace Memory
             }
         }
 
-        private async void OnButtonClick(object sender, RoutedEventArgs e)
+        private void RevealBoard()  //For debuging purposes
+        {
+            List<Button> listButtons = GetButtonList();
+            foreach (Button button in listButtons)
+            {
+                FlipCardFaceUp(button);
+            }
+        }
+
+        private void OnButtonClick(object sender, RoutedEventArgs e)
         {
             if (_animationActive || _reverseAnimationActive) return;
 
@@ -483,63 +553,8 @@ namespace Memory
                 _secondButton = btn;
             }
 
-            //Flip button visual
-            var btnVisual = ElementCompositionPreview.GetElementVisual(btn);
-            var compositor = btnVisual.Compositor;
+            FlipCardFaceUp(btn);
 
-            //Get a visual for the content
-            var btnContent = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(btn, 0), 0);
-            var btnContentVisual = ElementCompositionPreview.GetElementVisual(btnContent as FrameworkElement);
-
-            var easing = compositor.CreateLinearEasingFunction();
-
-            if (_flipBatchAnimation != null)
-            {
-                _flipBatchAnimation.Completed -= FlipBatchAnimation_Completed;
-                _flipBatchAnimation.Dispose();
-            }
-
-            _flipBatchAnimation = compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
-            _flipBatchAnimation.Completed += FlipBatchAnimation_Completed;
-
-            ScalarKeyFrameAnimation flipAnimation = compositor.CreateScalarKeyFrameAnimation();
-            flipAnimation.InsertKeyFrame(0.000001f, 180);
-            flipAnimation.InsertKeyFrame(1f, 0, easing);
-            flipAnimation.Duration = TimeSpan.FromMilliseconds(800);
-            flipAnimation.IterationBehavior = AnimationIterationBehavior.Count;
-            flipAnimation.IterationCount = 1;            
-            btnVisual.CenterPoint = new Vector3((float)(0.5 * btn.ActualWidth), (float)(0.5f * btn.ActualHeight), 0f);
-            btnVisual.RotationAxis = new Vector3(0.0f, 1f, 0f);
-
-            ScalarKeyFrameAnimation appearAnimation = compositor.CreateScalarKeyFrameAnimation();
-            appearAnimation.InsertKeyFrame(0.0f, 0);            
-            appearAnimation.InsertKeyFrame(0.599999f, 0);
-            appearAnimation.InsertKeyFrame(0.6f, 0.5f);
-            appearAnimation.InsertKeyFrame(1f, 1);
-            appearAnimation.Duration = TimeSpan.FromMilliseconds(800);
-            appearAnimation.IterationBehavior = AnimationIterationBehavior.Count;
-            appearAnimation.IterationCount = 1;
-
-            btnVisual.StartAnimation(nameof(btnVisual.RotationAngleInDegrees), flipAnimation);
-            btnContentVisual.StartAnimation(nameof(btnContentVisual.Opacity), appearAnimation);
-            _flipBatchAnimation.End();
-
-            if (_usePictures)
-            {
-                var file = await StorageFile.GetFileFromPathAsync(btn.Tag.ToString());
-                using (var stream = await file.OpenAsync(FileAccessMode.Read))
-                {
-                    var image = new Image();
-                    var bmp = new BitmapImage();
-                    await bmp.SetSourceAsync(stream);
-                    image.Source = bmp;
-                    btn.Content = image;
-                }
-            }
-            else
-            {
-                btn.Content = btn.Tag.ToString();
-            }           
         }
 
         private void FlipBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
