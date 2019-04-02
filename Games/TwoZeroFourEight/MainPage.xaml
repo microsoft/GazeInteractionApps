@@ -271,7 +271,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Eyes First Double Up is a game played in a four by four grid.&#x0d;&#x0d;A value of two or a four willl drop into an empty cell at the beginning of the game and after each move.&#x0d;&#x0d;Moves are made by shifting cells in one of the four directions by triggering the corresponding button. When cells containing the same value collide they double and merge." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.Row="1"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Eyes First - Double Up is a game played in a four by four grid.&#x0d;&#x0d;A value of two or a four willl drop into an empty cell at the beginning of the game and after each move.&#x0d;&#x0d;Moves are made by shifting cells in one of the four directions by triggering the corresponding button. When cells containing the same value collide they double and merge." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.Row="1"/>
                         <TextBlock Text="1 of 5" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
                     <Grid x:Name="HelpScreen2" Grid.Column="1" Visibility="Collapsed" Margin="50,0,50,0" >
