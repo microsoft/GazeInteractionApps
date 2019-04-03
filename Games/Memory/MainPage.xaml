@@ -390,7 +390,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Eyes First - Match Two is a game with four boards of increasing difficulty.&#x0d;&#x0d;You may choose from a 16, 24, 36 or 66 board, each with the corresponding number of cards." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.Row="1"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Eyes First - Match Two is a memory game with four puzzle boards of increasing difficulty.&#x0d;&#x0d;You may choose to play a board with 16, 24, 36 or 66 cards." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.Row="1"/>
                         <TextBlock Text="1 of 5" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
                     <Grid x:Name="HelpScreen2" Grid.Column="1" Visibility="Collapsed" Margin="50,0,50,0" >
@@ -405,8 +405,8 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI" Grid.ColumnSpan="2"/>
                         <TextBlock Text="2 of 5" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="The goal of the game is to select pairs of cards one card at a time while trying to select pairs with matching symbols. A board is complete once you have selected all of the card symbol pairs that make up the board." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.RowSpan="2" Grid.Row="1"/>
-                        <Image Source="/Assets/Solved16Card.PNG" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20,20,20,20" Grid.Column="1" Grid.RowSpan="2" Grid.Row="1"/>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="The goal is to match all of the cards in as few moves as possible by turning over one card at a time.&#x0d;&#x0d;The game is complete when all the cards have been matched as pairs." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.RowSpan="2" Grid.Row="1" Grid.ColumnSpan="2"/>
+                        <Image Source="/Assets/Solved16Card.PNG" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20,20,20,20" Grid.Column="1" Grid.RowSpan="2" Grid.Row="1" Visibility="Collapsed"/>
                     </Grid>
                     <Grid x:Name="HelpScreen3" Grid.Column="1" Visibility="Collapsed" Margin="50,0,50,0" >
                         <Grid.RowDefinitions>
