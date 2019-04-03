@@ -271,7 +271,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Eyes First - Double Up is a game played in a four by four grid.&#x0d;&#x0d;A value of two or a four willl drop into an empty cell at the beginning of the game and after each move.&#x0d;&#x0d;Moves are made by shifting cells in one of the four directions by triggering the corresponding button. When cells containing the same value collide they double and merge." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.Row="1"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Eyes First - Double Up is a puzzle with numbered tiles where the goal is to slide the tiles around until the number 2048 is reached.&#x0d;&#x0d;Tiles will only combine if they are the same number (i.e. 2 or 4 initially, and powers of two thereafter)." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.Row="1"/>
                         <TextBlock Text="1 of 5" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
                     <Grid x:Name="HelpScreen2" Grid.Column="1" Visibility="Collapsed" Margin="50,0,50,0" >
@@ -286,8 +286,8 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI" Grid.ColumnSpan="2"/>
                         <TextBlock Text="2 of 5" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="The goal of the game is continue shifting cells and doubling cells for as long as possible to eventually have a cell that contains 2048 or even higher. " VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.RowSpan="2" Grid.Row="1"/>
-                        <Image Source="/Assets/2048NoMoreMoves.PNG" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Grid.Column="1" Grid.RowSpan="1" Grid.Row="1" Stretch="Uniform"/>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="The goal of the game is to create a tile containing the number 2048 by combining tiles of the same number (e.g. 2+2, 4+4 etc.). But don't stop there, higher numbers are possible." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.RowSpan="2" Grid.Row="1"/>
+                        <Image Source="/Assets/doubleup.gif" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Grid.Column="1" Grid.RowSpan="1" Grid.Row="1" Stretch="Uniform"/>
                     </Grid>
                     <Grid x:Name="HelpScreen3" Grid.Column="1" Visibility="Collapsed" Margin="50,0,50,0" >
                         <Grid.RowDefinitions>
