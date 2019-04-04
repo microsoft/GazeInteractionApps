@@ -329,7 +329,7 @@
                                     <TextBlock x:Name="PauseButtonText" Text="&#xE769;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
                                 </Border>
                             </Button>-->
-                            <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Grid.Column="0" Grid.ColumnSpan="2">When all of the cells on the board are filled with values and none of the adjacent values equal each other there will be no further doublings possible and the game will be over.</TextBlock>
+                            <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Grid.Column="0" Grid.ColumnSpan="2">When all of the cells on the board are filled with values and none of the adjacent values equal each other, there will be no further doublings possible and the game will be over.</TextBlock>
 
                             <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe" FontSize="16" Width="50" Height="50" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="2">
                                 <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
