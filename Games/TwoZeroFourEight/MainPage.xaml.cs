@@ -827,6 +827,7 @@ namespace TwoZeroFourEight
             HelpScreen3.Visibility = Visibility.Collapsed;
             HelpScreen4.Visibility = Visibility.Collapsed;
             HelpScreen5.Visibility = Visibility.Collapsed;
+            HelpScreen6.Visibility = Visibility.Collapsed;
             HelpNavLeftButton.IsEnabled = false;
             HelpNavRightButton.IsEnabled = true;
 
@@ -870,10 +871,17 @@ namespace TwoZeroFourEight
             {
                 HelpScreen4.Visibility = Visibility.Collapsed;
                 HelpScreen5.Visibility = Visibility.Visible;
-                HelpNavRightButton.IsEnabled = false;
+                HelpNavRightButton.IsEnabled = true;
                 HelpNavLeftButton.IsEnabled = true;
             }
             else if (HelpScreen5.Visibility == Visibility.Visible)
+            {
+                HelpScreen5.Visibility = Visibility.Collapsed;
+                HelpScreen6.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = false;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen6.Visibility == Visibility.Visible)
             {
                 HelpNavRightButton.IsEnabled = false;
                 HelpNavLeftButton.IsEnabled = true;
@@ -914,6 +922,13 @@ namespace TwoZeroFourEight
             {
                 HelpScreen5.Visibility = Visibility.Collapsed;
                 HelpScreen4.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = true;
+                HelpNavRightButton.IsEnabled = true;
+            }
+            else if (HelpScreen6.Visibility == Visibility.Visible)
+            {
+                HelpScreen6.Visibility = Visibility.Collapsed;
+                HelpScreen5.Visibility = Visibility.Visible;
                 HelpNavLeftButton.IsEnabled = true;
                 HelpNavRightButton.IsEnabled = true;
             }

@@ -117,6 +117,7 @@
     <Content Include="Assets\2048.png" />
     <Content Include="Assets\2048NoMoreMoves.png" />
     <Content Include="Assets\DoubleUp.gif" />
+    <Content Include="Assets\GameBoard.PNG" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-150.png" />
