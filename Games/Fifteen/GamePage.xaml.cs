@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using Windows.UI.Composition;
+using System.Threading.Tasks;
 
 namespace Fifteen
 {
@@ -249,6 +250,24 @@ namespace Fifteen
             
             //Apply the slide animation to the blank button            
             blankBtnVisual.StartAnimation(nameof(btnVisual.Offset), slideAnimation);
+            
+            //Pulse after slide if sliding to correct position
+            if (((_blankRow * _boardSize) + _blankCol + 1).ToString() == btn.Content.ToString())
+            {               
+                var springSpeed = 50;
+
+                blankBtnVisual.CenterPoint = new System.Numerics.Vector3((float)blankBtn.ActualWidth / 2, (float)blankBtn.ActualHeight / 2, 0f);
+
+                var scaleAnimation = compositor.CreateSpringVector3Animation();
+                scaleAnimation.InitialValue = new System.Numerics.Vector3(0.9f, 0.9f, 0f);
+                scaleAnimation.FinalValue = new System.Numerics.Vector3(1.0f, 1.0f, 0f);
+                scaleAnimation.DampingRatio = 0.4f;
+                scaleAnimation.Period = TimeSpan.FromMilliseconds(springSpeed);
+                scaleAnimation.DelayTime = TimeSpan.FromMilliseconds(500);
+
+                blankBtnVisual.StartAnimation(nameof(blankBtnVisual.Scale), scaleAnimation);
+            }
+
             _slideBatchAnimation.End();
 
             //Swap content of the selected button with the blank button and clear the selected button
@@ -280,12 +299,12 @@ namespace Fifteen
 
 
         private void SlideBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
-        {
-            CheckCompletion();
-            _animationActive = false;
-            GazeInput.SetInteraction(GameGrid, Interaction.Enabled);
+        {           
+            CheckCompletionAsync();            
             if (!_gameOver)
             {
+                _animationActive = false;
+                GazeInput.SetInteraction(GameGrid, Interaction.Enabled);
                 GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             }            
         }
@@ -308,30 +327,57 @@ namespace Fifteen
 
         bool IsSolved()
         {
+            int row=0;
+            int col=0;
             for (int i = 0; i < _boardSize * _boardSize - 1; i++)
             {
-                int row = i / _boardSize;
-                int col = i % _boardSize;
+                row = i / _boardSize;
+                col = i % _boardSize;
                 if (_buttons[row, col].Content.ToString() != (i + 1).ToString())
                 {
                     return false;
                 }
             }
+            for (int i = 0; i < _boardSize * _boardSize - 1; i++)
+            {
+                row = i / _boardSize;
+                col = i % _boardSize;
+                PulseButton(_buttons[row, col]);
+            }            
             return true;
         }
 
-        void CheckCompletion()
+        void PulseButton(Button lastButton)
+        {                              
+            var btn1Visual = ElementCompositionPreview.GetElementVisual(lastButton);
+            var compositor = btn1Visual.Compositor;
+            var springSpeed = 50;
+
+            btn1Visual.CenterPoint = new System.Numerics.Vector3((float)lastButton.ActualWidth / 2, (float)lastButton.ActualHeight / 2, 0f);
+
+            var scaleAnimation = compositor.CreateSpringVector3Animation();
+            scaleAnimation.InitialValue = new System.Numerics.Vector3(0.9f, 0.9f, 0f);
+            scaleAnimation.FinalValue = new System.Numerics.Vector3(1.0f, 1.0f, 0f);
+            scaleAnimation.DampingRatio = 0.4f;
+            scaleAnimation.Period = TimeSpan.FromMilliseconds(springSpeed);
+
+            btn1Visual.StartAnimation(nameof(btn1Visual.Scale), scaleAnimation);
+        }
+
+        async void CheckCompletionAsync()
         {
             if (!IsSolved())
             {
                 return;
             }
+            _gameOver = true;
+
+            await Task.Delay(1000);
 
             string message = $"You solved the puzzle in {_numMoves} moves!";
             DialogText.Text = message;
             GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
-            DialogGrid.Visibility = Visibility.Visible;
-            _gameOver = true;
+            DialogGrid.Visibility = Visibility.Visible;            
         }
 
         private void DialogButton_Click(object sender, RoutedEventArgs e)
