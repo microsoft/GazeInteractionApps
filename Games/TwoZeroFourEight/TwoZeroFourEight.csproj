@@ -22,7 +22,7 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>6F9FC767397762DA2870036E4B08EC418BFD663B</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>6553FA7BE60D4F55F61D9CD6DF48AF114935F833</PackageCertificateThumbprint>
     <AppInstallerUpdateFrequency>1</AppInstallerUpdateFrequency>
     <AppInstallerCheckForUpdateFrequency>OnApplicationRun</AppInstallerCheckForUpdateFrequency>
   </PropertyGroup>
@@ -115,6 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\2048.png" />
+    <Content Include="Assets\2048NoMoreMoves.png" />
+    <Content Include="Assets\DoubleUp.gif" />
+    <Content Include="Assets\GameBoard.PNG" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-150.png" />
@@ -178,7 +181,7 @@
       <Version>6.1.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Input.GazeInteraction">
-      <Version>5.0.0</Version>
+      <Version>5.1.0</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

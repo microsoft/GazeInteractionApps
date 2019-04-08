@@ -46,7 +46,8 @@ namespace TwoZeroFourEight
     {
         private static Brush[] _backgroundColors = new Brush[]
         {
-            new SolidColorBrush(Colors.LightGray),
+            
+            new SolidColorBrush(Colors.Transparent),            
 
             new SolidColorBrush(Colors.PaleTurquoise),
             new SolidColorBrush(Colors.LightBlue),
@@ -124,17 +125,17 @@ namespace TwoZeroFourEight
             get { return _refIndex; }
             set
             {
-                SetField<int>(ref _refIndex, value, "IntVal");
+                SetField<int>(ref _refIndex, value, "RefIndex");
             }
         }
 
-        private Point _anchorPoint;
-        public Point AnchorPoint
+        private Double _cellSize;
+        public Double CellSize
         {
-            get { return _anchorPoint; }
+            get { return _cellSize; }
             set
             {
-                SetField<Point>(ref _anchorPoint, value, "AnchorPoint");
+                SetField<Double>(ref _cellSize, value, "CellSize");
             }
         }
     }
@@ -175,8 +176,7 @@ namespace TwoZeroFourEight
     {
         private int _SlideSpeed = 200;
         private int _AddSpeed = 500;
-        private int _SpawnSpeed = 25;
-        private int _boardSize;
+        private int _SpawnSpeed = 25;        
         private int _maxCells;
         private Random _random = new Random();
 
@@ -189,6 +189,14 @@ namespace TwoZeroFourEight
         {
             get { return _gameOver; }
             set { SetField<bool>(ref _gameOver, value, "GameOver"); }
+        }
+
+
+        private int _boardSize;
+        public int BoardSize
+        {
+            get { return _boardSize; }
+            set { SetField<int>(ref _boardSize, value, "BoardSize"); }
         }
 
         private int _highScore;
@@ -217,13 +225,35 @@ namespace TwoZeroFourEight
             }
         }
 
+        private Double _cellSpace = 75;
+        public Double CellSpace
+        {
+            get { return _cellSpace; }
+            set
+            {
+                SetField<Double>(ref _cellSpace, value, "CellSpace");
+                UpdateCellSizes();
+            }
+        }
+
+        private void UpdateCellSizes()
+        {
+            double borderSpace = _boardSize * 4; // cells get default margin of 4
+            double cellSize = (this.CellSpace - borderSpace) / _boardSize;
+
+            foreach (Cell cell in Cells)
+            {
+                cell.CellSize = cellSize;
+            }
+        }
+
         public List<Cell> Cells { get; set; }
         private List<FrameworkElement> Buttons { get; set; }
 
         public Board(int boardSize)
         {
             _boardSize = boardSize;
-            _maxCells = _boardSize * _boardSize;
+            _maxCells = _boardSize * _boardSize;                       
 
             Cells = new List<Cell>(_maxCells);
             for (int i = 0; i < _maxCells; i++)
@@ -236,16 +266,12 @@ namespace TwoZeroFourEight
 
         public void LoadButtonsList(GridView GameBoardGrid)
         {
-            Buttons = new List<FrameworkElement>();
-            var i = 0;
+            Buttons = new List<FrameworkElement>();            
             var controls = (GameBoardGrid.ItemsPanelRoot as ItemsWrapGrid).Children;
             foreach (FrameworkElement b in controls)
             {
                 Buttons.Add(b);
-                var buttonTranform = b.TransformToVisual(GameBoardGrid);
-                buttonTranform.TransformPoint(new Point(0, 0));
-                Cells[i].AnchorPoint = buttonTranform.TransformPoint(new Point(0, 0)); ;
-                i++;
+                var newButtonVisual = ElementCompositionPreview.GetElementVisual(b);              
             }
         }
 
@@ -276,8 +302,13 @@ namespace TwoZeroFourEight
             for (int i = 0; i < _boardSize; i++)
             {
                 for (int j = 0; j < _boardSize; j++)
-                {
+                {                    
                     var cur = Cells[i * _boardSize + j];
+                    if (cur.IntVal == 0)
+                    {
+                        return false;
+                    }
+
                     var above = (i > 0) ? Cells[((i - 1) * _boardSize) + j] : null;
                     var below = (i < _boardSize - 1) ? Cells[((i + 1) * _boardSize) + j] : null;
                     var left = (j > 0) ? Cells[(i * _boardSize) + j - 1] : null;
@@ -391,19 +422,11 @@ namespace TwoZeroFourEight
                     var easing = compositor.CreateLinearEasingFunction();
 
                     ///slideAnimation
-                    ///
-                    var initialToOffset = new Vector3((float)Cells[cur].AnchorPoint.X, (float)Cells[cur].AnchorPoint.Y, 0.0f);
-                    var initialFromOffset = new Vector3((float)Cells[j].AnchorPoint.X, (float)Cells[j].AnchorPoint.Y, 0.0f);
+                    ///                    
+                    var initialToOffset = slideToCellVisual.Offset;
+                    var initialFromOffset = slideFromCellVisual.Offset;
 
-                    if (slideToCellVisual.Offset.X != Cells[cur].AnchorPoint.X || slideFromCellVisual.Offset.X != Cells[j].AnchorPoint.X)
-                    {
-                        var warmUpAnimation = compositor.CreateVector3KeyFrameAnimation();
-                        warmUpAnimation.InsertKeyFrame(0f, initialFromOffset);
-                        warmUpAnimation.InsertKeyFrame(1f, initialToOffset);
-                        warmUpAnimation.Duration = TimeSpan.FromMilliseconds(1);
 
-                        slideToCellVisual.StartAnimation(nameof(slideToCellVisual.Offset), warmUpAnimation);
-                    }
 
                     var slideAnimation = compositor.CreateVector3KeyFrameAnimation();
                     slideAnimation.InsertKeyFrame(0f, initialFromOffset);
@@ -459,8 +482,8 @@ namespace TwoZeroFourEight
                     var answerText = VisualTreeHelper.GetChild(grid, 1);
 
                     var answerTextVisual = ElementCompositionPreview.GetElementVisual(answerText as FrameworkElement);
-                    var cellTextVisual = ElementCompositionPreview.GetElementVisual(cellText as FrameworkElement);                    
-
+                    var cellTextVisual = ElementCompositionPreview.GetElementVisual(cellText as FrameworkElement);
+                   
                     var easing = compositor.CreateLinearEasingFunction();
 
                     ///Scale the ToCell to breifly be twice the size and then back down to regular size
@@ -590,7 +613,7 @@ namespace TwoZeroFourEight
             if (change)
             {
                 OnPropertyChanged("Score");
-            }
+            }            
         }
 
         private void AddAdjacentBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
@@ -663,6 +686,9 @@ namespace TwoZeroFourEight
     {
         public Board Board;
 
+        private SolidColorBrush _solidTileForegroundBrush;
+        private SolidColorBrush _solidTileBrush;
+
         public MainPage()
         {
             InitializeComponent();
@@ -672,7 +698,6 @@ namespace TwoZeroFourEight
             VersionTextBlock.Text = GetAppVersion();
 
             Board = new Board(4);
-            DataContext = Board;
 
             CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args)
             {
@@ -689,7 +714,7 @@ namespace TwoZeroFourEight
         private void OnNewGame(object sender, RoutedEventArgs e)
         {
             Board.Reset();
-            Board.LoadButtonsList(GameBoardGrid);
+            Board.LoadButtonsList(GameBoardGrid);            
         }
 
         private void OnUpClick(object sender, RoutedEventArgs e)
@@ -759,12 +784,29 @@ namespace TwoZeroFourEight
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            ItemsWrapGrid itemsWrapGrid = GameBoardGrid.ItemsPanelRoot as ItemsWrapGrid;
+            itemsWrapGrid.MaximumRowsOrColumns = Board.BoardSize;
+            DataContext = Board;
+
             TurnOffGridViewClipping();
             Board.LoadButtonsList(GameBoardGrid);
-            Board.Reset();
+            Board.Reset();            
 
             var boardVisual = ElementCompositionPreview.GetElementVisual(GameBoardGrid);
             boardVisual.BorderMode = CompositionBorderMode.Soft;
+
+            var controls = (GameBoardGrid.ItemsPanelRoot as ItemsWrapGrid).Children;
+            foreach (FrameworkElement b in controls)
+            {                
+                var newButtonVisual = ElementCompositionPreview.GetElementVisual(b);             
+            }
+
+            _solidTileForegroundBrush = (SolidColorBrush)this.Resources["TileForeground"];
+            _solidTileBrush = (SolidColorBrush)this.Resources["TileBackground"];
+
+            GazeInput.DwellFeedbackProgressBrush = _solidTileForegroundBrush;
+            GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
+
         }
 
         public static string GetAppVersion()
@@ -776,5 +818,163 @@ namespace TwoZeroFourEight
             return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
         }
 
+        private void OnHowToPlayButton(object sender, RoutedEventArgs e)
+        {
+            GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
+
+            HelpScreen1.Visibility = Visibility.Visible;
+            HelpScreen2.Visibility = Visibility.Collapsed;
+            HelpScreen3.Visibility = Visibility.Collapsed;
+            HelpScreen4.Visibility = Visibility.Collapsed;
+            HelpScreen5.Visibility = Visibility.Collapsed;
+            HelpScreen6.Visibility = Visibility.Collapsed;
+            HelpNavLeftButton.IsEnabled = false;
+            HelpNavRightButton.IsEnabled = true;
+
+            HelpDialogGrid.Visibility = Visibility.Visible;
+        }
+
+        private void GameBoardGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Double narrowEdge = GameBoardGrid.ActualHeight ;
+            if (GameBoardGrid.ActualWidth  < narrowEdge)
+            {
+                narrowEdge = GameBoardGrid.ActualWidth ;
+            }
+            Board.CellSpace = narrowEdge;
+        }
+
+        private void OnHelpNavRight(object sender, RoutedEventArgs e)
+        {
+            if (HelpScreen1.Visibility == Visibility.Visible)
+            {
+                HelpScreen1.Visibility = Visibility.Collapsed;
+                HelpScreen2.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = true;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen2.Visibility == Visibility.Visible)
+            {
+                HelpScreen2.Visibility = Visibility.Collapsed;
+                HelpScreen3.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = true;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen3.Visibility == Visibility.Visible)
+            {
+                HelpScreen3.Visibility = Visibility.Collapsed;
+                HelpScreen4.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = true;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen4.Visibility == Visibility.Visible)
+            {
+                HelpScreen4.Visibility = Visibility.Collapsed;
+                HelpScreen5.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = true;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen5.Visibility == Visibility.Visible)
+            {
+                HelpScreen5.Visibility = Visibility.Collapsed;
+                HelpScreen6.Visibility = Visibility.Visible;
+                HelpNavRightButton.IsEnabled = false;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+            else if (HelpScreen6.Visibility == Visibility.Visible)
+            {
+                HelpNavRightButton.IsEnabled = false;
+                HelpNavLeftButton.IsEnabled = true;
+            }
+        }
+
+        private void OnHelpNavLeft(object sender, RoutedEventArgs e)
+        {
+            if (HelpScreen1.Visibility == Visibility.Visible)
+            {
+                HelpNavLeftButton.IsEnabled = false;
+                HelpNavRightButton.IsEnabled = true;
+            }
+            else if (HelpScreen2.Visibility == Visibility.Visible)
+            {
+                HelpScreen2.Visibility = Visibility.Collapsed;
+                HelpScreen1.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = false;
+                HelpNavRightButton.IsEnabled = true;
+            }
+            else if (HelpScreen3.Visibility == Visibility.Visible)
+            {
+                HelpScreen3.Visibility = Visibility.Collapsed;
+                HelpScreen2.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = true;
+                HelpNavRightButton.IsEnabled = true;
+            }
+
+            else if (HelpScreen4.Visibility == Visibility.Visible)
+            {
+                HelpScreen4.Visibility = Visibility.Collapsed;
+                HelpScreen3.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = true;
+                HelpNavRightButton.IsEnabled = true;
+            }
+
+            else if (HelpScreen5.Visibility == Visibility.Visible)
+            {
+                HelpScreen5.Visibility = Visibility.Collapsed;
+                HelpScreen4.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = true;
+                HelpNavRightButton.IsEnabled = true;
+            }
+            else if (HelpScreen6.Visibility == Visibility.Visible)
+            {
+                HelpScreen6.Visibility = Visibility.Collapsed;
+                HelpScreen5.Visibility = Visibility.Visible;
+                HelpNavLeftButton.IsEnabled = true;
+                HelpNavRightButton.IsEnabled = true;
+            }
+        }
+
+        private void DismissButton(object sender, RoutedEventArgs e)
+        {
+            HelpDialogGrid.Visibility = Visibility.Collapsed;
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+        }
+
+        private async void PrivacyViewScrollUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0,-" + PrivacyWebView.ActualHeight / 2 + ") " });
+        }
+
+        private void PrivacyViewScrollDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0," + PrivacyWebView.ActualHeight / 2 + ") " });
+        }
+
+        private void PrivacyViewContinueButton_Click(object sender, RoutedEventArgs e)
+        {
+            PrivacyViewGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void PrivacyHyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.Transparent);
+            WebViewLoadingText.Visibility = Visibility.Visible;
+            PrivacyWebView.Navigate(new System.Uri("https://go.microsoft.com/fwlink/?LinkId=521839"));
+            PrivacyViewGrid.Visibility = Visibility.Visible;
+        }
+
+        private void UseTermsHyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.Transparent);
+            WebViewLoadingText.Visibility = Visibility.Visible;
+            PrivacyWebView.Navigate(new System.Uri("https://www.microsoft.com/en-us/servicesagreement/default.aspx"));
+            PrivacyViewGrid.Visibility = Visibility.Visible;
+        }
+
+        private void PrivacyWebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        {
+            GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
+            WebViewLoadingText.Visibility = Visibility.Collapsed;
+        }
     }
 }
