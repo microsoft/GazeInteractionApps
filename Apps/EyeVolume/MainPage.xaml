@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:g="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     g:GazeInput.Interaction="Enabled"
+    g:GazeInput.IsCursorVisible="False"
     mc:Ignorable="d"
     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
 
@@ -80,5 +81,7 @@
             </StackPanel>
             <Button Grid.Row="2" Grid.Column="4" Click="OnVolumeUp" Content="&#xe995;" Style="{StaticResource VolumeButtonStyle}" FontFamily="Segoe MDL2 Assets" FontSize="72" Background="#FF6B6B6B" Foreground="White" />
     </Grid>
+        
+        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="0,0,10,10" FontFamily="Segoe UI" Foreground="White"></TextBlock>
     </Grid>
 </Page>

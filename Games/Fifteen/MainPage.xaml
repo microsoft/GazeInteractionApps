@@ -7,24 +7,23 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     gaze:GazeInput.Interaction="Enabled"
+    gaze:GazeInput.IsCursorVisible="False"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" FontFamily="Segoe UI">
 
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
-            <Setter Property="Margin" Value="10" />
             <Setter Property="FontSize" Value="64" />
-            <Setter Property="Width" Value="400" />
-            <Setter Property="Height" Value="400" />
+            <Setter Property="Margin" Value="50"/>
         </Style>
     </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -35,6 +34,8 @@
         <Button Grid.Row="1" Grid.Column="0" Tag="2" Click="OnBoardSizeSelected">3</Button>
         <Button Grid.Row="1" Grid.Column="1" Tag="3" Click="OnBoardSizeSelected">8</Button>
         <Button Grid.Row="1" Grid.Column="2" Tag="4" Click="OnBoardSizeSelected">15</Button>
+        
+        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="2" Padding="0,0,10,10" FontFamily="Segoe UI"></TextBlock>
     </Grid>
-    
+
 </Page>

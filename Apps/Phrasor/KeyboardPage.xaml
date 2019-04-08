@@ -6,19 +6,63 @@
     xmlns:gk="using:EyeGazeUserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
-    gaze:GazeInput.Interaction="Enabled"
-    gaze:GazeInput.CursorRadius="5"
-    gaze:GazeInput.MaxDwellRepeatCount="0"    
+    xmlns:g="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
+    g:GazeInput.Interaction="Enabled"
+    g:GazeInput.CursorRadius="5"
+    g:GazeInput.MaxDwellRepeatCount="0"    
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,14,0,-14">
+        <Grid.Resources>
+            <Style x:Key="Alpha" TargetType="ButtonBase">
+                <Setter Property="FontSize" Value="30"/>
+                <Setter Property="FontWeight" Value="Normal" />
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Margin" Value="4"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="AllowFocusOnInteraction" Value="False" />
+                <Setter Property="g:GazeInput.RepeatDelayDuration" Value="0:0:0.8"/>
+                <Setter Property="g:GazeInput.MaxDwellRepeatCount" Value="1" />
+            </Style>
+
+            <Style x:Key="Symbol" TargetType="ButtonBase">
+                <Setter Property="FontSize" Value="50"/>
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                <Setter Property="Margin" Value="4"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="AllowFocusOnInteraction" Value="False" />
+            </Style>
+        </Grid.Resources>
+
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <gk:GazeKeyboard x:Name="GazeKeyboard" Grid.Row="0" Grid.Column="0" />
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button     x:Name="SettingsButton" Grid.Row="0" Grid.Column="0" Content="&#xE115;" Style="{StaticResource Symbol}" />
+            <TextBox    x:Name="TextControl" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="7" TextWrapping="Wrap" FontSize="45" Margin="3,3,0,3" />
+            <Button     x:Name="EnterButton" Grid.Row="0" Grid.Column="8" Content="&#xE768;" Style="{StaticResource Symbol}" Click="OnEnterClick"/>
+            <Button     x:Name="CloseButton" Grid.Row="0" Grid.Column="9" Content="&#xE711;" Style="{StaticResource Symbol}" Click="OnCancelClick"/>
+        </Grid>
+
+        <gk:GazeKeyboard x:Name="GazeKeyboard" Grid.Row="1" Grid.Column="0" />
     </Grid>
 </Page>

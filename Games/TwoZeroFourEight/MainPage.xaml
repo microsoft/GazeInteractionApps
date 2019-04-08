@@ -7,15 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:g="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     g:GazeInput.Interaction="Enabled"
+    g:GazeInput.IsCursorVisible="False"
     mc:Ignorable="d"
-    KeyUp="OnPageKeyUp">
+    KeyUp="OnPageKeyUp"  Loaded="Page_Loaded">
 
     <Page.Resources>
         <Style x:Key="ButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="200" />
-            <Setter Property="Height" Value="200" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Height" Value="150" />
             <Setter Property="FontSize" Value="64" />
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+            <Setter Property="Margin" Value="10"/>
         </Style>
         
         <local:IntegerToStringConverter x:Key="IntegerToStringConverter" />
@@ -26,44 +28,101 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="200" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="200" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnNewGame" Content="&#xE8F4;" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="OnUpClick" Content="&#xF0AD;" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-        <Border Grid.Row="0" Grid.Column="2">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Score" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Chocolate" FontSize="32" />
-                <Border Width="50" />
-                <TextBlock Text="{x:Bind Path=Board.Score, Mode=OneWay}"  HorizontalTextAlignment="Center" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="Chocolate" FontSize="32" />
-            </StackPanel>
-        </Border>
-        <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnLeftClick" Content="&#xF0B0;" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonStyle}" Click="OnRightClick" Content="&#xF0AF;" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="OnDownClick" Content="&#xF0AE;" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        
-        <TextBlock Grid.Row="2" Grid.Column="2" Text="Game Over" Visibility="{x:Bind Path=Board.GameOver, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" Foreground="Chocolate"/>
 
-        <GridView Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left" Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalAlignment="Top">
+            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnNewGame" Content="New" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI" FontSize="36" Width="100" Height="100"/>
+
+       
+            <Border Width="400" Margin="50,10,0,0" IsHitTestVisible="False"  >
+                <Grid IsHitTestVisible="False">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Score"  HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Chocolate" FontSize="32" IsHitTestVisible="False" />
+                    <TextBlock Text="{x:Bind Path=Board.Score, Mode=OneWay}"   HorizontalTextAlignment="Center" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="Chocolate" FontSize="32" Grid.Column="1" IsHitTestVisible="False" />
+
+                    <TextBlock Text="High Score"  HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Chocolate" FontSize="32" Grid.Row="1" Margin="0,0,50,0" IsHitTestVisible="False"  />
+                    <TextBlock Text="{x:Bind Path=Board.HighScore, Mode=OneWay}"   HorizontalTextAlignment="Center" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="Chocolate" FontSize="32" Grid.Row="1" Grid.Column="1" IsHitTestVisible="False" />
+                    
+                </Grid>
+            </Border>
+        </StackPanel>
+
+        <Button   Style="{StaticResource ButtonStyle}" Click="OnExit" Content="&#xe8bb;" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="36" Width="100" Height="100" Grid.Column="2" Grid.RowSpan="2"/>
+        
+        
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="Game Over" Visibility="{x:Bind Path=Board.GameOver, Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="32" Foreground="Chocolate" Margin="0,0,150,150" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="OnUpClick" Content="&#xF0AD;" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+            <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="OnDownClick" Content="&#xF0AE;" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnLeftClick" Content="&#xF0B0;" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonStyle}" Click="OnRightClick" Content="&#xF0AF;" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            
+            <GridView x:Name="GameBoardBackGroundGrid" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" FontFamily="Segoe UI" Grid.Row="1" Grid.Column="1"  >
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="local:Cell">
+                        <Border Width="75" Height="75" Background="LightGray"  CornerRadius="5" BorderBrush="DarkGray" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </GridView>
+                
+            <GridView x:Name="GameBoardGrid" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" Grid.Row="1" Grid.Column="1">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                     <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="local:Cell">
-                    <Border Width="75" Height="75" Background="{x:Bind Path=IntVal, Mode=OneWay, Converter={StaticResource ValueToBackgroundColorConverter}}"  CornerRadius="5" BorderBrush="DarkGray" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock Text="{x:Bind Path=IntVal, Mode=OneWay, Converter={StaticResource IntegerToStringConverter}}" TextAlignment="Center" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </DataTemplate>
+                        <Border Width="75" Height="75" Background="{x:Bind Path=IntVal, Mode=OneWay, Converter={StaticResource ValueToBackgroundColorConverter}}"  BorderBrush="DarkGray" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid>
+                                <TextBlock Text="{x:Bind Path=IntVal, Mode=OneWay, Converter={StaticResource IntegerToStringConverter}}" TextAlignment="Center" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Canvas>
+                                    <TextBlock x:Name="AnswerText" Text="{x:Bind Path=AnswerString, Mode=OneWay}" TextAlignment="Center" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FFFF0707"/>
+                                </Canvas>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
             </ItemsControl.ItemTemplate>
         </GridView>
+        
+        </Grid>
+        <TextBlock x:Name="VersionTextBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2" Padding="0,0,10,10" FontFamily="Segoe UI"></TextBlock>
     </Grid>
 </Page>

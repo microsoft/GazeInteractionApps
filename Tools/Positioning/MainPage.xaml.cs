@@ -1,7 +1,7 @@
 ﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. 
 //See LICENSE in the project root for license information. 
 
-using GazeHidParsers;
+using Microsoft.Toolkit.Uwp.Input.GazeInteraction.GazeHidParsers;
 using System.Drawing;
 using System.Text;
 using Windows.Devices.Input.Preview;
@@ -16,8 +16,7 @@ namespace Positioning
     public sealed partial class MainPage : Page
     {
         private GazeInputSourcePreview gazeInputSourcePreview;
-        private LeftEyePositionParser leftEyePositionParser;
-        private RightEyePositionParser rightEyePositionParser;
+        private GazeHidPositionsParser gazeHidPositionsParser;
 
         private DisplayInformation displayInformation;
         Size screenSize;
@@ -78,17 +77,12 @@ namespace Positioning
                 var hidReport = args.CurrentPoint.HidInputReport;
                 var sourceDevice = args.CurrentPoint.SourceDevice;
 
-                if (leftEyePositionParser == null)
+                if (gazeHidPositionsParser == null)
                 {
-                    leftEyePositionParser = new LeftEyePositionParser(sourceDevice);
-                }
-                if (rightEyePositionParser == null)
-                {
-                    rightEyePositionParser = new RightEyePositionParser(sourceDevice);
+                    gazeHidPositionsParser = new GazeHidPositionsParser(sourceDevice);
                 }
 
-                var leftEyePosition = leftEyePositionParser.GetPosition(hidReport);
-                var rightEyePosition = rightEyePositionParser.GetPosition(hidReport);
+                var positions = gazeHidPositionsParser.GetGazeHidPositions(hidReport);
 
                 // The return values for the left and right eye are in micrometers by default
                 // They are references such that X and Y origin are the top left hand corner
@@ -96,68 +90,63 @@ namespace Positioning
                 // (not the tracker). As such, there is a minor difference between the actual
                 // sensor-to-eye distance vs the reported distance for left/right eye position.
 
-                UpdateEyeData("Left", leftEyePosition, LeftEyePositionEllipse, sb);
-                UpdateEyeData("Right", rightEyePosition, RightEyePositionEllipse, sb);
+                UpdateEyeData("Left", positions.LeftEyePosition, LeftEyePositionEllipse, sb);
+                UpdateEyeData("Right", positions.RightEyePosition, RightEyePositionEllipse, sb);
 
-                if (rightEyePosition != null && leftEyePosition != null)
+                if (positions.RightEyePosition != null && positions.LeftEyePosition != null)
                 {
                     // calculate IPD in mm
-                    var interPupilaryDistance = (rightEyePosition.Value.X - leftEyePosition.Value.X) / 1000.0;
+                    var interPupilaryDistance = (positions.RightEyePosition.X - positions.LeftEyePosition.X) / 1000.0;
 
                     sb.AppendLine($"          IPD ({interPupilaryDistance,6:F2}mm)");
                 }
 
-                var headPostitionParser = new GazeHidPositionParser(sourceDevice, GazeHidUsages.Usage_HeadPosition);
-                var headPosition = headPostitionParser.GetPosition(hidReport);
-                if (headPosition != null)
+                if (positions.HeadPosition != null)
                 {
-                    sb.AppendLine($"HeadPosition ({headPosition.Value.X,8:F2}, {headPosition.Value.Y,8:F2}, {headPosition.Value.Z,8:F2})");
+                    sb.AppendLine($"HeadPosition ({positions.HeadPosition.X,8:F2}, {positions.HeadPosition.Y,8:F2}, {positions.HeadPosition.Z,8:F2})");
                 }
 
-                var headRotationParser = new GazeHidRotationParser(sourceDevice, GazeHidUsages.Usage_HeadDirectionPoint);
-                var headRotation = headRotationParser.GetRotation(hidReport);
-
-                if (headRotation != null)
+                if (positions.HeadRotation != null)
                 {
-                    sb.AppendLine($"HeadRotation ({headRotation.Value.X,8:F2}, {headRotation.Value.Y,8:F2}, {headRotation.Value.Z,8:F2})");
+                    sb.AppendLine($"HeadRotation ({positions.HeadRotation.X,8:F2}, {positions.HeadRotation.Y,8:F2}, {positions.HeadRotation.Z,8:F2})");
                 }
             }
 
             StatusTextBlock.Text = sb.ToString();
         }
 
-        private void UpdateEyeData(string eyeName, Long3? eyePosition, Windows.UI.Xaml.Shapes.Ellipse eyeEllipse, StringBuilder sb)
+        private void UpdateEyeData(string eyeName, GazeHidPosition eyePosition, Windows.UI.Xaml.Shapes.Ellipse eyeEllipse, StringBuilder sb)
         {
             sb.Append($"{eyeName,7}EyePos (");
             if (eyePosition != null)
             {
-                sb.Append($"{(eyePosition.Value.X / 1000.0),6:F1}mm, {(eyePosition.Value.Y / 1000.0),6:F1}mm, {(eyePosition.Value.Z / 1000.0),6:F1}mm)");
+                sb.Append($"{(eyePosition.X / 1000.0),6:F1}mm, {(eyePosition.Y / 1000.0),6:F1}mm, {(eyePosition.Z / 1000.0),6:F1}mm)");
 
-                if (eyePosition.Value.X >= 0 &&
-                    eyePosition.Value.X <= screenSizeMicrometersWidth &&
-                    eyePosition.Value.Y >= 0 &&
-                    eyePosition.Value.Y <= screenSizeMicrometersHeight)
+                if (eyePosition.X >= 0 &&
+                    eyePosition.X <= screenSizeMicrometersWidth &&
+                    eyePosition.Y >= 0 &&
+                    eyePosition.Y <= screenSizeMicrometersHeight)
                 {
-                    var newX = MapRange(0, screenSizeMicrometersWidth, 0, ActualWidth, eyePosition.Value.X);
-                    var newY = MapRange(0, screenSizeMicrometersHeight, 0, ActualHeight, eyePosition.Value.Y);
+                    var newX = MapRange(0, screenSizeMicrometersWidth, 0, ActualWidth, eyePosition.X);
+                    var newY = MapRange(0, screenSizeMicrometersHeight, 0, ActualHeight, eyePosition.Y);
 
                     var newZ = string.Empty;
-                    if (eyePosition.Value.Z < 400000)
+                    if (eyePosition.Z < 400000)
                     {
                         newZ = "Red";
                         eyeEllipse.Fill = new SolidColorBrush(Colors.Red);
                     }
-                    else if (eyePosition.Value.Z < 500000)
+                    else if (eyePosition.Z < 500000)
                     {
                         newZ = "Yellow";
                         eyeEllipse.Fill = new SolidColorBrush(Colors.Yellow);
                     }
-                    else if (eyePosition.Value.Z < 700000)
+                    else if (eyePosition.Z < 700000)
                     {
                         newZ = "Green";
                         eyeEllipse.Fill = new SolidColorBrush(Colors.Green);
                     }
-                    else if (eyePosition.Value.Z < 800000)
+                    else if (eyePosition.Z < 800000)
                     {
                         newZ = "Yellow";
                         eyeEllipse.Fill = new SolidColorBrush(Colors.Yellow);
