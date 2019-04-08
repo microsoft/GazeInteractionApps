@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="58ad5d18-bbbc-4f4c-83c0-19bc082f4685" Publisher="CN=harishsk" Version="1.0.10.0" />
+  <Identity Name="58ad5d18-bbbc-4f4c-83c0-19bc082f4685" Publisher="CN=harishsk" Version="1.0.32.0" />
   <mp:PhoneIdentity PhoneProductId="58ad5d18-bbbc-4f4c-83c0-19bc082f4685" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Memory</DisplayName>
@@ -15,14 +15,13 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Memory.App">
-      <uap:VisualElements DisplayName="Memory" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Memory" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Memory" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
-          <uap:ShowNameOnTiles>
-            <uap:ShowOn Tile="square150x150Logo" />
-            <uap:ShowOn Tile="wide310x150Logo" />
-          </uap:ShowNameOnTiles>
+      <uap:VisualElements DisplayName="Eyes First - Match Two" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Match Two" BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Match Two" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#9fc79f" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape" />
+        </uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>
