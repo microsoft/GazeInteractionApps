@@ -48,26 +48,24 @@ namespace TwoZeroFourEight
         {
             
             new SolidColorBrush(Colors.Transparent),            
+ 
+            new SolidColorBrush(Color.FromArgb(255,215,253,253)),
+            new SolidColorBrush(Color.FromArgb(255,171,235,243)),
+            new SolidColorBrush(Color.FromArgb(255,140,208,243)),
+            new SolidColorBrush(Color.FromArgb(255,92,191,241)),
+            new SolidColorBrush(Color.FromArgb(255,255,250,205)),
+            new SolidColorBrush(Color.FromArgb(255,253,242,140)),
+            new SolidColorBrush(Color.FromArgb(255,247,214,127)),
+            new SolidColorBrush(Color.FromArgb(255,244,184,109)),
+            new SolidColorBrush(Color.FromArgb(255,175,248,188)),
+            new SolidColorBrush(Color.FromArgb(255,126,237,147)),
+            new SolidColorBrush(Color.FromArgb(255,92,208,130)),
+            new SolidColorBrush(Color.FromArgb(255,62,185,144)),
+            new SolidColorBrush(Color.FromArgb(255,215,217,255)),
+            new SolidColorBrush(Color.FromArgb(255,199,141,255)),
+            new SolidColorBrush(Color.FromArgb(255,167,154,247)),
+            new SolidColorBrush(Color.FromArgb(255,127,127,255)),
 
-            new SolidColorBrush(Colors.PaleTurquoise),
-            new SolidColorBrush(Colors.LightBlue),
-            new SolidColorBrush(Colors.LightSkyBlue),
-            new SolidColorBrush(Colors.DeepSkyBlue),
-
-            new SolidColorBrush(Colors.LemonChiffon),
-            new SolidColorBrush(Colors.Khaki),
-            new SolidColorBrush(Colors.DarkKhaki),
-            new SolidColorBrush(Colors.Goldenrod),
-
-            new SolidColorBrush(Colors.PaleGreen),
-            new SolidColorBrush(Colors.LightGreen),
-            new SolidColorBrush(Colors.YellowGreen),
-            new SolidColorBrush(Colors.LimeGreen),
-
-            new SolidColorBrush(Colors.MistyRose),
-            new SolidColorBrush(Colors.Pink),
-            new SolidColorBrush(Colors.HotPink),
-            new SolidColorBrush(Colors.DeepPink),
         };
 
         public object Convert(object value, Type targetType,
@@ -85,6 +83,25 @@ namespace TwoZeroFourEight
 
         public object ConvertBack(object value, Type targetType,
                                   object parameter, string culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public sealed class ValueToVisibilityConverter: IValueConverter
+    {       
+        public object Convert(object value, Type targetType, object parameter, string culture)
+        {            
+            int val = (int)value;
+            
+            if (val > 0)
+            {
+                return Visibility.Visible;
+            }
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string culture)
         {
             throw new NotImplementedException();
         }
@@ -211,6 +228,18 @@ namespace TwoZeroFourEight
             }
         }
 
+        private int _highTile;
+        public int HighTile
+        {
+            get { return _highTile; }
+            set
+            {
+                var appSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+                appSettings.Values["hightile"] = value.ToString();
+                SetField<int>(ref _highTile, value, "HighTile");
+            }
+        }
+
         private int _score;
         public int Score
         {
@@ -288,6 +317,16 @@ namespace TwoZeroFourEight
                 HighScore = 0;
             }
 
+            string storedHighTile = appSettings.Values["hightile"] as string;
+            if (storedHighTile != null)
+            {
+                HighTile = int.Parse(storedHighTile);
+            }
+            else
+            {
+                HighTile = 0;
+            }
+
             Score = 0;
             GameOver = false;
             for (int i = 0; i < _maxCells; i++)
@@ -358,7 +397,7 @@ namespace TwoZeroFourEight
             int index = _random.Next(blankCells.Count);
 
             // generate a 2 mostly, but generate a 4 about one in 8 times
-            int val = (_random.Next(8) > 0) ? 2 : 4;
+            int val = (_random.Next(8) > 0) ? 2 : 4;            
 
             ///Animate the appearance of the new cell value
             ///
@@ -460,9 +499,10 @@ namespace TwoZeroFourEight
             return highZ;
         }
 
-        private bool AddAdjacent(int start, int end, int delta)
-        {
-            bool addSuccess = false;
+        private int AddAdjacent(int start, int end, int delta)
+        {            
+            int doubledVal = 0;
+            int totalBonus = -1; //If it returns -1 then no additions happened regardless of whether they were bonus worthy
             int cur = start;
             for (int i = 0; i < _boardSize - 1; i++)
             {
@@ -483,7 +523,7 @@ namespace TwoZeroFourEight
 
                     var answerTextVisual = ElementCompositionPreview.GetElementVisual(answerText as FrameworkElement);
                     var cellTextVisual = ElementCompositionPreview.GetElementVisual(cellText as FrameworkElement);
-                   
+
                     var easing = compositor.CreateLinearEasingFunction();
 
                     ///Scale the ToCell to breifly be twice the size and then back down to regular size
@@ -527,7 +567,7 @@ namespace TwoZeroFourEight
                     _slideBatchAnimation.Suspend();
                     _addAdjacentBatchAnimation.Suspend();
                     slideToCellVisual.StartAnimation(nameof(slideToCellVisual.Scale), scaleUpAnimation);
-                    answerTextVisual.StartAnimation(nameof(answerTextVisual.Opacity), showAnswerAnimation);                    
+                    answerTextVisual.StartAnimation(nameof(answerTextVisual.Opacity), showAnswerAnimation);
                     answerTextVisual.StartAnimation(nameof(answerTextVisual.Scale), scaleAnswerAnimation);
                     cellTextVisual.StartAnimation(nameof(cellTextVisual.Opacity), showCellTextAnimation);
                     _addAdjacentBatchAnimation.Resume();
@@ -538,13 +578,28 @@ namespace TwoZeroFourEight
                     Cells[cur].AnswerString = Cells[cur].IntVal.ToString() + " + " + Cells[cur + delta].IntVal.ToString();
 
                     Cells[cur].IntVal += Cells[cur + delta].IntVal;
+
+                    doubledVal = Cells[cur].IntVal;
+                    if (totalBonus > -1)
+                    {
+                        totalBonus += MilestoneBonus(doubledVal);
+                    }
+                    else
+                    {
+                        totalBonus = 0;
+                    }
+                                        
+                    if (doubledVal > HighTile)
+                    {
+                        HighTile = doubledVal;
+                    }
+
                     Cells[cur + delta].IntVal = 0;
-                    Score += Cells[cur].IntVal;
-                    addSuccess = true;
+                    Score += Cells[cur].IntVal;                    
                 }
                 cur += delta;
-            }
-            return addSuccess;
+            }            
+            return totalBonus;
         }
 
         private void SlideBoard(int start, int end, int delta, int increment)
@@ -593,7 +648,9 @@ namespace TwoZeroFourEight
             int end = int.Parse(parms[1]);
             int delta = int.Parse(parms[2]);
             int increment = int.Parse(parms[3]);
-            bool change = bool.Parse(parms[4]);
+            bool change = bool.Parse(parms[4]);            
+            int totalRotationFactor = 0;
+            int bonusRotations = -1;
 
             var compositor = ElementCompositionPreview.GetElementVisual(Window.Current.Content).Compositor;
             _addAdjacentBatchAnimation = compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
@@ -602,18 +659,66 @@ namespace TwoZeroFourEight
 
             for (int i = 0; i < _boardSize; i++)
             {
-                change = AddAdjacent(start, end, delta) || change;
+                bonusRotations = AddAdjacent(start, end, delta);
+                if (bonusRotations > 0)
+                {
+                    totalRotationFactor += bonusRotations;
+                }                
+                change = (bonusRotations > -1) || change; 
                 start += increment;
-                end += increment;
+                end += increment;                
             }
 
             _addAdjacentBatchAnimation.Comment = _addAdjacentBatchAnimation.Comment + "," + change;
             _addAdjacentBatchAnimation.End();
 
+            MilestoneReward(totalRotationFactor);
+
             if (change)
             {
                 OnPropertyChanged("Score");
-            }            
+            }           
+        }
+
+        private void MilestoneReward(int totalRotationFactor)
+        {
+            //Milestone reward             
+            if (totalRotationFactor > 0)
+            {
+                var compositor = ElementCompositionPreview.GetElementVisual(Window.Current.Content).Compositor;
+
+                //Do something interesting             
+                var frame = (Frame)Window.Current.Content;
+                var mainPage = (MainPage)frame.Content;
+                var boardVisual = ElementCompositionPreview.GetElementVisual(mainPage.GameBoardGrid);
+
+                CubicBezierEasingFunction cubicEasing = compositor.CreateCubicBezierEasingFunction(new Vector2(.86f, 0.0f), new Vector2(.07f, 1.00f));
+
+                ScalarKeyFrameAnimation spinAnimation = compositor.CreateScalarKeyFrameAnimation();
+                spinAnimation.InsertKeyFrame(0.000001f, 0);
+                spinAnimation.InsertKeyFrame(0.999999f, 360 * totalRotationFactor, cubicEasing);
+                spinAnimation.InsertKeyFrame(1f, 0);
+                spinAnimation.Duration = TimeSpan.FromMilliseconds(3000);
+                spinAnimation.IterationBehavior = AnimationIterationBehavior.Count;
+                spinAnimation.IterationCount = 1;
+                boardVisual.CenterPoint = new Vector3((float)(0.5 * mainPage.GameBoardGrid.ActualWidth), (float)(0.5f * mainPage.GameBoardGrid.ActualHeight), 0f);
+                boardVisual.RotationAxis = new Vector3(0.0f, 0.0f, 1f);
+
+                boardVisual.StartAnimation(nameof(boardVisual.RotationAngleInDegrees), spinAnimation);
+            }
+        }
+
+
+        private int MilestoneBonus(int doubledValue)
+        {
+            int bonus = 0;
+            int milestone = 2048;  //Give one bonus spin for any adjacent doubling of tiles with this value or exponential spins for higher values
+
+            if (doubledValue >= milestone && doubledValue % milestone == 0)
+            {
+                bonus = doubledValue / milestone;
+            }
+            return bonus;
         }
 
         private void AddAdjacentBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
@@ -624,7 +729,7 @@ namespace TwoZeroFourEight
             int end = int.Parse(parms[1]);
             int delta = int.Parse(parms[2]);
             int increment = int.Parse(parms[3]);
-            bool change = bool.Parse(parms[4]);
+            bool change = bool.Parse(parms[4]);            
 
             for (int i = 0; i < _boardSize; i++)
             {
@@ -634,7 +739,7 @@ namespace TwoZeroFourEight
             }
 
             _slideBatchAnimation.Comment = change.ToString();
-            _slideBatchAnimation.End();
+            _slideBatchAnimation.End();            
 
             var frame = (Frame)Window.Current.Content;
             var mainPage = (MainPage)frame.Content;
@@ -644,11 +749,11 @@ namespace TwoZeroFourEight
         {
             string[] parms = (sender as CompositionScopedBatch).Comment.Split(',');
 
-            bool change = bool.Parse(parms[0]);
+            bool change = bool.Parse(parms[0]);            
             bool wasNewTileGenerated = false;
 
             if (change)
-            {
+            {                
                 wasNewTileGenerated = GenerateNextTile();
             }
 
@@ -691,7 +796,7 @@ namespace TwoZeroFourEight
 
         public MainPage()
         {
-            InitializeComponent();
+            InitializeComponent();            
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 

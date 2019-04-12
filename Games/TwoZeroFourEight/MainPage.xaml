@@ -40,6 +40,7 @@
 
         <local:IntegerToStringConverter x:Key="IntegerToStringConverter" />
         <local:ValueToBackgroundColorConverter x:Key="ValueToBackgroundColorConverter" />
+        <local:ValueToVisibilityConverter x:Key="ValueToVisibilityConverter" />
         
         <!--original palette-->
         <!--<SolidColorBrush x:Key="TileBackground" Color="#FF4D4D99"/>
@@ -100,7 +101,7 @@
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="150,-5,0,0" FontSize="36" FontWeight="SemiBold" Foreground="{StaticResource TileBackground}" FontFamily="Segoe UI">DOUBLE UP</TextBlock>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,150,0" Grid.ColumnSpan="3">
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,130,0" Grid.ColumnSpan="3">
                 <Border Margin="0,0,0,0" IsHitTestVisible="False"  >
                     <Grid IsHitTestVisible="False">
                         <Grid.RowDefinitions>
@@ -120,6 +121,10 @@
 
                     </Grid>
                 </Border>
+                <Border x:Name="HighTileBorder" Width="60" Height="60" Margin="20,5,0,0" Background="{x:Bind Path=Board.HighTile, Mode=OneWay, Converter={StaticResource ValueToBackgroundColorConverter}}" Visibility="{x:Bind Path=Board.HighTile, Mode=OneWay, Converter={StaticResource ValueToVisibilityConverter}}" BorderBrush="DarkGray" BorderThickness="1,1,1,1" >
+                    <TextBlock Text="{x:Bind Path=Board.HighTile, Mode=OneWay}"   HorizontalTextAlignment="Center" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="{StaticResource TileBackground}" FontSize="16" Grid.Column="1" IsHitTestVisible="False" />
+                </Border>
+
             </StackPanel>
 
 
