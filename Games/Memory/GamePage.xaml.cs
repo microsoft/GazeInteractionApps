@@ -623,6 +623,7 @@ namespace Memory
 
             string message = $"You matched the {_boardRows * _boardColumns} cards in {_numMoves} moves!";
             DialogText.Text = message;
+            GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
             DialogGrid.Visibility = Visibility.Visible;            
         }
 
