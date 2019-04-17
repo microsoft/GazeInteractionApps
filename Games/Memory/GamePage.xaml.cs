@@ -521,7 +521,7 @@ namespace Memory
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
-            if (_animationActive || _reverseAnimationActive) return;
+            if (_animationActive || _reverseAnimationActive || _interactionPaused) return;
 
             if (_gameOver)
             {                
