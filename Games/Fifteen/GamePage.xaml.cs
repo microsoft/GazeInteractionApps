@@ -311,7 +311,7 @@ namespace Fifteen
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
-            if (_animationActive) return;
+            if (_animationActive || _interactionPaused) return;
 
             var button = sender as Button;
             int cellNumber = int.Parse(button.Tag.ToString());
