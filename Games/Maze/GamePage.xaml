@@ -22,11 +22,12 @@
                     <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
-        
 
 
 
-        <Duration x:Key="DestructiveDwellDuration">00:00:01.0000000</Duration>
+            <Duration x:Key="RepeatDelayDuration">00:00:00.9000000</Duration>
+            <Duration x:Key="RepeatDuration">00:00:00.9000000</Duration>
+            <Duration x:Key="DestructiveDwellDuration">00:00:01.0000000</Duration>
         <SolidColorBrush x:Key="ToolBarButtonBackground" Color="#ba7f4d"/>
         <SolidColorBrush x:Key="TileBackground" Color="#6f5b3f"/>
         <SolidColorBrush x:Name="BorderBrush" Color="#6f5b3f"></SolidColorBrush>
@@ -181,6 +182,15 @@
                             <TextBlock Text="Change Puzzle Size" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" Foreground="{StaticResource ToolBarButtonBackground}"></TextBlock>
                         </Border>
                     </Button>
+                    <StackPanel x:Name="IncreaseBoardSizePanel"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Orientation="Horizontal">
+                        <TextBlock x:Name="BoardSizeText" Margin="40,0,40,0" VerticalAlignment="Center" Foreground="White" FontSize="36"  >6</TextBlock>
+                        <Button x:Name="IncreaseBoardSize" Width="150" Height="150" Margin="0,0,0,0" Click="IncreaseBoardSize_Click" Foreground="White" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" gaze:GazeInput.MaxDwellRepeatCount="10" gaze:GazeInput.RepeatDelayDuration="{StaticResource RepeatDelayDuration}" gaze:GazeInput.DwellRepeatDuration="{StaticResource RepeatDuration}">
+                            <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
+                                <TextBlock Text="Add Row" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" Foreground="{StaticResource ToolBarButtonBackground}"></TextBlock>
+                            </Border>
+                        </Button>
+                    </StackPanel>
+                    
                     <TextBlock x:Name="CongratsText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Congratulations" VerticalAlignment="Top" Margin="0,50,0,0" FontSize="48" Foreground="White" FontWeight="SemiBold" Grid.ColumnSpan="2" FontFamily="Segoe UI"/>
                     <TextBlock x:Name="DialogText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontSize="30" Foreground="White" Margin="0,150,0,0" Grid.ColumnSpan="2"/>
                 </Grid>

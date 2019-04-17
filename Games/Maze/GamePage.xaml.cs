@@ -679,7 +679,8 @@ namespace Maze
         }
 
         private void DialogButton_Click(object sender, RoutedEventArgs e)
-        {            
+        {
+            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             DialogGrid.Visibility = Visibility.Collapsed;
 
             ResetMaze();            
@@ -811,14 +812,30 @@ namespace Maze
                 {
                     congratsMessage = "Congratualtions!!";
                     message = $"You have solved the maze!";                    
-                }                
+                }
+                GazeInput.DwellFeedbackProgressBrush = _borderBrush;
 
                 DialogText.Text = message;
                 CongratsText.Text = congratsMessage;
+
+                if (_numRows >= 6)
+                {
+                    BoardSizeText.Text = _numRows.ToString();
+                    IncreaseBoardSizePanel.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    IncreaseBoardSizePanel.Visibility = Visibility.Collapsed;
+                }
+
                 DialogGrid.Visibility = Visibility.Visible;
-
             }
+        }
 
+        private void IncreaseBoardSize_Click(object sender, RoutedEventArgs e)
+        {
+            _numRows += 1;
+            BoardSizeText.Text = _numRows.ToString();
         }
 
         private async void OnBack(object sender, RoutedEventArgs e)
@@ -887,5 +904,7 @@ namespace Maze
             PlayAgainText.Visibility = Visibility.Visible;
             OnPause(PauseButton, null);
         }
+
+      
     }
 }
