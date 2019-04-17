@@ -87,7 +87,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnNewGame" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI" FontSize="24" Width="100" Height="100" Background="{x:Null}" Margin="0,0,0,0" Foreground="White" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnNewGame" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI" FontSize="24" Width="100" Height="100" Background="{x:Null}" Margin="0,0,0,0" Foreground="White" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}">
                 <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                     <TextBlock Text="New" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
