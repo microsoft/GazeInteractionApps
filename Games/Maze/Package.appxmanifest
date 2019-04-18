@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="0c8e65eb-7d08-4ae0-b9e1-2b44d9d526f2" Publisher="CN=harishsk" Version="1.0.12.0" />
+  <Identity Name="0c8e65eb-7d08-4ae0-b9e1-2b44d9d526f2" Publisher="CN=harishsk" Version="1.0.13.0" />
   <mp:PhoneIdentity PhoneProductId="0c8e65eb-7d08-4ae0-b9e1-2b44d9d526f2" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Maze</DisplayName>
