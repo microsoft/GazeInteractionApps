@@ -397,7 +397,7 @@ namespace TwoZeroFourEight
             int index = _random.Next(blankCells.Count);
 
             // generate a 2 mostly, but generate a 4 about one in 8 times
-            int val = (_random.Next(8) > 0) ? 2 : 4;            
+            int val = (_random.Next(8) > 0) ? 2 : 4;                        
 
             ///Animate the appearance of the new cell value
             ///
@@ -587,8 +587,9 @@ namespace TwoZeroFourEight
                     else
                     {
                         totalBonus = 0;
+                        totalBonus += MilestoneBonus(doubledVal);
                     }
-                                        
+
                     if (doubledVal > HighTile)
                     {
                         HighTile = doubledVal;
