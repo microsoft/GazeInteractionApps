@@ -191,8 +191,9 @@ namespace TwoZeroFourEight
 
     public class Board : NotificationBase
     {
-        private int _SlideSpeed = 200;
-        private int _AddSpeed = 500;
+        private BoardSpeed _boardSpeed = BoardSpeed.Slow;
+        private int _SlideSpeed = 200;        
+        private int _AddSpeed = 500;        
         private int _SpawnSpeed = 25;        
         private int _maxCells;
         private Random _random = new Random();
@@ -262,6 +263,49 @@ namespace TwoZeroFourEight
             {
                 SetField<Double>(ref _cellSpace, value, "CellSpace");
                 UpdateCellSizes();
+            }
+        }
+
+        private TimeSpan _slideDwellSpeed = TimeSpan.FromMilliseconds(100);
+        public TimeSpan SlideDwellSpeed
+        {
+            get { return _slideDwellSpeed; }
+            set
+            {
+                SetField<TimeSpan>(ref _slideDwellSpeed, value, "SlideDwellSpeed");
+            }
+        }
+
+        public enum BoardSpeed
+        {
+            Slow,
+            Fast
+        }
+
+        public void SetBoardSpeed(BoardSpeed speed)
+        {
+            _boardSpeed = speed;
+
+            switch (_boardSpeed)
+            {
+                case BoardSpeed.Slow:
+                    _SlideSpeed = 200;        
+                    _AddSpeed = 500;        
+                    _SpawnSpeed = 25; 
+                    break;
+
+                case BoardSpeed.Fast:
+                    _SlideSpeed = 100;
+                    _AddSpeed = 100;
+                    _SpawnSpeed = 25;
+
+                    break;
+
+                default:
+                    _SlideSpeed = 200;
+                    _AddSpeed = 500;
+                    _SpawnSpeed = 25;
+                    break;                        
             }
         }
 
@@ -412,8 +456,8 @@ namespace TwoZeroFourEight
                 var scaleAnimation = compositor.CreateSpringVector3Animation();
                 scaleAnimation.InitialValue = new System.Numerics.Vector3(0.5f, 0.5f, 0f);
                 scaleAnimation.FinalValue = new System.Numerics.Vector3(1.0f, 1.0f, 0f);
-
-                scaleAnimation.DampingRatio = 0.09f;
+                
+                scaleAnimation.DampingRatio = 0.6f;
                 scaleAnimation.Period = TimeSpan.FromMilliseconds(_SpawnSpeed);
 
                 newCellVisual.StartAnimation(nameof(newCellVisual.Scale), scaleAnimation);
@@ -457,8 +501,8 @@ namespace TwoZeroFourEight
                     var slideToCellVisual = ElementCompositionPreview.GetElementVisual(Buttons[cur]);
                     var compositor = slideToCellVisual.Compositor;
                     var slideFromCellVisual = ElementCompositionPreview.GetElementVisual(Buttons[j]);
-
-                    var easing = compositor.CreateLinearEasingFunction();
+                    
+                    CubicBezierEasingFunction easing = compositor.CreateCubicBezierEasingFunction(new Vector2(.86f, 0.0f), new Vector2(.07f, 1.00f));
 
                     ///slideAnimation
                     ///                    
@@ -523,15 +567,15 @@ namespace TwoZeroFourEight
 
                     var answerTextVisual = ElementCompositionPreview.GetElementVisual(answerText as FrameworkElement);
                     var cellTextVisual = ElementCompositionPreview.GetElementVisual(cellText as FrameworkElement);
-
-                    var easing = compositor.CreateLinearEasingFunction();
+                    
+                    CubicBezierEasingFunction easing = compositor.CreateCubicBezierEasingFunction(new Vector2(.86f, 0.0f), new Vector2(.07f, 1.00f));
 
                     ///Scale the ToCell to breifly be twice the size and then back down to regular size
                     ///
                     slideToCellVisual.CenterPoint = new System.Numerics.Vector3(slideToCellVisual.Size.X / 2, slideToCellVisual.Size.Y / 2, 0f);
-                    var scaleUpAnimation = compositor.CreateVector3KeyFrameAnimation();
+                    var scaleUpAnimation = compositor.CreateVector3KeyFrameAnimation();                    
                     scaleUpAnimation.InsertKeyFrame(0f, new System.Numerics.Vector3(1.0f, 1.0f, 0f), easing);
-                    scaleUpAnimation.InsertKeyFrame(0.5f, new System.Numerics.Vector3(1.5f, 1.5f, 0f), easing);
+                    scaleUpAnimation.InsertKeyFrame(0.5f, new System.Numerics.Vector3(1.2f, 1.2f, 0f), easing);
                     scaleUpAnimation.InsertKeyFrame(1f, new System.Numerics.Vector3(1.0f, 1.0f, 0f), easing);
                     scaleUpAnimation.Duration = TimeSpan.FromMilliseconds(_AddSpeed);
 
@@ -567,17 +611,23 @@ namespace TwoZeroFourEight
                     _slideBatchAnimation.Suspend();
                     _addAdjacentBatchAnimation.Suspend();
                     slideToCellVisual.StartAnimation(nameof(slideToCellVisual.Scale), scaleUpAnimation);
-                    answerTextVisual.StartAnimation(nameof(answerTextVisual.Opacity), showAnswerAnimation);
-                    answerTextVisual.StartAnimation(nameof(answerTextVisual.Scale), scaleAnswerAnimation);
-                    cellTextVisual.StartAnimation(nameof(cellTextVisual.Opacity), showCellTextAnimation);
+                    if (_boardSpeed == BoardSpeed.Slow)
+                    {
+                        answerTextVisual.StartAnimation(nameof(answerTextVisual.Opacity), showAnswerAnimation);
+                        answerTextVisual.StartAnimation(nameof(answerTextVisual.Scale), scaleAnswerAnimation);
+                        cellTextVisual.StartAnimation(nameof(cellTextVisual.Opacity), showCellTextAnimation);
+                    }
                     _addAdjacentBatchAnimation.Resume();
                     _slideBatchAnimation.Resume();
 
                     Canvas.SetZIndex(Buttons[cur], GetHighestButtonIndex() + 1);
 
-                    Cells[cur].AnswerString = Cells[cur].IntVal.ToString() + " + " + Cells[cur + delta].IntVal.ToString();
+                    if (_boardSpeed == BoardSpeed.Slow)
+                    {
+                        Cells[cur].AnswerString = Cells[cur].IntVal.ToString() + " + " + Cells[cur + delta].IntVal.ToString();
+                    }
 
-                    Cells[cur].IntVal += Cells[cur + delta].IntVal;
+                        Cells[cur].IntVal += Cells[cur + delta].IntVal;
 
                     doubledVal = Cells[cur].IntVal;
                     if (totalBonus > -1)
@@ -793,7 +843,7 @@ namespace TwoZeroFourEight
         public Board Board;
 
         private SolidColorBrush _solidTileForegroundBrush;
-        private SolidColorBrush _solidTileBrush;
+        private SolidColorBrush _solidTileBrush;        
 
         public MainPage()
         {
@@ -814,8 +864,8 @@ namespace TwoZeroFourEight
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
             {
                 GazeInput.LoadSettings(sharedSettings);
-            });
-        }
+            });           
+        }      
 
         private void OnNewGame(object sender, RoutedEventArgs e)
         {
@@ -848,17 +898,40 @@ namespace TwoZeroFourEight
             switch (e.Key)
             {
                 case VirtualKey.Up:
-                    Board.SlideUp();
+                    Board.SlideUp();                    
                     break;
                 case VirtualKey.Down:
-                    Board.SlideDown();
+                    Board.SlideDown();                    
                     break;
                 case VirtualKey.Left:
-                    Board.SlideLeft();
+                    Board.SlideLeft();                    
                     break;
                 case VirtualKey.Right:
-                    Board.SlideRight();
+                    Board.SlideRight();                    
                     break;
+
+                case VirtualKey.F1:
+                    Board.SetBoardSpeed(Board.BoardSpeed.Slow);                    
+                    break;
+
+                case VirtualKey.F2:
+                    Board.SetBoardSpeed(Board.BoardSpeed.Fast);                    
+                    break;
+
+                case VirtualKey.F3:
+                    int newSpeed = Board.SlideDwellSpeed.Milliseconds - 100;
+                    if (newSpeed < 100) newSpeed = 100;
+                    Board.SlideDwellSpeed = TimeSpan.FromMilliseconds(newSpeed);                    
+                    break;
+
+                case VirtualKey.F4:
+                    Board.SlideDwellSpeed = TimeSpan.FromMilliseconds(800);                    
+                    break;
+
+                case VirtualKey.F5:                                        
+                    Board.SlideDwellSpeed = TimeSpan.FromMilliseconds(Board.SlideDwellSpeed.Milliseconds + 100);                    
+                    break;
+
             }
         }
 

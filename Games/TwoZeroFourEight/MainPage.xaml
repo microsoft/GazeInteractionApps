@@ -155,7 +155,7 @@
             <Rectangle Grid.Row="1" Grid.Column="2" Width="180"/>
 
 
-            <GridView x:Name="GameBoardBackGroundGrid" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" FontFamily="Segoe UI" Grid.Row="1" Grid.Column="1" Padding="0,0,0,0" FocusVisualPrimaryThickness="0,0,0,0" FocusVisualMargin="0,0,0,-1" FocusVisualSecondaryThickness="0,0,0,0"  >
+            <GridView x:Name="GameBoardBackGroundGrid" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" FontFamily="Segoe UI" Grid.Row="1" Grid.Column="1" Padding="0,0,0,0" FocusVisualPrimaryThickness="0,0,0,0" FocusVisualMargin="0,0,0,-1" FocusVisualSecondaryThickness="0,0,0,0" AllowFocusOnInteraction="False"  >
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -171,7 +171,7 @@
                 </ItemsControl.ItemTemplate>
             </GridView>
 
-            <GridView x:Name="GameBoardGrid" x:FieldModifier="public" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" Grid.Row="1" Grid.Column="1" SizeChanged="GameBoardGrid_SizeChanged" FontFamily="Segoe UI" Padding="0,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" FocusVisualMargin="0,0,0,0" FocusVisualPrimaryThickness="0,0,0,0" FocusVisualSecondaryThickness="0,0,0,0">
+            <GridView x:Name="GameBoardGrid" x:FieldModifier="public" ItemsSource="{x:Bind Path=Board.Cells, Mode=OneWay}" Grid.Row="1" Grid.Column="1" SizeChanged="GameBoardGrid_SizeChanged" FontFamily="Segoe UI" Padding="0,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" FocusVisualMargin="0,0,0,0" FocusVisualPrimaryThickness="0,0,0,0" FocusVisualSecondaryThickness="0,0,0,0" AllowFocusOnInteraction="False">
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="10" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -216,22 +216,22 @@
 
             <Rectangle Width="{x:Bind GameBoardGrid.ActualWidth}" Height="{x:Bind GameBoardGrid.ActualHeight}" Grid.Row="1" Grid.Column="1"></Rectangle>
 
-            <Button x:Name="UpButton"  Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="OnUpClick" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Foreground="{StaticResource TileForeground}" Width="{x:Bind Board.CellSpace, Mode=OneWay}" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
+            <Button x:Name="UpButton"  Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="OnUpClick" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Foreground="{StaticResource TileForeground}" Width="{x:Bind Board.CellSpace, Mode=OneWay}" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" gaze:GazeInput.DwellDuration="{x:Bind Board.SlideDwellSpeed, Mode=OneWay}">
                 <Border Background="{StaticResource TileBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                     <TextBlock Text="&#xe70e;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
                 </Border>
             </Button>
-            <Button x:Name="DownButton" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="OnDownClick" HorizontalAlignment="Stretch" VerticalAlignment="Top" Foreground="{StaticResource TileForeground}" Width="{x:Bind Board.CellSpace, Mode=OneWay}" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <Button x:Name="DownButton" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="OnDownClick" HorizontalAlignment="Stretch" VerticalAlignment="Top" Foreground="{StaticResource TileForeground}" Width="{x:Bind Board.CellSpace, Mode=OneWay}" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" gaze:GazeInput.DwellDuration="{x:Bind Board.SlideDwellSpeed, Mode=OneWay}">
                 <Border Background="{StaticResource TileBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                     <TextBlock Text="&#xe70d;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
                 </Border>
             </Button>
-            <Button x:Name="LeftButton" Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnLeftClick" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="{x:Null}" Foreground="{StaticResource TileForeground}" Height="{x:Bind Board.CellSpace, Mode=OneWay}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <Button x:Name="LeftButton" Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="OnLeftClick" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="{x:Null}" Foreground="{StaticResource TileForeground}" Height="{x:Bind Board.CellSpace, Mode=OneWay}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" gaze:GazeInput.DwellDuration="{x:Bind Board.SlideDwellSpeed, Mode=OneWay}">
                 <Border Background="{StaticResource TileBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                     <TextBlock Text="&#xe76b;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
                 </Border>
             </Button>
-            <Button x:Name="RightButton" Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonStyle}" Click="OnRightClick" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="{x:Null}" Foreground="{StaticResource TileForeground}" Height="{x:Bind Board.CellSpace, Mode=OneWay}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <Button x:Name="RightButton" Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonStyle}" Click="OnRightClick" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="{x:Null}" Foreground="{StaticResource TileForeground}" Height="{x:Bind Board.CellSpace, Mode=OneWay}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" gaze:GazeInput.DwellDuration="{x:Bind Board.SlideDwellSpeed, Mode=OneWay}">
                 <Border Background="{StaticResource TileBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                     <TextBlock Text="&#xe76c;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
                 </Border>
