@@ -22,7 +22,6 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>4F0BC29A558D68DE56B4D089CA56EA25C302CB26</PackageCertificateThumbprint>
     <AppInstallerUpdateFrequency>1</AppInstallerUpdateFrequency>
     <AppInstallerCheckForUpdateFrequency>OnApplicationRun</AppInstallerCheckForUpdateFrequency>
   </PropertyGroup>
@@ -114,7 +113,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="Fifteen_StoreKey.pfx" />
     <None Include="Fifteen_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
