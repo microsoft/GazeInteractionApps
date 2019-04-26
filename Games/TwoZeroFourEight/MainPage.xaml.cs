@@ -46,9 +46,9 @@ namespace TwoZeroFourEight
     {
         private static Brush[] _backgroundColors = new Brush[]
         {
-            
-            new SolidColorBrush(Colors.Transparent),            
- 
+
+            new SolidColorBrush(Colors.Transparent),
+
             new SolidColorBrush(Color.FromArgb(255,215,253,253)),
             new SolidColorBrush(Color.FromArgb(255,171,235,243)),
             new SolidColorBrush(Color.FromArgb(255,140,208,243)),
@@ -88,12 +88,12 @@ namespace TwoZeroFourEight
         }
     }
 
-    public sealed class ValueToVisibilityConverter: IValueConverter
-    {       
+    public sealed class ValueToVisibilityConverter : IValueConverter
+    {
         public object Convert(object value, Type targetType, object parameter, string culture)
-        {            
+        {
             int val = (int)value;
-            
+
             if (val > 0)
             {
                 return Visibility.Visible;
@@ -107,7 +107,7 @@ namespace TwoZeroFourEight
         }
     }
 
-    public class Cell: NotificationBase
+    public class Cell : NotificationBase
     {
         private int _intVal;
         public int IntVal
@@ -157,7 +157,7 @@ namespace TwoZeroFourEight
         }
     }
 
-    public sealed class IntegerToStringConverter: IValueConverter
+    public sealed class IntegerToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType,
                               object parameter, string culture)
@@ -192,9 +192,9 @@ namespace TwoZeroFourEight
     public class Board : NotificationBase
     {
         private BoardSpeed _boardSpeed = BoardSpeed.Slow;
-        private int _SlideSpeed = 200;        
-        private int _AddSpeed = 500;        
-        private int _SpawnSpeed = 25;        
+        private int _SlideSpeed = 200;
+        private int _AddSpeed = 500;
+        private int _SpawnSpeed = 25;
         private int _maxCells;
         private Random _random = new Random();
 
@@ -289,9 +289,9 @@ namespace TwoZeroFourEight
             switch (_boardSpeed)
             {
                 case BoardSpeed.Slow:
-                    _SlideSpeed = 200;        
-                    _AddSpeed = 500;        
-                    _SpawnSpeed = 25; 
+                    _SlideSpeed = 200;
+                    _AddSpeed = 500;
+                    _SpawnSpeed = 25;
                     break;
 
                 case BoardSpeed.Fast:
@@ -305,7 +305,7 @@ namespace TwoZeroFourEight
                     _SlideSpeed = 200;
                     _AddSpeed = 500;
                     _SpawnSpeed = 25;
-                    break;                        
+                    break;
             }
         }
 
@@ -326,7 +326,7 @@ namespace TwoZeroFourEight
         public Board(int boardSize)
         {
             _boardSize = boardSize;
-            _maxCells = _boardSize * _boardSize;                       
+            _maxCells = _boardSize * _boardSize;
 
             Cells = new List<Cell>(_maxCells);
             for (int i = 0; i < _maxCells; i++)
@@ -339,12 +339,12 @@ namespace TwoZeroFourEight
 
         public void LoadButtonsList(GridView GameBoardGrid)
         {
-            Buttons = new List<FrameworkElement>();            
+            Buttons = new List<FrameworkElement>();
             var controls = (GameBoardGrid.ItemsPanelRoot as ItemsWrapGrid).Children;
             foreach (FrameworkElement b in controls)
             {
                 Buttons.Add(b);
-                var newButtonVisual = ElementCompositionPreview.GetElementVisual(b);              
+                var newButtonVisual = ElementCompositionPreview.GetElementVisual(b);
             }
         }
 
@@ -385,7 +385,7 @@ namespace TwoZeroFourEight
             for (int i = 0; i < _boardSize; i++)
             {
                 for (int j = 0; j < _boardSize; j++)
-                {                    
+                {
                     var cur = Cells[i * _boardSize + j];
                     if (cur.IntVal == 0)
                     {
@@ -441,7 +441,7 @@ namespace TwoZeroFourEight
             int index = _random.Next(blankCells.Count);
 
             // generate a 2 mostly, but generate a 4 about one in 8 times
-            int val = (_random.Next(8) > 0) ? 2 : 4;                        
+            int val = (_random.Next(8) > 0) ? 2 : 4;
 
             ///Animate the appearance of the new cell value
             ///
@@ -456,7 +456,7 @@ namespace TwoZeroFourEight
                 var scaleAnimation = compositor.CreateSpringVector3Animation();
                 scaleAnimation.InitialValue = new System.Numerics.Vector3(0.5f, 0.5f, 0f);
                 scaleAnimation.FinalValue = new System.Numerics.Vector3(1.0f, 1.0f, 0f);
-                
+
                 scaleAnimation.DampingRatio = 0.6f;
                 scaleAnimation.Period = TimeSpan.FromMilliseconds(_SpawnSpeed);
 
@@ -485,7 +485,7 @@ namespace TwoZeroFourEight
                 {
                     j += delta;
                 }
-                
+
                 //if the first cell is not empty it can't slide anywhere
                 ///for any other cell 
                 if ((j != cur) && (Cells[j].IntVal != 0))
@@ -501,7 +501,7 @@ namespace TwoZeroFourEight
                     var slideToCellVisual = ElementCompositionPreview.GetElementVisual(Buttons[cur]);
                     var compositor = slideToCellVisual.Compositor;
                     var slideFromCellVisual = ElementCompositionPreview.GetElementVisual(Buttons[j]);
-                    
+
                     CubicBezierEasingFunction easing = compositor.CreateCubicBezierEasingFunction(new Vector2(.86f, 0.0f), new Vector2(.07f, 1.00f));
 
                     ///slideAnimation
@@ -544,7 +544,7 @@ namespace TwoZeroFourEight
         }
 
         private int AddAdjacent(int start, int end, int delta)
-        {            
+        {
             int doubledVal = 0;
             int totalBonus = -1; //If it returns -1 then no additions happened regardless of whether they were bonus worthy
             int cur = start;
@@ -567,13 +567,13 @@ namespace TwoZeroFourEight
 
                     var answerTextVisual = ElementCompositionPreview.GetElementVisual(answerText as FrameworkElement);
                     var cellTextVisual = ElementCompositionPreview.GetElementVisual(cellText as FrameworkElement);
-                    
+
                     CubicBezierEasingFunction easing = compositor.CreateCubicBezierEasingFunction(new Vector2(.86f, 0.0f), new Vector2(.07f, 1.00f));
 
                     ///Scale the ToCell to breifly be twice the size and then back down to regular size
                     ///
                     slideToCellVisual.CenterPoint = new System.Numerics.Vector3(slideToCellVisual.Size.X / 2, slideToCellVisual.Size.Y / 2, 0f);
-                    var scaleUpAnimation = compositor.CreateVector3KeyFrameAnimation();                    
+                    var scaleUpAnimation = compositor.CreateVector3KeyFrameAnimation();
                     scaleUpAnimation.InsertKeyFrame(0f, new System.Numerics.Vector3(1.0f, 1.0f, 0f), easing);
                     scaleUpAnimation.InsertKeyFrame(0.5f, new System.Numerics.Vector3(1.2f, 1.2f, 0f), easing);
                     scaleUpAnimation.InsertKeyFrame(1f, new System.Numerics.Vector3(1.0f, 1.0f, 0f), easing);
@@ -627,7 +627,7 @@ namespace TwoZeroFourEight
                         Cells[cur].AnswerString = Cells[cur].IntVal.ToString() + " + " + Cells[cur + delta].IntVal.ToString();
                     }
 
-                        Cells[cur].IntVal += Cells[cur + delta].IntVal;
+                    Cells[cur].IntVal += Cells[cur + delta].IntVal;
 
                     doubledVal = Cells[cur].IntVal;
                     if (totalBonus > -1)
@@ -646,10 +646,10 @@ namespace TwoZeroFourEight
                     }
 
                     Cells[cur + delta].IntVal = 0;
-                    Score += Cells[cur].IntVal;                    
+                    Score += Cells[cur].IntVal;
                 }
                 cur += delta;
-            }            
+            }
             return totalBonus;
         }
 
@@ -699,7 +699,7 @@ namespace TwoZeroFourEight
             int end = int.Parse(parms[1]);
             int delta = int.Parse(parms[2]);
             int increment = int.Parse(parms[3]);
-            bool change = bool.Parse(parms[4]);            
+            bool change = bool.Parse(parms[4]);
             int totalRotationFactor = 0;
             int bonusRotations = -1;
 
@@ -714,10 +714,10 @@ namespace TwoZeroFourEight
                 if (bonusRotations > 0)
                 {
                     totalRotationFactor += bonusRotations;
-                }                
-                change = (bonusRotations > -1) || change; 
+                }
+                change = (bonusRotations > -1) || change;
                 start += increment;
-                end += increment;                
+                end += increment;
             }
 
             _addAdjacentBatchAnimation.Comment = _addAdjacentBatchAnimation.Comment + "," + change;
@@ -728,7 +728,7 @@ namespace TwoZeroFourEight
             if (change)
             {
                 OnPropertyChanged("Score");
-            }           
+            }
         }
 
         private void MilestoneReward(int totalRotationFactor)
@@ -780,7 +780,7 @@ namespace TwoZeroFourEight
             int end = int.Parse(parms[1]);
             int delta = int.Parse(parms[2]);
             int increment = int.Parse(parms[3]);
-            bool change = bool.Parse(parms[4]);            
+            bool change = bool.Parse(parms[4]);
 
             for (int i = 0; i < _boardSize; i++)
             {
@@ -790,7 +790,7 @@ namespace TwoZeroFourEight
             }
 
             _slideBatchAnimation.Comment = change.ToString();
-            _slideBatchAnimation.End();            
+            _slideBatchAnimation.End();
 
             var frame = (Frame)Window.Current.Content;
             var mainPage = (MainPage)frame.Content;
@@ -800,11 +800,11 @@ namespace TwoZeroFourEight
         {
             string[] parms = (sender as CompositionScopedBatch).Comment.Split(',');
 
-            bool change = bool.Parse(parms[0]);            
+            bool change = bool.Parse(parms[0]);
             bool wasNewTileGenerated = false;
 
             if (change)
-            {                
+            {
                 wasNewTileGenerated = GenerateNextTile();
             }
 
@@ -843,11 +843,11 @@ namespace TwoZeroFourEight
         public Board Board;
 
         private SolidColorBrush _solidTileForegroundBrush;
-        private SolidColorBrush _solidTileBrush;        
+        private SolidColorBrush _solidTileBrush;
 
         public MainPage()
         {
-            InitializeComponent();            
+            InitializeComponent();
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
@@ -864,13 +864,13 @@ namespace TwoZeroFourEight
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
             {
                 GazeInput.LoadSettings(sharedSettings);
-            });           
-        }      
+            });
+        }
 
         private void OnNewGame(object sender, RoutedEventArgs e)
         {
             Board.Reset();
-            Board.LoadButtonsList(GameBoardGrid);            
+            Board.LoadButtonsList(GameBoardGrid);
         }
 
         private void OnUpClick(object sender, RoutedEventArgs e)
@@ -898,38 +898,38 @@ namespace TwoZeroFourEight
             switch (e.Key)
             {
                 case VirtualKey.Up:
-                    Board.SlideUp();                    
+                    Board.SlideUp();
                     break;
                 case VirtualKey.Down:
-                    Board.SlideDown();                    
+                    Board.SlideDown();
                     break;
                 case VirtualKey.Left:
-                    Board.SlideLeft();                    
+                    Board.SlideLeft();
                     break;
                 case VirtualKey.Right:
-                    Board.SlideRight();                    
+                    Board.SlideRight();
                     break;
 
                 case VirtualKey.F1:
-                    Board.SetBoardSpeed(Board.BoardSpeed.Slow);                    
+                    Board.SetBoardSpeed(Board.BoardSpeed.Slow);
                     break;
 
                 case VirtualKey.F2:
-                    Board.SetBoardSpeed(Board.BoardSpeed.Fast);                    
+                    Board.SetBoardSpeed(Board.BoardSpeed.Fast);
                     break;
 
                 case VirtualKey.F3:
                     int newSpeed = Board.SlideDwellSpeed.Milliseconds - 100;
                     if (newSpeed < 100) newSpeed = 100;
-                    Board.SlideDwellSpeed = TimeSpan.FromMilliseconds(newSpeed);                    
+                    Board.SlideDwellSpeed = TimeSpan.FromMilliseconds(newSpeed);
                     break;
 
                 case VirtualKey.F4:
-                    Board.SlideDwellSpeed = TimeSpan.FromMilliseconds(800);                    
+                    Board.SlideDwellSpeed = TimeSpan.FromMilliseconds(800);
                     break;
 
-                case VirtualKey.F5:                                        
-                    Board.SlideDwellSpeed = TimeSpan.FromMilliseconds(Board.SlideDwellSpeed.Milliseconds + 100);                    
+                case VirtualKey.F5:
+                    Board.SlideDwellSpeed = TimeSpan.FromMilliseconds(Board.SlideDwellSpeed.Milliseconds + 100);
                     break;
 
             }
@@ -969,15 +969,15 @@ namespace TwoZeroFourEight
 
             TurnOffGridViewClipping();
             Board.LoadButtonsList(GameBoardGrid);
-            Board.Reset();            
+            Board.Reset();
 
             var boardVisual = ElementCompositionPreview.GetElementVisual(GameBoardGrid);
             boardVisual.BorderMode = CompositionBorderMode.Soft;
 
             var controls = (GameBoardGrid.ItemsPanelRoot as ItemsWrapGrid).Children;
             foreach (FrameworkElement b in controls)
-            {                
-                var newButtonVisual = ElementCompositionPreview.GetElementVisual(b);             
+            {
+                var newButtonVisual = ElementCompositionPreview.GetElementVisual(b);
             }
 
             _solidTileForegroundBrush = (SolidColorBrush)this.Resources["TileForeground"];
@@ -1015,10 +1015,10 @@ namespace TwoZeroFourEight
 
         private void GameBoardGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Double narrowEdge = GameBoardGrid.ActualHeight ;
-            if (GameBoardGrid.ActualWidth  < narrowEdge)
+            Double narrowEdge = GameBoardGrid.ActualHeight;
+            if (GameBoardGrid.ActualWidth < narrowEdge)
             {
-                narrowEdge = GameBoardGrid.ActualWidth ;
+                narrowEdge = GameBoardGrid.ActualWidth;
             }
             Board.CellSpace = narrowEdge;
         }
@@ -1065,6 +1065,7 @@ namespace TwoZeroFourEight
                 HelpNavRightButton.IsEnabled = false;
                 HelpNavLeftButton.IsEnabled = true;
             }
+            FixHelp();
         }
 
         private void OnHelpNavLeft(object sender, RoutedEventArgs e)
@@ -1111,6 +1112,7 @@ namespace TwoZeroFourEight
                 HelpNavLeftButton.IsEnabled = true;
                 HelpNavRightButton.IsEnabled = true;
             }
+            FixHelp();
         }
 
         private void DismissButton(object sender, RoutedEventArgs e)
@@ -1154,6 +1156,74 @@ namespace TwoZeroFourEight
         {
             GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
             WebViewLoadingText.Visibility = Visibility.Collapsed;
+        }
+
+        private void HelpPaneGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            FixHelp();
+        }
+
+        private void FixHelp()
+        {
+            double helpHeaderSize = 150;
+            double helpBottomSize = 140;
+
+            double helpTextBodySize = HelpPaneGrid.ActualHeight - helpHeaderSize - helpBottomSize;
+
+            HelpPaneGrid.UpdateLayout();
+
+            //Check Help 1
+            FixHelpTextSize(Help1TextBody, helpTextBodySize);
+
+            //Check Help 2
+            FixHelpTextSize(Help2TextBody, helpTextBodySize);
+
+            //Check Help 3
+            FixHelpTextSize(Help3TextBody, helpTextBodySize);
+
+            //Check Help 4            
+            FixHelpTextSize(Help4TextBody, helpTextBodySize);
+
+            //Check Help 5
+            double buttonItem1Size = 50;
+            double buttonItem2Size = 50;
+            helpTextBodySize = helpTextBodySize - buttonItem1Size - buttonItem2Size;
+            FixHelpTextSize(Help5TextBody, helpTextBodySize);
+
+            HelpPaneGrid.UpdateLayout();            
+        }
+
+        private void FixHelpTextSize(TextBlock helpTextBody, double helpTextBodySize)
+        {
+            double defaultFontSize = (double)this.Resources["HelpTextFontSize"];
+            double fitFontSize = defaultFontSize;            
+
+            var tb = new TextBlock();
+            tb.FontFamily = helpTextBody.FontFamily;
+            tb.FontSize = fitFontSize;
+            tb.TextWrapping = helpTextBody.TextWrapping;
+            tb.Text = helpTextBody.Text;
+            tb.Measure(new Size(helpTextBody.ActualWidth, Double.PositiveInfinity));
+
+            if (tb.DesiredSize.Height < helpTextBodySize)
+            {
+                helpTextBody.FontSize = fitFontSize;
+            }
+            else
+            {
+                if (helpTextBody.ActualHeight > 1)
+                {
+                    do
+                    {
+                        fitFontSize -= 1;
+                        tb.FontSize = fitFontSize;
+
+                        tb.Measure(new Size(helpTextBody.ActualWidth, Double.PositiveInfinity));
+
+                    } while (tb.DesiredSize.Height > helpTextBodySize && fitFontSize > 8);
+                }
+            }
+            helpTextBody.FontSize = fitFontSize;
         }
     }
 }
