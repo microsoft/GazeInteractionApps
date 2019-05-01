@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maze", "Games\Maze\Maze.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EyeVolume", "Apps\EyeVolume\EyeVolume.csproj", "{05D9AB57-A57F-4488-A603-C9B76F6932C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundMachineJr", "Apps\SoundMachineJr\SoundMachineJr.csproj", "{145278F9-BEE9-405B-9887-ACE955163C28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -117,6 +119,12 @@ Global
 		{05D9AB57-A57F-4488-A603-C9B76F6932C5}.Release|x64.ActiveCfg = Release|x64
 		{05D9AB57-A57F-4488-A603-C9B76F6932C5}.Release|x64.Build.0 = Release|x64
 		{05D9AB57-A57F-4488-A603-C9B76F6932C5}.Release|x64.Deploy.0 = Release|x64
+		{145278F9-BEE9-405B-9887-ACE955163C28}.Debug|x64.ActiveCfg = Debug|x64
+		{145278F9-BEE9-405B-9887-ACE955163C28}.Debug|x64.Build.0 = Debug|x64
+		{145278F9-BEE9-405B-9887-ACE955163C28}.Debug|x64.Deploy.0 = Debug|x64
+		{145278F9-BEE9-405B-9887-ACE955163C28}.Release|x64.ActiveCfg = Release|x64
+		{145278F9-BEE9-405B-9887-ACE955163C28}.Release|x64.Build.0 = Release|x64
+		{145278F9-BEE9-405B-9887-ACE955163C28}.Release|x64.Deploy.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,6 +142,7 @@ Global
 		{0A83E4C8-2660-4004-BA8D-D4BB7C7EB290} = {6111DFA8-1B3F-447F-BF12-50569369933F}
 		{D3B787FF-5522-447F-AC1E-0774DD264D04} = {63D34804-3752-4A32-B282-239553D08276}
 		{05D9AB57-A57F-4488-A603-C9B76F6932C5} = {6111DFA8-1B3F-447F-BF12-50569369933F}
+		{145278F9-BEE9-405B-9887-ACE955163C28} = {6111DFA8-1B3F-447F-BF12-50569369933F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BFE963A0-B319-42F1-8A82-A2C425F87FE9}
