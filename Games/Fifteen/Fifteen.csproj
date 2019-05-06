@@ -68,6 +68,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="Fifteen_TemporaryKey.pfx" />
+    <None Include="NuGet.Config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\LargeTile.scale-100.png" />
@@ -138,7 +139,7 @@
       <Version>6.2.8</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Input.GazeInteraction">
-      <Version>5.1.0</Version>
+      <Version>5.1.0-build.206</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
