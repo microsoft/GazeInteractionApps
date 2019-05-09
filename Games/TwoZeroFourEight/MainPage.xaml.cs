@@ -1123,12 +1123,12 @@ namespace TwoZeroFourEight
 
         private async void PrivacyViewScrollUpButton_Click(object sender, RoutedEventArgs e)
         {
-            PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0,-" + PrivacyWebView.ActualHeight / 2 + ") " });
+            await PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0,-" + PrivacyWebView.ActualHeight / 2 + ") " });
         }
 
-        private void PrivacyViewScrollDownButton_Click(object sender, RoutedEventArgs e)
+        private async void PrivacyViewScrollDownButton_Click(object sender, RoutedEventArgs e)
         {
-            PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0," + PrivacyWebView.ActualHeight / 2 + ") " });
+            await PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0," + PrivacyWebView.ActualHeight / 2 + ") " });
         }
 
         private void PrivacyViewContinueButton_Click(object sender, RoutedEventArgs e)

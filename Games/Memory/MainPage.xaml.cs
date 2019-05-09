@@ -1,6 +1,7 @@
 ﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
 //See LICENSE in the project root for license information.
 
+using System;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.ApplicationModel;
 using Windows.Foundation;
@@ -151,12 +152,12 @@ namespace Memory
 
         private async void PrivacyViewScrollUpButton_Click(object sender, RoutedEventArgs e)
         {
-            PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0,-" + PrivacyWebView.ActualHeight / 2 + ") " });
+            await PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0,-" + PrivacyWebView.ActualHeight / 2 + ") " });
         }
 
-        private void PrivacyViewScrollDownButton_Click(object sender, RoutedEventArgs e)
+        private async void PrivacyViewScrollDownButton_Click(object sender, RoutedEventArgs e)
         {
-            PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0," + PrivacyWebView.ActualHeight / 2 + ") " });
+            await PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0," + PrivacyWebView.ActualHeight / 2 + ") " });
         }
 
         private void PrivacyViewContinueButton_Click(object sender, RoutedEventArgs e)
