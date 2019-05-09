@@ -11,6 +11,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using System;
 
 namespace Fifteen
 {
@@ -162,12 +163,12 @@ namespace Fifteen
 
         private async void PrivacyViewScrollUpButton_Click(object sender, RoutedEventArgs e)
         {
-            PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0,-" + PrivacyWebView.ActualHeight / 2 + ") " });
+            await PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0,-" + PrivacyWebView.ActualHeight / 2 + ") " });
         }
 
-        private void PrivacyViewScrollDownButton_Click(object sender, RoutedEventArgs e)
+        private async void PrivacyViewScrollDownButton_Click(object sender, RoutedEventArgs e)
         {
-            PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0," + PrivacyWebView.ActualHeight / 2 + ") " });
+            await PrivacyWebView.InvokeScriptAsync("eval", new string[] { "window.scrollBy(0," + PrivacyWebView.ActualHeight / 2 + ") " });
         }
 
         private void PrivacyViewContinueButton_Click(object sender, RoutedEventArgs e)
