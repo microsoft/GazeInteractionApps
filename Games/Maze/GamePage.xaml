@@ -179,7 +179,7 @@
                     </Button>
                     <Button x:Name="DialogButton2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="300" Height="150" Margin="0,0,0,40" Click="DialogButton2_Click"  Foreground="White" FontSize="24" Padding="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
-                            <TextBlock Text="Change Puzzle Size" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" Foreground="{StaticResource ToolBarButtonBackground}"></TextBlock>
+                            <TextBlock Text="Change Puzzle Size" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" TextWrapping="Wrap" Foreground="{StaticResource ToolBarButtonBackground}"></TextBlock>
                         </Border>
                     </Button>
                     <StackPanel x:Name="IncreaseBoardSizePanel"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Orientation="Horizontal">
