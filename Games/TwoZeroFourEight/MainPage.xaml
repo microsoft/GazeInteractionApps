@@ -440,7 +440,7 @@
 
                             <HyperlinkButton x:Name="PrivacyHyperlink" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Height="150" Width="150" Foreground="White" FontFamily="Segoe UI" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Click="PrivacyHyperlink_Click" Margin="50,0,0,0">
                                 <Border CornerRadius="5" Background="{StaticResource ToolBarButtonBackground}" BorderThickness="3,0,0,0">
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Privacy &amp; Cookies</TextBlock>
+                                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center">Privacy &amp; Cookies</TextBlock>
                                 </Border>
                             </HyperlinkButton>
 
