@@ -69,6 +69,7 @@
     </AppxManifest>
     <None Include="Fifteen_TemporaryKey.pfx" />
     <None Include="NuGet.Config" />
+    <None Include="SuppressionFile.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\LargeTile.scale-100.png" />
