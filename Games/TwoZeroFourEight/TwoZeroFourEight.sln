@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoZeroFourEight", "TwoZeroFourEight.csproj", "{33F8C226-B2F5-449B-8389-81BEA753ED0C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33F8C226-B2F5-449B-8389-81BEA753ED0C}.Debug|x64.ActiveCfg = Debug|x64
+		{33F8C226-B2F5-449B-8389-81BEA753ED0C}.Debug|x64.Build.0 = Debug|x64
+		{33F8C226-B2F5-449B-8389-81BEA753ED0C}.Debug|x64.Deploy.0 = Debug|x64
+		{33F8C226-B2F5-449B-8389-81BEA753ED0C}.Release|x64.ActiveCfg = Release|x64
+		{33F8C226-B2F5-449B-8389-81BEA753ED0C}.Release|x64.Build.0 = Release|x64
+		{33F8C226-B2F5-449B-8389-81BEA753ED0C}.Release|x64.Deploy.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D3FB159-2BF3-48D8-A223-947A42AE6E9F}
+	EndGlobalSection
+EndGlobal
