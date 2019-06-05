@@ -1,0 +1,9 @@
+{
+  "tool": "Credential Scanner",
+  "suppressions": [
+    {
+      "file": "\\Games\\Maze\\Maze_TemporaryKey.pfx",
+      "_justification": "This is the temporary developer certificate required for building Windows Store apps"
+    }
+  ]
+}
