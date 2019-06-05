@@ -19,6 +19,6 @@ This app is also designed to be played with eye control using a Windows 10 compa
 
 Additional information
 Support contact info:
-hf-apps@microsoft.com
+
 Search terms:
 Eye control; eyes first; match two; memory game; concentration; hands free

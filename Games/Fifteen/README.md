@@ -15,6 +15,6 @@ Use eye control to play tile slide and put the puzzle board back in order. Chall
 
 Additional information
 Support contact info:
-hf-apps@microsoft.com
+
 Search terms:
 Eye control; eyes first; sliding tiles; tile slide; fifteen puzzle; 15 puzzle; hands free
