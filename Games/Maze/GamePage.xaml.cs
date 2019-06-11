@@ -808,13 +808,13 @@ namespace Maze
                 {
                     message = $"With a little help you have solved the maze!";
                     //EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Slow.gif"));
-                    EndAnimation.Source = null;
+                    //EndAnimation.Source = null;
                 }
                 else
                 {
                     congratsMessage = "Congratualtions!!";
                     message = $"You have solved the maze!";
-                    EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Fast.gif"));
+                    //EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Fast.gif"));
                 }
                 GazeInput.DwellFeedbackProgressBrush = _borderBrush;
 
