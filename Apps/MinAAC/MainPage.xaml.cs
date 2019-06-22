@@ -12,12 +12,20 @@ namespace MinAAC
 {
     public sealed partial class MainPage : Page
     {
-        MediaElement        _mediaElement;
+        const int NUM_PREDICTIONS = 5;
+        MediaElement _mediaElement;
         SpeechSynthesizer   _speechSynthesizer;
+        Button[]         _predictions;
 
         public MainPage()
         {
             InitializeComponent();
+            _predictions = new Button[NUM_PREDICTIONS];
+            _predictions[0] = Prediction0;
+            _predictions[1] = Prediction1;
+            _predictions[2] = Prediction2;
+            _predictions[3] = Prediction3;
+            _predictions[4] = Prediction4;
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
             _mediaElement = new MediaElement();
@@ -29,6 +37,7 @@ namespace MinAAC
         {
             GazeKeyboard.Target = TextControl;
             await GazeKeyboard.LoadLayout("MinAAC.xaml");
+            GazeKeyboard.PredictionTargets = _predictions;
         }
 
         private async void OnSpeak(object sender, RoutedEventArgs e)

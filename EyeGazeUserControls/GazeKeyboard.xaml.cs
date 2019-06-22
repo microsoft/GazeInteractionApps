@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Data.Text;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Input.Preview.Injection;
@@ -45,14 +46,52 @@ namespace EyeGazeUserControls
         InputInjector _injector;
         List<ButtonBase> _keyboardButtons;
         KeyboardPage _rootPage;
-
-        public Control Target;
+        TextPredictionGenerator _textPredictionGenerator;
+        WordsSegmenter _wordsSegmenter;
+        string _predictionLanguage;
+        Button[] _predictionTargets;
 
         public bool GazePlusClickMode;
+
+        public TextBox Target;
+
+        public string PredictionLanguage
+        {
+            get { return _predictionLanguage; }
+            set
+            {
+                _predictionLanguage = value;
+                _textPredictionGenerator = new TextPredictionGenerator(value);
+                _textPredictionGenerator.InputScope = Windows.UI.Text.Core.CoreTextInputScope.Text;
+                _wordsSegmenter = new WordsSegmenter(value);
+            }
+        }
+
+        public Button[] PredictionTargets
+        {
+            get { return _predictionTargets; }
+            set
+            {
+                if (_predictionTargets != null)
+                {
+                    foreach (var target in _predictionTargets)
+                    {
+                        target.Click -= OnPredictionSelected;
+                    }
+                }
+                _predictionTargets = value;
+                foreach (var target in _predictionTargets)
+                {
+                    target.Click += OnPredictionSelected;
+                }
+
+            }
+        }
 
         public GazeKeyboard()
         {
             InitializeComponent();
+            PredictionLanguage = "en-US";
             _injector = InputInjector.TryCreate();
         }
 
@@ -130,6 +169,8 @@ namespace EyeGazeUserControls
             var key = new InjectedInputKeyboardInfo();
             key.VirtualKey = (ushort)vk;
             _injector.InjectKeyboardInput(new[] { key });
+
+            UpdatePredictions();
             return true;
         }
 
@@ -153,6 +194,8 @@ namespace EyeGazeUserControls
                 keys.Add(key);
             }
             _injector.InjectKeyboardInput(keys);
+
+            UpdatePredictions();
             return true;
         }
 
@@ -282,12 +325,131 @@ namespace EyeGazeUserControls
                 key.ScanCode = button.Content.ToString()[0];
                 key.KeyOptions = InjectedInputKeyOptions.Unicode;
                 _injector.InjectKeyboardInput(new[] { key });
+                UpdatePredictions();
                 injected = true;
             }
 
             if (injected)
             {
                 RevertTempPage(button);
+            }
+        }
+
+        private void InjectString(string str, bool addSpace)
+        {
+            if (addSpace)
+            {
+                str += " ";
+            }
+
+            var keys = new List<InjectedInputKeyboardInfo>();
+            foreach (var ch in str)
+            {
+                var key = new InjectedInputKeyboardInfo();
+                key.ScanCode = ch;
+                key.KeyOptions = InjectedInputKeyOptions.Unicode;
+                keys.Add(key);
+            }
+            _injector.InjectKeyboardInput(keys);
+        }
+
+        private void OnPredictionSelected(object sender, RoutedEventArgs e)
+        {
+            WordSegment replaceSegment = null;
+            if (Target.SelectionStart < Target.Text.Length)
+            {
+                replaceSegment = _wordsSegmenter.GetTokenAt(Target.Text, (uint)Target.SelectionStart);
+            }
+            else if (Target.Text[Target.Text.Length - 1] != ' ')
+            {
+                var tokens = _wordsSegmenter.GetTokens(Target.Text);
+                if (tokens == null || tokens.Count == 0)
+                {
+                    return;
+                }
+
+                replaceSegment = tokens[tokens.Count - 1];
+            }
+
+            if (replaceSegment != null)
+            {
+                Target.Select((int)replaceSegment.SourceTextSegment.StartPosition, (int)replaceSegment.SourceTextSegment.Length);
+            }
+
+            string prediction = (sender as Button).Content.ToString();
+            InjectString(prediction, true);
+            UpdatePredictions();
+        }
+
+        private string[] GetPrevWords()
+        {
+            var segments = _wordsSegmenter.GetTokens(Target.Text);
+            if ((segments == null) || (segments.Count == 0))
+            {
+                return null;
+            }
+
+            int i = 0;
+            string[] words = new string[segments.Count];
+            foreach (var segment in segments)
+            {
+                words[i] = segment.Text;
+                i++;
+            }
+            return words;
+        }
+
+        private async void UpdateNextWordPredictions()
+        {
+            var prevWords = GetPrevWords();
+            var predictions = await _textPredictionGenerator.GetNextWordCandidatesAsync((uint)PredictionTargets.Length, prevWords);
+            DisplayPredictions(predictions);
+        }
+
+        private async void UpdatePredictions()
+        {
+            // IMPORTANT: Wait for the text box to be updated with the injected keys
+            await Task.Delay(1);
+
+            if ((PredictionTargets == null) || (PredictionTargets.Length <= 0))
+            {
+                return;
+            }
+
+            var prevWords = GetPrevWords();
+
+            if ((prevWords == null) || (prevWords.Length == 0))
+            {
+                return;
+            }
+
+            IReadOnlyList<string> predictions;
+            if (prevWords.Length == 1)
+            {
+                predictions = await _textPredictionGenerator.GetCandidatesAsync(prevWords[0], (uint)PredictionTargets.Length);
+            }
+            else
+            {
+                ArraySegment<string> prevWordsExceptLast = new ArraySegment<string>(prevWords, prevWords.Length - 1, 1);
+
+                predictions = await _textPredictionGenerator.GetCandidatesAsync(prevWords[prevWords.Length - 1],
+                                                                                    (uint)PredictionTargets.Length,
+                                                                                    TextPredictionOptions.Corrections | TextPredictionOptions.Predictions,
+                                                                                    prevWordsExceptLast);
+            }
+            DisplayPredictions(predictions);
+        }
+
+        private void DisplayPredictions(IReadOnlyList<string> predictions)
+        {
+            int i;
+            for (i = 0; (i < predictions.Count) && (i < PredictionTargets.Length); i++)
+            {
+                PredictionTargets[i].Content = predictions[i];
+            }
+            for (; i < PredictionTargets.Length; i++)
+            {
+                PredictionTargets[i].Content = "";
             }
         }
     }
