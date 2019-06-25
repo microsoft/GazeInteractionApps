@@ -426,8 +426,10 @@ namespace EyeGazeUserControls
 
             IReadOnlyList<string> predictions;
             var prevWordsExceptLast = prevWords.GetRange(1, prevWords.Count - 1);
+            // It looks like we need to send in a larger number than necessary to get good quality predictions. 
+            uint maxCandidates = (uint)PredictionTargets.Length * 2; 
             predictions = await _textPredictionGenerator.GetCandidatesAsync(prevWords[0], 
-                                                                            (uint)PredictionTargets.Length,
+                                                                            maxCandidates,
                                                                             TextPredictionOptions.Corrections | TextPredictionOptions.Predictions,
                                                                             prevWordsExceptLast);
             DisplayPredictions(predictions);
