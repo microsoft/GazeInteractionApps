@@ -381,7 +381,7 @@ namespace EyeGazeUserControls
             UpdatePredictions();
         }
 
-        private string[] GetPrevWords()
+        private List<string> GetPrevWords()
         {
             var segments = _wordsSegmenter.GetTokens(Target.Text);
             if ((segments == null) || (segments.Count == 0))
@@ -390,12 +390,13 @@ namespace EyeGazeUserControls
             }
 
             int i = 0;
-            string[] words = new string[segments.Count];
+            var words = new List<string>(segments.Count);
             foreach (var segment in segments)
             {
-                words[i] = segment.Text;
+                words.Add(segment.Text);
                 i++;
             }
+            words.Reverse();
             return words;
         }
 
@@ -418,25 +419,17 @@ namespace EyeGazeUserControls
 
             var prevWords = GetPrevWords();
 
-            if ((prevWords == null) || (prevWords.Length == 0))
+            if ((prevWords == null) || (prevWords.Count == 0))
             {
                 return;
             }
 
             IReadOnlyList<string> predictions;
-            if (prevWords.Length == 1)
-            {
-                predictions = await _textPredictionGenerator.GetCandidatesAsync(prevWords[0], (uint)PredictionTargets.Length);
-            }
-            else
-            {
-                ArraySegment<string> prevWordsExceptLast = new ArraySegment<string>(prevWords, prevWords.Length - 1, 1);
-
-                predictions = await _textPredictionGenerator.GetCandidatesAsync(prevWords[prevWords.Length - 1],
-                                                                                    (uint)PredictionTargets.Length,
-                                                                                    TextPredictionOptions.Corrections | TextPredictionOptions.Predictions,
-                                                                                    prevWordsExceptLast);
-            }
+            var prevWordsExceptLast = prevWords.GetRange(1, prevWords.Count - 1);
+            predictions = await _textPredictionGenerator.GetCandidatesAsync(prevWords[0], 
+                                                                            (uint)PredictionTargets.Length,
+                                                                            TextPredictionOptions.Corrections | TextPredictionOptions.Predictions,
+                                                                            prevWordsExceptLast);
             DisplayPredictions(predictions);
         }
 
