@@ -345,9 +345,18 @@ namespace EyeGazeUserControls
             var keys = new List<InjectedInputKeyboardInfo>();
             foreach (var ch in str)
             {
-                var key = new InjectedInputKeyboardInfo();
-                key.ScanCode = ch;
-                key.KeyOptions = InjectedInputKeyOptions.Unicode;
+                var key = new InjectedInputKeyboardInfo()
+                {
+                    ScanCode = ch,
+                    KeyOptions = InjectedInputKeyOptions.Unicode
+                };
+                keys.Add(key);
+
+                key = new InjectedInputKeyboardInfo()
+                {
+                    ScanCode = ch,
+                    KeyOptions = InjectedInputKeyOptions.Unicode | InjectedInputKeyOptions.KeyUp
+                };
                 keys.Add(key);
             }
             _injector.InjectKeyboardInput(keys);
