@@ -38,6 +38,7 @@ namespace Maze
         int _numRows;
         int _numCols;
 
+        int _numMoves;    
         Image _mazeRunner;
         Image _mazeEnd;
         Image _mazeComplete;
@@ -182,6 +183,8 @@ namespace Maze
             LoadMazeRunnerVisual();
             AnimateMazeRunnerVisualToCell(0, 0, TravelSpeed.Jump, 0);
             _usedSolver = false;
+            _numMoves = 0;
+            MoveCountTextBlock.Text = _numMoves.ToString();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -468,12 +471,14 @@ namespace Maze
 
         void AddTargetToMaze(int row, int col)
         {
+            double targetSizeFactor = 16;
+            double targetSize = (_cellSize/ targetSizeFactor);
 
             Ellipse elipse = new Ellipse();
-            elipse.Width = 10;
-            elipse.Height = 10;
+            elipse.Width = targetSize;
+            elipse.Height = targetSize;
             elipse.Fill = _borderBrush;
-            elipse.Opacity = 0.25;
+            elipse.Opacity = 0.60;
          
             Grid.SetRow(elipse, row);
             Grid.SetColumn(elipse, col);
@@ -508,8 +513,8 @@ namespace Maze
 
                     Border targetBorder = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == _numRows - 1 && Grid.GetColumn(b) == _numCols - 1) as Border;
                     _targetButton = targetBorder.Child as Button;
-                    _targetButton.Content = _mazeEnd;
-
+                    _targetButton.Padding = new Thickness(2);
+                    _targetButton.Content = _mazeEnd;                   
                     _openCellTimer.Stop();
                     return;
                 }
@@ -665,7 +670,7 @@ namespace Maze
             if (!((row == _numRows - 1) && (col == _numCols - 1)))
             {
                 _curButton.Content = curContent;
-            }            
+            }
 
             //if ((_curRow == _numRows - 1) && (_curCol == _numCols - 1))
             //{
@@ -676,6 +681,9 @@ namespace Maze
             //    DialogGrid.Visibility = Visibility.Visible;
             //    _isMazeSolved = true;
             //}
+
+            _numMoves++;
+            MoveCountTextBlock.Text = _numMoves.ToString();
         }
 
         private void DialogButton_Click(object sender, RoutedEventArgs e)
@@ -813,7 +821,7 @@ namespace Maze
                 else
                 {
                     congratsMessage = "Congratualtions!!";
-                    message = $"You have solved the maze!";
+                    message = $"You have solved the maze in {_numMoves} moves!"; 
                     //EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Fast.gif"));
                 }
                 GazeInput.DwellFeedbackProgressBrush = _borderBrush;
@@ -837,7 +845,11 @@ namespace Maze
 
         private void IncreaseBoardSize_Click(object sender, RoutedEventArgs e)
         {
-            _numRows += 1;
+            int minCellSize = 20;
+            if (((int)(this.ActualHeight - Toolbar.ActualHeight) - (int)(MazeBorder.Margin.Bottom + MazeBorder.Margin.Top)) / (_numRows + 1) > minCellSize)
+            {
+                _numRows += 1;
+            }            
             BoardSizeText.Text = _numRows.ToString();
         }
 
