@@ -45,7 +45,7 @@ namespace Maze
 
             _solidTileBrush = (SolidColorBrush)this.Resources["TileBackground"];
 
-            VersionTextBlock.Text = GetAppVersion();
+            VersionTextBlock.Text = "Version " + GetAppVersion();
 
             CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
                 GazeInput.GetGazePointer(this).Click();
