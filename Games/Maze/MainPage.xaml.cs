@@ -214,6 +214,14 @@ namespace Maze
         private void OnExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
+        }       
+
+        private void HelpDialogGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Escape)
+            {
+                DismissButton(null, null);
+            }
         }
     }
 }

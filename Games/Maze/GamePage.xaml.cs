@@ -918,8 +918,11 @@ namespace Maze
            
             PlayAgainText.Visibility = Visibility.Visible;
             OnPause(PauseButton, null);
-        }
+        }      
 
-      
+        private void DialogGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            DismissButton(null, null);
+        }
     }
 }
