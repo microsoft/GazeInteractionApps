@@ -689,8 +689,7 @@ namespace Maze
         private void DialogButton_Click(object sender, RoutedEventArgs e)
         {
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
-            DialogGrid.Visibility = Visibility.Collapsed;
-
+            DialogGrid.Visibility = Visibility.Collapsed;            
             ResetMaze();            
         }
 
@@ -840,6 +839,7 @@ namespace Maze
                 }
 
                 DialogGrid.Visibility = Visibility.Visible;
+                SetTabsForDialogView();
             }
         }
 
@@ -918,11 +918,51 @@ namespace Maze
            
             PlayAgainText.Visibility = Visibility.Visible;
             OnPause(PauseButton, null);
+            SetTabsForPageView();
         }      
 
         private void DialogGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
         {
-            DismissButton(null, null);
+            if (e.Key == Windows.System.VirtualKey.Escape)
+            {
+                DismissButton(null, null);
+            }
         }
+
+        private void SetTabsForDialogView()
+        {
+            BackButton.IsTabStop = false;
+            PauseButton.IsTabStop = false;
+            SolveButton.IsTabStop = false;
+            ExitButton.IsTabStop = false;
+
+            for (int row = 0; row < _numRows; row++)
+            {
+                for (int col = 0; col < _numCols; col++)
+                {
+                    string buttonName = $"button_{row}_{col}";                    
+                    Button button = FindName(buttonName) as Button;
+                    button.IsTabStop = false;
+                }
+            }
+        }
+
+        private void SetTabsForPageView()
+        {
+            BackButton.IsTabStop = true;
+            PauseButton.IsTabStop = true;
+            SolveButton.IsTabStop = true;            
+            ExitButton.IsTabStop = true;
+            for (int row = 0; row < _numRows; row++)
+            {
+                for (int col = 0; col < _numCols; col++)
+                {
+                    string buttonName = $"button_{row}_{col}";                    
+                    Button button = FindName(buttonName) as Button;
+                    button.IsTabStop = true;
+                }
+            }
+        }
+
     }
 }

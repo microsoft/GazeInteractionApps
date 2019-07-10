@@ -91,6 +91,7 @@ namespace Maze
             HelpNavRightButton.IsEnabled = true;
 
             HelpDialogGrid.Visibility = Visibility.Visible;
+            SetTabsForDialogView();
         }
 
         private void OnHelpNavRight(object sender, RoutedEventArgs e)
@@ -209,6 +210,7 @@ namespace Maze
         {
             HelpDialogGrid.Visibility = Visibility.Collapsed;
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+            SetTabsForPageView();
         }
 
         private void OnExit(object sender, RoutedEventArgs e)
@@ -223,5 +225,26 @@ namespace Maze
                 DismissButton(null, null);
             }
         }
+
+        private void SetTabsForDialogView()
+        {
+            HowToPlayButton.IsTabStop = false;
+            ExitButton.IsTabStop = false;
+            MazeSize1Button.IsTabStop = false;
+            MazeSize2Button.IsTabStop = false;
+            MazeSize3Button.IsTabStop = false;
+            MazeSize4Button.IsTabStop = false;
+        }
+
+        private void SetTabsForPageView()
+        {
+            HowToPlayButton.IsTabStop = true;
+            ExitButton.IsTabStop = true;
+            MazeSize1Button.IsTabStop = true;
+            MazeSize2Button.IsTabStop = true;
+            MazeSize3Button.IsTabStop = true;
+            MazeSize4Button.IsTabStop = true;
+        }
+
     }
 }

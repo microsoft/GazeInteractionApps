@@ -70,15 +70,14 @@
             <ColumnDefinition Width="40px"/>
         </Grid.ColumnDefinitions>
 
-
-        <Button Background="{x:Null}" Foreground="White" Margin="0,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OnHowToPlayButton" FontSize="24" Height="100" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1" FocusVisualPrimaryBrush="Transparent">
+        <Button x:Name="HowToPlayButton" Background="{x:Null}" Foreground="White" Margin="0,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OnHowToPlayButton" FontSize="24" Height="100" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1" FocusVisualPrimaryBrush="Transparent">
             <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="10,10,10,10">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,20,0" FontFamily="Segoe UI">
                     How to Play
                 </TextBlock>
             </Border>
         </Button>
-        <Button Grid.Column="2"  Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}" FontWeight="SemiBold" Margin="0,40,0,0" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Foreground="White" Grid.Row="0" Background="{x:Null}">
+        <Button x:Name="ExitButton" Grid.Column="2"  Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}" FontWeight="SemiBold" Margin="0,40,0,0" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Foreground="White" Grid.Row="0" Background="{x:Null}">
             <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                 <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold"></TextBlock>
             </Border>
@@ -91,7 +90,7 @@
         </StackPanel>
         <TextBlock Grid.ColumnSpan="4" FontSize="36" VerticalAlignment="Top" HorizontalTextAlignment="Center" Grid.Row="2" HorizontalAlignment="Stretch" Foreground="{StaticResource TileBackground}" Margin="0,0,0,20"> Select a maze size</TextBlock>
 
-        <Grid Grid.Row="3" Grid.ColumnSpan="4">
+        <Grid x:Name="GameBoardGrid" Grid.Row="3" Grid.ColumnSpan="4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="0"/>
                 <RowDefinition Height="Auto" MinHeight="0"/>
@@ -108,7 +107,7 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="1" Tag="3" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" FontFamily="Segoe UI">
+            <Button x:Name="MazeSize1Button" Grid.Row="0" Grid.Column="1" Tag="3" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" FontFamily="Segoe UI">
                 <Border Background="White" CornerRadius="10" Padding="5">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -144,7 +143,7 @@
                     </Grid>
                 </Border>
             </Button>
-            <Button Grid.Row="0" Grid.Column="3" Tag="4" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="200" Height="150">
+            <Button x:Name="MazeSize2Button" Grid.Row="0" Grid.Column="3" Tag="4" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="200" Height="150">
                 <Border Background="White" CornerRadius="10" Padding="5">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -190,7 +189,7 @@
                     </Grid>
                 </Border>
             </Button>
-            <Button Grid.Row="0" Grid.Column="5" Tag="5" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button x:Name="MazeSize3Button" Grid.Row="0" Grid.Column="5" Tag="5" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Border Background="White" CornerRadius="10" Padding="5">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -250,7 +249,7 @@
                     </Grid>
                 </Border>
             </Button>
-            <Button Grid.Row="0" Grid.Column="7" Tag="6" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Segoe UI">
+            <Button x:Name="MazeSize4Button" Grid.Row="0" Grid.Column="7" Tag="6" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Segoe UI">
                 <Border Background="White" CornerRadius="10,10,10,10" Padding="5,5,5,5">
                     <Grid>
                         <Grid.RowDefinitions>
