@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-
+using Windows.UI.Xaml.Shapes;
 
 namespace Memory
 {
@@ -142,10 +142,23 @@ namespace Memory
                     Grid.SetRow(button, row);
                     Grid.SetColumn(button, col);
                     buttonMatrix.Children.Add(button);
+                    button.Content = CreateTargetEllipse();
                 }
             }
 
             buttonMatrix.UpdateLayout();
+        }
+
+        private Ellipse CreateTargetEllipse()
+        {
+            var target = new Ellipse();
+            target.Width = 10;
+            target.Height = 10;
+            target.HorizontalAlignment = HorizontalAlignment.Center;
+            target.VerticalAlignment = VerticalAlignment.Center;
+            target.Fill = _toolButtonBrush;
+
+            return target;
         }
 
         private void AdjustFontSizes()
@@ -222,7 +235,7 @@ namespace Memory
             appearAnimation.InsertKeyFrame(0.0f, 1);
             appearAnimation.InsertKeyFrame(0.399999f, 1);
             appearAnimation.InsertKeyFrame(0.4f, 0);
-            appearAnimation.InsertKeyFrame(1f, 0);
+            appearAnimation.InsertKeyFrame(1f, 0);            
             appearAnimation.Duration = TimeSpan.FromMilliseconds(400);
             appearAnimation.IterationBehavior = AnimationIterationBehavior.Count;
             appearAnimation.IterationCount = 1;
@@ -237,10 +250,30 @@ namespace Memory
             GazeInput.SetInteraction(buttonMatrix, Interaction.Enabled);
         }
 
-        private void ReverseFlipBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
+        void MakeButtonContentOpaque(Button thisButton)
         {
-            _firstButton.Content = null;
-            _secondButton.Content = null;
+            var thisVisual = ElementCompositionPreview.GetElementVisual(thisButton);            
+            var compositor = thisVisual.Compositor;
+
+            //Get a visual for the content
+            var thisContent = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(thisButton, 0), 0);
+            var thisContentVisual = ElementCompositionPreview.GetElementVisual(thisContent as FrameworkElement);
+          
+            ScalarKeyFrameAnimation appearAnimation = compositor.CreateScalarKeyFrameAnimation();
+            appearAnimation.InsertKeyFrame(1f, 1);
+            appearAnimation.Duration = TimeSpan.FromMilliseconds(1000);
+            appearAnimation.IterationBehavior = AnimationIterationBehavior.Count;
+            appearAnimation.IterationCount = 1;
+
+            thisContentVisual.StartAnimation(nameof(thisContentVisual.Opacity), appearAnimation);            
+        }
+
+        private void ReverseFlipBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
+        {             
+            _firstButton.Content = CreateTargetEllipse();
+            _secondButton.Content = CreateTargetEllipse();
+            MakeButtonContentOpaque(_firstButton);
+            MakeButtonContentOpaque(_secondButton);
             _firstButton = null;
             _secondButton = null;
             _reverseAnimationActive = false;
@@ -309,7 +342,7 @@ namespace Memory
 
         private void FlipCardFaceDown(Button card)
         {
-            if (card.Content == null) return;
+            if (card.Content == null  || card.Content is Ellipse) return;            
 
             //Flip button visual
             var btn1Visual = ElementCompositionPreview.GetElementVisual(card);            
@@ -405,13 +438,16 @@ namespace Memory
         List<Button> GetButtonList()
         {
             List<Button> list = new List<Button>();            
-            foreach (Button button in buttonMatrix.Children)
+            foreach (UIElement button in buttonMatrix.Children)
             {
-                list.Add(button);
+                if (button is Button)
+                {
+                    list.Add(button as Button);
+                }                
             }
             return list;            
         }
-
+      
         async void ResetBoard()
         {
             PlayAgainText.Visibility = Visibility.Collapsed;
@@ -473,9 +509,11 @@ namespace Memory
             List<Button> listButtons = GetButtonList();
 
             for (int i = 0; i < _boardRows * _boardColumns; i += 2)
-            {
-                listButtons[i].Content = null;
-                listButtons[i + 1].Content = null;               
+            {                              
+                listButtons[i].Content = CreateTargetEllipse();
+                listButtons[i + 1].Content = CreateTargetEllipse();
+                MakeButtonContentOpaque(listButtons[i]);
+                MakeButtonContentOpaque(listButtons[i + 1]);
             }
             ApplyPerspective();
             AdjustFontSizes();
@@ -529,7 +567,7 @@ namespace Memory
             }
 
             var btn = sender as Button;
-            if (btn.Content != null)
+            if (!(btn.Content is Ellipse) && btn.Content != null)
             {             
                 return;
             }          
