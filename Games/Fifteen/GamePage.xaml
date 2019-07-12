@@ -162,13 +162,13 @@
                 </Border>
             </Button>
 
-            <Button Grid.Column="2" Style="{StaticResource ActionButtonStyle}" Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+            <Button x:Name="ExitButton" Grid.Column="2" Style="{StaticResource ActionButtonStyle}" Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
                 <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                     <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
                 </Border>
             </Button>
 
-            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ActionButtonStyle}" Click="OnBack" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}"  Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="False" Padding="0,0,0,0" BorderBrush="{x:Null}" Background="{x:Null}" FocusVisualPrimaryBrush="Transparent">
+            <Button x:Name="BackButton" Grid.Row="0" Grid.Column="0" Style="{StaticResource ActionButtonStyle}" Click="OnBack" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}"  Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="False" Padding="0,0,0,0" BorderBrush="{x:Null}" Background="{x:Null}" FocusVisualPrimaryBrush="Transparent">
                 <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                     <TextBlock Text="&#xe72b;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="SemiBold"></TextBlock>
                 </Border>
@@ -183,7 +183,7 @@
             <Rectangle Fill="#1926334D" RadiusX="10" RadiusY="10"></Rectangle>
             <Grid x:Name="GameGrid" Margin="10"/>
         </Grid>
-        <Grid Grid.Row="0" Grid.RowSpan="2" x:Name="DialogGrid" Visibility="Collapsed" Background="#99FFFFFF" Margin="0,0,0,0" >
+        <Grid Grid.Row="0" Grid.RowSpan="2" x:Name="DialogGrid" Visibility="Collapsed" Background="#99FFFFFF" Margin="0,0,0,0" PreviewKeyDown="DialogGrid_PreviewKeyDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="5*"/>
@@ -200,7 +200,7 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="1" Style="{StaticResource ActionButtonStyle}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,0" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton" Visibility="Visible">
+                    <Button x:Name="CloseDialogButton" Grid.Column="1" Style="{StaticResource ActionButtonStyle}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,0" FocusVisualPrimaryBrush="Transparent" FocusVisualSecondaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton" Visibility="Visible">
                         <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="96">
                             <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" ></TextBlock>
                         </Border>

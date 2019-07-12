@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI;
 using Windows.UI.Composition;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Input;
 
 namespace Fifteen
 {
@@ -112,7 +113,7 @@ namespace Fifteen
                 for (int col = 0; col < _boardSize; col++)
                 {
                     var button = new Button();
-                    button.Background = _solidTileBrush;
+                    button.Background = _solidTileBrush;                    
                     button.Name = "button" + "_" + col + "_" + row;
                     if (!(row == _boardSize - 1 && col == _boardSize - 1))
                     {
@@ -182,7 +183,7 @@ namespace Fifteen
                 if (SwapBlank(row, col))
                 {
                     shuffleCount--;
-                }
+                }                
             }
             GazeInput.SetInteraction(GameGrid, Interaction.Enabled);            
         }
@@ -377,7 +378,9 @@ namespace Fifteen
             string message = $"You solved the puzzle in {_numMoves} moves!";
             DialogText.Text = message;
             GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
-            DialogGrid.Visibility = Visibility.Visible;            
+            DialogGrid.Visibility = Visibility.Visible;
+            SetTabsForDialogView();
+            CloseDialogButton.Focus(FocusState.Programmatic);
         }
 
         private void DialogButton_Click(object sender, RoutedEventArgs e)
@@ -388,6 +391,7 @@ namespace Fifteen
             {
                 ResetBoard();
             }
+            SetTabsForPageView();
         }
 
         private void DialogButton2_Click(object sender, RoutedEventArgs e)
@@ -412,6 +416,8 @@ namespace Fifteen
 
             PlayAgainText.Visibility = Visibility.Visible;
             OnPause(PauseButton, null);
+            SetTabsForPageView();
+            PauseButton.Focus(FocusState.Programmatic);
         }
 
         private void OnExit(object sender, RoutedEventArgs e)
@@ -436,7 +442,10 @@ namespace Fifteen
                 _interactionPaused = false;
                 if (_gameOver)
                 {
-                    ResetBoard();
+                    while (IsSolved())
+                    {
+                        ResetBoard();
+                    }
                 }
             }
             else
@@ -444,7 +453,7 @@ namespace Fifteen
                 PauseButtonText.Text = "\uE768";
                 PauseButtonBorder.Background = _pausedButtonBrush;
                 GazeInput.SetInteraction(GameGrid, Interaction.Disabled);
-                _interactionPaused = true;
+                _interactionPaused = true;                
             }
         }
 
@@ -457,7 +466,43 @@ namespace Fifteen
             {
                 ResetBoard();
             }
+        }
 
+        private void DialogGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Escape)
+            {
+                DismissButton(null, null);
+            }
+        }
+
+        private void SetTabsForDialogView()
+        {
+            BackButton.IsTabStop = false;
+            PauseButton.IsTabStop = false;
+            ExitButton.IsTabStop = false;
+
+            for (int row = 0; row < _boardSize; row++)
+            {
+                for (int col = 0; col < _boardSize; col++)
+                {
+                    _buttons[row, col].IsTabStop = false;
+                }
+            }
+        }
+
+        private void SetTabsForPageView()
+        {
+            BackButton.IsTabStop = true;
+            PauseButton.IsTabStop = true;
+            ExitButton.IsTabStop = true;
+            for (int row = 0; row < _boardSize; row++)
+            {
+                for (int col = 0; col < _boardSize; col++)
+                {
+                    _buttons[row, col].IsTabStop = true;                     
+                }
+            }
         }
     }
 }
