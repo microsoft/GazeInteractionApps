@@ -701,6 +701,7 @@ namespace Memory
             PlayAgainText.Visibility = Visibility.Visible;
             OnPause(PauseButton, null);
             SetTabsForPageView();
+            PauseButton.Focus(FocusState.Programmatic);
         }
 
 
