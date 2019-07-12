@@ -11,6 +11,7 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
 namespace Memory
@@ -27,7 +28,7 @@ namespace Memory
 
             _solidTileBrush = (SolidColorBrush)this.Resources["TileBackground"];
 
-            VersionTextBlock.Text = GetAppVersion();
+            VersionTextBlock.Text = "Version " + GetAppVersion();
 
             CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
                 GazeInput.GetGazePointer(this).Click();
@@ -73,6 +74,7 @@ namespace Memory
             HelpNavRightButton.IsEnabled = true;
 
             HelpDialogGrid.Visibility = Visibility.Visible;
+            SetTabsForDialogView();
         }
 
         private void OnHelpNavRight(object sender, RoutedEventArgs e)
@@ -191,11 +193,41 @@ namespace Memory
         {
             HelpDialogGrid.Visibility = Visibility.Collapsed;
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+            SetTabsForPageView();
         }
 
         private void OnExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
         }
+
+        private void HelpDialogGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Escape)
+            {
+                DismissButton(null, null);
+            }
+        }
+
+        private void SetTabsForDialogView()
+        {
+            HowToPlayButton.IsTabStop = false;
+            ExitButton.IsTabStop = false;
+            BoardSize1Button.IsTabStop = false;
+            BoardSize2Button.IsTabStop = false;
+            BoardSize3Button.IsTabStop = false;
+            BoardSize4Button.IsTabStop = false;
+        }
+
+        private void SetTabsForPageView()
+        {
+            HowToPlayButton.IsTabStop = true;
+            ExitButton.IsTabStop = true;
+            BoardSize1Button.IsTabStop = true;
+            BoardSize2Button.IsTabStop = true;
+            BoardSize3Button.IsTabStop = true;
+            BoardSize4Button.IsTabStop = true;
+        }
+        
     }
 }

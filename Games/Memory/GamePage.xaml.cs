@@ -14,6 +14,7 @@ using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
@@ -137,6 +138,7 @@ namespace Memory
                 for (int col = 0; col < _boardColumns; col++)
                 {
                     var button = new Button();
+                    button.Name = $"button_{row}_{col}";
                     button.Click += OnButtonClick;
                     button.Style = Resources["ButtonStyle"] as Style;
                     Grid.SetRow(button, row);
@@ -662,7 +664,8 @@ namespace Memory
             string message = $"You matched the {_boardRows * _boardColumns} cards in {_numMoves} moves!";
             DialogText.Text = message;
             GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
-            DialogGrid.Visibility = Visibility.Visible;            
+            DialogGrid.Visibility = Visibility.Visible;
+            SetTabsForDialogView();
         }
 
         private void DialogButton_Click(object sender, RoutedEventArgs e)
@@ -697,6 +700,7 @@ namespace Memory
 
             PlayAgainText.Visibility = Visibility.Visible;
             OnPause(PauseButton, null);
+            SetTabsForPageView();
         }
 
 
@@ -740,6 +744,47 @@ namespace Memory
         {
             AdjustFontSizes();
             RepositionButtons();
+        }
+
+        private void DialogGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Escape)
+            {
+                DismissButton(null, null);
+            }
+        }
+
+        private void SetTabsForDialogView()
+        {
+            BackButton.IsTabStop = false;
+            PauseButton.IsTabStop = false;            
+            ExitButton.IsTabStop = false;
+
+            for (int row = 0; row < _boardRows; row++)
+            {
+                for (int col = 0; col < _boardColumns; col++)
+                {
+                    string buttonName = $"button_{row}_{col}";
+                    Button button = FindName(buttonName) as Button;
+                    button.IsTabStop = false;
+                }
+            }
+        }
+
+        private void SetTabsForPageView()
+        {
+            BackButton.IsTabStop = true;
+            PauseButton.IsTabStop = true;            
+            ExitButton.IsTabStop = true;
+            for (int row = 0; row < _boardRows; row++)
+            {
+                for (int col = 0; col < _boardColumns; col++)
+                {
+                    string buttonName = $"button_{row}_{col}";
+                    Button button = FindName(buttonName) as Button;
+                    button.IsTabStop = true;
+                }
+            }
         }
     }
 }
