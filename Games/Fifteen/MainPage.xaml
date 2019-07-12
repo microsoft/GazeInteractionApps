@@ -383,7 +383,7 @@
                         </Grid>
                         <TextBlock x:Name="VersionTextBlock"  Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1"  Padding="0,0,0,0" FontSize="18" FontFamily="Segoe UI" Margin="0,0,0,0" />
                     </Grid>
-                    <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontSize="52" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,20" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton">
+                    <Button  x:Name="BackToGameButton" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontSize="52" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,20" FocusVisualPrimaryBrush="Transparent" FocusVisualSecondaryBrush="Transparent"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Stretch">
                             <!--<TextBlock Text="&#xe8bb;" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" ></TextBlock>-->
                             <TextBlock Text="Back to game" Foreground="{StaticResource ToolBarButtonBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="24" Padding="60,0,60,0" ></TextBlock>

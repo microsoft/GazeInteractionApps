@@ -423,14 +423,14 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50"  Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+                            <Button IsTabStop="False"  HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50"  Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
                                 <Border x:Name="PauseButtonBorder" Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                                     <TextBlock x:Name="PauseButtonText" Text="&#xE769;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
                                 </Border>
                             </Button>
                             <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Grid.Column="1">The pause button allows you to pause the game and study the maze by temporarily making the maze unresponsive to input.</TextBlock>
 
-                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="2">
+                            <Button IsTabStop="False"  HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="2">
                                 <Border Background="Black" CornerRadius="5" HorizontalAlignment="Stretch">
                                     <TextBlock Text="&#xE768;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
                                 </Border>
@@ -460,14 +460,14 @@
 
                             <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,19" TextWrapping="Wrap" Grid.ColumnSpan="2">The buttons below have longer dwell times so as to prevent the user from exiting or closing out of the game by mistake:</TextBlock>
 
-                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50"  Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="1" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}">
+                            <Button IsTabStop="False"  HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50"  Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="1" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}">
                                 <Border x:Name="ExitBorder" Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                                     <TextBlock x:Name="ExitButtonText" Text="&#xE8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
                                 </Border>
                             </Button>
                             <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,-5,0,0" TextWrapping="Wrap" Grid.Column="8" Grid.Row="1" FontFamily="Segoe MDL2 Assets"> exit game entirely</TextBlock>
 
-                            <Button   HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50" Background="{x:Null}" FontWeight="SemiBold" Margin="0,5,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="2" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}">
+                            <Button IsTabStop="False"  HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="26" Width="50" Height="50" Background="{x:Null}" FontWeight="SemiBold" Margin="0,5,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Row="2" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}">
                                 <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                                     <TextBlock Text="&#xe72b;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" Foreground="White"></TextBlock>
                                 </Border>
@@ -512,7 +512,7 @@
                         </Grid>
                         <TextBlock x:Name="VersionTextBlock"  Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1"  Padding="0,0,0,0" FontSize="18" FontFamily="Segoe UI" Margin="0,0,0,0" />
                     </Grid>
-                    <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontSize="52" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,20" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton">
+                    <Button x:Name="BackToGameButton" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontSize="52" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,20" FocusVisualPrimaryBrush="Transparent"  FocusVisualSecondaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Stretch">
                             <!--<TextBlock Text="&#xe8bb;" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" ></TextBlock>-->
                             <TextBlock Text="Back to game" Foreground="{StaticResource ToolBarButtonBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="24" Padding="60,0,60,0" ></TextBlock>

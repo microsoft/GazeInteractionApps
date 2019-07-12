@@ -92,6 +92,7 @@ namespace Maze
 
             HelpDialogGrid.Visibility = Visibility.Visible;
             SetTabsForDialogView();
+            BackToGameButton.Focus(FocusState.Programmatic);
         }
 
         private void OnHelpNavRight(object sender, RoutedEventArgs e)

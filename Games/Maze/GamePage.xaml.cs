@@ -840,6 +840,7 @@ namespace Maze
 
                 DialogGrid.Visibility = Visibility.Visible;
                 SetTabsForDialogView();
+                CloseDialogButton.Focus(FocusState.Programmatic);
             }
         }
 
@@ -919,6 +920,7 @@ namespace Maze
             PlayAgainText.Visibility = Visibility.Visible;
             OnPause(PauseButton, null);
             SetTabsForPageView();
+            PauseButton.Focus(FocusState.Programmatic);
         }      
 
         private void DialogGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
