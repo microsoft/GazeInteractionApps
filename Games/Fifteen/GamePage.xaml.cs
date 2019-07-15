@@ -78,8 +78,21 @@ namespace Fifteen
             }
         }
 
+        private ScrollViewer getRootScrollViewer()
+        {
+            DependencyObject el = this;
+            while (el != null && !(el is ScrollViewer))
+            {
+                el = VisualTreeHelper.GetParent(el);
+            }
+
+            return (ScrollViewer)el;
+        }
+
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
+            getRootScrollViewer().Focus(FocusState.Programmatic);
+
             InitializeButtonArray();
             WaitForCompositionTimer.Start();
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
