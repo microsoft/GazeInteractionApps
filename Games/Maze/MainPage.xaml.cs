@@ -247,5 +247,20 @@ namespace Maze
             MazeSize4Button.IsTabStop = true;
         }
 
+        private ScrollViewer getRootScrollViewer()
+        {
+            DependencyObject el = this;
+            while (el != null && !(el is ScrollViewer))
+            {
+                el = VisualTreeHelper.GetParent(el);
+            }
+
+            return (ScrollViewer)el;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            getRootScrollViewer().Focus(FocusState.Programmatic);
+        }
     }
 }
