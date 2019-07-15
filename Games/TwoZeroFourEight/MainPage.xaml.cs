@@ -851,7 +851,7 @@ namespace TwoZeroFourEight
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
-            VersionTextBlock.Text = GetAppVersion();
+            VersionTextBlock.Text = "Version " + GetAppVersion();
 
             Board = new Board(4);
 
@@ -961,8 +961,21 @@ namespace TwoZeroFourEight
             scrollContentPresenter.Clip = null;
         }
 
+        private ScrollViewer getRootScrollViewer()
+        {
+            DependencyObject el = this;
+            while (el != null && !(el is ScrollViewer))
+            {
+                el = VisualTreeHelper.GetParent(el);
+            }
+
+            return (ScrollViewer)el;
+        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            getRootScrollViewer().Focus(FocusState.Programmatic);
+
             ItemsWrapGrid itemsWrapGrid = GameBoardGrid.ItemsPanelRoot as ItemsWrapGrid;
             itemsWrapGrid.MaximumRowsOrColumns = Board.BoardSize;
             DataContext = Board;
@@ -1011,6 +1024,9 @@ namespace TwoZeroFourEight
             HelpNavRightButton.IsEnabled = true;
 
             HelpDialogGrid.Visibility = Visibility.Visible;
+            SetTabsForDialogView();
+            FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
+            BackToGameButton.Focus(FocusState.Programmatic);
         }
 
         private void GameBoardGrid_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -1119,6 +1135,7 @@ namespace TwoZeroFourEight
         {
             HelpDialogGrid.Visibility = Visibility.Collapsed;
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+            SetTabsForPageView();
         }
 
         private async void PrivacyViewScrollUpButton_Click(object sender, RoutedEventArgs e)
@@ -1133,7 +1150,7 @@ namespace TwoZeroFourEight
 
         private void PrivacyViewContinueButton_Click(object sender, RoutedEventArgs e)
         {
-            PrivacyViewGrid.Visibility = Visibility.Collapsed;
+            PrivacyViewGrid.Visibility = Visibility.Collapsed;            
         }
 
         private void PrivacyHyperlink_Click(object sender, RoutedEventArgs e)
@@ -1224,6 +1241,36 @@ namespace TwoZeroFourEight
                 }
             }
             helpTextBody.FontSize = fitFontSize;
+        }
+
+        private void HelpDialogGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Escape)
+            {
+                DismissButton(null, null);
+            }
+        }
+
+        private void SetTabsForDialogView()
+        {
+            HowToPlayButton.IsTabStop = false;
+            ExitButton.IsTabStop = false;
+            NewGameButton.IsTabStop = false;
+            UpButton.IsTabStop = false;
+            DownButton.IsTabStop = false;
+            LeftButton.IsTabStop = false;
+            RightButton.IsTabStop = false;
+        }
+
+        private void SetTabsForPageView()
+        {
+            HowToPlayButton.IsTabStop = true;
+            ExitButton.IsTabStop = true;
+            NewGameButton.IsTabStop = true;
+            UpButton.IsTabStop = true;
+            DownButton.IsTabStop = true;
+            LeftButton.IsTabStop = true;
+            RightButton.IsTabStop = true;
         }
     }
 }
