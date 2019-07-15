@@ -8,7 +8,7 @@
     xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     gaze:GazeInput.Interaction="Enabled"
     gaze:GazeInput.IsCursorVisible="False"
-    mc:Ignorable="d"
+    mc:Ignorable="d" Loaded="Page_Loaded"
     >
 
     <Page.Resources>
@@ -73,14 +73,14 @@
             <ColumnDefinition Width="40px"/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="HowToPlayButton" Background="{x:Null}" Foreground="White" Margin="0,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OnHowToPlayButton" FontSize="24" Height="100" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1" FocusVisualPrimaryBrush="Transparent">
+        <Button x:Name="HowToPlayButton" Background="{x:Null}" Foreground="White" Margin="0,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OnHowToPlayButton" FontSize="24" Height="100" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1">
             <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="10,10,10,10">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,20,0" FontFamily="Segoe UI">
                     How to Play
                 </TextBlock>
             </Border>
         </Button>
-        <Button x:Name="ExitButton" Grid.Column="2"  Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}" FontWeight="SemiBold" Margin="0,40,0,0" FocusVisualPrimaryBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Foreground="White" Grid.Row="0" Background="{x:Null}">
+        <Button x:Name="ExitButton" Grid.Column="2"  Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}" FontWeight="SemiBold" Margin="0,40,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Foreground="White" Grid.Row="0" Background="{x:Null}">
             <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                 <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold"></TextBlock>
             </Border>
@@ -515,7 +515,7 @@
                         </Grid>
                         <TextBlock x:Name="VersionTextBlock"  Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1"  Padding="0,0,0,0" FontSize="18" FontFamily="Segoe UI" Margin="0,0,0,0" />
                     </Grid>
-                    <Button x:Name="BackToGameButton" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontSize="52" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,20" FocusVisualPrimaryBrush="Transparent" FocusVisualSecondaryBrush="Transparent"   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton">
+                    <Button x:Name="BackToGameButton" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontSize="52" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,20" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Stretch">
                             <!--<TextBlock Text="&#xe8bb;" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" ></TextBlock>-->
                             <TextBlock Text="Back to game" Foreground="{StaticResource ToolBarButtonBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="24" Padding="60,0,60,0" ></TextBlock>
