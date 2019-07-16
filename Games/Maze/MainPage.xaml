@@ -70,14 +70,14 @@
             <ColumnDefinition Width="40px"/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="HowToPlayButton" Background="{x:Null}" Foreground="White" Margin="0,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OnHowToPlayButton" FontSize="24" Height="100" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1">
+        <Button x:Name="HowToPlayButton"  AutomationProperties.Name="How To Play" Background="{x:Null}" Foreground="White" Margin="0,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OnHowToPlayButton" FontSize="24" Height="100" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1">
             <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="10,10,10,10">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,20,0" FontFamily="Segoe UI">
                     How to Play
                 </TextBlock>
             </Border>
         </Button>
-        <Button x:Name="ExitButton" Grid.Column="2"  Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}" FontWeight="SemiBold" Margin="0,40,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Foreground="White" Grid.Row="0" Background="{x:Null}">
+        <Button x:Name="ExitButton" AutomationProperties.Name="Exit Application" Grid.Column="2"  Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}" FontWeight="SemiBold" Margin="0,40,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Foreground="White" Grid.Row="0" Background="{x:Null}">
             <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                 <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold"></TextBlock>
             </Border>
@@ -107,7 +107,7 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="MazeSize1Button" Grid.Row="0" Grid.Column="1" Tag="3" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" FontFamily="Segoe UI">
+            <Button x:Name="MazeSize1Button" AutomationProperties.Name="Play a three row maze" Grid.Row="0" Grid.Column="1" Tag="3" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" FontFamily="Segoe UI">
                 <Border Background="White" CornerRadius="10" Padding="5">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -143,7 +143,7 @@
                     </Grid>
                 </Border>
             </Button>
-            <Button x:Name="MazeSize2Button" Grid.Row="0" Grid.Column="3" Tag="4" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="200" Height="150">
+            <Button x:Name="MazeSize2Button" AutomationProperties.Name="Play a four row maze"  Grid.Row="0" Grid.Column="3" Tag="4" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="200" Height="150">
                 <Border Background="White" CornerRadius="10" Padding="5">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -189,7 +189,7 @@
                     </Grid>
                 </Border>
             </Button>
-            <Button x:Name="MazeSize3Button" Grid.Row="0" Grid.Column="5" Tag="5" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button x:Name="MazeSize3Button" AutomationProperties.Name="Play a five row maze"  Grid.Row="0" Grid.Column="5" Tag="5" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Border Background="White" CornerRadius="10" Padding="5">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -249,7 +249,7 @@
                     </Grid>
                 </Border>
             </Button>
-            <Button x:Name="MazeSize4Button" Grid.Row="0" Grid.Column="7" Tag="6" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Segoe UI">
+            <Button x:Name="MazeSize4Button" AutomationProperties.Name="Play a six row maze"  Grid.Row="0" Grid.Column="7" Tag="6" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Segoe UI">
                 <Border Background="White" CornerRadius="10,10,10,10" Padding="5,5,5,5">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -370,12 +370,12 @@
                     </Grid.ColumnDefinitions>
 
 
-                    <Button x:Name="HelpNavRightButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,10,20,10"  Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="OnHelpNavRight" gaze:GazeInput.MaxDwellRepeatCount="5" gaze:GazeInput.RepeatDelayDuration="{StaticResource RepeatDelayDuration}" gaze:GazeInput.DwellRepeatDuration="{StaticResource RepeatDuration}" FontFamily="Segoe UI">
+                    <Button x:Name="HelpNavRightButton" AutomationProperties.Name="Page right"  Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,10,20,10"  Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="OnHelpNavRight" gaze:GazeInput.MaxDwellRepeatCount="5" gaze:GazeInput.RepeatDelayDuration="{StaticResource RepeatDelayDuration}" gaze:GazeInput.DwellRepeatDuration="{StaticResource RepeatDuration}" FontFamily="Segoe UI">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
                             <TextBlock Text="&#xe76c;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" FontSize="72"></TextBlock>
                         </Border>
                     </Button>
-                    <Button x:Name="HelpNavLeftButton" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"   Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" Padding="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="20,10,20,10" Click="OnHelpNavLeft" IsEnabled="False" gaze:GazeInput.MaxDwellRepeatCount="5" gaze:GazeInput.RepeatDelayDuration="{StaticResource RepeatDelayDuration}"  gaze:GazeInput.DwellRepeatDuration="{StaticResource RepeatDuration}">
+                    <Button x:Name="HelpNavLeftButton" AutomationProperties.Name="Page left"  Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"   Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" Padding="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="20,10,20,10" Click="OnHelpNavLeft" IsEnabled="False" gaze:GazeInput.MaxDwellRepeatCount="5" gaze:GazeInput.RepeatDelayDuration="{StaticResource RepeatDelayDuration}"  gaze:GazeInput.DwellRepeatDuration="{StaticResource RepeatDuration}">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
                             <TextBlock Text="&#xe76b;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets" FontSize="72"></TextBlock>
                         </Border>
@@ -512,7 +512,7 @@
                         </Grid>
                         <TextBlock x:Name="VersionTextBlock"  Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1"  Padding="0,0,0,0" FontSize="18" FontFamily="Segoe UI" Margin="0,0,0,0" />
                     </Grid>
-                    <Button x:Name="BackToGameButton" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontSize="52" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,20" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton">
+                    <Button x:Name="BackToGameButton" AutomationProperties.Name="Back to game" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontSize="52" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,20" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Stretch">
                             <!--<TextBlock Text="&#xe8bb;" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" ></TextBlock>-->
                             <TextBlock Text="Back to game" Foreground="{StaticResource ToolBarButtonBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="24" Padding="60,0,60,0" ></TextBlock>
@@ -535,11 +535,11 @@
             </Border>
 
             <TextBlock x:Name="WebViewLoadingText" Visibility="Collapsed" Text="Loading.." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Margin="0,0,0,200" Foreground="{StaticResource ToolBarButtonBackground}" FontFamily="Segoe UI" />
-            <Button x:Name="PrivacyViewScrollUpButton" Content="&#xe971;" Width="150" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,50,50,50" Click="PrivacyViewScrollUpButton_Click" Background="{StaticResource ToolBarButtonBackground}" Foreground="White" FontFamily="Segoe MDL2 Assets" gaze:GazeInput.MaxDwellRepeatCount="99"></Button>
+            <Button x:Name="PrivacyViewScrollUpButton" AutomationProperties.Name="Scroll up" Content="&#xe971;" Width="150" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,50,50,50" Click="PrivacyViewScrollUpButton_Click" Background="{StaticResource ToolBarButtonBackground}" Foreground="White" FontFamily="Segoe MDL2 Assets" gaze:GazeInput.MaxDwellRepeatCount="99"></Button>
 
-            <Button x:Name="PrivacyViewScrollDownButton" Content="&#xe972;" Width="150" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="400,50,0,50" Click="PrivacyViewScrollDownButton_Click" Background="{StaticResource ToolBarButtonBackground}" Foreground="White" FontFamily="Segoe MDL2 Assets" gaze:GazeInput.MaxDwellRepeatCount="99"/>
+            <Button x:Name="PrivacyViewScrollDownButton" AutomationProperties.Name="Scroll down" Content="&#xe972;" Width="150" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="400,50,0,50" Click="PrivacyViewScrollDownButton_Click" Background="{StaticResource ToolBarButtonBackground}" Foreground="White" FontFamily="Segoe MDL2 Assets" gaze:GazeInput.MaxDwellRepeatCount="99"/>
 
-            <Button x:Name="PrivacyViewContinueButton" Width="300" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,50,150,50" Click="PrivacyViewContinueButton_Click" Background="{StaticResource ToolBarButtonBackground}" Foreground="White" Content="Continue" FontSize="24"/>
+            <Button x:Name="PrivacyViewContinueButton" AutomationProperties.Name="Continue" Width="300" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,50,150,50" Click="PrivacyViewContinueButton_Click" Background="{StaticResource ToolBarButtonBackground}" Foreground="White" Content="Continue" FontSize="24"/>
 
         </Grid>
     </Grid>

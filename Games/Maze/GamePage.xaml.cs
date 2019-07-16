@@ -24,6 +24,7 @@ using Windows.UI.ViewManagement;
 using Windows.ApplicationModel;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Shapes;
+using Windows.UI.Xaml.Automation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -537,6 +538,7 @@ namespace Maze
 
         void OpenCellBorderAndAddButton()
         {
+            int pageHeaderButtonCount = 4;
             _newBorder = MazeGrid.Children.Cast<FrameworkElement>().First(b => Grid.GetRow(b) == _mazeCells[_currentMazeCell].Y && Grid.GetColumn(b) == _mazeCells[_currentMazeCell].X) as Border;
 
             _newBorderThickness = new Thickness();
@@ -547,9 +549,10 @@ namespace Maze
             _newBorderThickness.Bottom = (_targetCell.HasBottomWall) ? _borderThickness : 0;
             _newBorder.BorderThickness = _newBorderThickness;
 
-            _newButton = new Button();
-
+            _newButton = new Button();            
             _newButton.Name = $"button_{_mazeCells[_currentMazeCell].Y}_{_mazeCells[_currentMazeCell].X}";
+            _newButton.SetValue(AutomationProperties.NameProperty, $"Room {_mazeCells[_currentMazeCell].Y} {_mazeCells[_currentMazeCell].X}");
+            _newButton.TabIndex = (pageHeaderButtonCount-1) + (int)((_mazeCells[_currentMazeCell].Y * _numCols) + _mazeCells[_currentMazeCell].X);
             _newButton.Click += OnMazeCellClick;
             _newButton.Width = _cellSize;
             _newButton.Height = _cellSize;
@@ -702,7 +705,8 @@ namespace Maze
         private void DialogButton_Click(object sender, RoutedEventArgs e)
         {
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
-            DialogGrid.Visibility = Visibility.Collapsed;            
+            DialogGrid.Visibility = Visibility.Collapsed;
+            SetTabsForPageView();
             ResetMaze();            
         }
 

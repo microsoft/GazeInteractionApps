@@ -103,7 +103,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="PauseButton" Style="{StaticResource ActionButtonStyle}"  HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Click="OnPause" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+                    <Button x:Name="PauseButton"  AutomationProperties.Name="Pause" Style="{StaticResource ActionButtonStyle}"  HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Click="OnPause" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
                         <Button.Resources>
                             <ResourceDictionary>
                                 <ResourceDictionary.ThemeDictionaries>
@@ -117,26 +117,26 @@
                             </ResourceDictionary>
                         </Button.Resources>
 
-                        <Border x:Name="PauseButtonBorder" Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
+                        <Border x:Name="PauseButtonBorder" AutomationProperties.Name="Pause"  Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                             <TextBlock x:Name="PauseButtonText" Text="&#xE769;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" FontFamily="Segoe MDL2 Assets"></TextBlock>
                         </Border>
                     </Button>
-                    
-                    <Button x:Name="SolveButton" Style="{StaticResource ActionButtonStyle}" Click="OnSolveMaze" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22" Width="100" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Column="1">
+
+                    <Button x:Name="SolveButton" AutomationProperties.Name="Solve"  Style="{StaticResource ActionButtonStyle}" Click="OnSolveMaze" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22" Width="100" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.Column="1">
                         <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                             <TextBlock Text="Solve" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" ></TextBlock>
                         </Border>
                     </Button>
 
 
-                    <Button x:Name="ExitButton" Grid.Column="2" Style="{StaticResource ActionButtonStyle}" Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
+                    <Button x:Name="ExitButton" AutomationProperties.Name="Exit application"  Grid.Column="2" Style="{StaticResource ActionButtonStyle}" Click="OnExit" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}" Background="{x:Null}" FontWeight="SemiBold" Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0">
                         <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                             <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="ExtraBold"></TextBlock>
                         </Border>
                     </Button>
                 </Grid>
 
-                <Button x:Name="BackButton"  Grid.Row="0" Grid.Column="0" Style="{StaticResource ActionButtonStyle}" Click="OnBack" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}"  Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="False" Padding="0,0,0,0" BorderBrush="{x:Null}" Background="{x:Null}">
+                <Button x:Name="BackButton"  AutomationProperties.Name="Back"  TabIndex="0" Grid.Row="0" Grid.Column="0" Style="{StaticResource ActionButtonStyle}" Click="OnBack" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}"  Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="False" Padding="0,0,0,0" BorderBrush="{x:Null}" Background="{x:Null}">
                     <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Stretch">
                         <TextBlock Text="&#xe72b;" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="SemiBold"></TextBlock>
                     </Border>
@@ -182,20 +182,19 @@
                     </Grid.ColumnDefinitions>
 
                     <Image x:Name="EndAnimation" Source="/Assets/Luna_animated-Fast.gif" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,1" Grid.Row="1"/>
-
-                    <Button x:Name="DialogButton" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="300" Height="150" Click="DialogButton_Click" Foreground="White" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="1" Margin="0,0,0,20">
-                        <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
-                            <TextBlock Text="Play Again" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" Foreground="{StaticResource ToolBarButtonBackground}"></TextBlock>
-                        </Border>
-                    </Button>
-                    <Button x:Name="DialogButton2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="300" Height="150" Click="DialogButton2_Click"  Foreground="White" FontSize="24" Padding="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="1" Margin="0,0,0,20">
+                    <Button x:Name="DialogButton2"  AutomationProperties.Name="Change puzzle size"  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="300" Height="150" Click="DialogButton2_Click"  Foreground="White" FontSize="24" Padding="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="1" Margin="0,0,0,20">
                         <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
                             <TextBlock Text="Change Puzzle Size" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" TextWrapping="Wrap" Foreground="{StaticResource ToolBarButtonBackground}"></TextBlock>
                         </Border>
                     </Button>
+                    <Button x:Name="DialogButton"  AutomationProperties.Name="Play again" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="300" Height="150" Click="DialogButton_Click" Foreground="White" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="1" Margin="0,0,0,20">
+                        <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
+                            <TextBlock Text="Play Again" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" Foreground="{StaticResource ToolBarButtonBackground}"></TextBlock>
+                        </Border>
+                    </Button>
                     <StackPanel x:Name="IncreaseBoardSizePanel"  HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="2" Margin="0,0,20,0" Grid.Row="1">
                         <TextBlock x:Name="BoardSizeText" Margin="40,0,40,0" VerticalAlignment="Center" Foreground="White" FontSize="36"  >6</TextBlock>
-                        <Button x:Name="IncreaseBoardSize" Width="150" Height="150" Margin="0,0,0,0" Click="IncreaseBoardSize_Click" Foreground="White" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" gaze:GazeInput.MaxDwellRepeatCount="10" gaze:GazeInput.RepeatDelayDuration="{StaticResource RepeatDelayDuration}" gaze:GazeInput.DwellRepeatDuration="{StaticResource RepeatDuration}">
+                        <Button x:Name="IncreaseBoardSize"  AutomationProperties.Name="Increase board size"  Width="150" Height="150" Margin="0,0,0,0" Click="IncreaseBoardSize_Click" Foreground="White" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" gaze:GazeInput.MaxDwellRepeatCount="10" gaze:GazeInput.RepeatDelayDuration="{StaticResource RepeatDelayDuration}" gaze:GazeInput.DwellRepeatDuration="{StaticResource RepeatDuration}">
                             <Border Background="White" CornerRadius="5" HorizontalAlignment="Stretch">
                                 <TextBlock Text="Add Row" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" Foreground="{StaticResource ToolBarButtonBackground}"></TextBlock>
                             </Border>
@@ -205,7 +204,7 @@
                     <TextBlock x:Name="CongratsText" HorizontalAlignment="Center" TextWrapping="NoWrap" Text="Congratulations" VerticalAlignment="Bottom" Margin="0,50,0,0" FontSize="48" Foreground="White" FontWeight="SemiBold" Grid.ColumnSpan="4" FontFamily="Segoe UI" Grid.Column="0"/>
                     <TextBlock x:Name="DialogText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="With a little help you have solved the maze." VerticalAlignment="Top" FontSize="30" Foreground="White" Grid.ColumnSpan="4" Margin="0,0,0,5" Grid.Row="1"/>
 
-                    <Button x:Name="CloseDialogButton" Grid.Column="3" Style="{StaticResource ActionButtonStyle}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton" Visibility="Visible">
+                    <Button x:Name="CloseDialogButton"  AutomationProperties.Name="Close"  Grid.Column="3" Style="{StaticResource ActionButtonStyle}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontSize="52" Width="100" Height="100" Background="{x:Null}" FontWeight="SemiBold" Margin="0,20,20,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Click="DismissButton" Visibility="Visible">
                         <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="5" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="96">
                             <TextBlock Text="&#xe8bb;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="SemiBold" ></TextBlock>
                         </Border>
