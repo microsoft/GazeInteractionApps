@@ -12,6 +12,7 @@ using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
@@ -131,6 +132,7 @@ namespace Memory
 
         private void ArrangeBoardLayout()
         {
+            int pageHeaderButtonCount = 3;
             buttonMatrix.Children.Clear();
             buttonMatrix.RowDefinitions.Clear();
             buttonMatrix.ColumnDefinitions.Clear();
@@ -152,6 +154,8 @@ namespace Memory
                 {
                     var button = new Button();
                     button.Name = $"button_{row}_{col}";
+                    button.SetValue(AutomationProperties.NameProperty, $"Room {row} {col}");
+                    button.TabIndex = (pageHeaderButtonCount - 1) + (int)((row * _boardColumns) + col);                    
                     button.Click += OnButtonClick;
                     button.Style = Resources["ButtonStyle"] as Style;
                     Grid.SetRow(button, row);
@@ -686,6 +690,7 @@ namespace Memory
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             DialogGrid.Visibility = Visibility.Collapsed;
             ResetBoard();
+            SetTabsForPageView();
         }
 
         private async void DialogButton2_Click(object sender, RoutedEventArgs e)
