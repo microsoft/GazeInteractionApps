@@ -498,7 +498,7 @@
 
                             <TextBlock Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,19" TextWrapping="Wrap" Grid.ColumnSpan="2"></TextBlock>
 
-                            <HyperlinkButton x:Name="PrivacyHyperlink"  AutomationProperties.Name="Privacy and cookie" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Height="150" Width="230" Foreground="White" FontFamily="Segoe UI" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Click="PrivacyHyperlink_Click" Margin="20,0,0,0">
+                            <HyperlinkButton x:Name="PrivacyHyperlink"  AutomationProperties.Name="Privacy and cookies link" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Height="150" Width="230" Foreground="White" FontFamily="Segoe UI" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Click="PrivacyHyperlink_Click" Margin="20,0,0,0">
                                 <Border CornerRadius="5" Background="{StaticResource ToolBarButtonBackground}" BorderThickness="3,0,0,0">
                                     <TextBlock HorizontalAlignment="Center" FontSize="24" TextWrapping="Wrap" VerticalAlignment="Center">Privacy &amp; Cookies</TextBlock>
                                 </Border>
