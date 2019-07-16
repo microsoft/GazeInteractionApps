@@ -14,6 +14,7 @@ using Windows.UI;
 using Windows.UI.Composition;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Automation;
 
 namespace Fifteen
 {
@@ -128,6 +129,7 @@ namespace Fifteen
                     var button = new Button();
                     button.Background = _solidTileBrush;                    
                     button.Name = "button" + "_" + col + "_" + row;
+                    button.SetValue(AutomationProperties.NameProperty, $"Tile {row} {col}");                    
                     if (!(row == _boardSize - 1 && col == _boardSize - 1))
                     {
                         button.Content = ((row * _boardSize) + col + 1).ToString();
@@ -281,7 +283,7 @@ namespace Fifteen
 
                 blankBtnVisual.StartAnimation(nameof(blankBtnVisual.Scale), scaleAnimation);
             }
-
+            _slideBatchAnimation.Comment = $"{_blankRow},{_blankCol}";
             _slideBatchAnimation.End();
 
             //Swap content of the selected button with the blank button and clear the selected button
@@ -320,6 +322,9 @@ namespace Fifteen
                 _animationActive = false;
                 GazeInput.SetInteraction(GameGrid, Interaction.Enabled);
                 GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+                string[] parms = (sender as CompositionScopedBatch).Comment.Split(',');
+                Button focusButton = FindName($"button_{parms[1]}_{parms[0]}") as Button;
+                focusButton.Focus(FocusState.Programmatic);
             }            
         }
 

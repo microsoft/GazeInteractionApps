@@ -154,7 +154,7 @@ namespace Memory
                 {
                     var button = new Button();
                     button.Name = $"button_{row}_{col}";
-                    button.SetValue(AutomationProperties.NameProperty, $"Room {row} {col}");
+                    button.SetValue(AutomationProperties.NameProperty, $"Card {row} {col}");
                     button.TabIndex = (pageHeaderButtonCount - 1) + (int)((row * _boardColumns) + col);                    
                     button.Click += OnButtonClick;
                     button.Style = Resources["ButtonStyle"] as Style;
