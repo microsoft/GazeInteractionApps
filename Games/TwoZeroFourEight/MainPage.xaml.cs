@@ -845,6 +845,14 @@ namespace TwoZeroFourEight
         private SolidColorBrush _solidTileForegroundBrush;
         private SolidColorBrush _solidTileBrush;
 
+        private enum WebViewOpenedAs
+        {
+            Privacy,
+            UseTerms
+        }
+
+        private WebViewOpenedAs _webViewOpenedAs;
+
         public MainPage()
         {
             InitializeComponent();
@@ -1150,11 +1158,22 @@ namespace TwoZeroFourEight
 
         private void PrivacyViewContinueButton_Click(object sender, RoutedEventArgs e)
         {
-            PrivacyViewGrid.Visibility = Visibility.Collapsed;            
+            SetTabsForHelpWithClosedWebView();
+            PrivacyViewGrid.Visibility = Visibility.Collapsed;
+            if (_webViewOpenedAs == WebViewOpenedAs.Privacy)
+            {
+                PrivacyHyperlink.Focus(FocusState.Programmatic);
+            }
+            else
+            {
+                UseTermsHyperlink.Focus(FocusState.Programmatic);
+            }
         }
 
         private void PrivacyHyperlink_Click(object sender, RoutedEventArgs e)
         {
+            _webViewOpenedAs = WebViewOpenedAs.Privacy;
+            SetTabsForHelpWebView();
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.Transparent);
             WebViewLoadingText.Visibility = Visibility.Visible;
             PrivacyWebView.Navigate(new System.Uri("https://go.microsoft.com/fwlink/?LinkId=521839"));
@@ -1163,6 +1182,8 @@ namespace TwoZeroFourEight
 
         private void UseTermsHyperlink_Click(object sender, RoutedEventArgs e)
         {
+            _webViewOpenedAs = WebViewOpenedAs.UseTerms;
+            SetTabsForHelpWebView();
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.Transparent);
             WebViewLoadingText.Visibility = Visibility.Visible;
             PrivacyWebView.Navigate(new System.Uri("https://www.microsoft.com/en-us/servicesagreement/default.aspx"));
@@ -1272,5 +1293,23 @@ namespace TwoZeroFourEight
             LeftButton.IsTabStop = true;
             RightButton.IsTabStop = true;
         }
+
+        private void SetTabsForHelpWebView()
+        {
+            HelpNavRightButton.IsTabStop = false;
+            HelpNavLeftButton.IsTabStop = false;
+            BackToGameButton.IsTabStop = false;
+            PrivacyHyperlink.IsTabStop = false;
+            UseTermsHyperlink.IsTabStop = false;
+        }
+
+        private void SetTabsForHelpWithClosedWebView()
+        {
+            HelpNavRightButton.IsTabStop = true;
+            HelpNavLeftButton.IsTabStop = true;
+            BackToGameButton.IsTabStop = true;
+            PrivacyHyperlink.IsTabStop = true;
+            UseTermsHyperlink.IsTabStop = true;
+        }      
     }
 }
