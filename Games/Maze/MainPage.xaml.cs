@@ -35,6 +35,7 @@ namespace Maze
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        static bool firstLaunch = true;
 
         SolidColorBrush _solidTileBrush;
 
@@ -68,10 +69,7 @@ namespace Maze
 
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
-
-            bool isTrackerConnected = GazeInput.IsDeviceAvailable;
-            StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();            
-            logger.Log($"Init-ETD:{isTrackerConnected}");            
+           
         }
 
         private void OnStartGame(object sender, RoutedEventArgs e)
@@ -305,6 +303,13 @@ namespace Maze
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             getRootScrollViewer().Focus(FocusState.Programmatic);
+            
+            if (firstLaunch)
+            {
+                StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+                logger.Log($"Init-ETD:{GazeInput.IsDeviceAvailable}");
+                firstLaunch = false;
+            }            
         }
     }
 }

@@ -395,7 +395,7 @@ namespace Maze
             _numCols = (int)((this.ActualWidth - (MazeBorder.Margin.Left + MazeBorder.Margin.Right)) / _cellSize);
 
             StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
-            logger.Log($"BuildMaze:{_numRows},{_numCols}");
+            logger.Log($"BuildMaze-ETD:{GazeInput.IsDeviceAvailable}-{_numRows},{_numCols}");
 
             _maze = _mazeCreator.Create(_numRows, _numCols);
             _isMazeSolved = false;
@@ -839,14 +839,14 @@ namespace Maze
                     message = $"With a little help you have solved the maze!";
                     //EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Slow.gif"));
                     //EndAnimation.Source = null;
-                    logger.Log($"EndOfMaze-solve");
+                    logger.Log($"EndOfMaze-ETD:{GazeInput.IsDeviceAvailable}-solve");
                 }
                 else
                 {
                     congratsMessage = "Congratualtions!!";
                     message = $"You have solved the maze in {_numMoves} moves!";
                     //EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Fast.gif"));
-                    logger.Log($"EndOfMaze#m-{_numMoves}");
+                    logger.Log($"EndOfMaze-ETD:{GazeInput.IsDeviceAvailable}-m#{_numMoves}");
                 }
                 GazeInput.DwellFeedbackProgressBrush = _borderBrush;
 
@@ -910,6 +910,12 @@ namespace Maze
                 GazeInput.SetInteraction(MazeGrid, Interaction.Disabled);
                 GazeInput.SetInteraction(SolveButton, Interaction.Disabled);
 
+                if (e != null)
+                {
+                    //User initiated pause, not code
+                    StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+                    logger.Log($"Paused-ETD:{GazeInput.IsDeviceAvailable}");
+                }
                 _interactionPaused = true;
             }
         }
