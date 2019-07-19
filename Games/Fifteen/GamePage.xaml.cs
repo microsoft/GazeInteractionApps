@@ -34,6 +34,7 @@ namespace Fifteen
         SolidColorBrush _pausedButtonBrush = new SolidColorBrush(Colors.Black);
 
         CompositionScopedBatch _slideBatchAnimation;
+        CompositionScopedBatch _resetBatchAnimation;
 
         DispatcherTimer WaitForCompositionTimer;
 
@@ -156,6 +157,16 @@ namespace Fifteen
 
         void ResetBoard()
         {
+            if (_resetBatchAnimation != null)
+            {
+                _resetBatchAnimation.Completed -= SlideBatchAnimation_Completed;
+                _resetBatchAnimation.Dispose();
+            }
+            var pageVisual = ElementCompositionPreview.GetElementVisual(this);
+            var compositor = pageVisual.Compositor;
+            _resetBatchAnimation = compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
+            _resetBatchAnimation.Completed += ResetBatchAnimation_Completed;
+
             PlayAgainText.Visibility = Visibility.Collapsed;
             _gameOver = false;
             _numMoves = 0;
@@ -200,7 +211,17 @@ namespace Fifteen
                     shuffleCount--;
                 }                
             }
-            GazeInput.SetInteraction(GameGrid, Interaction.Enabled);            
+            GazeInput.SetInteraction(GameGrid, Interaction.Enabled);
+            
+            _resetBatchAnimation.End();
+        }
+
+        private void ResetBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
+        {
+            Button firstButton = FocusManager.FindFirstFocusableElement(GameGrid) as Button;
+            firstButton.Focus(FocusState.Programmatic);
+
+            getRootScrollViewer().Focus(FocusState.Programmatic);            
         }
 
         private bool IsButtonCompositionReady()
@@ -309,6 +330,9 @@ namespace Fifteen
             //Disable eye control for the new empty button so that there are no inappropriate dwell indicators
             GazeInput.SetInteraction(blankBtn, Interaction.Inherited);          
             GazeInput.SetInteraction(btn, Interaction.Disabled);
+
+            btn.IsTabStop = false;
+            blankBtn.IsTabStop = true;
 
             return true;
         }
