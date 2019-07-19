@@ -23,6 +23,7 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel;
 using System.Threading.Tasks;
+using Microsoft.Services.Store.Engagement;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -67,6 +68,10 @@ namespace Maze
 
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
+
+            bool isTrackerConnected = GazeInput.IsDeviceAvailable;
+            StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();            
+            logger.Log($"Init-ETD:{isTrackerConnected}");            
         }
 
         private void OnStartGame(object sender, RoutedEventArgs e)

@@ -25,6 +25,7 @@ using Windows.ApplicationModel;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Automation;
+using Microsoft.Services.Store.Engagement;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -393,6 +394,9 @@ namespace Maze
             _cellSize = remainingHeight / _numRows;
             _numCols = (int)((this.ActualWidth - (MazeBorder.Margin.Left + MazeBorder.Margin.Right)) / _cellSize);
 
+            StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+            logger.Log($"BuildMaze:{_numRows},{_numCols}");
+
             _maze = _mazeCreator.Create(_numRows, _numCols);
             _isMazeSolved = false;
 
@@ -705,9 +709,9 @@ namespace Maze
         private void DialogButton_Click(object sender, RoutedEventArgs e)
         {
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
-            DialogGrid.Visibility = Visibility.Collapsed;
+            DialogGrid.Visibility = Visibility.Collapsed;            
+            ResetMaze();
             SetTabsForPageView();
-            ResetMaze();            
         }
 
         private void LoadMazeRunnerVisual()
@@ -827,18 +831,22 @@ namespace Maze
 
                 HideMazeRunnerVisual(crumbNum);
 
+                StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();               
+
                 await Task.Delay(500 + (500 * crumbNum));
                 if (_usedSolver)
                 {
                     message = $"With a little help you have solved the maze!";
                     //EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Slow.gif"));
                     //EndAnimation.Source = null;
+                    logger.Log($"EndOfMaze-solve");
                 }
                 else
                 {
                     congratsMessage = "Congratualtions!!";
-                    message = $"You have solved the maze in {_numMoves} moves!"; 
+                    message = $"You have solved the maze in {_numMoves} moves!";
                     //EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Fast.gif"));
+                    logger.Log($"EndOfMaze#m-{_numMoves}");
                 }
                 GazeInput.DwellFeedbackProgressBrush = _borderBrush;
 
@@ -976,9 +984,12 @@ namespace Maze
             {
                 for (int col = 0; col < _numCols; col++)
                 {
-                    string buttonName = $"button_{row}_{col}";                    
+                    string buttonName = $"button_{row}_{col}";
                     Button button = FindName(buttonName) as Button;
-                    button.IsTabStop = true;
+                    if (button != null)
+                    {
+                        button.IsTabStop = true;
+                    }                    
                 }
             }
         }
