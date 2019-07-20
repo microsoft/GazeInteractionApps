@@ -1,6 +1,7 @@
 ﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
 //See LICENSE in the project root for license information.
 
+using Microsoft.Services.Store.Engagement;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using System;
 using System.Collections.Generic;
@@ -136,6 +137,9 @@ namespace Memory
             buttonMatrix.Children.Clear();
             buttonMatrix.RowDefinitions.Clear();
             buttonMatrix.ColumnDefinitions.Clear();
+
+            StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+            logger.Log($"NewBoard-ETD:{GazeInput.IsDeviceAvailable}-{_boardRows},{_boardColumns}");
 
             for (int row = 0; row < _boardRows; row++)
             {
@@ -676,6 +680,9 @@ namespace Memory
                 PulseButton(button);
             }
 
+            StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+            logger.Log($"AllCards{_boardRows * _boardColumns}-ETD:{GazeInput.IsDeviceAvailable}-m#{_numMoves}");
+
             await Task.Delay(1000);
 
             string message = $"You matched the {_boardRows * _boardColumns} cards in {_numMoves} moves!";
@@ -743,6 +750,13 @@ namespace Memory
                 PauseButtonText.Text = "\uE768";
                 PauseButtonBorder.Background = _pausedButtonBrush;
                 GazeInput.SetInteraction(buttonMatrix, Interaction.Disabled);
+
+                if (e != null)
+                {
+                    //User initiated pause, not code
+                    StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+                    logger.Log($"Paused-ETD:{GazeInput.IsDeviceAvailable}");
+                }
                 _interactionPaused = true;
             }
         }

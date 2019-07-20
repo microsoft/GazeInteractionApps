@@ -13,11 +13,14 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Microsoft.Services.Store.Engagement;
 
 namespace Memory
 {
     public sealed partial class MainPage : Page
     {
+        static bool firstLaunch = true;
+
         SolidColorBrush _solidTileBrush;
 
         private enum WebViewOpenedAs
@@ -216,7 +219,38 @@ namespace Memory
             HelpDialogGrid.Visibility = Visibility.Collapsed;
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             SetTabsForPageView();
+            LogHowToPlayClosed();
         }
+
+        private void LogHowToPlayClosed()
+        {
+            int currentPage = 0;
+
+            if (HelpScreen1.Visibility == Visibility.Visible)
+            {
+                currentPage = 1;
+            }
+            else if (HelpScreen2.Visibility == Visibility.Visible)
+            {
+                currentPage = 2;
+            }
+            else if (HelpScreen3.Visibility == Visibility.Visible)
+            {
+                currentPage = 3;
+            }
+            else if (HelpScreen4.Visibility == Visibility.Visible)
+            {
+                currentPage = 4;
+            }
+            else if (HelpScreen5.Visibility == Visibility.Visible)
+            {
+                currentPage = 5;
+            }           
+
+            StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+            logger.Log($"HTP-Pg{currentPage}-ETD:{GazeInput.IsDeviceAvailable}");
+        }
+
 
         private void OnExit(object sender, RoutedEventArgs e)
         {
@@ -283,6 +317,13 @@ namespace Memory
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             getRootScrollViewer().Focus(FocusState.Programmatic);
+
+            if (firstLaunch)
+            {
+                StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+                logger.Log($"Init-ETD:{GazeInput.IsDeviceAvailable}");
+                firstLaunch = false;
+            }
         }
     }
 }

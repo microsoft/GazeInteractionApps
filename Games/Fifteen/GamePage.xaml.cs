@@ -15,6 +15,7 @@ using Windows.UI.Composition;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Automation;
+using Microsoft.Services.Store.Engagement;
 
 namespace Fifteen
 {
@@ -114,6 +115,9 @@ namespace Fifteen
             GameGrid.Children.Clear();
             GameGrid.RowDefinitions.Clear();
             GameGrid.ColumnDefinitions.Clear();
+
+            StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+            logger.Log($"NewBoard-ETD:{GazeInput.IsDeviceAvailable}-{_boardSize}");
 
             for (int row = 0; row < _boardSize; row++)
             {
@@ -415,6 +419,9 @@ namespace Fifteen
             }
             _gameOver = true;
 
+            StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+            logger.Log($"Solved{_boardSize}-ETD:{GazeInput.IsDeviceAvailable}-m#{_numMoves}");
+
             await Task.Delay(1000);
 
             string message = $"You solved the puzzle in {_numMoves} moves!";
@@ -495,6 +502,13 @@ namespace Fifteen
                 PauseButtonText.Text = "\uE768";
                 PauseButtonBorder.Background = _pausedButtonBrush;
                 GazeInput.SetInteraction(GameGrid, Interaction.Disabled);
+
+                if (e != null)
+                {
+                    //User initiated pause, not code
+                    StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+                    logger.Log($"Paused-ETD:{GazeInput.IsDeviceAvailable}");
+                }
                 _interactionPaused = true;                
             }
         }

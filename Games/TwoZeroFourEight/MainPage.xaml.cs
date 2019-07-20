@@ -1,6 +1,7 @@
 ﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
 //See LICENSE in the project root for license information.
 
+using Microsoft.Services.Store.Engagement;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,8 @@ using Windows.UI.Xaml.Media;
 namespace TwoZeroFourEight
 {
     public class NotificationBase : INotifyPropertyChanged
-    {
+    {        
+
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -226,6 +228,8 @@ namespace TwoZeroFourEight
                 var appSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
                 appSettings.Values["highscore"] = value.ToString();
                 SetField<int>(ref _highScore, value, "HighScore");
+                StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+                logger.Log($"HighScore:{_highScore}-ETD:{GazeInput.IsDeviceAvailable}");
             }
         }
 
@@ -238,6 +242,8 @@ namespace TwoZeroFourEight
                 var appSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
                 appSettings.Values["hightile"] = value.ToString();
                 SetField<int>(ref _highTile, value, "HighTile");
+                StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+                logger.Log($"HighTile:{_highTile}-ETD:{GazeInput.IsDeviceAvailable}");
             }
         }
 
@@ -840,6 +846,8 @@ namespace TwoZeroFourEight
 
     public sealed partial class MainPage : Page
     {
+        static bool firstLaunch = true;
+
         public Board Board;
 
         private SolidColorBrush _solidTileForegroundBrush;
@@ -879,6 +887,9 @@ namespace TwoZeroFourEight
         {
             Board.Reset();
             Board.LoadButtonsList(GameBoardGrid);
+
+            StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+            logger.Log($"NewGame-ETD:{GazeInput.IsDeviceAvailable}");
         }
 
         private void OnUpClick(object sender, RoutedEventArgs e)
@@ -1007,6 +1018,12 @@ namespace TwoZeroFourEight
             GazeInput.DwellFeedbackProgressBrush = _solidTileForegroundBrush;
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
 
+            if (firstLaunch)
+            {
+                StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+                logger.Log($"Init-ETD:{GazeInput.IsDeviceAvailable}");
+                firstLaunch = false;
+            }
         }
 
         public static string GetAppVersion()
@@ -1075,7 +1092,7 @@ namespace TwoZeroFourEight
                 HelpScreen4.Visibility = Visibility.Collapsed;
                 HelpScreen5.Visibility = Visibility.Visible;
                 HelpNavRightButton.IsEnabled = true;
-                HelpNavLeftButton.IsEnabled = true;
+                HelpNavLeftButton.IsEnabled = true;                
             }
             else if (HelpScreen5.Visibility == Visibility.Visible)
             {
@@ -1083,7 +1100,7 @@ namespace TwoZeroFourEight
                 HelpScreen6.Visibility = Visibility.Visible;
                 HelpNavRightButton.IsEnabled = false;
                 HelpNavLeftButton.IsEnabled = true;
-            }
+           }
             else if (HelpScreen6.Visibility == Visibility.Visible)
             {
                 HelpNavRightButton.IsEnabled = false;
@@ -1144,6 +1161,40 @@ namespace TwoZeroFourEight
             HelpDialogGrid.Visibility = Visibility.Collapsed;
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             SetTabsForPageView();
+            LogHowToPlayClosed();
+        }
+
+        private void LogHowToPlayClosed()
+        {
+            int currentPage = 0;
+
+            if (HelpScreen1.Visibility == Visibility.Visible)
+            {
+                currentPage = 1;
+            }
+            else if (HelpScreen2.Visibility == Visibility.Visible)
+            {
+                currentPage = 2;
+            }
+            else if (HelpScreen3.Visibility == Visibility.Visible)
+            {
+                currentPage = 3;
+            }
+            else if (HelpScreen4.Visibility == Visibility.Visible)
+            {
+                currentPage = 4;
+            }
+            else if (HelpScreen5.Visibility == Visibility.Visible)
+            {
+                currentPage = 5;
+            }
+            else if (HelpScreen6.Visibility == Visibility.Visible)
+            {
+                currentPage = 6;
+            }
+
+            StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+            logger.Log($"HTP-Pg{currentPage}-ETD:{GazeInput.IsDeviceAvailable}");
         }
 
         private async void PrivacyViewScrollUpButton_Click(object sender, RoutedEventArgs e)

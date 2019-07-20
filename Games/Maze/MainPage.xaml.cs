@@ -236,7 +236,38 @@ namespace Maze
             HelpDialogGrid.Visibility = Visibility.Collapsed;
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             SetTabsForPageView();
+            LogHowToPlayClosed();
         }
+
+        private void LogHowToPlayClosed()
+        {
+            int currentPage = 0;
+
+            if (HelpScreen1.Visibility == Visibility.Visible)
+            {
+                currentPage = 1;
+            }
+            else if (HelpScreen2.Visibility == Visibility.Visible)
+            {
+                currentPage = 2;
+            }
+            else if (HelpScreen3.Visibility == Visibility.Visible)
+            {
+                currentPage = 3;
+            }
+            else if (HelpScreen4.Visibility == Visibility.Visible)
+            {
+                currentPage = 4;
+            }
+            else if (HelpScreen5.Visibility == Visibility.Visible)
+            {
+                currentPage = 5;
+            }           
+
+            StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
+            logger.Log($"HTP-Pg{currentPage}-ETD:{GazeInput.IsDeviceAvailable}");
+        }
+
 
         private void OnExit(object sender, RoutedEventArgs e)
         {
