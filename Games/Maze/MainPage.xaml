@@ -72,7 +72,7 @@
 
         <Button x:Name="HowToPlayButton"  AutomationProperties.Name="How To Play" Background="{x:Null}" Foreground="White" Margin="0,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OnHowToPlayButton" FontSize="24" Height="100" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1">
             <Border Background="{StaticResource ToolBarButtonBackground}" CornerRadius="10,10,10,10">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,20,0" FontFamily="Segoe UI">
+                <TextBlock x:Uid="HowToPlay" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,20,0" FontFamily="Segoe UI">
                     How to Play
                 </TextBlock>
             </Border>
