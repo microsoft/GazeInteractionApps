@@ -836,15 +836,22 @@ namespace Maze
                 await Task.Delay(500 + (500 * crumbNum));
                 if (_usedSolver)
                 {
-                    message = $"With a little help you have solved the maze!";
+                    var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+                    message = resourceLoader.GetString("SolvedWithHelpMessageString");
+                    //message = $"With a little help you have solved the maze!";
                     //EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Slow.gif"));
                     //EndAnimation.Source = null;
                     logger.Log($"EndOfMaze-ETD:{GazeInput.IsDeviceAvailable}-solve");
                 }
                 else
                 {
-                    congratsMessage = "Congratualtions!!";
-                    message = $"You have solved the maze in {_numMoves} moves!";
+                    var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();                    
+                    congratsMessage = resourceLoader.GetString("CongratsMessageString");
+                    //congratsMessage = "Congratualtions!!";
+
+                    //message = $"You have solved the maze in {_numMoves} moves!";
+                    message = $"{resourceLoader.GetString("CongratsMessageStringMoveCountPrefix")}{_numMoves}{resourceLoader.GetString("CongratsMessageStringMoveCountPostfix")}";
+
                     //EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Fast.gif"));
                     logger.Log($"EndOfMaze-ETD:{GazeInput.IsDeviceAvailable}-m#{_numMoves}");
                 }

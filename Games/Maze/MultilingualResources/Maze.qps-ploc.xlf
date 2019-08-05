@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="qps-ploc" original="MAZE/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6914.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MAZE/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="AddRowButton.Text" translate="yes" xml:space="preserve">
+          <source>Add Row</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[187F6][!!_Âďď Ŕòẃ_!!]</target>
+        </trans-unit>
+        <trans-unit id="AppDescription" translate="yes" xml:space="preserve">
+          <source>Maze</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[BB2C9][!!_Μâźê_!!]</target>
+        </trans-unit>
+        <trans-unit id="AppDisplayName" translate="yes" xml:space="preserve">
+          <source>Eyes First - Maze</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[A309E][!!_Éýèş ₣íŕśţ - Мâźę_!!]</target>
+        </trans-unit>
+        <trans-unit id="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Back</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[B88C7][!!_Ьãċќ_!!]</target>
+        </trans-unit>
+        <trans-unit id="BackToGameButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Back to game</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[09990][!!_Ъãĉĸ ťô ğâмè_!!]</target>
+        </trans-unit>
+        <trans-unit id="BoardSize1.Text" translate="yes" xml:space="preserve">
+          <source>3 rows</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[082F5][!!_3 řôŵś_!!]</target>
+        </trans-unit>
+        <trans-unit id="BoardSize2.Text" translate="yes" xml:space="preserve">
+          <source>4 rows</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[83D7B][!!_4 ŕóẅŝ_!!]</target>
+        </trans-unit>
+        <trans-unit id="BoardSize3.Text" translate="yes" xml:space="preserve">
+          <source>5 rows</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[8ED4D][!!_5 řòẃś_!!]</target>
+        </trans-unit>
+        <trans-unit id="BoardSize4.Text" translate="yes" xml:space="preserve">
+          <source>6 rows</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[12234][!!_6 ŕòẃš_!!]</target>
+        </trans-unit>
+        <trans-unit id="ChangePuzzleSizeButton.Text" translate="yes" xml:space="preserve">
+          <source>Change Puzzle Size</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[262FE][!!_Čнáиĝé Ρúžżłè Šîżê_!!]</target>
+        </trans-unit>
+        <trans-unit id="ChangePuzzleSizeDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Change puzzle size</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[9D027][!!_Ćћàиģę рûźżłê šìżé_!!]</target>
+        </trans-unit>
+        <trans-unit id="CloseDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Close</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[10A77][!!_Ĉłôŝê_!!]</target>
+        </trans-unit>
+        <trans-unit id="CongratsMessageString" translate="yes" xml:space="preserve">
+          <source>Congratualtions!!</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[32774][!!_Ĉóйĝŕáτµâĺťîóήś!!_!!]</target>
+        </trans-unit>
+        <trans-unit id="CongratsMessageStringMoveCountPostfix" translate="yes" xml:space="preserve">
+          <source> moves!</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[F187D][!!_ mòνèŝ!_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">the number of moves is inserted before this string. Note the leading space.</note>
+        </trans-unit>
+        <trans-unit id="CongratsMessageStringMoveCountPrefix" translate="yes" xml:space="preserve">
+          <source>You have solved the maze in </source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[77892][!!_Ŷòú нáνè ŝõłνêď τћê máźê îη _!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">the number of moves is inserted after this string. Note the trailing space.</note>
+        </trans-unit>
+        <trans-unit id="ExitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Exit Application</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[D25E0][!!_Ê×íт Ãρþļîċáтíôи_!!]</target>
+        </trans-unit>
+        <trans-unit id="EyesFirst.Text" translate="yes" xml:space="preserve">
+          <source>EYES FIRST</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[15D53][!!_ÈÝÉŠ ₣ÎЃŠŤ_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">App name prefix that gets displayed in pink box [All caps]</note>
+        </trans-unit>
+        <trans-unit id="HelpNavLeftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Page left</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C2FE3][!!_Ρáġé łêƒτ_!!]</target>
+        </trans-unit>
+        <trans-unit id="HelpNavRightButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Page right</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[D6246][!!_Þàĝè ѓįġнţ_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlay.Text" translate="yes" xml:space="preserve">
+          <source>How to Play</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[F903C][!!_Ήôẁ тô Ρļáÿ_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">appears on the button that launches the how to play or help info</note>
+        </trans-unit>
+        <trans-unit id="HowToPlayBackToGameButton.Text" translate="yes" xml:space="preserve">
+          <source>Back to game</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[6A2C3][!!_ßàĉĸ ţó ğâмé_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">appears at bottom of each how to play screen</note>
+        </trans-unit>
+        <trans-unit id="HowToPlayButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>How To Play</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[0C67D][!!_Нóẅ Ťò Рłãў_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayHeader.Text" translate="yes" xml:space="preserve">
+          <source>How to Play</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[6A237][!!_Ηôẁ τô Рľáý_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">appears at top of each how to play screen</note>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage1.Text" translate="yes" xml:space="preserve">
+          <source>Eyes First - Maze is a path finding game with four maze sizes of increasing difficulty.
+
+You may choose to play a randomized maze with 3, 4, 5 or 6 rows.</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[252EB][!!_Éÿêş ₣ířšт - Мáżè íś ã рãтĥ ƒîйďìήĝ ġãмè ẃíтн ƒôùŗ máźę şìžéş õƒ îηċřêáŝìηĝ ðîƒƒîĉûĺтŷ.
+
+Ýõµ mâў čнõòşę ťõ ρłâУ á řâηđõmîžęð мâźê ẁìτн 3, 4, 5 òѓ 6 ŗôẅś._!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Multiline help text for first help page. Note special line feed strings</note>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage2.Text" translate="yes" xml:space="preserve">
+          <source>The goal is to navigate the dog back to the dog house in as few moves as possible.  To move around the maze dwell or click on a room in the same hall or pathway of the maze. 
+
+The game is complete when the dog reaches home.</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[184FF][!!_Ťħê ğôáł îś тô ήàνíġâτè тђé ðòġ ьãĉк ţò ţћê ðòģ ĥõùŝé îή àš ƒêẁ môνêş àŝ þóšŝîвļę.  Ťò môνè âřòµήð ťћé máźê đẃéĺļ òŗ ċĺíĉк ôη ã ѓõõм įй τħè şâмê нáĺĺ óѓ рâтħẁáУ óƒ тĥê мãžę. 
+
+Τĥé ĝãмê ìš čòмρľèтę ẅђęй ťнę ďóĝ ѓéàĉĥęš нómê._!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Multiline help text for second help page. Note special line feed strings</note>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage3Line1.Text" translate="yes" xml:space="preserve">
+          <source>The pause button allows you to pause the game and study the maze by temporarily making the maze unresponsive to input.</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[B8DAD][!!_Ťнè ρãµŝè ъµтτóй âĺĺõẅš Уòµ τó þâûśê ţĥę ġãmè áήđ šтµďў тнê мážę Бў τęmρôŕâѓíľý máķįиğ тћè мàžè ùηŕéšрôйŝíνê тó íирûτ._!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage3Line2.Text" translate="yes" xml:space="preserve">
+          <source>Press play to resume the game.</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[7F793][!!_Рřèśş рļâý ţô ŗêšùмę τнè ġámé._!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage4Line1.Text" translate="yes" xml:space="preserve">
+          <source>The buttons below have longer dwell times so as to prevent the user from exiting or closing out of the game by mistake:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[EECB2][!!_Ţĥè ъùтτõйś вèļóẁ ћáνè ľóиĝêř ðŵéĺĺ тìмêŝ ŝó áŝ ťó þŕéνêиţ τĥé úśêŕ ƒřòм êхìťîηġ õŕ ĉľóšįηģ õûť õƒ ţĥê ġàмè Бў мíşтàќè:_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage4Line2.Text" translate="yes" xml:space="preserve">
+          <source>exit game entirely</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[AAFA7][!!_ę×įт ğàмè êйтíѓêłУ_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage4Line3.Text" translate="yes" xml:space="preserve">
+          <source>close game and return to home page</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[A6DC3][!!_čłóşê ĝámè âиď ѓêţùřη ťò ђômè þâğê_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPageLabel1of5.Text" translate="yes" xml:space="preserve">
+          <source>1 of 5</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[0FC07][!!_1 óƒ 5_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPageLabel2of5.Text" translate="yes" xml:space="preserve">
+          <source>2 of 5</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[72DE9][!!_2 ôƒ 5_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPageLabel3of5.Text" translate="yes" xml:space="preserve">
+          <source>3 of 5</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[780C5][!!_3 ôƒ 5_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPageLabel4of5.Text" translate="yes" xml:space="preserve">
+          <source>4 of 5</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[53124][!!_4 õƒ 5_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPageLabel5of5.Text" translate="yes" xml:space="preserve">
+          <source>5 of 5</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[93E5A][!!_5 òƒ 5_!!]</target>
+        </trans-unit>
+        <trans-unit id="IncreaseBoardSizeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Increase board size</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[E9D51][!!_Ìήĉřęâŝé Бòáѓď śíźê_!!]</target>
+        </trans-unit>
+        <trans-unit id="MazeSizeButton1.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Play a three row maze</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[152F0][!!_Ρļàў â τђѓéè ŗóẁ мàźé_!!]</target>
+        </trans-unit>
+        <trans-unit id="MazeSizeButton2.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Play a four row maze</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[B20DE][!!_Þĺáÿ à ƒòúѓ ŗôẁ máźè_!!]</target>
+        </trans-unit>
+        <trans-unit id="MazeSizeButton3.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Play a five row maze</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C1D64][!!_Ρłáŷ ã ƒìνé ѓõŵ màźę_!!]</target>
+        </trans-unit>
+        <trans-unit id="MazeSizeButton4.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Play a six row maze</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[9962B][!!_Ρłáў á ŝį× ŕôŵ mâźé_!!]</target>
+        </trans-unit>
+        <trans-unit id="MazeTitle.Text" translate="yes" xml:space="preserve">
+          <source>MAZE</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[8F0CC][!!_МÃŽÈ_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">App name postfix that gets display under pink box [All caps]</note>
+        </trans-unit>
+        <trans-unit id="MovesLabel.Text" translate="yes" xml:space="preserve">
+          <source>Moves</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5206D][!!_Μóνêŝ_!!]</target>
+        </trans-unit>
+        <trans-unit id="PauseButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Pause</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[3F383][!!_Þãúšê_!!]</target>
+        </trans-unit>
+        <trans-unit id="PlayAgainButton.Text" translate="yes" xml:space="preserve">
+          <source>Play Again</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[FB8DC][!!_Рĺáў Âġáîй_!!]</target>
+        </trans-unit>
+        <trans-unit id="PlayAgainDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Play again</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[47E19][!!_ÞľáУ áğâįη_!!]</target>
+        </trans-unit>
+        <trans-unit id="PrivacyButton.Text" translate="yes" xml:space="preserve">
+          <source>Privacy &amp; Cookies</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[63C17][!!_Þѓìνàĉý &amp; Čõóķįęŝ_!!]</target>
+        </trans-unit>
+        <trans-unit id="PrivacyHeader.Text" translate="yes" xml:space="preserve">
+          <source>Privacy &amp; Terms</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[69886][!!_Þřįνâĉÿ &amp; Τêŕmş_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Top of Privacy page on last page of How to Play.Note the special string for the ampersand</note>
+        </trans-unit>
+        <trans-unit id="PrivacyHyperlinkButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Privacy and cookies link</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C285B][!!_Þŗíνãćў ãйð ćóôĸíêş ļįйķ_!!]</target>
+        </trans-unit>
+        <trans-unit id="PrivacyViewScrollDownButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Scroll down</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[49DEB][!!_Šċřôĺł ðõẁй_!!]</target>
+        </trans-unit>
+        <trans-unit id="PrivacyViewScrollUpButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Scroll up</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[42DF3][!!_Śĉřôĺĺ µþ_!!]</target>
+        </trans-unit>
+        <trans-unit id="SelectPlayMessagePostfix.Text" translate="yes" xml:space="preserve">
+          <source> to Play Again</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C2398][!!_ тô Þľáў Âġàìи_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Instructional text that appears after button symbol. Note leading space</note>
+        </trans-unit>
+        <trans-unit id="SelectPlayMessagePrefix.Text" translate="yes" xml:space="preserve">
+          <source>Select </source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[4E707][!!_Ŝéłęčť _!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Instructional text that appears before button symbol. Note trailing space</note>
+        </trans-unit>
+        <trans-unit id="SelectSize.Text" translate="yes" xml:space="preserve">
+          <source>Select a maze size</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[BC0DB][!!_Ŝêĺèĉτ â мãźê ŝìžê_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Instructs user to pick a board size</note>
+        </trans-unit>
+        <trans-unit id="SolveButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Solve</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[77CA0][!!_Šòĺνę_!!]</target>
+        </trans-unit>
+        <trans-unit id="SolveButtonLabel.Text" translate="yes" xml:space="preserve">
+          <source>Solve</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[44CF9][!!_Šóĺνè_!!]</target>
+        </trans-unit>
+        <trans-unit id="SolvedWithHelpMessageString" translate="yes" xml:space="preserve">
+          <source>With a little help you have solved the maze!</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[8D145][!!_Ẁíţћ á ľįτтĺę ђêłþ ўóù нãνé śôłνêđ ţħé mâżé!_!!]</target>
+        </trans-unit>
+        <trans-unit id="UseTermsButton.Text" translate="yes" xml:space="preserve">
+          <source>Use Terms</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[F9DC3][!!_Úŝę Τèŕmś_!!]</target>
+        </trans-unit>
+        <trans-unit id="UseTermsHyperlinkButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Use Terms link</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[449E4][!!_Úśę Тèŗмş łįйк_!!]</target>
+        </trans-unit>
+        <trans-unit id="VersionStringPrefix" translate="yes" xml:space="preserve">
+          <source>Version </source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[22242][!!_Vèѓšíõή _!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Prefix to version number information. Note extra space afterwards.</note>
+        </trans-unit>
+        <trans-unit id="WebViewContinueButton.Content" translate="yes" xml:space="preserve">
+          <source>Continue</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5A50C][!!_Ĉóήτìйúê_!!]</target>
+        </trans-unit>
+        <trans-unit id="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Continue</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5D623][!!_Ċõиτíήµę_!!]</target>
+        </trans-unit>
+        <trans-unit id="WebViewLoadingPrompt.Text" translate="yes" xml:space="preserve">
+          <source>Loading..</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[DF2D6][!!_Ľôâđîйĝ.._!!]</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

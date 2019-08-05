@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddRowButton.Text" xml:space="preserve">
+    <value>[187F6][!!_Âďď Ŕòẃ_!!]</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>[BB2C9][!!_Μâźê_!!]</value>
+  </data>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>[A309E][!!_Éýèş ₣íŕśţ - Мâźę_!!]</value>
+  </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[B88C7][!!_Ьãċќ_!!]</value>
+  </data>
+  <data name="BackToGameButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[09990][!!_Ъãĉĸ ťô ğâмè_!!]</value>
+  </data>
+  <data name="BoardSize1.Text" xml:space="preserve">
+    <value>[082F5][!!_3 řôŵś_!!]</value>
+  </data>
+  <data name="BoardSize2.Text" xml:space="preserve">
+    <value>[83D7B][!!_4 ŕóẅŝ_!!]</value>
+  </data>
+  <data name="BoardSize3.Text" xml:space="preserve">
+    <value>[8ED4D][!!_5 řòẃś_!!]</value>
+  </data>
+  <data name="BoardSize4.Text" xml:space="preserve">
+    <value>[12234][!!_6 ŕòẃš_!!]</value>
+  </data>
+  <data name="ChangePuzzleSizeButton.Text" xml:space="preserve">
+    <value>[262FE][!!_Čнáиĝé Ρúžżłè Šîżê_!!]</value>
+  </data>
+  <data name="ChangePuzzleSizeDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[9D027][!!_Ćћàиģę рûźżłê šìżé_!!]</value>
+  </data>
+  <data name="CloseDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[10A77][!!_Ĉłôŝê_!!]</value>
+  </data>
+  <data name="CongratsMessageString" xml:space="preserve">
+    <value>[32774][!!_Ĉóйĝŕáτµâĺťîóήś!!_!!]</value>
+  </data>
+  <data name="CongratsMessageStringMoveCountPostfix" xml:space="preserve">
+    <value>[F187D][!!_ mòνèŝ!_!!]</value>
+    <comment>the number of moves is inserted before this string. Note the leading space.</comment>
+  </data>
+  <data name="CongratsMessageStringMoveCountPrefix" xml:space="preserve">
+    <value>[77892][!!_Ŷòú нáνè ŝõłνêď τћê máźê îη _!!]</value>
+    <comment>the number of moves is inserted after this string. Note the trailing space.</comment>
+  </data>
+  <data name="ExitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[D25E0][!!_Ê×íт Ãρþļîċáтíôи_!!]</value>
+  </data>
+  <data name="EyesFirst.Text" xml:space="preserve">
+    <value>[15D53][!!_ÈÝÉŠ ₣ÎЃŠŤ_!!]</value>
+    <comment>App name prefix that gets displayed in pink box [All caps]</comment>
+  </data>
+  <data name="HelpNavLeftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[C2FE3][!!_Ρáġé łêƒτ_!!]</value>
+  </data>
+  <data name="HelpNavRightButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[D6246][!!_Þàĝè ѓįġнţ_!!]</value>
+  </data>
+  <data name="HowToPlay.Text" xml:space="preserve">
+    <value>[F903C][!!_Ήôẁ тô Ρļáÿ_!!]</value>
+    <comment>appears on the button that launches the how to play or help info</comment>
+  </data>
+  <data name="HowToPlayBackToGameButton.Text" xml:space="preserve">
+    <value>[6A2C3][!!_ßàĉĸ ţó ğâмé_!!]</value>
+    <comment>appears at bottom of each how to play screen</comment>
+  </data>
+  <data name="HowToPlayButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[0C67D][!!_Нóẅ Ťò Рłãў_!!]</value>
+  </data>
+  <data name="HowToPlayHeader.Text" xml:space="preserve">
+    <value>[6A237][!!_Ηôẁ τô Рľáý_!!]</value>
+    <comment>appears at top of each how to play screen</comment>
+  </data>
+  <data name="HowToPlayPage1.Text" xml:space="preserve">
+    <value>[252EB][!!_Éÿêş ₣ířšт - Мáżè íś ã рãтĥ ƒîйďìήĝ ġãмè ẃíтн ƒôùŗ máźę şìžéş õƒ îηċřêáŝìηĝ ðîƒƒîĉûĺтŷ.
+
+Ýõµ mâў čнõòşę ťõ ρłâУ á řâηđõmîžęð мâźê ẁìτн 3, 4, 5 òѓ 6 ŗôẅś._!!]</value>
+    <comment>Multiline help text for first help page. Note special line feed strings</comment>
+  </data>
+  <data name="HowToPlayPage2.Text" xml:space="preserve">
+    <value>[184FF][!!_Ťħê ğôáł îś тô ήàνíġâτè тђé ðòġ ьãĉк ţò ţћê ðòģ ĥõùŝé îή àš ƒêẁ môνêş àŝ þóšŝîвļę.  Ťò môνè âřòµήð ťћé máźê đẃéĺļ òŗ ċĺíĉк ôη ã ѓõõм įй τħè şâмê нáĺĺ óѓ рâтħẁáУ óƒ тĥê мãžę. 
+
+Τĥé ĝãмê ìš čòмρľèтę ẅђęй ťнę ďóĝ ѓéàĉĥęš нómê._!!]</value>
+    <comment>Multiline help text for second help page. Note special line feed strings</comment>
+  </data>
+  <data name="HowToPlayPage3Line1.Text" xml:space="preserve">
+    <value>[B8DAD][!!_Ťнè ρãµŝè ъµтτóй âĺĺõẅš Уòµ τó þâûśê ţĥę ġãmè áήđ šтµďў тнê мážę Бў τęmρôŕâѓíľý máķįиğ тћè мàžè ùηŕéšрôйŝíνê тó íирûτ._!!]</value>
+  </data>
+  <data name="HowToPlayPage3Line2.Text" xml:space="preserve">
+    <value>[7F793][!!_Рřèśş рļâý ţô ŗêšùмę τнè ġámé._!!]</value>
+  </data>
+  <data name="HowToPlayPage4Line1.Text" xml:space="preserve">
+    <value>[EECB2][!!_Ţĥè ъùтτõйś вèļóẁ ћáνè ľóиĝêř ðŵéĺĺ тìмêŝ ŝó áŝ ťó þŕéνêиţ τĥé úśêŕ ƒřòм êхìťîηġ õŕ ĉľóšįηģ õûť õƒ ţĥê ġàмè Бў мíşтàќè:_!!]</value>
+  </data>
+  <data name="HowToPlayPage4Line2.Text" xml:space="preserve">
+    <value>[AAFA7][!!_ę×įт ğàмè êйтíѓêłУ_!!]</value>
+  </data>
+  <data name="HowToPlayPage4Line3.Text" xml:space="preserve">
+    <value>[A6DC3][!!_čłóşê ĝámè âиď ѓêţùřη ťò ђômè þâğê_!!]</value>
+  </data>
+  <data name="HowToPlayPageLabel1of5.Text" xml:space="preserve">
+    <value>[0FC07][!!_1 óƒ 5_!!]</value>
+  </data>
+  <data name="HowToPlayPageLabel2of5.Text" xml:space="preserve">
+    <value>[72DE9][!!_2 ôƒ 5_!!]</value>
+  </data>
+  <data name="HowToPlayPageLabel3of5.Text" xml:space="preserve">
+    <value>[780C5][!!_3 ôƒ 5_!!]</value>
+  </data>
+  <data name="HowToPlayPageLabel4of5.Text" xml:space="preserve">
+    <value>[53124][!!_4 õƒ 5_!!]</value>
+  </data>
+  <data name="HowToPlayPageLabel5of5.Text" xml:space="preserve">
+    <value>[93E5A][!!_5 òƒ 5_!!]</value>
+  </data>
+  <data name="IncreaseBoardSizeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[E9D51][!!_Ìήĉřęâŝé Бòáѓď śíźê_!!]</value>
+  </data>
+  <data name="MazeSizeButton1.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[152F0][!!_Ρļàў â τђѓéè ŗóẁ мàźé_!!]</value>
+  </data>
+  <data name="MazeSizeButton2.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[B20DE][!!_Þĺáÿ à ƒòúѓ ŗôẁ máźè_!!]</value>
+  </data>
+  <data name="MazeSizeButton3.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[C1D64][!!_Ρłáŷ ã ƒìνé ѓõŵ màźę_!!]</value>
+  </data>
+  <data name="MazeSizeButton4.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[9962B][!!_Ρłáў á ŝį× ŕôŵ mâźé_!!]</value>
+  </data>
+  <data name="MazeTitle.Text" xml:space="preserve">
+    <value>[8F0CC][!!_МÃŽÈ_!!]</value>
+    <comment>App name postfix that gets display under pink box [All caps]</comment>
+  </data>
+  <data name="MovesLabel.Text" xml:space="preserve">
+    <value>[5206D][!!_Μóνêŝ_!!]</value>
+  </data>
+  <data name="PauseButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[3F383][!!_Þãúšê_!!]</value>
+  </data>
+  <data name="PlayAgainButton.Text" xml:space="preserve">
+    <value>[FB8DC][!!_Рĺáў Âġáîй_!!]</value>
+  </data>
+  <data name="PlayAgainDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[47E19][!!_ÞľáУ áğâįη_!!]</value>
+  </data>
+  <data name="PrivacyButton.Text" xml:space="preserve">
+    <value>[63C17][!!_Þѓìνàĉý &amp; Čõóķįęŝ_!!]</value>
+  </data>
+  <data name="PrivacyHeader.Text" xml:space="preserve">
+    <value>[69886][!!_Þřįνâĉÿ &amp; Τêŕmş_!!]</value>
+    <comment>Top of Privacy page on last page of How to Play.Note the special string for the ampersand</comment>
+  </data>
+  <data name="PrivacyHyperlinkButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[C285B][!!_Þŗíνãćў ãйð ćóôĸíêş ļįйķ_!!]</value>
+  </data>
+  <data name="PrivacyViewScrollDownButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[49DEB][!!_Šċřôĺł ðõẁй_!!]</value>
+  </data>
+  <data name="PrivacyViewScrollUpButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[42DF3][!!_Śĉřôĺĺ µþ_!!]</value>
+  </data>
+  <data name="SelectPlayMessagePostfix.Text" xml:space="preserve">
+    <value>[C2398][!!_ тô Þľáў Âġàìи_!!]</value>
+    <comment>Instructional text that appears after button symbol. Note leading space</comment>
+  </data>
+  <data name="SelectPlayMessagePrefix.Text" xml:space="preserve">
+    <value>[4E707][!!_Ŝéłęčť _!!]</value>
+    <comment>Instructional text that appears before button symbol. Note trailing space</comment>
+  </data>
+  <data name="SelectSize.Text" xml:space="preserve">
+    <value>[BC0DB][!!_Ŝêĺèĉτ â мãźê ŝìžê_!!]</value>
+    <comment>Instructs user to pick a board size</comment>
+  </data>
+  <data name="SolveButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[77CA0][!!_Šòĺνę_!!]</value>
+  </data>
+  <data name="SolveButtonLabel.Text" xml:space="preserve">
+    <value>[44CF9][!!_Šóĺνè_!!]</value>
+  </data>
+  <data name="SolvedWithHelpMessageString" xml:space="preserve">
+    <value>[8D145][!!_Ẁíţћ á ľįτтĺę ђêłþ ўóù нãνé śôłνêđ ţħé mâżé!_!!]</value>
+  </data>
+  <data name="UseTermsButton.Text" xml:space="preserve">
+    <value>[F9DC3][!!_Úŝę Τèŕmś_!!]</value>
+  </data>
+  <data name="UseTermsHyperlinkButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[449E4][!!_Úśę Тèŗмş łįйк_!!]</value>
+  </data>
+  <data name="VersionStringPrefix" xml:space="preserve">
+    <value>[22242][!!_Vèѓšíõή _!!]</value>
+    <comment>Prefix to version number information. Note extra space afterwards.</comment>
+  </data>
+  <data name="WebViewContinueButton.Content" xml:space="preserve">
+    <value>[5A50C][!!_Ĉóήτìйúê_!!]</value>
+  </data>
+  <data name="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[5D623][!!_Ċõиτíήµę_!!]</value>
+  </data>
+  <data name="WebViewLoadingPrompt.Text" xml:space="preserve">
+    <value>[DF2D6][!!_Ľôâđîйĝ.._!!]</value>
+  </data>
+</root>

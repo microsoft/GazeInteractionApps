@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddRowButton.Text" xml:space="preserve">
+    <value>Ajouter une ligne</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>Labyrinthe</value>
+  </data>
+  <data name="HowToPlay.Text" xml:space="preserve">
+    <value>Comment jouer</value>
+    <comment>appears on the button that launches the how to play or help info</comment>
+  </data>
+  <data name="HowToPlayHeader.Text" xml:space="preserve">
+    <value>Comment jouer</value>
+    <comment>appears at top of each how to play screen</comment>
+  </data>
+  <data name="HowToPlayPageLabel1of5.Text" xml:space="preserve">
+    <value>(1 sur 5)</value>
+  </data>
+  <data name="HowToPlayPageLabel2of5.Text" xml:space="preserve">
+    <value>(2 sur 5)</value>
+  </data>
+  <data name="HowToPlayPageLabel3of5.Text" xml:space="preserve">
+    <value>(3 sur 5)</value>
+  </data>
+  <data name="HowToPlayPageLabel4of5.Text" xml:space="preserve">
+    <value>(4 sur 5)</value>
+  </data>
+  <data name="HowToPlayPageLabel5of5.Text" xml:space="preserve">
+    <value>(5 sur 5)</value>
+  </data>
+  <data name="MovesLabel.Text" xml:space="preserve">
+    <value>Déplacements</value>
+  </data>
+  <data name="PlayAgainButton.Text" xml:space="preserve">
+    <value>Rejouer</value>
+  </data>
+  <data name="PrivacyButton.Text" xml:space="preserve">
+    <value>Confidentialité et cookies</value>
+  </data>
+  <data name="SelectPlayMessagePrefix.Text" xml:space="preserve">
+    <value>Sélectionner</value>
+    <comment>Instructional text that appears before button symbol. Note trailing space</comment>
+  </data>
+  <data name="UseTermsButton.Text" xml:space="preserve">
+    <value>Conditions d’utilisation</value>
+  </data>
+  <data name="VersionStringPrefix" xml:space="preserve">
+    <value>Version :</value>
+    <comment>Prefix to version number information. Note extra space afterwards.</comment>
+  </data>
+  <data name="WebViewContinueButton.Content" xml:space="preserve">
+    <value>Continuer</value>
+  </data>
+  <data name="WebViewLoadingPrompt.Text" xml:space="preserve">
+    <value>Chargement...</value>
+  </data>
+</root>
