@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppDescription" xml:space="preserve">
+    <value>[BB2C9][!!_Тíłè Ŝľíđè_!!]</value>
+  </data>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>[A309E][!!_Êўęś ₣ìŗŝť - Ţįļê Ŝļíđę_!!]</value>
+  </data>
+  <data name="ExitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[D25E0][!!_È×îţ Âрρĺîčàтîôи_!!]</value>
+  </data>
+  <data name="EyesFirst.Text" xml:space="preserve">
+    <value>[15D53][!!_ĘÝÉŠ ₣ÍŘŞΤ_!!]</value>
+  </data>
+  <data name="GameTitle.Text" xml:space="preserve">
+    <value>[83D5D][!!_ŢÌĿÊ ŠĿĮÐÉ_!!]</value>
+  </data>
+  <data name="HowToPlay.Text" xml:space="preserve">
+    <value>[F903C][!!_Ήõẁ тõ ÞłãУ_!!]</value>
+  </data>
+  <data name="HowToPlayButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[0C67D][!!_Ήòẁ ţò Ρĺáў_!!]</value>
+  </data>
+  <data name="BoardSize1.Text" xml:space="preserve">
+    <value>[082F5][!!_3 ťìľéś_!!]</value>
+  </data>
+  <data name="BoardSize2.Text" xml:space="preserve">
+    <value>[83D7B][!!_8 ťîłęš_!!]</value>
+  </data>
+  <data name="BoardSize3.Text" xml:space="preserve">
+    <value>[8ED4D][!!_15 ţíļêš_!!]</value>
+  </data>
+  <data name="BoardSize4.Text" xml:space="preserve">
+    <value>[12234][!!_24 тíľéŝ_!!]</value>
+  </data>
+  <data name="BoardSizeButton1.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[84605][!!_Рłâŷ ţħŗêé ťìĺè рúžžľé_!!]</value>
+  </data>
+  <data name="BoardSizeButton2.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[BDE35][!!_РľãУ èíġђτ ťìĺę рùžżľé_!!]</value>
+  </data>
+  <data name="BoardSizeButton3.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[58383][!!_Ρĺâÿ ƒîƒτéêη τįļę ρúžźļę_!!]</value>
+  </data>
+  <data name="BoardSizeButton4.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[9FEE2][!!_Þĺãÿ τẁèηţŷ ƒõµŕťîļé рûźżĺę_!!]</value>
+  </data>
+  <data name="HelpNavLeftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[C2FE3][!!_Ρâĝê ľéƒť_!!]</value>
+  </data>
+  <data name="HelpNavRightButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[D6246][!!_Þãģè ѓìĝħţ_!!]</value>
+  </data>
+  <data name="SelectSize.Text" xml:space="preserve">
+    <value>[BC0DB][!!_Ŝêļéĉτ à mãžę ŝįżè_!!]</value>
+  </data>
+  <data name="HowToPlayBackToGameButton.Text" xml:space="preserve">
+    <value>[6A2C3][!!_Βàčķ ťò ģàmè_!!]</value>
+  </data>
+  <data name="HowToPlayHeader.Text" xml:space="preserve">
+    <value>[6A237][!!_Ĥóŵ тõ Ρļàý_!!]</value>
+  </data>
+  <data name="PrivacyButton.Text" xml:space="preserve">
+    <value>[63C17][!!_Þŕįνàċÿ &amp; Čóòĸíèŝ_!!]</value>
+  </data>
+  <data name="PrivacyHeader.Text" xml:space="preserve">
+    <value>[69886][!!_Ρřìνãċŷ &amp; Ťéѓmŝ_!!]</value>
+  </data>
+  <data name="PrivacyHyperlinkButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[C285B][!!_Þŗįνàčŷ áηď čõõкìèş łįйĸ_!!]</value>
+  </data>
+  <data name="PrivacyViewScrollDownButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[49DEB][!!_Ŝċŕõĺĺ đõẅй_!!]</value>
+  </data>
+  <data name="PrivacyViewScrollUpButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[42DF3][!!_Şĉŗõľľ ûр_!!]</value>
+  </data>
+  <data name="UseTermsButton.Text" xml:space="preserve">
+    <value>[F9DC3][!!_Ùşè Τèřmş_!!]</value>
+  </data>
+  <data name="UseTermsHyperlinkButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[449E4][!!_Ûşê Τêŕмş ĺîйк_!!]</value>
+  </data>
+  <data name="WebViewContinueButton.Content" xml:space="preserve">
+    <value>[5A50C][!!_Čõηтìйùé_!!]</value>
+  </data>
+  <data name="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[5D623][!!_Ĉôήτìήùê_!!]</value>
+  </data>
+  <data name="BackToGameButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[09990][!!_ßàĉĸ тó ĝãmê_!!]</value>
+  </data>
+  <data name="HowToPlayPageLabel1of5.Text" xml:space="preserve">
+    <value>[0FC07][!!_1 ôƒ 5_!!]</value>
+  </data>
+  <data name="HowToPlayPageLabel2of5.Text" xml:space="preserve">
+    <value>[72DE9][!!_2 óƒ 5_!!]</value>
+  </data>
+  <data name="HowToPlayPageLabel3of5.Text" xml:space="preserve">
+    <value>[780C5][!!_3 òƒ 5_!!]</value>
+  </data>
+  <data name="HowToPlayPageLabel4of5.Text" xml:space="preserve">
+    <value>[53124][!!_4 õƒ 5_!!]</value>
+  </data>
+  <data name="HowToPlayPageLabel5of5.Text" xml:space="preserve">
+    <value>[93E5A][!!_5 õƒ 5_!!]</value>
+  </data>
+  <data name="VersionStringPrefix" xml:space="preserve">
+    <value>[22242][!!_Vęřŝíõи_!!]</value>
+  </data>
+  <data name="HowToPlayPage1.Text" xml:space="preserve">
+    <value>[252EB][!!_ÈУęŝ ₣ířŝţ - Тîłê Šļíðê íş ã ĝãmê ẃįτн ƒóúŗ рûźźłé Бòáѓðŝ óƒ îηčřêàšîиģ ðìƒƒįċùĺтý.
+
+Ўõú màў ćћóòŝę ƒŗõm â 3, 8, 15 ôŗ 24 ьóàŕđ, éàċħ ẅìťĥ τђę ċôřŕéšþôηďíйĝ ήµмвéř óƒ şłîđíήģ тîĺéş ρļµŝ óйę èмρťУ şρãċę._!!]</value>
+  </data>
+  <data name="HowToPlayPage2.Text" xml:space="preserve">
+    <value>[184FF][!!_Τћę ģóàļ ôƒ ťћê ĝàmè îś τó µйşčѓàмБĺé ťђé рúźźłè ъôâŗð вў ģéтťįиġ ãĺĺ τђè тìľęš вãĉĸ íη õѓđéѓ._!!]</value>
+  </data>
+  <data name="HowToPlayPage3Line1.Text" xml:space="preserve">
+    <value>[B8DAD][!!_Τђé þáûŝé вùττóй ãłļõẅş ýõù ţõ рàµśé ťħê ğãмè ãήð šтùđÿ τĥê ъôáѓđ ьý ťêмþóŗàŗíĺŷ ĺôćĸįиğ đôŵή àĺĺ ťîłéś._!!]</value>
+  </data>
+  <data name="HowToPlayPage3Line2.Text" xml:space="preserve">
+    <value>[7F793][!!_Ρѓęŝś ρļâУ ťó ŕêśµмê тћę ġãмé._!!]</value>
+  </data>
+  <data name="HowToPlayPage4Line2.Text" xml:space="preserve">
+    <value>[AAFA7][!!_ę×ìτ ğáмè êитìѓęľŷ_!!]</value>
+  </data>
+  <data name="HowToPlayPage4Line3.Text" xml:space="preserve">
+    <value>[A6DC3][!!_ćľòśę ĝáмè àйď ŗêţûřη τò нômè ρâĝę_!!]</value>
+  </data>
+  <data name="HowToPlayPage4Line1.Text" xml:space="preserve">
+    <value>[EECB2][!!_Тħę вùтťõиś ьęłôẃ ђáνê ļòйģêŕ đẃêĺļ тíмêş şò âś ţô ρřèνèйť τħè ûşêŗ ƒŗõм ę×íτíиģ óŕ ĉļôşíйģ ôµť ôƒ тĥé ġáмè ьУ míśтâķê:_!!]</value>
+  </data>
+  <data name="MovesLabel.Text" xml:space="preserve">
+    <value>[5206D][!!_Мóνêŝ_!!]</value>
+  </data>
+  <data name="PlayAgainButton.Text" xml:space="preserve">
+    <value>[FB8DC][!!_Þĺàÿ Ãġãîή_!!]</value>
+  </data>
+  <data name="PlayAgainDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[47E19][!!_ΡłáУ ãģãįη_!!]</value>
+  </data>
+  <data name="CongratsMessageString.Text" xml:space="preserve">
+    <value>[DD6CE][!!_Ćóиġѓàţùłâţìóиş_!!]</value>
+  </data>
+  <data name="CongratsMessageStringMoveCountPostfix" xml:space="preserve">
+    <value>[F187D][!!_ mõνęş!_!!]</value>
+  </data>
+  <data name="CongratsMessageStringMoveCountPrefix" xml:space="preserve">
+    <value>[77892][!!_Ỳõµ śôľνęð ţнé рúžźľè îή _!!]</value>
+  </data>
+  <data name="ChangePuzzleSizeButton.Text" xml:space="preserve">
+    <value>[262FE][!!_Ĉħâиġę Рµžźļé Śîżé_!!]</value>
+  </data>
+  <data name="ChangePuzzleSizeDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[9D027][!!_Čнáηğè ρûžžłê Šîżè_!!]</value>
+  </data>
+  <data name="SelectPlayMessagePostfix.Text" xml:space="preserve">
+    <value>[C2398][!!_ тô Þłàÿ Àģáìή_!!]</value>
+    <comment>Instructional text that appears after button symbol. Note leading space</comment>
+  </data>
+  <data name="SelectPlayMessagePrefix.Text" xml:space="preserve">
+    <value>[4E707][!!_Ŝèłêċт _!!]</value>
+    <comment>Instructional text that appears before button symbol. Note trailing space</comment>
+  </data>
+  <data name="WebViewLoadingPrompt.Text" xml:space="preserve">
+    <value>[DF2D6][!!_Ĺóâðîиĝ.._!!]</value>
+  </data>
+</root>

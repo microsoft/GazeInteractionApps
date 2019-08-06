@@ -424,7 +424,11 @@ namespace Fifteen
 
             await Task.Delay(1000);
 
-            string message = $"You solved the puzzle in {_numMoves} moves!";
+            //string message = $"You solved the puzzle in {_numMoves} moves!";
+
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            string message = $"{resourceLoader.GetString("CongratsMessageStringMoveCountPrefix")}{_numMoves}{resourceLoader.GetString("CongratsMessageStringMoveCountPostfix")}";
+
             DialogText.Text = message;
             GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
             DialogGrid.Visibility = Visibility.Visible;

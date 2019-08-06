@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="qps-ploc" original="FIFTEEN/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6914.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="FIFTEEN/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="AppDescription" translate="yes" xml:space="preserve">
+          <source>Tile Slide</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[BB2C9][!!_Тíłè Ŝľíđè_!!]</target>
+        </trans-unit>
+        <trans-unit id="AppDisplayName" translate="yes" xml:space="preserve">
+          <source>Eyes First - Tile Slide</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[A309E][!!_Êўęś ₣ìŗŝť - Ţįļê Ŝļíđę_!!]</target>
+        </trans-unit>
+        <trans-unit id="ExitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Exit Application</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[D25E0][!!_È×îţ Âрρĺîčàтîôи_!!]</target>
+        </trans-unit>
+        <trans-unit id="EyesFirst.Text" translate="yes" xml:space="preserve">
+          <source>EYES FIRST</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[15D53][!!_ĘÝÉŠ ₣ÍŘŞΤ_!!]</target>
+        </trans-unit>
+        <trans-unit id="GameTitle.Text" translate="yes" xml:space="preserve">
+          <source>TILE SLIDE</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[83D5D][!!_ŢÌĿÊ ŠĿĮÐÉ_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlay.Text" translate="yes" xml:space="preserve">
+          <source>How to Play</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[F903C][!!_Ήõẁ тõ ÞłãУ_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>How to Play</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[0C67D][!!_Ήòẁ ţò Ρĺáў_!!]</target>
+        </trans-unit>
+        <trans-unit id="BoardSize1.Text" translate="yes" xml:space="preserve">
+          <source>3 tiles</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[082F5][!!_3 ťìľéś_!!]</target>
+        </trans-unit>
+        <trans-unit id="BoardSize2.Text" translate="yes" xml:space="preserve">
+          <source>8 tiles</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[83D7B][!!_8 ťîłęš_!!]</target>
+        </trans-unit>
+        <trans-unit id="BoardSize3.Text" translate="yes" xml:space="preserve">
+          <source>15 tiles</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[8ED4D][!!_15 ţíļêš_!!]</target>
+        </trans-unit>
+        <trans-unit id="BoardSize4.Text" translate="yes" xml:space="preserve">
+          <source>24 tiles</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[12234][!!_24 тíľéŝ_!!]</target>
+        </trans-unit>
+        <trans-unit id="BoardSizeButton1.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Play three tile puzzle</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[84605][!!_Рłâŷ ţħŗêé ťìĺè рúžžľé_!!]</target>
+        </trans-unit>
+        <trans-unit id="BoardSizeButton2.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Play eight tile puzzle</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[BDE35][!!_РľãУ èíġђτ ťìĺę рùžżľé_!!]</target>
+        </trans-unit>
+        <trans-unit id="BoardSizeButton3.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Play fifteen tile puzzle</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[58383][!!_Ρĺâÿ ƒîƒτéêη τįļę ρúžźļę_!!]</target>
+        </trans-unit>
+        <trans-unit id="BoardSizeButton4.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Play twenty fourtile puzzle</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[9FEE2][!!_Þĺãÿ τẁèηţŷ ƒõµŕťîļé рûźżĺę_!!]</target>
+        </trans-unit>
+        <trans-unit id="HelpNavLeftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Page left</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C2FE3][!!_Ρâĝê ľéƒť_!!]</target>
+        </trans-unit>
+        <trans-unit id="HelpNavRightButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Page right</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[D6246][!!_Þãģè ѓìĝħţ_!!]</target>
+        </trans-unit>
+        <trans-unit id="SelectSize.Text" translate="yes" xml:space="preserve">
+          <source>Select a maze size</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[BC0DB][!!_Ŝêļéĉτ à mãžę ŝįżè_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayBackToGameButton.Text" translate="yes" xml:space="preserve">
+          <source>Back to game</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[6A2C3][!!_Βàčķ ťò ģàmè_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayHeader.Text" translate="yes" xml:space="preserve">
+          <source>How to Play</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[6A237][!!_Ĥóŵ тõ Ρļàý_!!]</target>
+        </trans-unit>
+        <trans-unit id="PrivacyButton.Text" translate="yes" xml:space="preserve">
+          <source>Privacy &amp; Cookies</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[63C17][!!_Þŕįνàċÿ &amp; Čóòĸíèŝ_!!]</target>
+        </trans-unit>
+        <trans-unit id="PrivacyHeader.Text" translate="yes" xml:space="preserve">
+          <source>Privacy &amp; Terms</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[69886][!!_Ρřìνãċŷ &amp; Ťéѓmŝ_!!]</target>
+        </trans-unit>
+        <trans-unit id="PrivacyHyperlinkButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Privacy and cookies link</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C285B][!!_Þŗįνàčŷ áηď čõõкìèş łįйĸ_!!]</target>
+        </trans-unit>
+        <trans-unit id="PrivacyViewScrollDownButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Scroll down</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[49DEB][!!_Ŝċŕõĺĺ đõẅй_!!]</target>
+        </trans-unit>
+        <trans-unit id="PrivacyViewScrollUpButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Scroll up</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[42DF3][!!_Şĉŗõľľ ûр_!!]</target>
+        </trans-unit>
+        <trans-unit id="UseTermsButton.Text" translate="yes" xml:space="preserve">
+          <source>Use Terms</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[F9DC3][!!_Ùşè Τèřmş_!!]</target>
+        </trans-unit>
+        <trans-unit id="UseTermsHyperlinkButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Use Terms link</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[449E4][!!_Ûşê Τêŕмş ĺîйк_!!]</target>
+        </trans-unit>
+        <trans-unit id="WebViewContinueButton.Content" translate="yes" xml:space="preserve">
+          <source>Continue</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5A50C][!!_Čõηтìйùé_!!]</target>
+        </trans-unit>
+        <trans-unit id="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Continue</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5D623][!!_Ĉôήτìήùê_!!]</target>
+        </trans-unit>
+        <trans-unit id="BackToGameButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Back to game</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[09990][!!_ßàĉĸ тó ĝãmê_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPageLabel1of5.Text" translate="yes" xml:space="preserve">
+          <source>1 of 5</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[0FC07][!!_1 ôƒ 5_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPageLabel2of5.Text" translate="yes" xml:space="preserve">
+          <source>2 of 5</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[72DE9][!!_2 óƒ 5_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPageLabel3of5.Text" translate="yes" xml:space="preserve">
+          <source>3 of 5</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[780C5][!!_3 òƒ 5_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPageLabel4of5.Text" translate="yes" xml:space="preserve">
+          <source>4 of 5</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[53124][!!_4 õƒ 5_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPageLabel5of5.Text" translate="yes" xml:space="preserve">
+          <source>5 of 5</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[93E5A][!!_5 õƒ 5_!!]</target>
+        </trans-unit>
+        <trans-unit id="VersionStringPrefix" translate="yes" xml:space="preserve">
+          <source>Version</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[22242][!!_Vęřŝíõи_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage1.Text" translate="yes" xml:space="preserve">
+          <source>Eyes First - Tile Slide is a game with four puzzle boards of increasing difficulty.
+
+You may choose from a 3, 8, 15 or 24 board, each with the corresponding number of sliding tiles plus one empty space.</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[252EB][!!_ÈУęŝ ₣ířŝţ - Тîłê Šļíðê íş ã ĝãmê ẃįτн ƒóúŗ рûźźłé Бòáѓðŝ óƒ îηčřêàšîиģ ðìƒƒįċùĺтý.
+
+Ўõú màў ćћóòŝę ƒŗõm â 3, 8, 15 ôŗ 24 ьóàŕđ, éàċħ ẅìťĥ τђę ċôřŕéšþôηďíйĝ ήµмвéř óƒ şłîđíήģ тîĺéş ρļµŝ óйę èмρťУ şρãċę._!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage2.Text" translate="yes" xml:space="preserve">
+          <source>The goal of the game is to unscramble the puzzle board by getting all the tiles back in order.</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[184FF][!!_Τћę ģóàļ ôƒ ťћê ĝàmè îś τó µйşčѓàмБĺé ťђé рúźźłè ъôâŗð вў ģéтťįиġ ãĺĺ τђè тìľęš вãĉĸ íη õѓđéѓ._!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage3Line1.Text" translate="yes" xml:space="preserve">
+          <source>The pause button allows you to pause the game and study the board by temporarily locking down all tiles.</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[B8DAD][!!_Τђé þáûŝé вùττóй ãłļõẅş ýõù ţõ рàµśé ťħê ğãмè ãήð šтùđÿ τĥê ъôáѓđ ьý ťêмþóŗàŗíĺŷ ĺôćĸįиğ đôŵή àĺĺ ťîłéś._!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage3Line2.Text" translate="yes" xml:space="preserve">
+          <source>Press play to resume the game.</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[7F793][!!_Ρѓęŝś ρļâУ ťó ŕêśµмê тћę ġãмé._!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage4Line2.Text" translate="yes" xml:space="preserve">
+          <source>exit game entirely</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[AAFA7][!!_ę×ìτ ğáмè êитìѓęľŷ_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage4Line3.Text" translate="yes" xml:space="preserve">
+          <source>close game and return to home page</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[A6DC3][!!_ćľòśę ĝáмè àйď ŗêţûřη τò нômè ρâĝę_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage4Line1.Text" translate="yes" xml:space="preserve">
+          <source>The buttons below have longer dwell times so as to prevent the user from exiting or closing out of the game by mistake:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[EECB2][!!_Тħę вùтťõиś ьęłôẃ ђáνê ļòйģêŕ đẃêĺļ тíмêş şò âś ţô ρřèνèйť τħè ûşêŗ ƒŗõм ę×íτíиģ óŕ ĉļôşíйģ ôµť ôƒ тĥé ġáмè ьУ míśтâķê:_!!]</target>
+        </trans-unit>
+        <trans-unit id="MovesLabel.Text" translate="yes" xml:space="preserve">
+          <source>Moves</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5206D][!!_Мóνêŝ_!!]</target>
+        </trans-unit>
+        <trans-unit id="PlayAgainButton.Text" translate="yes" xml:space="preserve">
+          <source>Play Again</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[FB8DC][!!_Þĺàÿ Ãġãîή_!!]</target>
+        </trans-unit>
+        <trans-unit id="PlayAgainDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Play again</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[47E19][!!_ΡłáУ ãģãįη_!!]</target>
+        </trans-unit>
+        <trans-unit id="CongratsMessageString.Text" translate="yes" xml:space="preserve">
+          <source>Congratulations</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[DD6CE][!!_Ćóиġѓàţùłâţìóиş_!!]</target>
+        </trans-unit>
+        <trans-unit id="CongratsMessageStringMoveCountPostfix" translate="yes" xml:space="preserve">
+          <source> moves!</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[F187D][!!_ mõνęş!_!!]</target>
+        </trans-unit>
+        <trans-unit id="CongratsMessageStringMoveCountPrefix" translate="yes" xml:space="preserve">
+          <source>You solved the puzzle in </source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[77892][!!_Ỳõµ śôľνęð ţнé рúžźľè îή _!!]</target>
+        </trans-unit>
+        <trans-unit id="ChangePuzzleSizeButton.Text" translate="yes" xml:space="preserve">
+          <source>Change Puzzle Size</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[262FE][!!_Ĉħâиġę Рµžźļé Śîżé_!!]</target>
+        </trans-unit>
+        <trans-unit id="ChangePuzzleSizeDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Change puzzle Size</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[9D027][!!_Čнáηğè ρûžžłê Šîżè_!!]</target>
+        </trans-unit>
+        <trans-unit id="SelectPlayMessagePostfix.Text" translate="yes" xml:space="preserve">
+          <source> to Play Again</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C2398][!!_ тô Þłàÿ Àģáìή_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Instructional text that appears after button symbol. Note leading space</note>
+        </trans-unit>
+        <trans-unit id="SelectPlayMessagePrefix.Text" translate="yes" xml:space="preserve">
+          <source>Select </source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[4E707][!!_Ŝèłêċт _!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Instructional text that appears before button symbol. Note trailing space</note>
+        </trans-unit>
+        <trans-unit id="WebViewLoadingPrompt.Text" translate="yes" xml:space="preserve">
+          <source>Loading..</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[DF2D6][!!_Ĺóâðîиĝ.._!!]</target>
+        </trans-unit>
+        <trans-unit id="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Back</source>
+          <target state="new">Back</target>
+        </trans-unit>
+        <trans-unit id="CloseDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Close</source>
+          <target state="new">Close</target>
+        </trans-unit>
+        <trans-unit id="PauseButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Pause</source>
+          <target state="new">Pause</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>
