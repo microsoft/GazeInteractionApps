@@ -75,8 +75,9 @@
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[D6246][!!_Þãģè ѓìĝħţ_!!]</target>
         </trans-unit>
         <trans-unit id="SelectSize.Text" translate="yes" xml:space="preserve">
-          <source>Select a maze size</source>
+          <source>Select a puzzle size</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[BC0DB][!!_Ŝêļéĉτ à mãžę ŝįżè_!!]</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="HowToPlayBackToGameButton.Text" translate="yes" xml:space="preserve">
           <source>Back to game</source>
@@ -230,15 +231,15 @@ You may choose from a 3, 8, 15 or 24 board, each with the corresponding number o
         </trans-unit>
         <trans-unit id="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Back</source>
-          <target state="new">Back</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[B88C7][!!_βáćќ_!!]</target>
         </trans-unit>
         <trans-unit id="CloseDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Close</source>
-          <target state="new">Close</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[10A77][!!_Čĺòśê_!!]</target>
         </trans-unit>
         <trans-unit id="PauseButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Pause</source>
-          <target state="new">Pause</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[3F383][!!_Ρãµşê_!!]</target>
         </trans-unit>
       </group>
     </body>

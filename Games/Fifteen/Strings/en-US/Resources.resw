@@ -272,7 +272,7 @@ You may choose from a 3, 8, 15 or 24 board, each with the corresponding number o
     <comment>Instructional text that appears before button symbol. Note trailing space</comment>
   </data>
   <data name="SelectSize.Text" xml:space="preserve">
-    <value>Select a maze size</value>
+    <value>Select a puzzle size</value>
   </data>
   <data name="UseTermsButton.Text" xml:space="preserve">
     <value>Use Terms</value>

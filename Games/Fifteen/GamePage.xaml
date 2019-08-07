@@ -175,7 +175,7 @@
             
         </Grid>
 
-        <TextBlock x:Name="PlayAgainText" Grid.Row="1" HorizontalAlignment="Center" Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Top" Visibility="Collapsed" Margin="0,-3,0,0" FontFamily="Segoe MDL2 Assets">
+        <TextBlock x:Name="PlayAgainText" Grid.Row="1" HorizontalAlignment="Center" Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Top" Visibility="Collapsed" Margin="0,-3,0,0" FontFamily="Segoe UI">
             <Run x:Uid="SelectPlayMessagePrefix">Select </Run><Run FontFamily="Segoe MDL2 Assets">&#xE768;</Run><Run x:Uid="SelectPlayMessagePostfix"> to Play Again</Run>
         </TextBlock>
 

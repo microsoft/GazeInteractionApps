@@ -178,4 +178,13 @@
   <data name="WebViewLoadingPrompt.Text" xml:space="preserve">
     <value>[DF2D6][!!_Ĺóâðîиĝ.._!!]</value>
   </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[B88C7][!!_βáćќ_!!]</value>
+  </data>
+  <data name="CloseDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[10A77][!!_Čĺòśê_!!]</value>
+  </data>
+  <data name="PauseButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[3F383][!!_Ρãµşê_!!]</value>
+  </data>
 </root>
