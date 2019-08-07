@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="58ad5d18-bbbc-4f4c-83c0-19bc082f4685" Publisher="CN=harishsk" Version="1.0.39.0" />
-  <mp:PhoneIdentity PhoneProductId="58ad5d18-bbbc-4f4c-83c0-19bc082f4685" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="Microsoft.EyesFirst-MatchTwo" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="1.0.40.0" />
+  <mp:PhoneIdentity PhoneProductId="d00b0347-af25-4a89-88b7-a712e2c6813d" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Memory</DisplayName>
-    <PublisherDisplayName>harishsk</PublisherDisplayName>
+    <DisplayName>Eyes First - Match Two</DisplayName>
+    <PublisherDisplayName>Microsoft Research</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Memory.App">
-      <uap:VisualElements DisplayName="Eyes First - Match Two" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Match Two" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="ms-resource:AppDisplayName" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="ms-resource:AppDescription" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#9fc79f" />

@@ -39,7 +39,8 @@ namespace Memory
 
             _solidTileBrush = (SolidColorBrush)this.Resources["TileBackground"];
 
-            VersionTextBlock.Text = "Version " + GetAppVersion();
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            VersionTextBlock.Text = resourceLoader.GetString("VersionStringPrefix") + GetAppVersion();
 
             CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
                 GazeInput.GetGazePointer(this).Click();

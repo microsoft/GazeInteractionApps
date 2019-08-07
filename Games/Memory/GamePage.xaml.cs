@@ -685,7 +685,11 @@ namespace Memory
 
             await Task.Delay(1000);
 
-            string message = $"You matched the {_boardRows * _boardColumns} cards in {_numMoves} moves!";
+            //string message = $"You matched the {_boardRows * _boardColumns} cards in {_numMoves} moves!";
+
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            string message = $"{resourceLoader.GetString("CongratsMessageStringMoveCountPrefix")}{_boardRows * _boardColumns}{resourceLoader.GetString("CongratsMessageStringMoveCountPostfix1")}{_numMoves}{resourceLoader.GetString("CongratsMessageStringMoveCountPostfix2")}";
+
             DialogText.Text = message;
             GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
             DialogGrid.Visibility = Visibility.Visible;
