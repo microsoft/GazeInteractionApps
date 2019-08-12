@@ -867,7 +867,8 @@ namespace TwoZeroFourEight
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
-            VersionTextBlock.Text = "Version " + GetAppVersion();
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            VersionTextBlock.Text = resourceLoader.GetString("VersionStringPrefix") + GetAppVersion();
 
             Board = new Board(4);
 

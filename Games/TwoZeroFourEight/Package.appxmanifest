@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="4e21ae5c-147f-4626-b664-0dddb7bcfbab" Publisher="CN=harishsk" Version="1.0.28.0" />
-  <mp:PhoneIdentity PhoneProductId="4e21ae5c-147f-4626-b664-0dddb7bcfbab" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="Microsoft.EyesFirst-DoubleUp" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="1.0.30.0" />
+  <mp:PhoneIdentity PhoneProductId="5c54f2bd-d394-4700-87a1-7b9baeb47518" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>2048</DisplayName>
-    <PublisherDisplayName>harishsk</PublisherDisplayName>
+    <DisplayName>Eyes First - Double Up</DisplayName>
+    <PublisherDisplayName>Microsoft Research</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="TwoZeroFourEight.App">
-      <uap:VisualElements DisplayName="Eyes First - Double Up" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="2048" BackgroundColor="#a9cbdb">
+      <uap:VisualElements DisplayName="ms-resource:AppDisplayName" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="ms-resource:AppDescription" BackgroundColor="#a9cbdb">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
