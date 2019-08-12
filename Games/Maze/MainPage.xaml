@@ -400,7 +400,7 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock x:Uid="HowToPlayHeader" Grid.Column="0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI" Grid.ColumnSpan="2"/>
-                        <TextBlock  x:Uid="HowToPlayPageLabel2of5" Text="2 of 5" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock x:Uid="HowToPlayPageLabel2of5" Text="2 of 5" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
                         <TextBlock x:Uid="HowToPlayPage2" HorizontalAlignment="Left" TextWrapping="Wrap" Text="The goal is to navigate the dog back to the dog house in as few moves as possible.  To move around the maze dwell or click on a room in the same hall or pathway of the maze. &#x0d;&#x0d;The game is complete when the dog reaches home." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.RowSpan="2" Grid.Row="1" Grid.ColumnSpan="2"/>
                         <Image Source="/Assets/Solved16Card.PNG" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20,20,20,20" Grid.Column="1" Grid.RowSpan="2" Grid.Row="1" Visibility="Collapsed"/>
                     </Grid>
