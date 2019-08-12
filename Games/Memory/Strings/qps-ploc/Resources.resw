@@ -183,4 +183,10 @@
   <data name="ChangePuzzleSizeDialogButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>[9D027][!!_Ćћàиĝê ьòãřď şíżê_!!]</value>
   </data>
+  <data name="HelpNavLeftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[C2FE3][!!_Þãģê ľèƒτ_!!]</value>
+  </data>
+  <data name="HelpNavRightButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[D6246][!!_Ρáĝè ŗîġћτ_!!]</value>
+  </data>
 </root>

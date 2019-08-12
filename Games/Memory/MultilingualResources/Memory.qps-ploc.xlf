@@ -236,6 +236,26 @@ The game is complete when all the cards have been matched as pairs.</source>
           <source>Change board size</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[9D027][!!_Ćћàиĝê ьòãřď şíżê_!!]</target>
         </trans-unit>
+        <trans-unit id="HelpNavLeftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Page left</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C2FE3][!!_Þãģê ľèƒτ_!!]</target>
+        </trans-unit>
+        <trans-unit id="HelpNavRightButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Page right</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[D6246][!!_Ρáĝè ŗîġћτ_!!]</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage5Line1.Text" translate="yes" xml:space="preserve">
+          <source>The buttons below have longer dwell times so as to prevent the user from exiting or closing out of the game by mistake:</source>
+          <target state="new">The buttons below have longer dwell times so as to prevent the user from exiting or closing out of the game by mistake:</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage5Line2.Text" translate="yes" xml:space="preserve">
+          <source> exit game entirely</source>
+          <target state="new"> exit game entirely</target>
+        </trans-unit>
+        <trans-unit id="HowToPlayPage5Line3.Text" translate="yes" xml:space="preserve">
+          <source> start a new game</source>
+          <target state="new"> start a new game</target>
+        </trans-unit>
       </group>
     </body>
   </file>

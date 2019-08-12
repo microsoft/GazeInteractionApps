@@ -180,6 +180,12 @@
   <data name="GameTitle.Text" xml:space="preserve">
     <value>MATCH TWO</value>
   </data>
+  <data name="HelpNavLeftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Page left</value>
+  </data>
+  <data name="HelpNavRightButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Page right</value>
+  </data>
   <data name="HowToPlay.Text" xml:space="preserve">
     <value>How to Play</value>
   </data>
@@ -216,6 +222,15 @@ The game is complete when all the cards have been matched as pairs.</value>
   </data>
   <data name="HowToPlayPage4Line3.Text" xml:space="preserve">
     <value>close game and return to home page</value>
+  </data>
+  <data name="HowToPlayPage5Line1.Text" xml:space="preserve">
+    <value>The buttons below have longer dwell times so as to prevent the user from exiting or closing out of the game by mistake:</value>
+  </data>
+  <data name="HowToPlayPage5Line2.Text" xml:space="preserve">
+    <value> exit game entirely</value>
+  </data>
+  <data name="HowToPlayPage5Line3.Text" xml:space="preserve">
+    <value> start a new game</value>
   </data>
   <data name="HowToPlayPageLabel1of5.Text" xml:space="preserve">
     <value>1 of 5</value>
