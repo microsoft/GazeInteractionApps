@@ -37,6 +37,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -61,8 +62,14 @@
             <Button     x:Name="EnterButton" Grid.Row="0" Grid.Column="8" Content="&#xE768;" Style="{StaticResource Symbol}" Click="OnSpeak"/>
             <Button     x:Name="CloseButton" Grid.Row="0" Grid.Column="9" Content="&#xE711;" Style="{StaticResource Symbol}" Click="OnExit"/>
         </Grid>
-
-        <gk:GazeKeyboard x:Name="GazeKeyboard" Grid.Row="1"  Grid.Column="0" />
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Button x:Name="Prediction0" Height="100" MinWidth="300" Style="{StaticResource Alpha}" />
+            <Button x:Name="Prediction1" Height="100" MinWidth="300" Style="{StaticResource Alpha}" />
+            <Button x:Name="Prediction2" Height="100" MinWidth="300" Style="{StaticResource Alpha}" />
+            <Button x:Name="Prediction3" Height="100" MinWidth="300" Style="{StaticResource Alpha}" />
+            <Button x:Name="Prediction4" Height="100" MinWidth="300" Style="{StaticResource Alpha}" />
+        </StackPanel>
+        <gk:GazeKeyboard x:Name="GazeKeyboard" Grid.Row="2"  Grid.Column="0" />
     </Grid>
 
 </Page>
