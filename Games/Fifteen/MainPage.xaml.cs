@@ -40,12 +40,9 @@ namespace Fifteen
             _solidTileBrush = (SolidColorBrush)this.Resources["TileBackground"];
 
             var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-            VersionTextBlock.Text = resourceLoader.GetString("VersionStringPrefix") + GetAppVersion();            
-
-            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
-                GazeInput.GetGazePointer(null).Click();
-            });
-
+            VersionTextBlock.Text = resourceLoader.GetString("VersionStringPrefix") + GetAppVersion();
+           
+          
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
             {
@@ -53,7 +50,7 @@ namespace Fifteen
             });
 
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
-            GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);            
+            GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);                       
         }
 
         private void OnBoardSizeSelected(object sender, RoutedEventArgs e)
@@ -72,9 +69,21 @@ namespace Fifteen
             return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
         }
 
-        private void OnExit(object sender, RoutedEventArgs e)
+        private async void OnExit(object sender, RoutedEventArgs e)
         {
-            Application.Current.Exit();
+            var uri = new Uri("eyes-first-app:");            
+            
+            var info = await Windows.System.Launcher.QueryUriSupportAsync(uri, Windows.System.LaunchQuerySupportType.Uri, "8957e598-b7eb-4c5f-a532-abe69b023bfb_bxjssgjs5et3c");
+
+            //if (info == Windows.System.LaunchQuerySupportStatus.Available)
+            //{
+            //    var ret = await Windows.System.Launcher.LaunchUriAsync(uri);
+            //}
+            //else
+            //{
+                Application.Current.Exit();
+            //}
+            
         }
 
         private void OnHowToPlayButton(object sender, RoutedEventArgs e)

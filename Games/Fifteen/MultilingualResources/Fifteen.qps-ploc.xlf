@@ -115,10 +115,6 @@
           <source>Use Terms link</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[449E4][!!_Ûşê Τêŕмş ĺîйк_!!]</target>
         </trans-unit>
-        <trans-unit id="WebViewContinueButton.Content" translate="yes" xml:space="preserve">
-          <source>Continue</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5A50C][!!_Čõηтìйùé_!!]</target>
-        </trans-unit>
         <trans-unit id="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Continue</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[5D623][!!_Ĉôήτìήùê_!!]</target>
@@ -240,6 +236,10 @@ You may choose from a 3, 8, 15 or 24 board, each with the corresponding number o
         <trans-unit id="PauseButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Pause</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[3F383][!!_Ρãµşê_!!]</target>
+        </trans-unit>
+        <trans-unit id="WebViewContinue.Text" translate="yes" xml:space="preserve">
+          <source>Continue</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[BFB29][!!_Ċóйтíйµê_!!]</target>
         </trans-unit>
       </group>
     </body>

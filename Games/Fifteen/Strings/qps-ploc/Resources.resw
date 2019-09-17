@@ -93,9 +93,6 @@
   <data name="UseTermsHyperlinkButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>[449E4][!!_Ûşê Τêŕмş ĺîйк_!!]</value>
   </data>
-  <data name="WebViewContinueButton.Content" xml:space="preserve">
-    <value>[5A50C][!!_Čõηтìйùé_!!]</value>
-  </data>
   <data name="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>[5D623][!!_Ĉôήτìήùê_!!]</value>
   </data>
@@ -186,5 +183,8 @@
   </data>
   <data name="PauseButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>[3F383][!!_Ρãµşê_!!]</value>
+  </data>
+  <data name="WebViewContinue.Text" xml:space="preserve">
+    <value>[BFB29][!!_Ċóйтíйµê_!!]</value>
   </data>
 </root>

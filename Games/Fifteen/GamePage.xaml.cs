@@ -99,7 +99,7 @@ namespace Fifteen
             InitializeButtonArray();
             WaitForCompositionTimer.Start();
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
-            GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);                
+            GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -352,7 +352,7 @@ namespace Fifteen
                 GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
                 string[] parms = (sender as CompositionScopedBatch).Comment.Split(',');
                 Button focusButton = FindName($"button_{parms[1]}_{parms[0]}") as Button;
-                focusButton.Focus(FocusState.Programmatic);
+                focusButton.Focus(FocusState.Programmatic);                                           
             }            
         }
 
