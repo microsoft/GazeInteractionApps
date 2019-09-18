@@ -874,7 +874,10 @@ namespace TwoZeroFourEight
 
             CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args)
             {
-                GazeInput.GetGazePointer(this).Click();
+                if (!args.KeyStatus.WasKeyDown)
+                {
+                    GazeInput.GetGazePointer(this).Click();
+                }
             });
 
             var sharedSettings = new ValueSet();
@@ -1052,7 +1055,7 @@ namespace TwoZeroFourEight
             HelpDialogGrid.Visibility = Visibility.Visible;
             SetTabsForDialogView();
             FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
-            BackToGameButton.Focus(FocusState.Programmatic);
+            BackToGameButton.Focus(FocusState.Pointer);
         }
 
         private void GameBoardGrid_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -1214,11 +1217,11 @@ namespace TwoZeroFourEight
             PrivacyViewGrid.Visibility = Visibility.Collapsed;
             if (_webViewOpenedAs == WebViewOpenedAs.Privacy)
             {
-                PrivacyHyperlink.Focus(FocusState.Programmatic);
+                PrivacyHyperlink.Focus(FocusState.Pointer);
             }
             else
             {
-                UseTermsHyperlink.Focus(FocusState.Programmatic);
+                UseTermsHyperlink.Focus(FocusState.Pointer);
             }
         }
 

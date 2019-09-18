@@ -54,10 +54,6 @@
           <source>Version</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[22242][!!_Vêŗŝíôή_!!]</target>
         </trans-unit>
-        <trans-unit id="WebViewContinueButton.Content" translate="yes" xml:space="preserve">
-          <source>Continue</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5A50C][!!_Ćôйτíйûê_!!]</target>
-        </trans-unit>
         <trans-unit id="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Continue</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[5D623][!!_Ĉóиţìηûè_!!]</target>
@@ -197,6 +193,10 @@ If the board fills up and none of the adjacent tiles contain the same numbers, t
         <trans-unit id="HowToPlayPage5Line3.Text" translate="yes" xml:space="preserve">
           <source> start a new game</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[0EC45][!!_ šτàŕť â иéẅ ĝámę_!!]</target>
+        </trans-unit>
+        <trans-unit id="WebViewContinue.Text" translate="yes" xml:space="preserve">
+          <source>Continue</source>
+          <target state="new">Continue</target>
         </trans-unit>
       </group>
     </body>

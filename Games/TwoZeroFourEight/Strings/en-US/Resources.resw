@@ -249,7 +249,7 @@ If the board fills up and none of the adjacent tiles contain the same numbers, t
   <data name="VersionStringPrefix" xml:space="preserve">
     <value>Version</value>
   </data>
-  <data name="WebViewContinueButton.Content" xml:space="preserve">
+  <data name="WebViewContinue.Text" xml:space="preserve">
     <value>Continue</value>
   </data>
   <data name="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
