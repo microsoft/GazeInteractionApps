@@ -136,9 +136,6 @@
   <data name="VersionStringPrefix" xml:space="preserve">
     <value>[22242][!!_Vèѓşîôή_!!]</value>
   </data>
-  <data name="WebViewContinueButton.Content" xml:space="preserve">
-    <value>[5A50C][!!_Ĉòиťìйµę_!!]</value>
-  </data>
   <data name="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>[5D623][!!_Ċôήţíηúę_!!]</value>
   </data>

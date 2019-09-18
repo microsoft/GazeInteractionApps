@@ -12,6 +12,7 @@ using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Composition;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
@@ -47,6 +48,8 @@ namespace Memory
         SolidColorBrush _solidTileBrush;        
         SolidColorBrush _toolButtonBrush;
         SolidColorBrush _pausedButtonBrush = new SolidColorBrush(Colors.Black);
+        SolidColorBrush _whiteBrush = new SolidColorBrush(Colors.White);
+        SolidColorBrush _transparentBrush = new SolidColorBrush(Colors.Transparent);
 
         int _boardRows = 6;
         int _boardColumns = 11;
@@ -70,6 +73,8 @@ namespace Memory
             _flashTimer.Tick += OnFlashTimerTick;
             _usePictures = false;
 
+            CoreWindow.GetForCurrentThread().KeyDown += CoredWindow_KeyDown;
+
             Loaded += MainPage_Loaded;
 
             var sharedSettings = new ValueSet();
@@ -77,6 +82,14 @@ namespace Memory
                 var gazePointer = GazeInput.GetGazePointer(this);
                 gazePointer.LoadSettings(sharedSettings);
             });
+        }
+
+        private void CoredWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            if (!args.KeyStatus.WasKeyDown)
+            {
+                GazeInput.GetGazePointer(this).Click();
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -307,6 +320,8 @@ namespace Memory
             //Flip button visual
             var btnVisual = ElementCompositionPreview.GetElementVisual(btn);
             var compositor = btnVisual.Compositor;
+
+            GazeInput.DwellFeedbackProgressBrush = _transparentBrush;
 
             //Get a visual for the content
             var btnContent = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(btn, 0), 0);
@@ -620,6 +635,8 @@ namespace Memory
 
         private void FlipBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
         {
+            GazeInput.DwellFeedbackProgressBrush = _whiteBrush;
+
             _animationActive = false;
 
             if (_secondButton == null)
@@ -698,7 +715,7 @@ namespace Memory
 
         private void DialogButton_Click(object sender, RoutedEventArgs e)
         {
-            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+            GazeInput.DwellFeedbackProgressBrush = _whiteBrush;
             DialogGrid.Visibility = Visibility.Collapsed;
             ResetBoard();
             SetTabsForPageView();
@@ -706,7 +723,7 @@ namespace Memory
 
         private async void DialogButton2_Click(object sender, RoutedEventArgs e)
         {
-            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+            GazeInput.DwellFeedbackProgressBrush = _whiteBrush;
             DialogGrid.Visibility = Visibility.Collapsed;
             ClearBoard();
             await Task.Delay(400);
@@ -716,7 +733,7 @@ namespace Memory
 
         private void DismissButton(object sender, RoutedEventArgs e)
         {
-            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+            GazeInput.DwellFeedbackProgressBrush = _whiteBrush;
             DialogGrid.Visibility = Visibility.Collapsed;
 
             //RootGrid.Children.Remove(PlayAgainButton);
@@ -730,7 +747,7 @@ namespace Memory
             PlayAgainText.Visibility = Visibility.Visible;
             OnPause(PauseButton, null);
             SetTabsForPageView();
-            PauseButton.Focus(FocusState.Programmatic);
+            PauseButton.Focus(FocusState.Pointer);
         }
 
 
@@ -822,6 +839,11 @@ namespace Memory
                     button.IsTabStop = true;
                 }
             }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            CoreWindow.GetForCurrentThread().KeyDown -= CoredWindow_KeyDown;
         }
     }
 }

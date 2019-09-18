@@ -42,10 +42,8 @@ namespace Memory
             var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
             VersionTextBlock.Text = resourceLoader.GetString("VersionStringPrefix") + GetAppVersion();
 
-            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
-                GazeInput.GetGazePointer(this).Click();
-            });
-
+            CoreWindow.GetForCurrentThread().KeyDown += CoredWindow_KeyDown;
+         
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
             {
@@ -54,6 +52,14 @@ namespace Memory
 
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
+        }
+
+        private void CoredWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            if (!args.KeyStatus.WasKeyDown)
+            {
+                GazeInput.GetGazePointer(this).Click();
+            }
         }
 
         private void OnStartGame(object sender, RoutedEventArgs e)
@@ -87,7 +93,7 @@ namespace Memory
 
             HelpDialogGrid.Visibility = Visibility.Visible;
             SetTabsForDialogView();
-            BackToGameButton.Focus(FocusState.Programmatic);
+            BackToGameButton.Focus(FocusState.Pointer);
         }
 
         private void OnHelpNavRight(object sender, RoutedEventArgs e)
@@ -181,11 +187,11 @@ namespace Memory
             PrivacyViewGrid.Visibility = Visibility.Collapsed;
             if (_webViewOpenedAs == WebViewOpenedAs.Privacy)
             {
-                PrivacyHyperlink.Focus(FocusState.Programmatic);
+                PrivacyHyperlink.Focus(FocusState.Pointer);
             }
             else
             {
-                UseTermsHyperlink.Focus(FocusState.Programmatic);
+                UseTermsHyperlink.Focus(FocusState.Pointer);
             }
         }
 
@@ -325,6 +331,11 @@ namespace Memory
                 logger.Log($"Init-ETD:{GazeInput.IsDeviceAvailable}");
                 firstLaunch = false;
             }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            CoreWindow.GetForCurrentThread().KeyDown -= CoredWindow_KeyDown;
         }
     }
 }

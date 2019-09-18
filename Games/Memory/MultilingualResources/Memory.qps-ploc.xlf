@@ -174,10 +174,6 @@ The game is complete when all the cards have been matched as pairs.</source>
           <source>Version</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[22242][!!_Vèѓşîôή_!!]</target>
         </trans-unit>
-        <trans-unit id="WebViewContinueButton.Content" translate="yes" xml:space="preserve">
-          <source>Continue</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5A50C][!!_Ĉòиťìйµę_!!]</target>
-        </trans-unit>
         <trans-unit id="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Continue</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[5D623][!!_Ċôήţíηúę_!!]</target>
@@ -246,15 +242,19 @@ The game is complete when all the cards have been matched as pairs.</source>
         </trans-unit>
         <trans-unit id="HowToPlayPage5Line1.Text" translate="yes" xml:space="preserve">
           <source>The buttons below have longer dwell times so as to prevent the user from exiting or closing out of the game by mistake:</source>
-          <target state="new">The buttons below have longer dwell times so as to prevent the user from exiting or closing out of the game by mistake:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[FB95D][!!_Ţнè Бùτţõйş ъęľôẁ ђàνê łõиġéŕ ðẁêľľ τíмêş şó ãś тó ρŕèνèήτ тћé ûşèŕ ƒѓòм ê×îťįήġ õѓ ċļóşíήģ óûť òƒ тħę ġãmé ьÿ мíŝťáķé:_!!]</target>
         </trans-unit>
         <trans-unit id="HowToPlayPage5Line2.Text" translate="yes" xml:space="preserve">
           <source> exit game entirely</source>
-          <target state="new"> exit game entirely</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[D3F35][!!_ ę×įţ ĝámé êйţîѓéļÿ_!!]</target>
         </trans-unit>
         <trans-unit id="HowToPlayPage5Line3.Text" translate="yes" xml:space="preserve">
           <source> start a new game</source>
-          <target state="new"> start a new game</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[0EC45][!!_ šтãѓт à ηéŵ ģàмę_!!]</target>
+        </trans-unit>
+        <trans-unit id="WebViewContinue.Text" translate="yes" xml:space="preserve">
+          <source>Continue</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[BFB29][!!_Čõйтįйûè_!!]</target>
         </trans-unit>
       </group>
     </body>
