@@ -352,7 +352,7 @@ namespace Fifteen
                 GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
                 string[] parms = (sender as CompositionScopedBatch).Comment.Split(',');
                 Button focusButton = FindName($"button_{parms[1]}_{parms[0]}") as Button;
-                focusButton.Focus(FocusState.Programmatic);                                           
+                focusButton.Focus(FocusState.Pointer);        //Pointer focus state does not force the focus visual to display, which improves experience in switch mode                                   
             }            
         }
 
