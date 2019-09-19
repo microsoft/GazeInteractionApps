@@ -100,7 +100,7 @@ namespace Fifteen
             
             HelpDialogGrid.Visibility = Visibility.Visible;
             SetTabsForDialogView();
-            BackToGameButton.Focus(FocusState.Programmatic);
+            BackToGameButton.Focus(FocusState.Pointer);
         }
 
         private void OnHelpNavRight(object sender, RoutedEventArgs e)
@@ -232,11 +232,11 @@ namespace Fifteen
             PrivacyViewGrid.Visibility = Visibility.Collapsed;
             if (_webViewOpenedAs == WebViewOpenedAs.Privacy)
             {
-                PrivacyHyperlink.Focus(FocusState.Programmatic);
+                PrivacyHyperlink.Focus(FocusState.Pointer);
             }
             else
             {
-                UseTermsHyperlink.Focus(FocusState.Programmatic);
+                UseTermsHyperlink.Focus(FocusState.Pointer);
             }
         }
 

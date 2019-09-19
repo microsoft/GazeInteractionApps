@@ -225,7 +225,7 @@ namespace Fifteen
             Button firstButton = FocusManager.FindFirstFocusableElement(GameGrid) as Button;
             firstButton.Focus(FocusState.Programmatic);
 
-            getRootScrollViewer().Focus(FocusState.Programmatic);            
+            getRootScrollViewer().Focus(FocusState.Pointer);            
         }
 
         private bool IsButtonCompositionReady()
@@ -433,7 +433,7 @@ namespace Fifteen
             GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
             DialogGrid.Visibility = Visibility.Visible;
             SetTabsForDialogView();
-            CloseDialogButton.Focus(FocusState.Programmatic);
+            CloseDialogButton.Focus(FocusState.Pointer);
         }
 
         private void DialogButton_Click(object sender, RoutedEventArgs e)
@@ -470,7 +470,7 @@ namespace Fifteen
             PlayAgainText.Visibility = Visibility.Visible;
             OnPause(PauseButton, null);
             SetTabsForPageView();
-            PauseButton.Focus(FocusState.Programmatic);
+            PauseButton.Focus(FocusState.Pointer);
         }
 
         private void OnExit(object sender, RoutedEventArgs e)
