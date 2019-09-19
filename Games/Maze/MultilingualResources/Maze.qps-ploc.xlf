@@ -264,10 +264,6 @@ The game is complete when the dog reaches home.</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[22242][!!_Vèѓšíõή _!!]</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Prefix to version number information. Note extra space afterwards.</note>
         </trans-unit>
-        <trans-unit id="WebViewContinueButton.Content" translate="yes" xml:space="preserve">
-          <source>Continue</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5A50C][!!_Ĉóήτìйúê_!!]</target>
-        </trans-unit>
         <trans-unit id="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Continue</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[5D623][!!_Ċõиτíήµę_!!]</target>
@@ -275,6 +271,10 @@ The game is complete when the dog reaches home.</source>
         <trans-unit id="WebViewLoadingPrompt.Text" translate="yes" xml:space="preserve">
           <source>Loading..</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[DF2D6][!!_Ľôâđîйĝ.._!!]</target>
+        </trans-unit>
+        <trans-unit id="WebViewContinue.Text" translate="yes" xml:space="preserve">
+          <source>Continue</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[BFB29][!!_Ćòиτîήûé_!!]</target>
         </trans-unit>
       </group>
     </body>

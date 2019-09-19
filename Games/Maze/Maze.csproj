@@ -77,8 +77,6 @@
     <None Include="Maze_StoreKey.pfx" />
     <None Include="Maze_TemporaryKey.pfx" />
     <PRIResource Include="Strings\qps-ploc\Resources.resw" />
-    <PRIResource Include="Strings\fr-FR\Resources.resw" />
-    <PRIResource Include="Strings\fr-CA\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw">
       <SubType>Designer</SubType>
     </PRIResource>
@@ -225,8 +223,6 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <XliffResource Include="MultilingualResources\Maze.fr-CA.xlf" />
-    <XliffResource Include="MultilingualResources\Maze.fr-FR.xlf" />
     <XliffResource Include="MultilingualResources\Maze.qps-ploc.xlf" />
   </ItemGroup>
   <ItemGroup />

@@ -159,15 +159,21 @@ namespace Maze
 
             Loaded += GamePage_Loaded;
 
-            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {
-                GazeInput.GetGazePointer(this).Click();
-            });
-
+            CoreWindow.GetForCurrentThread().KeyDown += CoredWindow_KeyDown;
+          
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
             {
                 GazeInput.LoadSettings(sharedSettings);
             });
+        }
+
+        private void CoredWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            if (!args.KeyStatus.WasKeyDown)
+            {
+                GazeInput.GetGazePointer(this).Click();
+            }
         }
 
         private ScrollViewer getRootScrollViewer()
@@ -872,7 +878,7 @@ namespace Maze
 
                 DialogGrid.Visibility = Visibility.Visible;
                 SetTabsForDialogView();
-                CloseDialogButton.Focus(FocusState.Programmatic);
+                CloseDialogButton.Focus(FocusState.Pointer);
             }
         }
 
@@ -958,7 +964,7 @@ namespace Maze
             PlayAgainText.Visibility = Visibility.Visible;
             OnPause(PauseButton, null);
             SetTabsForPageView();
-            PauseButton.Focus(FocusState.Programmatic);
+            PauseButton.Focus(FocusState.Pointer);
         }      
 
         private void DialogGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
@@ -1007,5 +1013,9 @@ namespace Maze
             }
         }
 
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            CoreWindow.GetForCurrentThread().KeyDown -= CoredWindow_KeyDown;
+        }
     }
 }

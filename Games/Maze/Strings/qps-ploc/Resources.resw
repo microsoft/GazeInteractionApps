@@ -207,13 +207,13 @@
     <value>[22242][!!_Vèѓšíõή _!!]</value>
     <comment>Prefix to version number information. Note extra space afterwards.</comment>
   </data>
-  <data name="WebViewContinueButton.Content" xml:space="preserve">
-    <value>[5A50C][!!_Ĉóήτìйúê_!!]</value>
-  </data>
   <data name="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>[5D623][!!_Ċõиτíήµę_!!]</value>
   </data>
   <data name="WebViewLoadingPrompt.Text" xml:space="preserve">
     <value>[DF2D6][!!_Ľôâđîйĝ.._!!]</value>
+  </data>
+  <data name="WebViewContinue.Text" xml:space="preserve">
+    <value>[BFB29][!!_Ćòиτîήûé_!!]</value>
   </data>
 </root>

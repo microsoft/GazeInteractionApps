@@ -308,7 +308,7 @@
     <value>Version </value>
     <comment>Prefix to version number information. Note extra space afterwards.</comment>
   </data>
-  <data name="WebViewContinueButton.Content" xml:space="preserve">
+  <data name="WebViewContinue.Text" xml:space="preserve">
     <value>Continue</value>
   </data>
   <data name="WebViewContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
