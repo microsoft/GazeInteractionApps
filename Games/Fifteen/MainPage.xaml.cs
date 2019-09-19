@@ -41,8 +41,9 @@ namespace Fifteen
 
             var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
             VersionTextBlock.Text = resourceLoader.GetString("VersionStringPrefix") + GetAppVersion();
-           
-          
+
+            CoreWindow.GetForCurrentThread().KeyDown += CoredWindow_KeyDown;
+
             var sharedSettings = new ValueSet();
             GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
             {
@@ -51,6 +52,14 @@ namespace Fifteen
 
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);                       
+        }
+
+        private void CoredWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            if (!args.KeyStatus.WasKeyDown)
+            {
+                GazeInput.GetGazePointer(this).Click();
+            }
         }
 
         private void OnBoardSizeSelected(object sender, RoutedEventArgs e)
@@ -333,6 +342,11 @@ namespace Fifteen
                 logger.Log($"Init-ETD:{GazeInput.IsDeviceAvailable}");
                 firstLaunch = false;
             }
+        }        
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            CoreWindow.GetForCurrentThread().KeyDown -= CoredWindow_KeyDown;
         }
     }
 }

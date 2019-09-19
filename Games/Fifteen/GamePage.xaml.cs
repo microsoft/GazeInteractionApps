@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Automation;
 using Microsoft.Services.Store.Engagement;
+using Windows.UI.Core;
 
 namespace Fifteen
 {
@@ -62,6 +63,16 @@ namespace Fifteen
             });
 
             Loaded += GamePage_Loaded;
+
+            CoreWindow.GetForCurrentThread().KeyDown += CoredWindow_KeyDown;
+        }
+
+        private void CoredWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            if (!args.KeyStatus.WasKeyDown)
+            {
+                GazeInput.GetGazePointer(this).Click();
+            }
         }
 
         private void WaitForCompositionTimer_Tick(object sender, object e)
@@ -563,6 +574,11 @@ namespace Fifteen
                     _buttons[row, col].IsTabStop = true;                     
                 }
             }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            CoreWindow.GetForCurrentThread().KeyDown -= CoredWindow_KeyDown;
         }
     }
 }

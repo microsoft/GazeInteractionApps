@@ -8,7 +8,7 @@
     xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     gaze:GazeInput.Interaction="Enabled"
     gaze:GazeInput.IsCursorVisible="False"
-    mc:Ignorable="d" FontFamily="Segoe UI">
+    mc:Ignorable="d" FontFamily="Segoe UI" Unloaded="Page_Unloaded">
 
     <Page.Resources>
 

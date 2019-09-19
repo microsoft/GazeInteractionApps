@@ -60,13 +60,7 @@ namespace Fifteen
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
-        {
-            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args) {                
-                if (!args.KeyStatus.WasKeyDown)
-                {
-                    GazeInput.GetGazePointer(null).Click();
-                }
-            });
+        {           
 
             Frame rootFrame = Window.Current.Content as Frame;
 

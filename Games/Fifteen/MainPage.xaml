@@ -9,7 +9,7 @@
     gaze:GazeInput.Interaction="Enabled"
     gaze:GazeInput.IsCursorVisible="False"
     mc:Ignorable="d"
-    FontFamily="Segoe UI" Loaded="Page_Loaded" >
+    FontFamily="Segoe UI" Loaded="Page_Loaded" Unloaded="Page_Unloaded" >
 
     <Page.Resources>
         <Duration x:Key="DestructiveDwellDuration">00:00:01.0000000</Duration>
