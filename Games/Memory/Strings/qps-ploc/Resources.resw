@@ -186,4 +186,16 @@
   <data name="HelpNavRightButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>[D6246][!!_Ρáĝè ŗîġћτ_!!]</value>
   </data>
+  <data name="HowToPlayPage5Line1.Text" xml:space="preserve">
+    <value>[FB95D][!!_Ţнè Бùτţõйş ъęľôẁ ђàνê łõиġéŕ ðẁêľľ τíмêş şó ãś тó ρŕèνèήτ тћé ûşèŕ ƒѓòм ê×îťįήġ õѓ ċļóşíήģ óûť òƒ тħę ġãmé ьÿ мíŝťáķé:_!!]</value>
+  </data>
+  <data name="HowToPlayPage5Line2.Text" xml:space="preserve">
+    <value>[D3F35][!!_ ę×įţ ĝámé êйţîѓéļÿ_!!]</value>
+  </data>
+  <data name="HowToPlayPage5Line3.Text" xml:space="preserve">
+    <value>[0EC45][!!_ šтãѓт à ηéŵ ģàмę_!!]</value>
+  </data>
+  <data name="WebViewContinue.Text" xml:space="preserve">
+    <value>[BFB29][!!_Čõйтįйûè_!!]</value>
+  </data>
 </root>
