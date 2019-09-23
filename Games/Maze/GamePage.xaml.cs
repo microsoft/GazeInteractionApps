@@ -847,7 +847,7 @@ namespace Maze
                     //message = $"With a little help you have solved the maze!";
                     //EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Slow.gif"));
                     //EndAnimation.Source = null;
-                    logger.Log($"EndOfMaze-ETD:{GazeInput.IsDeviceAvailable}-solve");
+                    logger.Log($"EndOfMaze{_numRows}-ETD:{GazeInput.IsDeviceAvailable}-solve");
                 }
                 else
                 {
@@ -859,7 +859,7 @@ namespace Maze
                     message = $"{resourceLoader.GetString("CongratsMessageStringMoveCountPrefix")}{_numMoves}{resourceLoader.GetString("CongratsMessageStringMoveCountPostfix")}";
 
                     //EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Fast.gif"));
-                    logger.Log($"EndOfMaze-ETD:{GazeInput.IsDeviceAvailable}-m#{_numMoves}");
+                    logger.Log($"EndOfMaze{_numRows}-ETD:{GazeInput.IsDeviceAvailable}-m#{_numMoves}");
                 }
                 GazeInput.DwellFeedbackProgressBrush = _borderBrush;
 
