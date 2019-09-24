@@ -229,7 +229,11 @@ namespace TwoZeroFourEight
                 appSettings.Values["highscore"] = value.ToString();
                 SetField<int>(ref _highScore, value, "HighScore");
                 StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
-                logger.Log($"HighScore:{_highScore}-ETD:{GazeInput.IsDeviceAvailable}");
+                if (_highScore > 1000)
+                {
+                    logger.Log($"HighScore:over-{_highScore-(_highScore % 1000)}-ETD:{GazeInput.IsDeviceAvailable}");
+                }
+                
             }
         }
 
