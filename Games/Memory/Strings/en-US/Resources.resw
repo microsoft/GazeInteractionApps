@@ -131,15 +131,19 @@
   </data>
   <data name="BoardSize1.Text" xml:space="preserve">
     <value>16 cards</value>
+    <comment>{NumberedPlaceholder=16}</comment>
   </data>
   <data name="BoardSize2.Text" xml:space="preserve">
     <value>24 cards</value>
+    <comment>{NumberedPlaceholder=24}</comment>
   </data>
   <data name="BoardSize3.Text" xml:space="preserve">
     <value>36 cards</value>
+    <comment>{NumberedPlaceholder=36}</comment>
   </data>
   <data name="BoardSize4.Text" xml:space="preserve">
     <value>66 cards</value>
+    <comment>{NumberedPlaceholder=66}</comment>
   </data>
   <data name="BoardSizeButton1.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Play sixteen card game</value>
@@ -202,6 +206,7 @@
     <value>Eyes First - Match Two is a memory game with four puzzle boards of increasing difficulty.
 
 You may choose to play a board with 16, 24, 36 or 66 cards.</value>
+    <comment>{NumberedPlaceholder=16,24,36,66}</comment>
   </data>
   <data name="HowToPlayPage2.Text" xml:space="preserve">
     <value>The goal is to match all of the cards in as few moves as possible by turning over one card at a time.
