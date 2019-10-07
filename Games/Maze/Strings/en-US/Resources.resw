@@ -134,15 +134,19 @@
   </data>
   <data name="BoardSize1.Text" xml:space="preserve">
     <value>3 rows</value>
+    <comment>{NumberedPlaceholder=3}</comment>
   </data>
   <data name="BoardSize2.Text" xml:space="preserve">
     <value>4 rows</value>
+    <comment>{NumberedPlaceholder=4}</comment>
   </data>
   <data name="BoardSize3.Text" xml:space="preserve">
     <value>5 rows</value>
+    <comment>{NumberedPlaceholder=5}</comment>
   </data>
   <data name="BoardSize4.Text" xml:space="preserve">
     <value>6 rows</value>
+    <comment>{NumberedPlaceholder=6}</comment>
   </data>
   <data name="ChangePuzzleSizeButton.Text" xml:space="preserve">
     <value>Change Puzzle Size</value>
@@ -154,7 +158,7 @@
     <value>Close</value>
   </data>
   <data name="CongratsMessageString" xml:space="preserve">
-    <value>Congratualtions!!</value>
+    <value>Congratulations!!</value>
   </data>
   <data name="CongratsMessageStringMoveCountPostfix" xml:space="preserve">
     <value> moves!</value>
@@ -194,7 +198,7 @@
   </data>
   <data name="HowToPlayPage1.Text" xml:space="preserve">
     <value>Eyes First - Maze is a path finding game with four maze sizes of increasing difficulty.You may choose to play a randomized maze with 3, 4, 5 or 6 rows.</value>
-    <comment>Multiline help text for first help page. Note special line feed strings</comment>
+    <comment>Multiline help text for first help page. Note special line feed strings {NumberedPlaceholder=3,4,5,6}</comment>
   </data>
   <data name="HowToPlayPage2.Text" xml:space="preserve">
     <value>The goal is to navigate the dog back to the dog house in as few moves as possible.  To move around the maze dwell or click on a room in the same hall or pathway of the maze. The game is complete when the dog reaches home.</value>

@@ -179,6 +179,7 @@ After each move one of the empty tiles will fill with a value of 2 or sometimes 
 But if you reach 2048 don't stop there, higher combinations are possible.
 
 If the board fills up and none of the adjacent tiles contain the same numbers, the game is over.</value>
+    <comment>{NumberedPlaceholder=2048}</comment>
   </data>
   <data name="HowToPlayPage5Line1.Text" xml:space="preserve">
     <value>The buttons below have longer dwell times so as to prevent the user from exiting or closing out of the game by mistake:</value>
