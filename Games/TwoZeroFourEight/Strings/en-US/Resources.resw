@@ -119,9 +119,11 @@
   </resheader>
   <data name="AppDescription" xml:space="preserve">
     <value>Double Up</value>
+    <comment>{Locked}</comment>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>Eyes First - Double Up</value>
+    <comment>{NumberedPlaceholder="Eyes First", "Double Up"}</comment>
   </data>
   <data name="BackToGameButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Back to game</value>
@@ -134,12 +136,14 @@
   </data>
   <data name="EyesFirst.Text" xml:space="preserve">
     <value>EYES FIRST</value>
+    <comment>{Locked}</comment>
   </data>
   <data name="GameOver.Text" xml:space="preserve">
     <value>Game Over</value>
   </data>
   <data name="GameTitle.Text" xml:space="preserve">
     <value>DOUBLE UP</value>
+    <comment>{Locked}</comment>
   </data>
   <data name="HelpNavLeftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Page left</value>
@@ -166,6 +170,7 @@
     <value>Eyes First - Double Up is a puzzle based on a grid that gradually fills with numbered tiles.
 
 After each move one of the empty tiles will fill with a value of 2 or sometimes 4.</value>
+    <comment>{NumberedPlaceholder="Eyes First", "Double Up"}</comment>
   </data>
   <data name="HowToPlayPage2.Text" xml:space="preserve">
     <value>The four arrow buttons (up, down, left, right) slide all the tiles on the board in the direction of the arrow until they encounter the edge of the grid or another tile.</value>
