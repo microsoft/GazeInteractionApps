@@ -157,7 +157,7 @@
     <value>Back to game</value>
   </data>
   <data name="HowToPlayButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>How to Play</value>
+    <value>How to Play and Settings</value>
   </data>
   <data name="HowToPlayHeader.Text" xml:space="preserve">
     <value>How to Play</value>
@@ -190,23 +190,32 @@ If the board fills up and none of the adjacent tiles contain the same numbers, t
   <data name="HowToPlayPage5Line3.Text" xml:space="preserve">
     <value> start a new game</value>
   </data>
-  <data name="HowToPlayPageLabel1of6.Text" xml:space="preserve">
-    <value>1 of 6</value>
+  <data name="HowToPlayPage6Line1.Text" xml:space="preserve">
+    <value>The settings button at the top left of this screen will allow you to customize your experience by viewing or changing your game interaction settings.</value>
   </data>
-  <data name="HowToPlayPageLabel2of6.Text" xml:space="preserve">
-    <value>2 of 6</value>
+  <data name="HowToPlayPageLabel1of7.Text" xml:space="preserve">
+    <value>1 of 7</value>
   </data>
-  <data name="HowToPlayPageLabel3of6.Text" xml:space="preserve">
-    <value>3 of 6</value>
+  <data name="HowToPlayPageLabel2of7.Text" xml:space="preserve">
+    <value>2 of 7</value>
   </data>
-  <data name="HowToPlayPageLabel4of6.Text" xml:space="preserve">
-    <value>4 of 6</value>
+  <data name="HowToPlayPageLabel3of7.Text" xml:space="preserve">
+    <value>3 of 7</value>
   </data>
-  <data name="HowToPlayPageLabel5of6.Text" xml:space="preserve">
-    <value>5 of 6</value>
+  <data name="HowToPlayPageLabel4of7.Text" xml:space="preserve">
+    <value>4 of 7</value>
   </data>
-  <data name="HowToPlayPageLabel6of6.Text" xml:space="preserve">
-    <value>6 of 6</value>
+  <data name="HowToPlayPageLabel5of7.Text" xml:space="preserve">
+    <value>5 of 7</value>
+  </data>
+  <data name="HowToPlayPageLabel6of7.Text" xml:space="preserve">
+    <value>6 of 7</value>
+  </data>
+  <data name="HowToPlayPageLabel7of7.Text" xml:space="preserve">
+    <value>7 of 7</value>
+  </data>
+  <data name="HowToPlaySettingsHeader.Text" xml:space="preserve">
+    <value>About Settings</value>
   </data>
   <data name="LeftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Slide left</value>
@@ -238,6 +247,27 @@ If the board fills up and none of the adjacent tiles contain the same numbers, t
   <data name="Score.Text" xml:space="preserve">
     <value>Score</value>
   </data>
+  <data name="SettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsContinue.Text" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="SettingsContinueButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="SettingsGazePlusSwitchDescriptionLabel.Text" xml:space="preserve">
+    <value>Choose to activate (click) buttons with dwell or a switch</value>
+  </data>
+  <data name="SettingsGazePlusSwitchLabel.Text" xml:space="preserve">
+    <value>Activation Method</value>
+  </data>
+  <data name="SettingsGazePlusSwitchToggleOff" xml:space="preserve">
+    <value>Activation method is dwell</value>
+  </data>
+  <data name="SettingsGazePlusSwitchToggleOn" xml:space="preserve">
+    <value>Activation method is switch</value>
+  </data>
   <data name="UpButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Slide up</value>
   </data>
@@ -247,8 +277,8 @@ If the board fills up and none of the adjacent tiles contain the same numbers, t
   <data name="UseTermsHyperlinkButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Use Terms link</value>
   </data>
-  <data name="VersionStringPrefix" xml:space="preserve">
-    <value>Version</value>
+  <data name="VersionString" xml:space="preserve">
+    <value>Version {0}</value>
   </data>
   <data name="WebViewContinue.Text" xml:space="preserve">
     <value>Continue</value>

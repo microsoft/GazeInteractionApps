@@ -74,7 +74,6 @@
     <PRIResource Include="Strings\en-US\Resources.resw">
       <SubType>Designer</SubType>
     </PRIResource>
-    <PRIResource Include="Strings\qps-ploc\Resources.resw" />
     <None Include="TwoZeroFourEight_StoreKey.pfx" />
     <None Include="TwoZeroFourEight_TemporaryKey.pfx" />
   </ItemGroup>
@@ -207,7 +206,7 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <XliffResource Include="MultilingualResources\TwoZeroFourEight.qps-ploc.xlf" />
+    <Folder Include="MultilingualResources\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
