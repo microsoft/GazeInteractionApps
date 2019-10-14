@@ -1,9 +1,13 @@
         {
             "tool": "Credential Scanner",
-            "suppressions": [
+          "suppressions": [
             {
-                "file": "\\Games\\Fifteen\\Fifteen_TemporaryKey.pfx",
-                "_justification": "This is the temporary developer certificate required for building Windows Store apps"
+              "file": "\\Games\\Fifteen\\Fifteen_TemporaryKey.pfx",
+              "_justification": "This is the temporary developer certificate required for building Windows Store apps"
+            },
+            {
+              "file": "\\Games\\Fifteen\\Fifteen_StoreKey.pfx",
+              "_justification": "This is the temporary developer certificate required for building Windows Store apps"
             }
           ]
         }
