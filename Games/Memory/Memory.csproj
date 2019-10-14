@@ -76,7 +76,6 @@
     </AppxManifest>
     <None Include="Memory_StoreKey.pfx" />
     <None Include="Memory_TemporaryKey.pfx" />
-    <PRIResource Include="Strings\qps-ploc\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
@@ -210,9 +209,8 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <XliffResource Include="MultilingualResources\Memory.qps-ploc.xlf" />
+    <Folder Include="MultilingualResources\" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
