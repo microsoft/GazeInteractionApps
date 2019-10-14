@@ -76,7 +76,6 @@
     <None Include="Fifteen_TemporaryKey.pfx" />
     <None Include="NuGet.Config" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
-    <PRIResource Include="Strings\qps-ploc\Resources.resw" />
     <None Include="SuppressionFile.json" />
   </ItemGroup>
   <ItemGroup>
@@ -209,9 +208,8 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <XliffResource Include="MultilingualResources\Fifteen.qps-ploc.xlf" />
+    <Folder Include="MultilingualResources\" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

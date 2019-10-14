@@ -76,7 +76,6 @@
     </AppxManifest>
     <None Include="Maze_StoreKey.pfx" />
     <None Include="Maze_TemporaryKey.pfx" />
-    <PRIResource Include="Strings\qps-ploc\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw">
       <SubType>Designer</SubType>
     </PRIResource>
@@ -223,9 +222,8 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <XliffResource Include="MultilingualResources\Maze.qps-ploc.xlf" />
+    <Folder Include="MultilingualResources\" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
