@@ -119,9 +119,11 @@
   </resheader>
   <data name="AppDescription" xml:space="preserve">
     <value>Match Two</value>
+    <comment>{Locked}</comment>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>Eyes First - Match Two</value>
+    <comment>{NumberedPlaceholder="Eyes First", "Match Two"}</comment>
   </data>
   <data name="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Back</value>
@@ -180,9 +182,11 @@
   </data>
   <data name="EyesFirst.Text" xml:space="preserve">
     <value>EYES FIRST</value>
+    <comment>{Locked}</comment>
   </data>
   <data name="GameTitle.Text" xml:space="preserve">
     <value>MATCH TWO</value>
+    <comment>{Locked}</comment>
   </data>
   <data name="HelpNavLeftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Page left</value>
@@ -206,7 +210,7 @@
     <value>Eyes First - Match Two is a memory game with four puzzle boards of increasing difficulty.
 
 You may choose to play a board with 16, 24, 36 or 66 cards.</value>
-    <comment>{NumberedPlaceholder=16,24,36,66}</comment>
+    <comment>{NumberedPlaceholder="Eyes First", "Match Two",16,24,36,66}</comment>
   </data>
   <data name="HowToPlayPage2.Text" xml:space="preserve">
     <value>The goal is to match all of the cards in as few moves as possible by turning over one card at a time.
