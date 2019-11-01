@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Description" xml:space="preserve">
-    <value>Eyes First - Maze is a path finding game with four maze sizes of increasing difficulty. You may choose to play a randomized maze with 3, 4, 5 or 6 rows. The goal of the game is to navigate the dog back to the dog house in as few moves as possible. 
+    <value>Eyes First - Match Two is a game with four boards of increasing difficulty. You may choose from a 16, 24, 36, or 66 board, each with a corresponding number of cards. The goal of the game is to find a match for each card on the board and to do so in as few moves as possible.
 This app is also designed to be played with eye control using a Windows 10 compatible eye tracker.</value>
     <comment>Main product description that appears for this game when displayed in the Windows Store.
 Note: all of the other fields in this document contain text that is either displayed in the Windows Store catalog listing for this application or are meta fields used by the Windows Store search engine to help match users search terms and decide if this application is displayed in the users search results.</comment>
   </data>
   <data name="ProductFeatures" xml:space="preserve">
-    <value>Use eye control to play Maze.</value>
+    <value>Use eye control to play Match Two</value>
   </data>
   <data name="ProductName" xml:space="preserve">
-    <value>Eyes First – Maze</value>
+    <value>Eyes First – Match Two</value>
   </data>
   <data name="SearchTerm1" xml:space="preserve">
     <value>eye control</value>
@@ -136,28 +136,28 @@ Note: all of the other fields in this document contain text that is either displ
     <value>eyes first</value>
   </data>
   <data name="SearchTerm3" xml:space="preserve">
-    <value>maze</value>
+    <value>match two</value>
   </data>
   <data name="SearchTerm4" xml:space="preserve">
-    <value>puzzle</value>
+    <value>memory game</value>
   </data>
   <data name="SearchTerm5" xml:space="preserve">
-    <value>hands free</value>
+    <value>concentration</value>
   </data>
   <data name="SearchTerm6" xml:space="preserve">
-    <value>eye tracking</value>
+    <value>hands free</value>
   </data>
   <data name="SearchTerm7" xml:space="preserve">
-    <value>eye gaze</value>
+    <value>eye tracking</value>
   </data>
   <data name="ShortDescription" xml:space="preserve">
-    <value>Use eye control to play and find the shortest path home through the Maze. Challenge yourself to complete the maze in as few moves as possible or go up in board size for a harder maze to solve!
+    <value>Use eye control to play Match Two and find a match for each card in the board. Challenge yourself to complete the board in as few moves as possible or go up in board size for a harder test of your memory!
 This app is also designed to be played with eye control using a Windows 10 compatible eye tracker.</value>
   </data>
   <data name="ShortTitle" xml:space="preserve">
-    <value>Maze</value>
+    <value>Match Two</value>
   </data>
   <data name="SortTitle" xml:space="preserve">
-    <value>Eyes First Maze</value>
+    <value>Eyes First Match Two</value>
   </data>
 </root>
