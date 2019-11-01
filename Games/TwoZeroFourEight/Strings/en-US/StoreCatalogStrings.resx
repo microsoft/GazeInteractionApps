@@ -121,25 +121,30 @@
     <value>Eyes First – Double Up is a puzzle with numbered tiles, where the goal is to slide the tiles around until the number 2048 is reached. Tiles will only combine if they are the same number (2 or 4 initially, and powers of two thereafter). Try to create a tile with the number 2048. One can still continue playing after the number 2048 is reached.
 This app is also designed to be played with eye control using a Windows 10 compatible eye tracker.</value>
     <comment>Main product description that appears for this game when displayed in the Windows Store.
-Note: all of the other fields in this document contain text that is either displayed in the Windows Store catalog listing for this application or are meta fields used by the Windows Store search engine to help match users search terms and decide if this application is displayed in the users search results.</comment>
+Note: all of the other fields in this document contain text that is either displayed in the Windows Store catalog listing for this application or are meta fields used by the Windows Store search engine to help match users search terms and decide if this application is displayed in the users search results. {NumberedPlaceholder="Eyes First", "Double Up", 2048, 2, 4}</comment>
   </data>
   <data name="ProductFeatures" xml:space="preserve">
     <value>Use eye control to play Double Up</value>
+    <comment>{NumberedPlaceholder="Double Up"}</comment>
   </data>
   <data name="ProductName" xml:space="preserve">
     <value>Eyes First – Double Up</value>
+    <comment>{NumberedPlaceholder="Eyes First", "Double Up"}</comment>
   </data>
   <data name="SearchTerm1" xml:space="preserve">
     <value>eye control</value>
   </data>
   <data name="SearchTerm2" xml:space="preserve">
     <value>eyes first</value>
+    <comment>{NumberedPlaceholder="eyes first"}</comment>
   </data>
   <data name="SearchTerm3" xml:space="preserve">
     <value>double up</value>
+    <comment>{NumberedPlaceholder="double up"}</comment>
   </data>
   <data name="SearchTerm4" xml:space="preserve">
     <value>2048</value>
+    <comment>{Locked}</comment>
   </data>
   <data name="SearchTerm5" xml:space="preserve">
     <value>twenty forty-eight</value>
@@ -153,11 +158,14 @@ Note: all of the other fields in this document contain text that is either displ
   <data name="ShortDescription" xml:space="preserve">
     <value>Use eye control to play Double Up and slide the number tiles to create a tile with the number 2048. Challenge yourself to reach the number 2048 and keep going thereafter to create the largest number possible!
 This app is also designed to be played with eye control using a Windows 10 compatible eye tracker.</value>
+    <comment>{NumberedPlaceholder="Double Up", 2048}</comment>
   </data>
   <data name="ShortTitle" xml:space="preserve">
     <value>Double Up</value>
+    <comment>{NumberedPlaceholder="Double Up"}</comment>
   </data>
   <data name="SortTitle" xml:space="preserve">
     <value>Eyes First Double Up</value>
+    <comment>{NumberedPlaceholder="Eyes First", "Double Up"}</comment>
   </data>
 </root>
