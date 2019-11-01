@@ -75,8 +75,20 @@
 
         <Button x:Uid="HowToPlayButton" x:Name="HowToPlayButton" AutomationProperties.Name="How to play"  Background="{x:Null}" Foreground="White" Margin="0,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OnHowToPlayButton" FontSize="24" Height="96" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1">
             <Grid Margin="-2" Background="{StaticResource ToolBarButtonBackground}" CornerRadius="10,10,10,10">
+                <Grid.ColumnDefinitions>
+                   
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                   
+                </Grid.ColumnDefinitions>
+
+                <!--hold for settings-->
+                <!--<TextBlock  FontSize="26" FontFamily="Segoe MDL2 Assets"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="0,0,0,0" Margin="0,0,20,20" Grid.Column="1">                    
+                   &#xe713;
+                </TextBlock>-->
+               
                 <TextBlock x:Uid="HowToPlay" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,20,0" FontFamily="Segoe UI">
-                    How to Play
+                    How to Play 
                 </TextBlock>
             </Grid>
         </Button>
@@ -109,7 +121,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-
+            
             <Button x:Uid="BoardSizeButton1" x:Name="BoardSize1Button" AutomationProperties.Name="Play sixteen card game"  Grid.Row="0" Grid.Column="1" Tag="16" Click="OnStartGame" Background="{x:Null}" Foreground="White" Margin="0,0,0,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="200" Height="150" FontFamily="Segoe UI">
                 <Border Background="White" CornerRadius="10" Padding="5">
                     <Grid>
@@ -390,7 +402,7 @@
                         </Grid.RowDefinitions>
                         <TextBlock x:Uid="HowToPlayHeader" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI"/>
                         <TextBlock x:Uid="HowToPlayPage1" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Eyes First - Match Two is a memory game with four puzzle boards of increasing difficulty.&#x0d;&#x0d;You may choose to play a board with 16, 24, 36 or 66 cards." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.Row="1"/>
-                        <TextBlock x:Uid="HowToPlayPageLabel1of5" Text="1 of 5" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock x:Uid="HowToPlayPageLabel1of6" Text="1 of 6" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
                     <Grid x:Name="HelpScreen2" Grid.Column="1" Visibility="Collapsed" Margin="50,0,50,0" >
                         <Grid.RowDefinitions>
@@ -403,7 +415,7 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock x:Uid="HowToPlayHeader" Grid.Column="0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI" Grid.ColumnSpan="2"/>
-                        <TextBlock x:Uid="HowToPlayPageLabel2of5" Text="2 of 5" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock x:Uid="HowToPlayPageLabel2of6" Text="2 of 6" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
                         <TextBlock x:Uid="HowToPlayPage2" HorizontalAlignment="Left" TextWrapping="Wrap" Text="The goal is to match all of the cards in as few moves as possible by turning over one card at a time.&#x0d;&#x0d;The game is complete when all the cards have been matched as pairs." VerticalAlignment="Top" FontSize="{StaticResource HelpTextFontSize}" Foreground="White" Grid.RowSpan="2" Grid.Row="1" Grid.ColumnSpan="2"/>
                         <Image Source="/Assets/Solved16Card.PNG" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20,20,20,20" Grid.Column="1" Grid.RowSpan="2" Grid.Row="1" Visibility="Collapsed"/>
                     </Grid>
@@ -414,7 +426,7 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock x:Uid="HowToPlayHeader" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI"/>
-                        <TextBlock x:Uid="HowToPlayPageLabel3of5" Text="3 of 5" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock x:Uid="HowToPlayPageLabel3of6" Text="3 of 6" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
                         <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
@@ -449,7 +461,7 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock x:Uid="HowToPlayHeader" HorizontalAlignment="Center" TextWrapping="Wrap" Text="How to Play" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI"/>
-                        <TextBlock x:Uid="HowToPlayPageLabel4of5" Text="4 of 5" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock x:Uid="HowToPlayPageLabel4of6" Text="4 of 6" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
                         <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
@@ -486,8 +498,32 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
+                        <TextBlock x:Uid="HowToPlaySettingsHeader" HorizontalAlignment="Center" TextWrapping="Wrap" Text="About Settings" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI"/>
+                        <TextBlock x:Uid="HowToPlayPageLabel5of6" Text="5 of 6" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
+                        <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock x:Uid="HowToPlayPage5Line1" Foreground="White" FontSize="{StaticResource HelpTextFontSize}" VerticalAlignment="Center" Margin="10,0,0,19" TextWrapping="Wrap" Grid.ColumnSpan="2">The settings button at the top left of these How to Play screens allows you to select the group of symbols displayed in the game as well as change between gaze plus switch or dwell modes</TextBlock>
+
+                        </Grid>
+
+                    </Grid>
+                    <Grid x:Name="HelpScreen6" Grid.Column="1" Visibility="Collapsed" Margin="50,0,50,0" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150px"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
                         <TextBlock x:Uid="PrivacyHeader" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Privacy &amp; Terms" VerticalAlignment="Center" FontSize="48" Foreground="White" FontFamily="Segoe UI"/>
-                        <TextBlock x:Uid="HowToPlayPageLabel5of5" Text="5 of 5" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock x:Uid="HowToPlayPageLabel6of6" Text="6 of 6" Foreground="White" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"/>
                         <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
@@ -521,6 +557,108 @@
                             <TextBlock x:Uid="HowToPlayBackToGameButton" Text="Back to game" Foreground="{StaticResource ToolBarButtonBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="24" Padding="60,0,60,0" ></TextBlock>
                         </Grid>
                     </Button>
+                    <!--hold for settings-Collapsed-->
+                    <!--hold for settings-remember to edit resw-->
+                    <Button x:Name="SettingsButton" x:Uid="SettingsButton" AutomationProperties.Name="Settings" Height="96" Width="96" Grid.Column="1" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,15,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontFamily="Segoe UI" Padding="0" Click="SettingsButton_Click" Visibility="Collapsed" >
+                        <Grid Margin="-2" Background="White" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <TextBlock Foreground="{StaticResource ToolBarButtonBackground}" FontFamily="Segoe MDL2 Assets" FontSize="46" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                 &#xe713;
+                            </TextBlock>
+                        </Grid>
+                    </Button>
+                    <Grid x:Name="SettingsScreen" Background="{StaticResource ToolBarButtonBackground}" Grid.ColumnSpan="3" Visibility="Collapsed" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120px"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="120px"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Foreground="White" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,50,0,0">Settings</TextBlock>
+
+                        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="White" BorderThickness="1,1,1,1" Padding="20" Margin="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock  x:Uid="SettingsGazePlusSwitchLabel" Foreground="White" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="top" Grid.Column="0" Grid.Row="0" Margin="0,0,0,0">Activation Method</TextBlock>
+                                    <TextBlock  x:Uid="SettingsGazePlusSwitchDescriptionLabel" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="top" Grid.Column="0" Grid.Row="1" Margin="0,0,0,0" TextWrapping="Wrap">Choose to activate (click) buttons with dwell or a switch</TextBlock>
+                                    
+                                </Grid>
+                                
+                                <Button x:Name="GazePlusSwitchToggle" Background="{x:Null}" FontFamily="Segoe UI" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0" Margin="10,0,10,0" Click="GazePlusSwitchToggle_Click">
+                                    <Grid x:Name="GazePlusSwitchToggleShape" Margin="-2" Background="White" CornerRadius="5">
+                                        <TextBlock x:Name="GazePlusSwitchToggleText"  Foreground="{StaticResource ToolBarButtonBackground}" FontFamily="Segoe UI" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            Switch
+                                        </TextBlock>
+                                    </Grid>
+                                </Button>
+                                <Button x:Name="GazeToggle" Background="{x:Null}" FontFamily="Segoe UI" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0" Margin="10,0,10,0" Click="GazeToggle_Click" >
+                                    <Grid x:Name="GazeToggleShape" Margin="-2" Background="White" CornerRadius="5">
+                                        <TextBlock x:Name="GazeToggleText"  Foreground="{StaticResource ToolBarButtonBackground}" FontFamily="Segoe UI" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            Dwell
+                                        </TextBlock>
+                                    </Grid>
+                                </Button>
+                            </Grid>
+                        </Border>
+                        
+                        <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="White" BorderThickness="1,1,1,1" Padding="20" Margin="10" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width=".5*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width=".5*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock  x:Uid="SymbolSetLabel" Foreground="White" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="top" Grid.Column="0" Grid.Row="0" Margin="0,0,0,0">Symbol Set</TextBlock>
+                                    <TextBlock  x:Uid="SymbolSetDescriptionLabel" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="top" Grid.Column="0" Grid.Row="1" Margin="0,0,0,0"  TextWrapping="Wrap">Choose the set of symbols you want to see in the game</TextBlock>
+                                </Grid>
+
+                                <Button x:Uid="PreviousSymbolCollectionButton" x:Name="PreviousSymbolCollectionButton" AutomationProperties.Name="Previous Symbol Collection Button" Grid.Column="1" Background="{x:Null}" FontFamily="Segoe UI"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"  Padding="0" Margin="0,0,0,0" Click="PreviousSymbolCollectionButton_Click" gaze:GazeInput.DwellRepeatDuration="{StaticResource RepeatDuration}" gaze:GazeInput.MaxDwellRepeatCount="99">
+                                    <Grid Margin="-2" Background="White" CornerRadius="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <TextBlock x:Name="PreviousSymbolCollectionText"  Foreground="{StaticResource ToolBarButtonBackground}" FontFamily="Segoe MDL2 Assets" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                         &#xe76b;
+                                        </TextBlock>
+                                    </Grid>
+                                </Button>
+                                <TextBlock  x:Uid="SettingsSymbolCollectionLabel" x:Name="SettingsSymbolCollectionLabel" Foreground="White" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" Margin="0,0,0,0">Emoji symbols</TextBlock>
+                                <Button x:Uid="NextSymbolCollectionButton" x:Name="NextSymbolCollectionButton" AutomationProperties.Name="Next Symbol Collection Button" Background="{x:Null}" FontFamily="Segoe UI" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"  Padding="0" Margin="0,0,0,0" Click="NextSymbolCollectionButton_Click" gaze:GazeInput.MaxDwellRepeatCount="99" gaze:GazeInput.DwellRepeatDuration="{StaticResource RepeatDuration}">
+                                    <Grid Margin="-2" Background="White" CornerRadius="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <TextBlock x:Name="NextSymbolCollectionButtonText"  Foreground="{StaticResource ToolBarButtonBackground}" FontFamily="Segoe MDL2 Assets" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                         &#xe76c;
+                                        </TextBlock>
+                                    </Grid>
+                                </Button>
+                            </Grid>
+                        </Border>
+
+                        <Button x:Uid="SettingsContinueButton" x:Name="SettingsContinueButton" AutomationProperties.Name="Continue" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Width="296" Height="96" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0"  Background="{x:Null}" Foreground="White" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Click="SettingsContinueButton_Click" Margin="0,20,0,20">
+                            <Grid Margin="-2" Background="White" CornerRadius="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+                                <TextBlock x:Uid="SettingsContinue" Text="Continue" Foreground="{StaticResource ToolBarButtonBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI"></TextBlock>
+                            </Grid>
+                        </Button>
+                    </Grid>
                 </Grid>
             </Border>
         </Grid>

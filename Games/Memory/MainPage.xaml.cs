@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Microsoft.Services.Store.Engagement;
+using Windows.UI.Xaml.Automation;
+using Windows.System;
 
 namespace Memory
 {
@@ -22,6 +24,19 @@ namespace Memory
         static bool firstLaunch = true;
 
         SolidColorBrush _solidTileBrush;
+        SolidColorBrush _toolBarButtonBackgroundBrush;
+        SolidColorBrush _whiteBrush;
+
+        bool _gazePlusSwitch;
+        bool _tempGazePlusSwitch;
+        string _symbolCollection;
+        string _tempSettingSymbolCollection;
+
+        enum SymbolSets
+        {
+            VintageCollection,
+            EmojiCollection1
+        }
 
         private enum WebViewOpenedAs
         {
@@ -38,20 +53,50 @@ namespace Memory
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
             _solidTileBrush = (SolidColorBrush)this.Resources["TileBackground"];
+            _toolBarButtonBackgroundBrush = (SolidColorBrush)this.Resources["ToolBarButtonBackground"];
+            _whiteBrush =  new SolidColorBrush(Colors.White);
 
             var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-            VersionTextBlock.Text = resourceLoader.GetString("VersionStringPrefix") + GetAppVersion();
+            VersionTextBlock.Text = String.Format(resourceLoader.GetString("VersionString"), GetAppVersion());
 
             CoreWindow.GetForCurrentThread().KeyDown += CoredWindow_KeyDown;
          
-            var sharedSettings = new ValueSet();
-            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
-            {
-                GazeInput.LoadSettings(sharedSettings);
-            });
+            //var sharedSettings = new ValueSet();
+            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
+            //{
+            //    GazeInput.LoadSettings(sharedSettings);
+            //});
 
-            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+            LoadLocalSettings();
+
+            GazeInput.DwellFeedbackProgressBrush = _whiteBrush;
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
+        }
+
+        private void LoadLocalSettings()
+        {
+            var appSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            bool? storedGazePlusSwith = appSettings.Values[nameof(_gazePlusSwitch)] as bool?;
+            if (storedGazePlusSwith != null)
+            {
+                _gazePlusSwitch = (bool)storedGazePlusSwith;
+
+            }
+            else
+            {
+                _gazePlusSwitch = false;
+            }
+
+            _symbolCollection = appSettings.Values[nameof(_symbolCollection)] as string;
+            GazeInput.SetIsSwitchEnabled(this, _gazePlusSwitch);
+        }
+
+        private void SetLocalSettings()
+        {
+            var appSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            appSettings.Values[nameof(_gazePlusSwitch)] = _gazePlusSwitch;
+            GazeInput.SetIsSwitchEnabled(this, _gazePlusSwitch);
+            appSettings.Values[nameof(_symbolCollection)] = _symbolCollection;
         }
 
         private void CoredWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
@@ -88,6 +133,7 @@ namespace Memory
             HelpScreen3.Visibility = Visibility.Collapsed;
             HelpScreen4.Visibility = Visibility.Collapsed;
             HelpScreen5.Visibility = Visibility.Collapsed;
+            HelpScreen6.Visibility = Visibility.Collapsed;
             HelpNavLeftButton.IsEnabled = false;
             HelpNavRightButton.IsEnabled = true;
 
@@ -121,12 +167,26 @@ namespace Memory
             }
             else if (HelpScreen4.Visibility == Visibility.Visible)
             {
+                //hold for settings
+                //HelpScreen4.Visibility = Visibility.Collapsed;
+                //HelpScreen5.Visibility = Visibility.Visible;
+                //HelpNavRightButton.IsEnabled = true;
+                //HelpNavLeftButton.IsEnabled = true;
+
                 HelpScreen4.Visibility = Visibility.Collapsed;
-                HelpScreen5.Visibility = Visibility.Visible;
+                HelpScreen6.Visibility = Visibility.Visible;
                 HelpNavRightButton.IsEnabled = false;
                 HelpNavLeftButton.IsEnabled = true;
             }
-            else if (HelpScreen5.Visibility == Visibility.Visible)
+            //hold for settings
+            //else if (HelpScreen5.Visibility == Visibility.Visible)
+            //{
+            //    HelpScreen5.Visibility = Visibility.Collapsed;
+            //    HelpScreen6.Visibility = Visibility.Visible;
+            //    HelpNavRightButton.IsEnabled = false;
+            //    HelpNavLeftButton.IsEnabled = true;
+            //}
+            else if (HelpScreen6.Visibility == Visibility.Visible)
             {
                 HelpNavRightButton.IsEnabled = false;
                 HelpNavLeftButton.IsEnabled = true;
@@ -154,7 +214,6 @@ namespace Memory
                 HelpNavLeftButton.IsEnabled = true;
                 HelpNavRightButton.IsEnabled = true;
             }
-
             else if (HelpScreen4.Visibility == Visibility.Visible)
             {
                 HelpScreen4.Visibility = Visibility.Collapsed;
@@ -162,9 +221,23 @@ namespace Memory
                 HelpNavLeftButton.IsEnabled = true;
                 HelpNavRightButton.IsEnabled = true;
             }
-            else if (HelpScreen5.Visibility == Visibility.Visible)
+            //hold for settings
+            //else if (HelpScreen5.Visibility == Visibility.Visible)
+            //{
+            //    HelpScreen5.Visibility = Visibility.Collapsed;
+            //    HelpScreen4.Visibility = Visibility.Visible;
+            //    HelpNavLeftButton.IsEnabled = true;
+            //    HelpNavRightButton.IsEnabled = true;
+            //}
+            else if (HelpScreen6.Visibility == Visibility.Visible)
             {
-                HelpScreen5.Visibility = Visibility.Collapsed;
+                //hold for settings
+                //HelpScreen6.Visibility = Visibility.Collapsed;
+                //HelpScreen5.Visibility = Visibility.Visible;
+                //HelpNavLeftButton.IsEnabled = true;
+                //HelpNavRightButton.IsEnabled = true;
+
+                HelpScreen6.Visibility = Visibility.Collapsed;
                 HelpScreen4.Visibility = Visibility.Visible;
                 HelpNavLeftButton.IsEnabled = true;
                 HelpNavRightButton.IsEnabled = true;
@@ -224,7 +297,7 @@ namespace Memory
         private void DismissButton(object sender, RoutedEventArgs e)
         {
             HelpDialogGrid.Visibility = Visibility.Collapsed;
-            GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
+            GazeInput.DwellFeedbackProgressBrush = _whiteBrush;
             SetTabsForPageView();
             LogHowToPlayClosed();
         }
@@ -252,15 +325,24 @@ namespace Memory
             else if (HelpScreen5.Visibility == Visibility.Visible)
             {
                 currentPage = 5;
-            }           
-
+            }
+            else if (HelpScreen6.Visibility == Visibility.Visible)
+            {
+                currentPage = 6;
+            }
             StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
             logger.Log($"HTP-Pg{currentPage}-ETD:{GazeInput.IsDeviceAvailable}");
         }
 
 
-        private void OnExit(object sender, RoutedEventArgs e)
+        private async void OnExit(object sender, RoutedEventArgs e)
         {
+            if (((App)Application.Current).KioskActivation)
+            {
+                var uri = new Uri("eyes-first-app:");
+                var ret = await Launcher.LaunchUriAsync(uri);
+            }
+
             Application.Current.Exit();
         }
 
@@ -310,6 +392,26 @@ namespace Memory
             UseTermsHyperlink.IsTabStop = true;
         }
 
+        private void SetTabsForSettingsView()
+        {
+            SettingsButton.IsTabStop = false;
+            HelpNavRightButton.IsTabStop = false;
+            HelpNavLeftButton.IsTabStop = false;
+            BackToGameButton.IsTabStop = false;
+            PrivacyHyperlink.IsTabStop = false;
+            UseTermsHyperlink.IsTabStop = false;
+        }
+
+        private void SetTabsForHelpWithClosedSettings()
+        {
+            SettingsButton.IsTabStop = true;
+            HelpNavRightButton.IsTabStop = true;
+            HelpNavLeftButton.IsTabStop = true;
+            BackToGameButton.IsTabStop = true;
+            PrivacyHyperlink.IsTabStop = true;
+            UseTermsHyperlink.IsTabStop = true;
+        }
+
         private ScrollViewer getRootScrollViewer()
         {
             DependencyObject el = this;
@@ -337,5 +439,145 @@ namespace Memory
         {
             CoreWindow.GetForCurrentThread().KeyDown -= CoredWindow_KeyDown;
         }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            GazeInput.DwellFeedbackProgressBrush = _toolBarButtonBackgroundBrush;
+            SetTabsForSettingsView();
+            SettingsScreen.Visibility = Visibility.Visible;
+            //retrieve local settings
+            SetGazeToggleStates(_gazePlusSwitch);
+
+            _tempSettingSymbolCollection = _symbolCollection;
+
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+          
+            if (_symbolCollection == "VintageCollection")
+            {
+                SettingsSymbolCollectionLabel.Text = resourceLoader.GetString("SettingsSymbolCollectionVintage");
+            }
+            else
+            {
+                SettingsSymbolCollectionLabel.Text = resourceLoader.GetString("SettingsSymbolCollectionEmoji");
+            }
+
+            FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
+            SettingsContinueButton.Focus(FocusState.Pointer);
+        }
+
+        private void SettingsContinueButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetTabsForHelpWithClosedSettings();
+            SettingsScreen.Visibility = Visibility.Collapsed;
+            //store and set local settings
+            if (_tempGazePlusSwitch == true)
+            {
+                _gazePlusSwitch = true;
+            }
+            else
+            {
+                _gazePlusSwitch = false;
+            }
+            if (_tempSettingSymbolCollection == "VintageCollection")
+            {
+                _symbolCollection = "VintageCollection";
+            }
+            else
+            {
+                _symbolCollection = "EmojiCollection1";
+            }
+            SetLocalSettings();
+            GazeInput.DwellFeedbackProgressBrush = _solidTileBrush; 
+        }       
+
+        private void GazeToggle_Click(object sender, RoutedEventArgs e)
+        {
+            SetGazeToggleStates(false);                         
+        }
+
+        private void GazePlusSwitchToggle_Click(object sender, RoutedEventArgs e)
+        {
+            SetGazeToggleStates(true);
+        }
+
+        private void SetGazeToggleStates(bool gazePlusSwitch)
+        {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            
+            if (gazePlusSwitch)
+            {
+                GazePlusSwitchToggle.SetValue(AutomationProperties.NameProperty, resourceLoader.GetString("SettingsGazePlusSwitchToggleOn"));
+                GazeToggle.SetValue(AutomationProperties.NameProperty, resourceLoader.GetString("SettingsGazePlusSwitchToggleOn"));
+                GazePlusSwitchToggleShape.Background = _whiteBrush;
+                GazeToggleShape.Background = _solidTileBrush;
+                _tempGazePlusSwitch = true;
+            }
+            else
+            {
+                GazePlusSwitchToggle.SetValue(AutomationProperties.NameProperty, resourceLoader.GetString("SettingsGazePlusSwitchToggleOff"));
+                GazeToggle.SetValue(AutomationProperties.NameProperty, resourceLoader.GetString("SettingsGazePlusSwitchToggleOff"));
+                GazeToggleShape.Background = _whiteBrush;
+                GazePlusSwitchToggleShape.Background = _solidTileBrush;
+                _tempGazePlusSwitch = false;
+            }
+        }
+
+
+        private void NextSymbolCollectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            string[] symbolsets = Enum.GetNames(typeof(SymbolSets));
+            for (int i=0; i < symbolsets.Length; i++)
+            {
+                if (symbolsets[i] == _tempSettingSymbolCollection)
+                {
+                    if (i + 1 < symbolsets.Length)
+                    {
+                        _tempSettingSymbolCollection = symbolsets[i + 1];
+                    }
+                    else
+                    {
+                        _tempSettingSymbolCollection = symbolsets[0];
+                    }
+                    SetSettingSymbolCollectionLabel(_tempSettingSymbolCollection);
+                    break;
+                }
+            }
+        }
+
+        private void PreviousSymbolCollectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            string[] symbolsets = Enum.GetNames(typeof(SymbolSets));
+            for (int i = 0; i < symbolsets.Length; i++)
+            {
+                if (symbolsets[i] == _tempSettingSymbolCollection)
+                {
+                    if (i - 1 >= 0)
+                    {
+                        _tempSettingSymbolCollection = symbolsets[i - 1];
+                    }
+                    else
+                    {
+                        _tempSettingSymbolCollection = symbolsets[symbolsets.Length-1];
+                    }
+                    SetSettingSymbolCollectionLabel(_tempSettingSymbolCollection);
+                    break;
+                }
+            }            
+        }
+
+        private void SetSettingSymbolCollectionLabel(string collectionName)
+        {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            if (collectionName == "VintageCollection")
+            {
+                SettingsSymbolCollectionLabel.Text = resourceLoader.GetString("SettingsSymbolCollectionVintage");
+            }
+            else
+            {
+                SettingsSymbolCollectionLabel.Text = resourceLoader.GetString("SettingsSymbolCollectionEmoji");
+            }
+        }
+
+       
     }
 }

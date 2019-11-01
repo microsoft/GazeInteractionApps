@@ -31,7 +31,7 @@
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Margin" Value="10" />
             <Setter Property="FontSize" Value="80" />
-            <Setter Property="FontFamily" Value="Webdings" />
+            <Setter Property="FontFamily" Value="Segoe Color Emoji" />
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="{StaticResource TileBackground}" />
         </Style>
@@ -118,13 +118,13 @@
                     </Grid>
                 </Button>
 
-
-
                 
+
+
             </Grid>
 
             <TextBlock x:Name="PlayAgainText" Grid.Row="1" HorizontalAlignment="Center" Foreground="{StaticResource ToolBarButtonBackground}" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Top" Visibility="Collapsed" FontFamily="Segoe UI" Margin="0,-3,0,0">
-                    <Run x:Uid="SelectPlayMessagePrefix">Select </Run><Run FontFamily="Segoe UI">&#xE768;</Run><Run x:Uid="SelectPlayMessagePostfix"> to Play Again</Run>
+                    <Run x:Uid="SelectPlayMessagePrefix">Select </Run><Run FontFamily="Segoe MDL2 Assets">&#xE768;</Run><Run x:Uid="SelectPlayMessagePostfix"> to Play Again</Run>
             </TextBlock>
 
             <Grid Grid.Row="1" Margin="40,30,40,40">
