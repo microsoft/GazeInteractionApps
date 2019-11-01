@@ -122,11 +122,9 @@
   </data>
   <data name="AppDescription" xml:space="preserve">
     <value>Maze</value>
-    <comment>{Locked}</comment>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>Eyes First - Maze</value>
-    <comment>{NumberedPlaceholder="Eyes First", "Maze"}</comment>
   </data>
   <data name="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Back</value>
@@ -175,7 +173,7 @@
   </data>
   <data name="EyesFirst.Text" xml:space="preserve">
     <value>EYES FIRST</value>
-    <comment>App name prefix that gets displayed in pink box [All caps] {Locked}</comment>
+    <comment>App name prefix that gets displayed in pink box [All caps]</comment>
   </data>
   <data name="HelpNavLeftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Page left</value>
@@ -200,7 +198,7 @@
   </data>
   <data name="HowToPlayPage1.Text" xml:space="preserve">
     <value>Eyes First - Maze is a path finding game with four maze sizes of increasing difficulty.You may choose to play a randomized maze with 3, 4, 5 or 6 rows.</value>
-    <comment>Multiline help text for first help page. Note special line feed strings {NumberedPlaceholder="Eyes First",3,4,5,6}</comment>
+    <comment>Multiline help text for first help page. Note special line feed strings {NumberedPlaceholder=3,4,5,6}</comment>
   </data>
   <data name="HowToPlayPage2.Text" xml:space="preserve">
     <value>The goal is to navigate the dog back to the dog house in as few moves as possible.  To move around the maze dwell or click on a room in the same hall or pathway of the maze. The game is complete when the dog reaches home.</value>
@@ -253,7 +251,7 @@
   </data>
   <data name="MazeTitle.Text" xml:space="preserve">
     <value>MAZE</value>
-    <comment>App name postfix that gets display under pink box [All caps] {Locked}</comment>
+    <comment>App name postfix that gets display under pink box [All caps]</comment>
   </data>
   <data name="MovesLabel.Text" xml:space="preserve">
     <value>Moves</value>

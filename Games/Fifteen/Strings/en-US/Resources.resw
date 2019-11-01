@@ -119,11 +119,9 @@
   </resheader>
   <data name="AppDescription" xml:space="preserve">
     <value>Tile Slide</value>
-    <comment>{NumberedPlaceholder="Tile Slide"}</comment>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>Eyes First - Tile Slide</value>
-    <comment>{NumberedPlaceholder="Eyes First","Tile Slide"}</comment>
   </data>
   <data name="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Back</value>
@@ -182,11 +180,9 @@
   </data>
   <data name="EyesFirst.Text" xml:space="preserve">
     <value>EYES FIRST</value>
-    <comment>{Locked}</comment>
   </data>
   <data name="GameTitle.Text" xml:space="preserve">
     <value>TILE SLIDE</value>
-    <comment>{Locked}</comment>
   </data>
   <data name="HelpNavLeftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Page left</value>
@@ -210,7 +206,7 @@
     <value>Eyes First - Tile Slide is a game with four puzzle boards of increasing difficulty.
 
 You may choose from a 3, 8, 15 or 24 board, each with the corresponding number of sliding tiles plus one empty space.</value>
-    <comment>{NumberedPlaceholder="Eyes First", "Tile Slide", 3,8,15,24}</comment>
+    <comment>{NumberedPlaceholder=3,8,15,24}</comment>
   </data>
   <data name="HowToPlayPage2.Text" xml:space="preserve">
     <value>The goal of the game is to unscramble the puzzle board by getting all the tiles back in order.</value>
