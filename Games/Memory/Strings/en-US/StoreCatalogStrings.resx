@@ -121,22 +121,26 @@
     <value>Eyes First - Match Two is a game with four boards of increasing difficulty. You may choose from a 16, 24, 36, or 66 board, each with a corresponding number of cards. The goal of the game is to find a match for each card on the board and to do so in as few moves as possible.
 This app is also designed to be played with eye control using a Windows 10 compatible eye tracker.</value>
     <comment>Main product description that appears for this game when displayed in the Windows Store.
-Note: all of the other fields in this document contain text that is either displayed in the Windows Store catalog listing for this application or are meta fields used by the Windows Store search engine to help match users search terms and decide if this application is displayed in the users search results.</comment>
+Note: all of the other fields in this document contain text that is either displayed in the Windows Store catalog listing for this application or are meta fields used by the Windows Store search engine to help match users search terms and decide if this application is displayed in the users search results. {NumberedPlaceholder="Eyes First", "Match Two", 16, 24, 36, 66}</comment>
   </data>
   <data name="ProductFeatures" xml:space="preserve">
     <value>Use eye control to play Match Two</value>
+    <comment>{NumberedPlaceholder="Match Two"}</comment>
   </data>
   <data name="ProductName" xml:space="preserve">
     <value>Eyes First – Match Two</value>
+    <comment>{NumberedPlaceholder="Eyes First", "Match Two"}</comment>
   </data>
   <data name="SearchTerm1" xml:space="preserve">
     <value>eye control</value>
   </data>
   <data name="SearchTerm2" xml:space="preserve">
     <value>eyes first</value>
+    <comment>{NumberedPlaceholder="eyes first"}</comment>
   </data>
   <data name="SearchTerm3" xml:space="preserve">
     <value>match two</value>
+    <comment>{NumberedPlaceholder="match two"}</comment>
   </data>
   <data name="SearchTerm4" xml:space="preserve">
     <value>memory game</value>
@@ -153,11 +157,14 @@ Note: all of the other fields in this document contain text that is either displ
   <data name="ShortDescription" xml:space="preserve">
     <value>Use eye control to play Match Two and find a match for each card in the board. Challenge yourself to complete the board in as few moves as possible or go up in board size for a harder test of your memory!
 This app is also designed to be played with eye control using a Windows 10 compatible eye tracker.</value>
+    <comment>{NumberedPlaceholder="Match Two"}</comment>
   </data>
   <data name="ShortTitle" xml:space="preserve">
     <value>Match Two</value>
+    <comment>{NumberedPlaceholder="Match Two"}</comment>
   </data>
   <data name="SortTitle" xml:space="preserve">
     <value>Eyes First Match Two</value>
+    <comment>{NumberedPlaceholder="Eyes First", "Match Two"}</comment>
   </data>
 </root>
