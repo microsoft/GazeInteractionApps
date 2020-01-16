@@ -50,11 +50,23 @@
             <ColumnDefinition />
             <ColumnDefinition Width="40"/>
         </Grid.ColumnDefinitions>
-        <Button x:Uid="HowToPlayButton" x:Name="HowToPlayButton" AutomationProperties.Name="How to play" Background="{x:Null}" Foreground="White" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="OnHowToPlayButton" FontSize="24" Height="96" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1">
+        <Button x:Uid="HowToPlayButton" x:Name="HowToPlayButton" AutomationProperties.Name="How to play" Background="{x:Null}" Foreground="White" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="OnHowToPlayButton" FontSize="24" Height="96" Width="96"  FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="1">
             <Grid Margin="-2" Background="{StaticResource ToolBarButtonBackground}" CornerRadius="10,10,10,10">
-                <TextBlock x:Uid="HowToPlay" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,20,0" FontFamily="Segoe UI">
-                    How to Play
+                <!--How to Play  x:Uid="HowToPlay"-->
+                <!--<TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,0,0,0" FontFamily="Segoe UI" Margin="20,0">                    
+                  <Run FontSize="52" FontFamily="Segoe MDL2 Assets"> &#xe713;</Run> 
                 </TextBlock>
+                <Ellipse Height="27" Width="27" Fill="{StaticResource ToolBarButtonBackground}"></Ellipse>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Padding="0,0,0,0" FontFamily="Segoe MDL2 Assets">                    
+                  <Run FontSize="20" FontFamily="Segoe MDL2 Assets"> &#xe897;</Run>
+                </TextBlock>-->
+                <TextBlock  FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,0,0,0" FontFamily="Segoe MDL2 Assets" Margin="0,0,-42,-44">                    
+                   &#xe713;
+                </TextBlock>
+                <TextBlock FontSize="42"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Padding="0,0,0,0" FontFamily="Segoe MDL2 Assets">                    
+                   &#xe897;
+                </TextBlock>
+
             </Grid>
         </Button>
 
@@ -389,7 +401,43 @@
                             <TextBlock x:Uid="HowToPlayBackToGameButton" Text="Back to game" Foreground="{StaticResource ToolBarButtonBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="24" Padding="60,0,60,0" ></TextBlock>
                         </Grid>
                     </Button>
-                   
+                    <Button x:Name="SettingsButton" x:Uid="SettingsButton" AutomationProperties.Name="Settings" Height="96" Width="96" Grid.Column="1" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,15,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontFamily="Segoe UI" Padding="0" Click="SettingsButton_Click" >
+                        <Grid Margin="-2" Background="White" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <TextBlock Foreground="{StaticResource ToolBarButtonBackground}" FontFamily="Segoe MDL2 Assets" FontSize="46" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                 &#xe713;
+                            </TextBlock>
+                        </Grid>
+                    </Button>
+                    <Grid x:Name="SettingsScreen" Background="{StaticResource ToolBarButtonBackground}" Grid.ColumnSpan="3" Visibility="Collapsed" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Foreground="White" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Margin="0,50,0,0">Settings</TextBlock>
+
+                        <TextBlock  x:Uid="SettingsGazePlusSwitchLabel" Foreground="White" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0">Gaze plus switch</TextBlock>
+                        <ToggleButton x:Name="GazePlusSwitchToggle" Height="96" Width="192" Background="{x:Null}" FontFamily="Segoe UI" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Unchecked="GazePlusSwitchToggle_Unchecked" Checked="GazePlusSwitchToggle_Checked" Padding="0" >
+                            <Grid Margin="-2" Background="White" CornerRadius="5">
+                                <TextBlock x:Name="GazePlusSwitchToggleText"  Foreground="{StaticResource ToolBarButtonBackground}" FontFamily="Segoe UI" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                 is off
+                            </TextBlock>
+                            </Grid>
+                        </ToggleButton>
+
+                        <Button x:Uid="SettingsContinueButton" x:Name="SettingsContinueButton" AutomationProperties.Name="Continue" Grid.Column="1" Grid.Row="4" Width="296" Height="96" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,20,0,20" Padding="0"  Background="{x:Null}" Foreground="White" FontSize="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Click="SettingsContinueButton_Click">
+                            <Grid Margin="-2" Background="White" CornerRadius="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+                                <TextBlock x:Uid="SettingsContinue" Text="Continue" Foreground="{StaticResource ToolBarButtonBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI"></TextBlock>
+                            </Grid>
+                        </Button>
+                    </Grid>
                 </Grid>
             </Border>
         </Grid>

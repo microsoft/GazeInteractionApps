@@ -1007,9 +1007,15 @@ namespace TwoZeroFourEight
             }
         }
 
-        private void OnExit(object sender, RoutedEventArgs e)
+        private async void OnExit(object sender, RoutedEventArgs e)
         {
-            Application.Current.Exit();
+            if (((App)Application.Current).KioskActivation)
+            {
+                var uri = new Uri("eyes-first-app:");
+                var ret = await Launcher.LaunchUriAsync(uri);
+            }
+           
+                Application.Current.Exit();                       
         }
 
         private static T FindFirstChildOfType<T>(DependencyObject startNode)

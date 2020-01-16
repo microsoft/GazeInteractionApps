@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using System;
 using Windows.UI.Xaml.Input;
 using Microsoft.Services.Store.Engagement;
+using Windows.System;
 
 namespace Fifteen
 {
@@ -22,6 +23,8 @@ namespace Fifteen
         static bool firstLaunch = true;
 
         SolidColorBrush _solidTileBrush;
+
+        bool _gazePlusSwitch;
 
         private enum WebViewOpenedAs
         {
@@ -40,18 +43,43 @@ namespace Fifteen
             _solidTileBrush = (SolidColorBrush)this.Resources["TileBackground"];
 
             var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-            VersionTextBlock.Text = resourceLoader.GetString("VersionStringPrefix") + GetAppVersion();
+            VersionTextBlock.Text = String.Format(resourceLoader.GetString("VersionString"), GetAppVersion());
 
             CoreWindow.GetForCurrentThread().KeyDown += CoredWindow_KeyDown;
 
-            var sharedSettings = new ValueSet();
-            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
-            {
-                GazeInput.LoadSettings(sharedSettings);
-            });
+            //var sharedSettings = new ValueSet();
+            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
+            //{
+            //    GazeInput.LoadSettings(sharedSettings);
+            //});
+
+            LoadLocalSettings();
 
             GazeInput.DwellFeedbackProgressBrush = new SolidColorBrush(Colors.White);
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);                       
+        }
+
+        private void LoadLocalSettings()
+        {
+            var appSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            bool? storedGazePlusSwith = appSettings.Values[nameof(_gazePlusSwitch)] as bool?;
+            if (storedGazePlusSwith != null)
+            {
+                _gazePlusSwitch = (bool)storedGazePlusSwith;
+
+            }
+            else
+            {
+                _gazePlusSwitch = false;
+            }            
+            GazeInput.SetIsSwitchEnabled(this, _gazePlusSwitch);
+        }
+
+        private void SetLocalSettings()
+        {           
+            var appSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            appSettings.Values[nameof(_gazePlusSwitch)] = _gazePlusSwitch;
+            GazeInput.SetIsSwitchEnabled(this, _gazePlusSwitch);
         }
 
         private void CoredWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
@@ -80,9 +108,15 @@ namespace Fifteen
 
         private async void OnExit(object sender, RoutedEventArgs e)
         {
-            var uri = new Uri("eyes-first-app:");            
+            if (((App)Application.Current).KioskActivation)
+            {
+                var uri = new Uri("eyes-first-app:");
+                var ret = await Launcher.LaunchUriAsync(uri);
+            }
+
+            //var uri = new Uri("eyes-first-app:");            
             
-            var info = await Windows.System.Launcher.QueryUriSupportAsync(uri, Windows.System.LaunchQuerySupportType.Uri, "8957e598-b7eb-4c5f-a532-abe69b023bfb_bxjssgjs5et3c");
+            //var info = await Windows.System.Launcher.QueryUriSupportAsync(uri, Windows.System.LaunchQuerySupportType.Uri, "8957e598-b7eb-4c5f-a532-abe69b023bfb_bxjssgjs5et3c");
 
             //if (info == Windows.System.LaunchQuerySupportStatus.Available)
             //{
@@ -321,6 +355,26 @@ namespace Fifteen
             UseTermsHyperlink.IsTabStop = true;
         }
 
+        private void SetTabsForSettingsView()
+        {
+            SettingsButton.IsTabStop = false;
+            HelpNavRightButton.IsTabStop = false;
+            HelpNavLeftButton.IsTabStop = false;
+            BackToGameButton.IsTabStop = false;
+            PrivacyHyperlink.IsTabStop = false;
+            UseTermsHyperlink.IsTabStop = false;
+        }
+
+        private void SetTabsForHelpWithClosedSettings()
+        {
+            SettingsButton.IsTabStop = true;
+            HelpNavRightButton.IsTabStop = true;
+            HelpNavLeftButton.IsTabStop = true;
+            BackToGameButton.IsTabStop = true;
+            PrivacyHyperlink.IsTabStop = true;
+            UseTermsHyperlink.IsTabStop = true;
+        }
+
         private ScrollViewer getRootScrollViewer()
         {
             DependencyObject el = this;
@@ -347,6 +401,44 @@ namespace Fifteen
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             CoreWindow.GetForCurrentThread().KeyDown -= CoredWindow_KeyDown;
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetTabsForSettingsView();
+            SettingsScreen.Visibility = Visibility.Visible;
+            //retrieve local settings
+            GazePlusSwitchToggle.IsChecked = _gazePlusSwitch;
+            FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
+            SettingsContinueButton.Focus(FocusState.Pointer);
+        }
+
+        private void SettingsContinueButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetTabsForHelpWithClosedSettings();
+            SettingsScreen.Visibility = Visibility.Collapsed;
+            //store and set local settings
+            if (GazePlusSwitchToggle.IsChecked == true)
+            {
+                _gazePlusSwitch = true;
+            }
+            else
+            {
+                _gazePlusSwitch = false;
+            }
+            SetLocalSettings();
+        }
+
+        private void GazePlusSwitchToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            GazePlusSwitchToggleText.Text = resourceLoader.GetString("SettingsGazePlusSwitchOff");
+        }
+
+        private void GazePlusSwitchToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            GazePlusSwitchToggleText.Text = resourceLoader.GetString("SettingsGazePlusSwitchOn");
         }
     }
 }

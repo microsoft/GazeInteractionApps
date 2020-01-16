@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Automation;
 using Microsoft.Services.Store.Engagement;
+using Windows.System;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -90,6 +91,8 @@ namespace Maze
         CompositionScopedBatch _endBatch;
 
         CompositionSurfaceBrush _breadCrumbBrush;
+
+        bool _gazePlusSwitch;
 
         enum TravelSpeed
         {
@@ -160,12 +163,29 @@ namespace Maze
             Loaded += GamePage_Loaded;
 
             CoreWindow.GetForCurrentThread().KeyDown += CoredWindow_KeyDown;
-          
-            var sharedSettings = new ValueSet();
-            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
+
+            //var sharedSettings = new ValueSet();
+            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
+            //{
+            //    GazeInput.LoadSettings(sharedSettings);
+            //});
+
+            LoadLocalSettings();
+        }
+
+        private void LoadLocalSettings()
+        {
+            var appSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            bool? storedGazePlusSwith = appSettings.Values[nameof(_gazePlusSwitch)] as bool?;
+            if (storedGazePlusSwith != null)
             {
-                GazeInput.LoadSettings(sharedSettings);
-            });
+                _gazePlusSwitch = (bool)storedGazePlusSwith;
+            }
+            else
+            {
+                _gazePlusSwitch = false;
+            }
+            GazeInput.SetIsSwitchEnabled(this, _gazePlusSwitch);
         }
 
         private void CoredWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
@@ -277,6 +297,7 @@ namespace Maze
 
             if (_solutionCurIndex >= _solution.Count())
             {
+                GazeInput.SetInteraction(MazeGrid, Interaction.Enabled);
                 _solutionTimer.Stop();
                 _isMazeSolved = true;
 
@@ -384,11 +405,13 @@ namespace Maze
             _solution = solver.Solve(_maze, new Position(_curRow, _curCol), new Position(_numRows - 1, _numCols - 1));
             _usedSolver = true;
             _solutionCurIndex = 0;
+            GazeInput.SetInteraction(MazeGrid, Interaction.Disabled);
             _solutionTimer.Start();
         }
 
         private void BuildMaze()
         {
+            GazeInput.SetInteraction(MazeGrid, Interaction.Enabled);
             _solutionTimer.Stop();
             _cellCreationTimer.Stop();
             _openCellTimer.Stop();
@@ -855,8 +878,8 @@ namespace Maze
                     congratsMessage = resourceLoader.GetString("CongratsMessageString");
                     //congratsMessage = "Congratualtions!!";
 
-                    //message = $"You have solved the maze in {_numMoves} moves!";
-                    message = $"{resourceLoader.GetString("CongratsMessageStringMoveCountPrefix")}{_numMoves}{resourceLoader.GetString("CongratsMessageStringMoveCountPostfix")}";
+                    //message = $"You have solved the maze in {_numMoves} moves!";                    
+                    message = String.Format(resourceLoader.GetString("CongratsDetailMessage"),_numMoves);
 
                     //EndAnimation.Source = new BitmapImage(new Uri("ms-appx:///Assets/Luna_animated-Fast.gif"));
                     logger.Log($"EndOfMaze{_numRows}-ETD:{GazeInput.IsDeviceAvailable}-m#{_numMoves}");
@@ -884,7 +907,7 @@ namespace Maze
 
         private void IncreaseBoardSize_Click(object sender, RoutedEventArgs e)
         {
-            int minCellSize = 20;
+            int minCellSize = 30;
             if (((int)(this.ActualHeight - Toolbar.ActualHeight) - (int)(MazeBorder.Margin.Bottom + MazeBorder.Margin.Top)) / (_numRows + 1) > minCellSize)
             {
                 _numRows += 1;
@@ -942,8 +965,14 @@ namespace Maze
             Frame.Navigate(typeof(MainPage));
         }
 
-        private void OnExit(object sender, RoutedEventArgs e)
+        private async void OnExit(object sender, RoutedEventArgs e)
         {
+            if (((App)Application.Current).KioskActivation)
+            {
+                var uri = new Uri("eyes-first-app:");
+                var ret = await Launcher.LaunchUriAsync(uri);
+            }
+
             Application.Current.Exit();
         }
 

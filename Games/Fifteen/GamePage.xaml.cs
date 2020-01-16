@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Automation;
 using Microsoft.Services.Store.Engagement;
 using Windows.UI.Core;
+using Windows.System;
 
 namespace Fifteen
 {
@@ -44,6 +45,11 @@ namespace Fifteen
 
         bool _animationActive = false;
 
+        bool _gazePlusSwitch;
+
+        int _slideSpeed = 500;
+        int _pulseSpeed = 500;
+
         public GamePage()
         {
             InitializeComponent();
@@ -55,21 +61,77 @@ namespace Fifteen
             WaitForCompositionTimer.Tick += WaitForCompositionTimer_Tick;
             WaitForCompositionTimer.Interval = TimeSpan.FromMilliseconds(50);
 
-            var sharedSettings = new ValueSet();
-            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
-            {
-                var gazePointer = GazeInput.GetGazePointer(this);
-                gazePointer.LoadSettings(sharedSettings);
-            });
+            //var sharedSettings = new ValueSet();
+            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
+            //{
+            //    var gazePointer = GazeInput.GetGazePointer(this);
+            //    gazePointer.LoadSettings(sharedSettings);
+            //});
+
+            LoadLocalSettings();
 
             Loaded += GamePage_Loaded;
 
             CoreWindow.GetForCurrentThread().KeyDown += CoredWindow_KeyDown;
         }
 
+        private void LoadLocalSettings()
+        {
+            var appSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            bool? storedGazePlusSwith = appSettings.Values[nameof(_gazePlusSwitch)] as bool?;
+            if (storedGazePlusSwith != null)
+            {
+                _gazePlusSwitch = (bool)storedGazePlusSwith;
+
+            }
+            else
+            {
+                _gazePlusSwitch = false;
+            }
+            GazeInput.SetIsSwitchEnabled(this, _gazePlusSwitch);
+        }
+
         private void CoredWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
-            if (!args.KeyStatus.WasKeyDown)
+            bool wasSpecialKey = false;
+
+            switch (args.VirtualKey)
+            {
+                case VirtualKey.Up:
+
+                    SwapBlank(_blankRow + 1, _blankCol);
+                    wasSpecialKey = true;
+                    break;
+
+                case VirtualKey.Down:
+                    SwapBlank(_blankRow - 1, _blankCol);
+                    wasSpecialKey = true;
+                    break;
+
+                case VirtualKey.Left:
+                    SwapBlank(_blankRow, _blankCol + 1);
+                    wasSpecialKey = true;
+                    break;
+
+                case VirtualKey.Right:
+                    SwapBlank(_blankRow, _blankCol - 1);
+                    wasSpecialKey = true;
+                    break;
+
+                case VirtualKey.F1:
+                    _slideSpeed = 500;
+                    _pulseSpeed = 500;
+                    wasSpecialKey = true;
+                    break;
+
+                case VirtualKey.F2:
+                    _slideSpeed = 20;
+                    _pulseSpeed = 50;
+                    wasSpecialKey = true;
+                    break;
+            }
+
+            if (!args.KeyStatus.WasKeyDown && !wasSpecialKey)
             {
                 GazeInput.GetGazePointer(this).Click();
             }
@@ -257,6 +319,11 @@ namespace Fifteen
 
         bool SwapBlank(int row, int col)
         {
+            if (row < 0 || col < 0 || row > _boardSize - 1 || col > _boardSize - 1)
+            {
+                return false;
+            }
+
             //Prevent tile slides once puzzle is solved
             if (DialogGrid.Visibility == Visibility.Visible || _gameOver)
             {
@@ -297,9 +364,9 @@ namespace Fifteen
             //then slide that button back into its original position
             var slideAnimation = compositor.CreateVector3KeyFrameAnimation();
             slideAnimation.InsertKeyFrame(0f, btnVisual.Offset);
-            slideAnimation.InsertKeyFrame(1f, blankBtnVisual.Offset, easing);
-            slideAnimation.Duration = TimeSpan.FromMilliseconds(500);
-            
+            slideAnimation.InsertKeyFrame(1f, blankBtnVisual.Offset, easing);            
+            slideAnimation.Duration = TimeSpan.FromMilliseconds(_slideSpeed);
+
             //Apply the slide animation to the blank button            
             blankBtnVisual.StartAnimation(nameof(btnVisual.Offset), slideAnimation);
             
@@ -314,8 +381,8 @@ namespace Fifteen
                 scaleAnimation.InitialValue = new System.Numerics.Vector3(0.9f, 0.9f, 0f);
                 scaleAnimation.FinalValue = new System.Numerics.Vector3(1.0f, 1.0f, 0f);
                 scaleAnimation.DampingRatio = 0.4f;
-                scaleAnimation.Period = TimeSpan.FromMilliseconds(springSpeed);
-                scaleAnimation.DelayTime = TimeSpan.FromMilliseconds(500);
+                scaleAnimation.Period = TimeSpan.FromMilliseconds(springSpeed);                
+                scaleAnimation.DelayTime = TimeSpan.FromMilliseconds(_pulseSpeed);
 
                 blankBtnVisual.StartAnimation(nameof(blankBtnVisual.Scale), scaleAnimation);
             }
@@ -436,9 +503,8 @@ namespace Fifteen
             await Task.Delay(1000);
 
             //string message = $"You solved the puzzle in {_numMoves} moves!";
-
-            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-            string message = $"{resourceLoader.GetString("CongratsMessageStringMoveCountPrefix")}{_numMoves}{resourceLoader.GetString("CongratsMessageStringMoveCountPostfix")}";
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();           
+            string message = String.Format(resourceLoader.GetString("CongratsDetailMessage"), _numMoves);
 
             DialogText.Text = message;
             GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
@@ -484,8 +550,14 @@ namespace Fifteen
             PauseButton.Focus(FocusState.Pointer);
         }
 
-        private void OnExit(object sender, RoutedEventArgs e)
+        private async void OnExit(object sender, RoutedEventArgs e)
         {
+            if (((App)Application.Current).KioskActivation)
+            {
+                var uri = new Uri("eyes-first-app:");
+                var ret = await Launcher.LaunchUriAsync(uri);
+            }
+
             Application.Current.Exit();
         }
 
