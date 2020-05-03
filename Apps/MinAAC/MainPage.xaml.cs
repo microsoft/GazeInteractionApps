@@ -6,7 +6,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.Media.SpeechSynthesis;
-using EyeGazeUserControls;
+using Microsoft.Toolkit.Uwp.Input.GazeControls;
 
 namespace MinAAC
 {

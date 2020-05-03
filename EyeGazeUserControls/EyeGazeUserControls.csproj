@@ -7,8 +7,8 @@
     <ProjectGuid>{5234ACC2-814B-4232-8647-7142E74B9295}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EyeGazeUserControls</RootNamespace>
-    <AssemblyName>EyeGazeUserControls</AssemblyName>
+    <RootNamespace>Microsoft.Toolkit.Uwp.Input.GazeControls</RootNamespace>
+    <AssemblyName>Microsoft.Toolkit.Uwp.Input.GazeControls</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
@@ -43,11 +43,18 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GazeFilePicker.xaml.cs">
+      <DependentUpon>GazeFilePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GazeKeyboard.xaml.cs">
       <DependentUpon>GazeKeyboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Keyboard.cs" />
+    <Compile Include="KeyboardPage.cs" />
+    <Compile Include="PathPart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StorageItem.cs" />
+    <Compile Include="UIElementExtensions.cs" />
     <EmbeddedResource Include="Properties\EyeGazeUserControls.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -59,23 +66,33 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="GazeFilePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GazeKeyboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Content Include="Layouts\MinAAC.xaml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Layouts\FullKeyboard.xaml">
-      <SubType>Designer</SubType>
+    <Content Include="KeyboardLayouts\FilenameEntry.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Layouts\TwoStageKeyboard.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KeyboardLayouts\FullKeyboard.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KeyboardLayouts\MinAAC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KeyboardLayouts\TwoStageKeyboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

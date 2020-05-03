@@ -133,5 +133,12 @@
                 <Button x:Name="CursorRadius50" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CursorRadius50_Click" Content="Cursor Radius 50"/>
             </Grid>
         </PivotItem>
+        <PivotItem Header="File dialogs">
+          <StackPanel Orientation="Vertical">
+        <Button x:Name="FileOpen"  Click="FileOpen_Click" Content="Open File..." VerticalAlignment="Top" Width="200" Height="200"/>
+        <Button x:Name="FileSave"  Click="FileSave_Click" Content="Save File..." VerticalAlignment="Top" Width="200" Height="200"/>
+        <TextBlock x:Name="SelectedFile" Width="500" />
+      </StackPanel>
+        </PivotItem>
     </Pivot>
 </Page>

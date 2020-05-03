@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 
-namespace EyeGazeUserControls
+namespace Microsoft.Toolkit.Uwp.Input.GazeControls
 {
-    public enum KeyType
+    internal enum KeyType
     {
         Normal,
         Toggle,
         Layout
     }
 
-    public class Keyboard : DependencyObject
+    internal class Keyboard : DependencyObject
     {
         public static readonly DependencyProperty KeyTypeProperty =
             DependencyProperty.RegisterAttached("KeyType", typeof(KeyType), typeof(Keyboard), new PropertyMetadata(0));
@@ -68,6 +68,7 @@ namespace EyeGazeUserControls
                 list = new List<int>();
                 SetVKList(obj, list);
             }
+
             return list;
         }
 
@@ -88,6 +89,7 @@ namespace EyeGazeUserControls
                 list = new List<string>();
                 SetPageList(obj, list);
             }
+
             return list;
         }
 
@@ -95,7 +97,6 @@ namespace EyeGazeUserControls
         {
             obj.SetValue(PageListProperty, value);
         }
-
 
         public static readonly DependencyProperty PageContainerProperty =
             DependencyProperty.RegisterAttached("PageContainer", typeof(string), typeof(Keyboard), new PropertyMetadata(0));
@@ -109,7 +110,6 @@ namespace EyeGazeUserControls
         {
             obj.SetValue(PageContainerProperty, value);
         }
-
 
         public static readonly DependencyProperty TemporaryPageProperty =
             DependencyProperty.RegisterAttached("TemporaryPage", typeof(string), typeof(Keyboard), new PropertyMetadata(0));
