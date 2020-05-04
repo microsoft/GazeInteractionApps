@@ -1,6 +1,7 @@
 ﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. 
 //See LICENSE in the project root for license information. 
 
+using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -64,6 +65,7 @@ namespace ControlTest
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+            GazeInput.Interaction = Interaction.Enabled;
         }
 
         /// <summary>

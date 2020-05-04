@@ -7,6 +7,11 @@ using Windows.Foundation.Collections;
 using Windows.Foundation;
 using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
 using Windows.UI.Core;
+using Microsoft.Toolkit.Uwp.Input.GazeControls;
+using Windows.UI.ViewManagement;
+using System;
+using Windows.Storage;
+using System.Diagnostics;
 
 namespace ControlTest
 {
@@ -163,5 +168,29 @@ namespace ControlTest
             GazeInput.SetCursorRadius(this, 50);
         }
         #endregion
+
+        private async void ShowFilePicker(bool saveMode)
+        {
+            var picker = new GazeFilePicker();
+            var library = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Documents);
+            picker.CurrentFolder = library.SaveFolder;
+            picker.SaveMode = saveMode;
+            await picker.ShowAsync();
+            if (picker.SelectedItem != null)
+            {
+                SelectedFile.Text = picker.SelectedItem.Path;
+                Debug.WriteLine($"{picker.SelectedItem.Path}");
+            }
+        }
+
+        private void FileOpen_Click(object sender, RoutedEventArgs e)
+        {
+            ShowFilePicker(false);
+        }
+
+        private void FileSave_Click(object sender, RoutedEventArgs e)
+        {
+            ShowFilePicker(true);
+        }
     }
 }

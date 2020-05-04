@@ -21,35 +21,17 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
-namespace EyeGazeUserControls
+namespace Microsoft.Toolkit.Uwp.Input.GazeControls
 {
-    internal class KeyboardPage
-    {
-        public FrameworkElement Page;
-        public KeyboardPage Parent;
-        public List<string> ChildrenNames;
-        public List<KeyboardPage> Children;
-        public KeyboardPage CurrentChild;
-        public KeyboardPage PrevChild;
-
-        public KeyboardPage(FrameworkElement page, KeyboardPage parent)
-        {
-            Page = page;
-            Parent = parent;
-            ChildrenNames = new List<string>();
-            Children = new List<KeyboardPage>();
-        }
-    }
-
     public sealed partial class GazeKeyboard : UserControl
     {
-        InputInjector _injector;
-        List<ButtonBase> _keyboardButtons;
-        KeyboardPage _rootPage;
-        TextPredictionGenerator _textPredictionGenerator;
-        WordsSegmenter _wordsSegmenter;
-        string _predictionLanguage;
-        Button[] _predictionTargets;
+        private InputInjector _injector;
+        private List<ButtonBase> _keyboardButtons;
+        private KeyboardPage _rootPage;
+        private TextPredictionGenerator _textPredictionGenerator;
+        private WordsSegmenter _wordsSegmenter;
+        private string _predictionLanguage;
+        private Button[] _predictionTargets;
 
         public bool GazePlusClickMode;
 
@@ -57,7 +39,11 @@ namespace EyeGazeUserControls
 
         public string PredictionLanguage
         {
-            get { return _predictionLanguage; }
+            get
+            {
+                return _predictionLanguage;
+            }
+
             set
             {
                 _predictionLanguage = value;
@@ -69,7 +55,11 @@ namespace EyeGazeUserControls
 
         public Button[] PredictionTargets
         {
-            get { return _predictionTargets; }
+            get
+            {
+                return _predictionTargets;
+            }
+
             set
             {
                 if (_predictionTargets != null)
@@ -102,11 +92,12 @@ namespace EyeGazeUserControls
             for (int i = 0; i < count; i++)
             {
                 DependencyObject current = VisualTreeHelper.GetChild(startNode, i);
-                if ((current.GetType()).Equals(typeof(T)) || (current.GetType().GetTypeInfo().IsSubclassOf(typeof(T))))
+                if (current.GetType().Equals(typeof(T)) || current.GetType().GetTypeInfo().IsSubclassOf(typeof(T)))
                 {
                     T asType = (T)current;
                     results.Add(asType);
                 }
+
                 FindChildren<T>(results, current);
             }
         }
@@ -136,7 +127,7 @@ namespace EyeGazeUserControls
         {
             try
             {
-                var uri = new Uri($"ms-appx:///EyeGazeUserControls/Layouts/{layoutFile}");
+                var uri = new Uri($"ms-appx:///Microsoft.Toolkit.Uwp.Input.GazeControls/KeyboardLayouts/{layoutFile}");
                 var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri);
                 var xaml = await FileIO.ReadTextAsync(storageFile);
                 var xamlNode = XamlReader.Load(xaml) as FrameworkElement;
@@ -166,6 +157,7 @@ namespace EyeGazeUserControls
             {
                 return false;
             }
+
             var key = new InjectedInputKeyboardInfo();
             key.VirtualKey = (ushort)vk;
             _injector.InjectKeyboardInput(new[] { key });
@@ -191,8 +183,10 @@ namespace EyeGazeUserControls
                 {
                     state.Add(vk, true);
                 }
+
                 keys.Add(key);
             }
+
             _injector.InjectKeyboardInput(keys);
 
             UpdatePredictions();
@@ -222,6 +216,7 @@ namespace EyeGazeUserControls
             {
                 return kbdPage;
             }
+
             KeyboardPage containerPage = null;
             for (int i = 0; i < kbdPage.Children.Count; i++)
             {
@@ -231,6 +226,7 @@ namespace EyeGazeUserControls
                     return containerPage;
                 }
             }
+
             return null;
         }
 
@@ -257,6 +253,7 @@ namespace EyeGazeUserControls
                     {
                         container.PrevChild = container.CurrentChild;
                     }
+
                     container.CurrentChild = container.Children[i];
                 }
             }
@@ -307,7 +304,7 @@ namespace EyeGazeUserControls
             {
                 HandlePageChange(container, button);
             }
-            else if((vk = Keyboard.GetVK(button)) != 0)
+            else if ((vk = Keyboard.GetVK(button)) != 0)
             {
                 injected = HandleVirtualKey(vk);
             }
@@ -357,8 +354,10 @@ namespace EyeGazeUserControls
                     ScanCode = ch,
                     KeyOptions = InjectedInputKeyOptions.Unicode | InjectedInputKeyOptions.KeyUp
                 };
+
                 keys.Add(key);
             }
+
             _injector.InjectKeyboardInput(keys);
         }
 
@@ -405,6 +404,7 @@ namespace EyeGazeUserControls
                 words.Add(segment.Text);
                 i++;
             }
+
             words.Reverse();
             return words;
         }
@@ -435,12 +435,16 @@ namespace EyeGazeUserControls
 
             IReadOnlyList<string> predictions;
             var prevWordsExceptLast = prevWords.GetRange(1, prevWords.Count - 1);
-            // It looks like we need to send in a larger number than necessary to get good quality predictions. 
-            uint maxCandidates = (uint)PredictionTargets.Length * 2; 
-            predictions = await _textPredictionGenerator.GetCandidatesAsync(prevWords[0], 
-                                                                            maxCandidates,
-                                                                            TextPredictionOptions.Corrections | TextPredictionOptions.Predictions,
-                                                                            prevWordsExceptLast);
+
+            // It looks like we need to send in a larger number than necessary to get good quality predictions.
+
+            uint maxCandidates = (uint)PredictionTargets.Length * 2;
+            predictions = await _textPredictionGenerator.GetCandidatesAsync(
+                            prevWords[0],
+                            maxCandidates,
+                            TextPredictionOptions.Corrections | TextPredictionOptions.Predictions,
+                            prevWordsExceptLast);
+
             DisplayPredictions(predictions);
         }
 
@@ -451,9 +455,10 @@ namespace EyeGazeUserControls
             {
                 PredictionTargets[i].Content = predictions[i];
             }
+
             for (; i < PredictionTargets.Length; i++)
             {
-                PredictionTargets[i].Content = "";
+                PredictionTargets[i].Content = string.Empty;
             }
         }
     }
