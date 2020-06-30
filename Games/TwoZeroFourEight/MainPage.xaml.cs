@@ -16,7 +16,6 @@ using Windows.UI.Composition;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Hosting;
@@ -25,10 +24,8 @@ using Windows.UI.Xaml.Media;
 
 namespace TwoZeroFourEight
 {
-    #region ClassDefs
-
     public class NotificationBase : INotifyPropertyChanged
-    {        
+    {
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -234,9 +231,9 @@ namespace TwoZeroFourEight
                 StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
                 if (_highScore > 1000)
                 {
-                    logger.Log($"HighScore:over-{_highScore-(_highScore % 1000)}-ETD:{GazeInput.IsDeviceAvailable}");
+                    logger.Log($"HighScore:over-{_highScore - (_highScore % 1000)}-ETD:{GazeInput.IsDeviceAvailable}");
                 }
-                
+
             }
         }
 
@@ -851,8 +848,6 @@ namespace TwoZeroFourEight
         }
     }
 
-    #endregion
-
     public sealed partial class MainPage : Page
     {
         static bool firstLaunch = true;
@@ -860,12 +855,7 @@ namespace TwoZeroFourEight
         public Board Board;
 
         private SolidColorBrush _solidTileForegroundBrush;
-        private SolidColorBrush _toolBarButtonBackgroundBrush;
         private SolidColorBrush _solidTileBrush;
-        SolidColorBrush _whiteBrush;
-
-        bool _gazePlusSwitch;
-        bool _tempGazePlusSwitch;
 
         private enum WebViewOpenedAs
         {
@@ -882,42 +872,23 @@ namespace TwoZeroFourEight
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
             var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-            VersionTextBlock.Text = String.Format(resourceLoader.GetString("VersionString") , GetAppVersion());
+            VersionTextBlock.Text = resourceLoader.GetString("VersionStringPrefix") + GetAppVersion();
 
             Board = new Board(4);
 
-            CoreWindow.GetForCurrentThread().KeyDown += CoredWindow_KeyDown;
-
-            //var sharedSettings = new ValueSet();
-            //GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
-            //{
-            //    GazeInput.LoadSettings(sharedSettings);
-            //});
-
-            LoadLocalSettings();
-        }
-
-        private void LoadLocalSettings()
-        {
-            var appSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
-            bool? storedGazePlusSwith = appSettings.Values[nameof(_gazePlusSwitch)] as bool?;
-            if (storedGazePlusSwith != null)
+            CoreWindow.GetForCurrentThread().KeyDown += new Windows.Foundation.TypedEventHandler<CoreWindow, KeyEventArgs>(delegate (CoreWindow sender, KeyEventArgs args)
             {
-                _gazePlusSwitch = (bool)storedGazePlusSwith;
+                if (!args.KeyStatus.WasKeyDown)
+                {
+                    GazeInput.GetGazePointer(this).Click();
+                }
+            });
 
-            }
-            else
+            var sharedSettings = new ValueSet();
+            GazeSettingsHelper.RetrieveSharedSettings(sharedSettings).Completed = new AsyncActionCompletedHandler((asyncInfo, asyncStatus) =>
             {
-                _gazePlusSwitch = false;
-            }
-            GazeInput.SetIsSwitchEnabled(this, _gazePlusSwitch);
-        }
-
-        private void SetLocalSettings()
-        {
-            var appSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
-            appSettings.Values[nameof(_gazePlusSwitch)] = _gazePlusSwitch;
-            GazeInput.SetIsSwitchEnabled(this, _gazePlusSwitch);
+                GazeInput.LoadSettings(sharedSettings);
+            });
         }
 
         private void OnNewGame(object sender, RoutedEventArgs e)
@@ -949,61 +920,45 @@ namespace TwoZeroFourEight
             Board.SlideDown();
         }
 
-        private void CoredWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
+        private void OnPageKeyUp(object sender, KeyRoutedEventArgs e)
         {
-            bool wasSpecialKey = false;
-
-            switch (args.VirtualKey)
+            switch (e.Key)
             {
                 case VirtualKey.Up:
                     Board.SlideUp();
-                    wasSpecialKey = true;
                     break;
                 case VirtualKey.Down:
                     Board.SlideDown();
-                    wasSpecialKey = true;
                     break;
                 case VirtualKey.Left:
                     Board.SlideLeft();
-                    wasSpecialKey = true;
                     break;
                 case VirtualKey.Right:
                     Board.SlideRight();
-                    wasSpecialKey = true;
                     break;
 
                 case VirtualKey.F1:
                     Board.SetBoardSpeed(Board.BoardSpeed.Slow);
-                    wasSpecialKey = true;
                     break;
 
                 case VirtualKey.F2:
                     Board.SetBoardSpeed(Board.BoardSpeed.Fast);
-                    wasSpecialKey = true;
                     break;
 
                 case VirtualKey.F3:
                     int newSpeed = Board.SlideDwellSpeed.Milliseconds - 100;
                     if (newSpeed < 100) newSpeed = 100;
                     Board.SlideDwellSpeed = TimeSpan.FromMilliseconds(newSpeed);
-                    wasSpecialKey = true;
                     break;
 
                 case VirtualKey.F4:
                     Board.SlideDwellSpeed = TimeSpan.FromMilliseconds(800);
-                    wasSpecialKey = true;
                     break;
 
                 case VirtualKey.F5:
                     Board.SlideDwellSpeed = TimeSpan.FromMilliseconds(Board.SlideDwellSpeed.Milliseconds + 100);
-                    wasSpecialKey = true;
                     break;
 
-            }
-
-            if (!args.KeyStatus.WasKeyDown && !wasSpecialKey)
-            {
-                GazeInput.GetGazePointer(this).Click();
             }
         }
 
@@ -1066,9 +1021,7 @@ namespace TwoZeroFourEight
             }
 
             _solidTileForegroundBrush = (SolidColorBrush)this.Resources["TileForeground"];
-            _toolBarButtonBackgroundBrush = (SolidColorBrush)this.Resources["ToolBarButtonBackground"];
             _solidTileBrush = (SolidColorBrush)this.Resources["TileBackground"];
-            _whiteBrush = new SolidColorBrush(Colors.White);
 
             GazeInput.DwellFeedbackProgressBrush = _solidTileForegroundBrush;
             GazeInput.DwellFeedbackCompleteBrush = new SolidColorBrush(Colors.Transparent);
@@ -1100,9 +1053,27 @@ namespace TwoZeroFourEight
             HelpScreen4.Visibility = Visibility.Collapsed;
             HelpScreen5.Visibility = Visibility.Collapsed;
             HelpScreen6.Visibility = Visibility.Collapsed;
-            HelpScreen7.Visibility = Visibility.Collapsed;
             HelpNavLeftButton.IsEnabled = false;
             HelpNavRightButton.IsEnabled = true;
+
+            HelpDialogGrid.Visibility = Visibility.Visible;
+            SetTabsForDialogView();
+            FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
+            BackToGameButton.Focus(FocusState.Pointer);
+        }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
+
+            HelpScreen1.Visibility = Visibility.Collapsed;
+            HelpScreen2.Visibility = Visibility.Collapsed;
+            HelpScreen3.Visibility = Visibility.Collapsed;
+            HelpScreen4.Visibility = Visibility.Collapsed;
+            HelpScreen5.Visibility = Visibility.Collapsed;
+            HelpScreen6.Visibility = Visibility.Visible;
+            HelpNavLeftButton.IsEnabled = true;
+            HelpNavRightButton.IsEnabled = false;
 
             HelpDialogGrid.Visibility = Visibility.Visible;
             SetTabsForDialogView();
@@ -1148,23 +1119,16 @@ namespace TwoZeroFourEight
                 HelpScreen4.Visibility = Visibility.Collapsed;
                 HelpScreen5.Visibility = Visibility.Visible;
                 HelpNavRightButton.IsEnabled = true;
-                HelpNavLeftButton.IsEnabled = true;                
+                HelpNavLeftButton.IsEnabled = true;
             }
             else if (HelpScreen5.Visibility == Visibility.Visible)
             {
                 HelpScreen5.Visibility = Visibility.Collapsed;
                 HelpScreen6.Visibility = Visibility.Visible;
-                HelpNavRightButton.IsEnabled = true;
-                HelpNavLeftButton.IsEnabled = true;
-           }
-            else if (HelpScreen6.Visibility == Visibility.Visible)
-            {
-                HelpScreen6.Visibility = Visibility.Collapsed;
-                HelpScreen7.Visibility = Visibility.Visible;
                 HelpNavRightButton.IsEnabled = false;
                 HelpNavLeftButton.IsEnabled = true;
             }
-            else if (HelpScreen7.Visibility == Visibility.Visible)
+            else if (HelpScreen6.Visibility == Visibility.Visible)
             {
                 HelpNavRightButton.IsEnabled = false;
                 HelpNavLeftButton.IsEnabled = true;
@@ -1216,13 +1180,6 @@ namespace TwoZeroFourEight
                 HelpNavLeftButton.IsEnabled = true;
                 HelpNavRightButton.IsEnabled = true;
             }
-            else if (HelpScreen7.Visibility == Visibility.Visible)
-            {
-                HelpScreen7.Visibility = Visibility.Collapsed;
-                HelpScreen6.Visibility = Visibility.Visible;
-                HelpNavLeftButton.IsEnabled = true;
-                HelpNavRightButton.IsEnabled = true;
-            }
             FixHelp();
         }
 
@@ -1261,10 +1218,6 @@ namespace TwoZeroFourEight
             else if (HelpScreen6.Visibility == Visibility.Visible)
             {
                 currentPage = 6;
-            }
-            else if (HelpScreen7.Visibility == Visibility.Visible)
-            {
-                currentPage = 7;
             }
 
             StoreServicesCustomEventLogger logger = StoreServicesCustomEventLogger.GetDefault();
@@ -1353,13 +1306,13 @@ namespace TwoZeroFourEight
             helpTextBodySize = helpTextBodySize - buttonItem1Size - buttonItem2Size;
             FixHelpTextSize(Help5TextBody, helpTextBodySize);
 
-            HelpPaneGrid.UpdateLayout();            
+            HelpPaneGrid.UpdateLayout();
         }
 
         private void FixHelpTextSize(TextBlock helpTextBody, double helpTextBodySize)
         {
             double defaultFontSize = (double)this.Resources["HelpTextFontSize"];
-            double fitFontSize = defaultFontSize;            
+            double fitFontSize = defaultFontSize;
 
             var tb = new TextBlock();
             tb.FontFamily = helpTextBody.FontFamily;
@@ -1406,6 +1359,7 @@ namespace TwoZeroFourEight
             DownButton.IsTabStop = false;
             LeftButton.IsTabStop = false;
             RightButton.IsTabStop = false;
+            AboutButton.IsTabStop = false;
         }
 
         private void SetTabsForPageView()
@@ -1417,6 +1371,7 @@ namespace TwoZeroFourEight
             DownButton.IsTabStop = true;
             LeftButton.IsTabStop = true;
             RightButton.IsTabStop = true;
+            AboutButton.IsTabStop = true;
         }
 
         private void SetTabsForHelpWebView()
@@ -1436,87 +1391,6 @@ namespace TwoZeroFourEight
             PrivacyHyperlink.IsTabStop = true;
             UseTermsHyperlink.IsTabStop = true;
         }
-
-        private void SetTabsForSettingsView()
-        {
-            SettingsButton.IsTabStop = false;
-            HelpNavRightButton.IsTabStop = false;
-            HelpNavLeftButton.IsTabStop = false;
-            BackToGameButton.IsTabStop = false;
-            PrivacyHyperlink.IsTabStop = false;
-            UseTermsHyperlink.IsTabStop = false;
-        }
-
-        private void SetTabsForHelpWithClosedSettings()
-        {
-            SettingsButton.IsTabStop = true;
-            HelpNavRightButton.IsTabStop = true;
-            HelpNavLeftButton.IsTabStop = true;
-            BackToGameButton.IsTabStop = true;
-            PrivacyHyperlink.IsTabStop = true;
-            UseTermsHyperlink.IsTabStop = true;
-        }
-
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            GazeInput.DwellFeedbackProgressBrush = _toolBarButtonBackgroundBrush;
-            SetTabsForSettingsView();
-            SettingsScreen.Visibility = Visibility.Visible;
-            //retrieve local settings
-            SetGazeToggleStates(_gazePlusSwitch);
-          
-
-            FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
-            SettingsContinueButton.Focus(FocusState.Pointer);
-        }
-
-        private void SettingsContinueButton_Click(object sender, RoutedEventArgs e)
-        {
-            SetTabsForHelpWithClosedSettings();
-            SettingsScreen.Visibility = Visibility.Collapsed;
-            //store and set local settings
-            if (_tempGazePlusSwitch == true)
-            {
-                _gazePlusSwitch = true;
-            }
-            else
-            {
-                _gazePlusSwitch = false;
-            }
-            SetLocalSettings();
-            GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
-        }       
-
-        private void GazeToggle_Click(object sender, RoutedEventArgs e)
-        {
-            SetGazeToggleStates(false);
-        }
-
-        private void GazePlusSwitchToggle_Click(object sender, RoutedEventArgs e)
-        {
-            SetGazeToggleStates(true);
-        }
-
-        private void SetGazeToggleStates(bool gazePlusSwitch)
-        {
-            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-
-            if (gazePlusSwitch)
-            {
-                GazePlusSwitchToggle.SetValue(AutomationProperties.NameProperty, resourceLoader.GetString("SettingsGazePlusSwitchToggleOn"));
-                GazeToggle.SetValue(AutomationProperties.NameProperty, resourceLoader.GetString("SettingsGazePlusSwitchToggleOn"));
-                GazePlusSwitchToggleShape.Background = _whiteBrush;
-                GazeToggleShape.Background = _solidTileBrush;
-                _tempGazePlusSwitch = true;
-            }
-            else
-            {
-                GazePlusSwitchToggle.SetValue(AutomationProperties.NameProperty, resourceLoader.GetString("SettingsGazePlusSwitchToggleOff"));
-                GazeToggle.SetValue(AutomationProperties.NameProperty, resourceLoader.GetString("SettingsGazePlusSwitchToggleOff"));
-                GazeToggleShape.Background = _whiteBrush;
-                GazePlusSwitchToggleShape.Background = _solidTileBrush;
-                _tempGazePlusSwitch = false;
-            }
-        }
+       
     }
 }

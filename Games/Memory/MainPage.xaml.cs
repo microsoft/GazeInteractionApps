@@ -142,6 +142,24 @@ namespace Memory
             BackToGameButton.Focus(FocusState.Pointer);
         }
 
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            GazeInput.DwellFeedbackProgressBrush = _solidTileBrush;
+
+            HelpScreen1.Visibility = Visibility.Collapsed;
+            HelpScreen2.Visibility = Visibility.Collapsed;
+            HelpScreen3.Visibility = Visibility.Collapsed;
+            HelpScreen4.Visibility = Visibility.Collapsed;
+            HelpScreen5.Visibility = Visibility.Collapsed;
+            HelpScreen6.Visibility = Visibility.Visible;
+            HelpNavLeftButton.IsEnabled = true;
+            HelpNavRightButton.IsEnabled = false;
+
+            HelpDialogGrid.Visibility = Visibility.Visible;
+            SetTabsForDialogView();
+            BackToGameButton.Focus(FocusState.Pointer);
+        }
+
         private void OnHelpNavRight(object sender, RoutedEventArgs e)
         {
             if (HelpScreen1.Visibility == Visibility.Visible)
@@ -362,6 +380,7 @@ namespace Memory
             BoardSize2Button.IsTabStop = false;
             BoardSize3Button.IsTabStop = false;
             BoardSize4Button.IsTabStop = false;
+            AboutButton.IsTabStop = false;
         }
 
         private void SetTabsForPageView()
@@ -372,6 +391,7 @@ namespace Memory
             BoardSize2Button.IsTabStop = true;
             BoardSize3Button.IsTabStop = true;
             BoardSize4Button.IsTabStop = true;
+            AboutButton.IsTabStop = true;
         }
 
         private void SetTabsForHelpWebView()
@@ -577,7 +597,6 @@ namespace Memory
                 SettingsSymbolCollectionLabel.Text = resourceLoader.GetString("SettingsSymbolCollectionEmoji");
             }
         }
-
        
     }
 }

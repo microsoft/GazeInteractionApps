@@ -220,7 +220,15 @@
             <TextBlock  x:Uid="BoardSize3" Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,0">15 tiles</TextBlock>
             <TextBlock  x:Uid="BoardSize4" Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,0">24 tiles</TextBlock>
         </Grid>
-                
+
+        <Button x:Uid="AboutButton" x:Name="AboutButton" AutomationProperties.Name="About" Background="{x:Null}" Foreground="White" Margin="0,0,0,40" HorizontalAlignment="right" VerticalAlignment="Bottom" FontSize="24" Height="96" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="4" Grid.Row="4" Click="AboutButton_Click"  gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}">
+            <Grid Margin="-2" Background="{StaticResource ToolBarButtonBackground}" CornerRadius="10,10,10,10">
+                <TextBlock x:Uid="About" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,20,0" FontFamily="Segoe UI">
+                    About
+                </TextBlock>
+            </Grid>
+        </Button>
+
         <Grid Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="6" x:Name="HelpDialogGrid" Visibility="Collapsed" Background="#99FFFFFF" Margin="0,0,0,0"  PreviewKeyDown="HelpDialogGrid_PreviewKeyDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>

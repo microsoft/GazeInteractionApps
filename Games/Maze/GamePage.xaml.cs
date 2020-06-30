@@ -359,7 +359,7 @@ namespace Maze
 
         private void OnSolveMaze(object sender, RoutedEventArgs e)
         {
-            if (_cellCreationTimer.IsEnabled || _openCellTimer.IsEnabled || _interactionPaused)
+            if (_cellCreationTimer.IsEnabled || _openCellTimer.IsEnabled || _interactionPaused || _animationIsRunning)
             {
                 return;
             }

@@ -234,9 +234,12 @@ namespace Fifteen
         private void ResetBatchAnimation_Completed(object sender, CompositionBatchCompletedEventArgs args)
         {
             Button firstButton = FocusManager.FindFirstFocusableElement(GameGrid) as Button;
-            firstButton.Focus(FocusState.Programmatic);
+            if (firstButton != null)
+            {
+                firstButton.Focus(FocusState.Programmatic);
 
-            getRootScrollViewer().Focus(FocusState.Pointer);            
+                getRootScrollViewer().Focus(FocusState.Pointer);
+            }                                
         }
 
         private bool IsButtonCompositionReady()

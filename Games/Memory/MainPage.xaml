@@ -365,6 +365,19 @@
             <TextBlock x:Uid="BoardSize4" Foreground="{StaticResource TileBackground}" Grid.Row="1" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,0">66 cards</TextBlock>
         </Grid>
 
+        <Button x:Uid="AboutButton" x:Name="AboutButton" AutomationProperties.Name="About"  Background="{x:Null}" Foreground="White" Margin="0,40,0,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="24" Height="96" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" FontFamily="Segoe UI" Grid.Column="2" Click="AboutButton_Click" Grid.Row="3" gaze:GazeInput.DwellDuration="{StaticResource DestructiveDwellDuration}">
+            <Grid Margin="-2" Background="{StaticResource ToolBarButtonBackground}" CornerRadius="10,10,10,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock x:Uid="About" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,20,0" FontFamily="Segoe UI">
+                   About
+                </TextBlock>
+            </Grid>
+        </Button>
+
         <Grid Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="6" x:Name="HelpDialogGrid" Visibility="Collapsed" Background="#99FFFFFF" Margin="0,0,0,0" PreviewKeyDown="HelpDialogGrid_PreviewKeyDown" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
