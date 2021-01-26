@@ -572,7 +572,7 @@
                     </Button>
                     <!--hold for settings-Collapsed-->
                     <!--hold for settings-remember to edit resw-->
-                    <Button x:Name="SettingsButton" x:Uid="SettingsButton" AutomationProperties.Name="Settings" Height="96" Width="96" Grid.Column="1" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,15,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontFamily="Segoe UI" Padding="0" Click="SettingsButton_Click" Visibility="Collapsed" >
+                    <Button x:Name="SettingsButton" x:Uid="SettingsButton" AutomationProperties.Name="Settings" Height="96" Width="96" Grid.Column="1" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,15,0,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontFamily="Segoe UI" Padding="0" Click="SettingsButton_Click" Visibility="Visible" >
                         <Grid Margin="-2" Background="White" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <TextBlock Foreground="{StaticResource ToolBarButtonBackground}" FontFamily="Segoe MDL2 Assets" FontSize="46" HorizontalAlignment="Center" VerticalAlignment="Center">
                                  &#xe713;
